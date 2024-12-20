@@ -7,11 +7,11 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: nginx
+  repository: solomonai/core-enterprise
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: latest
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -132,9 +132,9 @@ env:
 - name: FORWARDED_ALLOW_IPS
   value: "*"
 - name: POLAR_ALLOWED_HOSTS
-  value: '["sandbox.polar.sh"]'
+  value: '["core-enterprise-sandbox.solomon-ai.app"]'
 - name: POLAR_CORS_ORIGINS
-  value: '["https://sandbox.polar.sh", "https://github.com"]'
+  value: '["https://core-enterprise-sandbox.solomon-ai.app", "https://github.com"]'
 
 # Database variables
 - name: POLAR_POSTGRES_DATABASE
@@ -184,11 +184,11 @@ env:
 
 # Backend variables
 - name: POLAR_USER_SESSION_COOKIE_KEY
-  value: "polar_sandbox_session"
+  value: "solomon_ai_sandbox_session"
 - name: POLAR_USER_SESSION_COOKIE_DOMAIN
-  value: "polar.sh"
+  value: "solomon-ai.app"
 - name: POLAR_BASE_URL
-  value: "https://core-enterprise-sandbox.polar.sh/v1"
+  value: "https://core-enterprise-sandbox.solomon-ai.app/v1"
 - name: POLAR_CURRENT_JWK_KID
   value: ""
 - name: POLAR_DEBUG
@@ -204,17 +204,17 @@ env:
 - name: POLAR_EMAIL_SENDER
   value: "resend"
 - name: POLAR_EMAIL_FROM_NAME
-  value: "[SANDBOX] Polar"
+  value: "[SANDBOX] Solomon AI"
 - name: POLAR_EMAIL_FROM_EMAIL_ADDRESS
-  value: "noreply@notifications.sandbox.polar.sh"
+  value: "noreply@ninbox.staging.solomon-ai.app"
 - name: POLAR_ENV
   value: "sandbox"
 - name: POLAR_FRONTEND_BASE_URL
-  value: "https://sandbox.polar.sh"
+  value: "https://core-enterprise-sandbox.solomon-ai.app"
 - name: POLAR_CHECKOUT_BASE_URL
-  value: "https://core-enterprise-sandbox.polar.sh/v1/checkout-links/{client_secret}/redirect"
+  value: "https://core-enterprise-sandbox.solomon-ai.app/v1/checkout-links/{client_secret}/redirect"
 - name: POLAR_GITHUB_APP_NAMESPACE
-  value: "polar-sandbox"
+  value: "solomon-ai-sandbox"
 - name: POLAR_GITHUB_BADGE_EMBED
   value: "1"
 - name: POLAR_GITHUB_POLAR_USER_ACCESS_TOKEN
@@ -270,13 +270,12 @@ env:
 - name: POLAR_LOGFIRE_TOKEN
   value: ""
 
-
 # Worker Configuration
 worker:
   enabled: true
   replicaCount: 2
   command: [ "uv", "run", "supervisord", "-c", "supervisord.worker.conf" ]
-  
+
   # Resource configuration for workers
   resources:
     requests:
@@ -285,33 +284,33 @@ worker:
     limits:
       cpu: "1000m"
       memory: "512Mi"
-  
+
   # Autoscaling configuration for workers
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 15     # Allow more worker replicas for processing
-    targetCPUUtilizationPercentage: 65  # Scale up earlier than API
+    maxReplicas: 15 # Allow more worker replicas for processing
+    targetCPUUtilizationPercentage: 65 # Scale up earlier than API
     targetMemoryUtilizationPercentage: 75
     # Custom metrics for queue-based scaling could be added here
     behavior:
       scaleUp:
-        stabilizationWindowSeconds: 180  # Faster scale up for workers
+        stabilizationWindowSeconds: 180 # Faster scale up for workers
         policies:
         - type: Pods
-          value: 3                       # Add up to 3 pods at a time
+          value: 3 # Add up to 3 pods at a time
           periodSeconds: 60
       scaleDown:
-        stabilizationWindowSeconds: 600  # Slower scale down
+        stabilizationWindowSeconds: 600 # Slower scale down
         policies:
         - type: Pods
-          value: 1                       # Remove 1 pod at a time
+          value: 1 # Remove 1 pod at a time
           periodSeconds: 120
 
   # Pod disruption budget for workers
   podDisruptionBudget:
     enabled: true
-    minAvailable: 1     # Always keep at least 1 worker running
+    minAvailable: 1 # Always keep at least 1 worker running
 
   # Anti-affinity rules to spread workers across nodes
   affinity:
@@ -329,13 +328,12 @@ worker:
 
   # Topology spread constraints
   topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/component: worker
-
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/component: worker
   # Resource quotas
   resourceQuota:
     enabled: true
@@ -352,7 +350,7 @@ worker:
     runAsNonRoot: true
     runAsUser: 1000
     fsGroup: 2000
-  
+
   securityContext:
     allowPrivilegeEscalation: false
     capabilities:
@@ -364,15 +362,15 @@ worker:
 
   # Worker-specific environment variables
   env:
-    - name: POLAR_LOGFIRE_WORKER_TOKEN
-      value: ""
+  - name: POLAR_LOGFIRE_WORKER_TOKEN
+    value: ""
 
 # GitHub Worker Configuration
 githubWorker:
   enabled: true
   replicaCount: 1
   command: [ "uv", "run", "supervisord", "-c", "supervisord.worker_github.conf" ]
-  
+
   # Resource configuration for github workers
   resources:
     requests:
@@ -381,7 +379,7 @@ githubWorker:
     limits:
       cpu: "1000m"
       memory: "512Mi"
-  
+
   # Autoscaling configuration for github workers
   autoscaling:
     enabled: true
@@ -424,13 +422,12 @@ githubWorker:
 
   # Topology spread constraints
   topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/component: github-worker
-
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/component: github-worker
   # Resource quotas
   resourceQuota:
     enabled: true
@@ -447,7 +444,7 @@ githubWorker:
     runAsNonRoot: true
     runAsUser: 1000
     fsGroup: 2000
-  
+
   securityContext:
     allowPrivilegeEscalation: false
     capabilities:
@@ -459,5 +456,5 @@ githubWorker:
 
   # Worker-specific environment variables
   env:
-    - name: POLAR_LOGFIRE_WORKER_TOKEN
-      value: ""
+  - name: POLAR_LOGFIRE_WORKER_TOKEN
+    value: ""

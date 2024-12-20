@@ -80,7 +80,7 @@ ingress:
   hosts:
   # The hostname that this Ingress will respond to
   # Requests to api.polar.sh will be routed to this service
-  - host: api.polar.sh
+  - host: core-enterprise-api.solomon-ai.app
     # List of URL paths to match and route
     paths:
     # The URL path to match
@@ -97,20 +97,20 @@ ingress:
   tls: []
   #  - secretName: polar-api-tls
   #    hosts:
-  #      - api.polar.sh
+  #      - core-enterprise-api.solomon-ai.app
 
   # Example TLS configuration:
   # tls:
   # - hosts:
-  #     - api.polar.sh
+  #     - core-enterprise-api.solomon-ai.app
   #   secretName: polar-tls-cert  # Secret containing TLS certificate
 
 resources:
   requests:
-    cpu: "100m"    # Minimum CPU needed
+    cpu: "100m" # Minimum CPU needed
     memory: "256Mi" # Minimum memory needed
   limits:
-    cpu: "500m"    # Maximum CPU allowed
+    cpu: "500m" # Maximum CPU allowed
     memory: "512Mi" # Maximum memory allowed
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -126,22 +126,22 @@ readinessProbe:
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
   enabled: true
-  minReplicas: 2      # Minimum replicas to ensure high availability
-  maxReplicas: 10     # Maximum replicas to control costs
-  targetCPUUtilizationPercentage: 70  # Scale up when CPU hits 70%
-  targetMemoryUtilizationPercentage: 80  # Scale up when memory hits 80%
+  minReplicas: 2 # Minimum replicas to ensure high availability
+  maxReplicas: 10 # Maximum replicas to control costs
+  targetCPUUtilizationPercentage: 70 # Scale up when CPU hits 70%
+  targetMemoryUtilizationPercentage: 80 # Scale up when memory hits 80%
   behavior:
     scaleUp:
-      stabilizationWindowSeconds: 300    # Wait 5 mins before scaling up again
+      stabilizationWindowSeconds: 300 # Wait 5 mins before scaling up again
       policies:
       - type: Pods
-        value: 2                         # Add max 2 pods at a time
+        value: 2 # Add max 2 pods at a time
         periodSeconds: 60
     scaleDown:
-      stabilizationWindowSeconds: 300    # Wait 5 mins before scaling down
+      stabilizationWindowSeconds: 300 # Wait 5 mins before scaling down
       policies:
       - type: Pods
-        value: 1                         # Remove 1 pod at a time
+        value: 1 # Remove 1 pod at a time
         periodSeconds: 60
 
 # Additional volumes on the output Deployment definition.
@@ -174,9 +174,9 @@ env:
 - name: FORWARDED_ALLOW_IPS
   value: "*"
 - name: POLAR_ALLOWED_HOSTS
-  value: '["polar.sh","docs.polar.sh"]'
+  value: '["solomon-ai.app","docs.solomon-ai.app"]'
 - name: POLAR_CORS_ORIGINS
-  value: '["https://dashboard.polar.sh", "https://github.com" , "https://polar.sh", "https://docs.polar.sh", "https://polar-polar-sh.vercel.app"]'
+  value: '["https://core-enterprise-production.solomon-ai.app", "https://dashboard.solomon-ai.app", "https://github.com" , "https://solomon-ai.app", "https://docs.solomon-ai.app", "https://solomon-ai-staging.vercel.app"]'
 
 # Database variables
 - name: POLAR_POSTGRES_DATABASE
@@ -226,9 +226,9 @@ env:
 
 # Backend variables
 - name: POLAR_USER_SESSION_COOKIE_DOMAIN
-  value: "polar.sh"
+  value: "solomon-ai.app"
 - name: POLAR_BASE_URL
-  value: "https://api.polar.sh/v1"
+  value: "https://core-enterprise-api.solomon-ai.app/v1"
 - name: POLAR_CURRENT_JWK_KID
   value: ""
 - name: POLAR_DEBUG
@@ -246,15 +246,15 @@ env:
 - name: POLAR_EMAIL_FROM_NAME
   value: "Solomon-AI"
 - name: POLAR_EMAIL_FROM_EMAIL_ADDRESS
-  value: "noreply@notifications.polar.sh"
+  value: "noreply@inbox.solomon-ai.app"
 - name: POLAR_ENV
   value: "production"
 - name: POLAR_FRONTEND_BASE_URL
-  value: "https://polar.sh"
+  value: "https://core-enterprise-production.solomon-ai.app"
 - name: POLAR_CHECKOUT_BASE_URL
-  value: "https://buy.polar.sh/{client_secret}"
+  value: "https://buy.solomon-ai.app/{client_secret}"
 - name: POLAR_GITHUB_APP_NAMESPACE
-  value: "polar-sh"
+  value: "solomon-ai"
 - name: POLAR_GITHUB_BADGE_EMBED
   value: "1"
 - name: POLAR_GITHUB_POLAR_USER_ACCESS_TOKEN
@@ -315,7 +315,7 @@ worker:
   enabled: true
   replicaCount: 2
   command: [ "uv", "run", "supervisord", "-c", "supervisord.worker.conf" ]
-  
+
   # Resource configuration for workers
   resources:
     requests:
@@ -324,33 +324,33 @@ worker:
     limits:
       cpu: "1000m"
       memory: "512Mi"
-  
+
   # Autoscaling configuration for workers
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 15     # Allow more worker replicas for processing
-    targetCPUUtilizationPercentage: 65  # Scale up earlier than API
+    maxReplicas: 15 # Allow more worker replicas for processing
+    targetCPUUtilizationPercentage: 65 # Scale up earlier than API
     targetMemoryUtilizationPercentage: 75
     # Custom metrics for queue-based scaling could be added here
     behavior:
       scaleUp:
-        stabilizationWindowSeconds: 180  # Faster scale up for workers
+        stabilizationWindowSeconds: 180 # Faster scale up for workers
         policies:
         - type: Pods
-          value: 3                       # Add up to 3 pods at a time
+          value: 3 # Add up to 3 pods at a time
           periodSeconds: 60
       scaleDown:
-        stabilizationWindowSeconds: 600  # Slower scale down
+        stabilizationWindowSeconds: 600 # Slower scale down
         policies:
         - type: Pods
-          value: 1                       # Remove 1 pod at a time
+          value: 1 # Remove 1 pod at a time
           periodSeconds: 120
 
   # Pod disruption budget for workers
   podDisruptionBudget:
     enabled: true
-    minAvailable: 1     # Always keep at least 1 worker running
+    minAvailable: 1 # Always keep at least 1 worker running
 
   # Anti-affinity rules to spread workers across nodes
   affinity:
@@ -368,13 +368,12 @@ worker:
 
   # Topology spread constraints
   topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/component: worker
-
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/component: worker
   # Resource quotas
   resourceQuota:
     enabled: true
@@ -391,7 +390,7 @@ worker:
     runAsNonRoot: true
     runAsUser: 1000
     fsGroup: 2000
-  
+
   securityContext:
     allowPrivilegeEscalation: false
     capabilities:
@@ -403,15 +402,15 @@ worker:
 
   # Worker-specific environment variables
   env:
-    - name: POLAR_LOGFIRE_WORKER_TOKEN
-      value: ""
+  - name: POLAR_LOGFIRE_WORKER_TOKEN
+    value: ""
 
 # GitHub Worker Configuration
 githubWorker:
   enabled: true
   replicaCount: 1
   command: [ "uv", "run", "supervisord", "-c", "supervisord.worker_github.conf" ]
-  
+
   # Resource configuration for github workers
   resources:
     requests:
@@ -420,7 +419,7 @@ githubWorker:
     limits:
       cpu: "1000m"
       memory: "512Mi"
-  
+
   # Autoscaling configuration for github workers
   autoscaling:
     enabled: true
@@ -463,13 +462,12 @@ githubWorker:
 
   # Topology spread constraints
   topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: kubernetes.io/hostname
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/component: github-worker
-
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/component: github-worker
   # Resource quotas
   resourceQuota:
     enabled: true
@@ -486,7 +484,7 @@ githubWorker:
     runAsNonRoot: true
     runAsUser: 1000
     fsGroup: 2000
-  
+
   securityContext:
     allowPrivilegeEscalation: false
     capabilities:
@@ -498,5 +496,5 @@ githubWorker:
 
   # Worker-specific environment variables
   env:
-    - name: POLAR_LOGFIRE_WORKER_TOKEN
-      value: ""
+  - name: POLAR_LOGFIRE_WORKER_TOKEN
+    value: ""
