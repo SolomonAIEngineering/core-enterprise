@@ -2,7 +2,7 @@ name: Production Deployment - Web App
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_ENTERPRISE }}
-  TURBO_TOKEN: Z0yhHR0s0cQtwy3HgfrK2Cal
+  TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   TURBO_TEAM: ${{ secrets.VERCEL_ORG_ID }}
 on:
   push:
@@ -29,14 +29,14 @@ jobs:
         run: pnpm test
       - name: 📤 Pull Vercel Environment Information
         working-directory: clients
-        run: pnpm dlx vercel pull --yes --environment=production --token=Z0yhHR0s0cQtwy3HgfrK2Cal
+        run: pnpm dlx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - name: 🏗 Build Project Artifacts
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
         working-directory: clients
-        run: pnpm dlx vercel build --prod --token=Z0yhHR0s0cQtwy3HgfrK2Cal
+        run: pnpm dlx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: 🚀 Deploy to Vercel
         working-directory: clients
         run: |
-          pnpm dlx vercel deploy --prebuilt --prod --archive=tgz --token=Z0yhHR0s0cQtwy3HgfrK2Cal > domain.txt
-          pnpm dlx vercel alias --scope=${{ secrets.VERCEL_ORG_ID }} --token=Z0yhHR0s0cQtwy3HgfrK2Cal set `cat domain.txt` enterpise.solomon-ai.app
+          pnpm dlx vercel deploy --prebuilt --prod --archive=tgz --token=${{ secrets.VERCEL_TOKEN }} > domain.txt
+          pnpm dlx vercel alias --scope=${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }} set `cat domain.txt` enterpise.solomon-ai.app
