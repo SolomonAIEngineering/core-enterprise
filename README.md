@@ -38,7 +38,7 @@ sffdf
 </div>
 <hr />
 
-## Polar: Open source Lemon Squeezy & Paddle alternative
+## Polar (Core Enterprise): Open source Lemon Squeezy & Paddle alternative
 Focus on building your passion, while we focus on the infrastructure to get you paid.
 
 - Sell SaaS and digital products in minutes
