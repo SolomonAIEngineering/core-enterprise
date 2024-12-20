@@ -1,0 +1,502 @@
+# Default values for core-enterprise-production.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: solomonai/core-enterprise
+  # This sets the pull policy for images.
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+podSecurityContext: {} # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 80
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  # Controls whether an Ingress resource should be created
+  # Setting this to false will not create any Ingress resources
+  enabled: true
+
+  # Specifies which Ingress controller should implement this Ingress
+  # Common values: nginx, traefik, istio
+  # Empty string means use the cluster's default controller
+  className: ""
+
+  # Annotations allow you to configure controller-specific behavior
+  # Examples:
+  # - SSL/TLS configuration
+  # - Rate limiting
+  # - Authentication
+  # - Rewrite rules
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
+  # Defines the hostname(s) and paths that this Ingress should handle
+  hosts:
+  # The hostname that this Ingress will respond to
+  # Requests to api.polar.sh will be routed to this service
+  - host: api.polar.sh
+    # List of URL paths to match and route
+    paths:
+    # The URL path to match
+    # "/" means match all paths under the hostname
+    - path: /
+      # How the path should be matched:
+      # - Exact: Match the URL exactly
+      # - Prefix: Match URLs that start with this path
+      # - ImplementationSpecific: Let the controller decide
+      pathType: ImplementationSpecific
+  # TLS configuration for HTTPS
+  # Empty list means no TLS (HTTP only)
+  # To enable HTTPS, specify certificate details:
+  tls: []
+  #  - secretName: polar-api-tls
+  #    hosts:
+  #      - api.polar.sh
+
+  # Example TLS configuration:
+  # tls:
+  # - hosts:
+  #     - api.polar.sh
+  #   secretName: polar-tls-cert  # Secret containing TLS certificate
+
+resources:
+  requests:
+    cpu: "100m"    # Minimum CPU needed
+    memory: "256Mi" # Minimum memory needed
+  limits:
+    cpu: "500m"    # Maximum CPU allowed
+    memory: "512Mi" # Maximum memory allowed
+
+# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+
+# This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: true
+  minReplicas: 2      # Minimum replicas to ensure high availability
+  maxReplicas: 10     # Maximum replicas to control costs
+  targetCPUUtilizationPercentage: 70  # Scale up when CPU hits 70%
+  targetMemoryUtilizationPercentage: 80  # Scale up when memory hits 80%
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 300    # Wait 5 mins before scaling up again
+      policies:
+      - type: Pods
+        value: 2                         # Add max 2 pods at a time
+        periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300    # Wait 5 mins before scaling down
+      policies:
+      - type: Pods
+        value: 1                         # Remove 1 pod at a time
+        periodSeconds: 60
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+init:
+  command: [ "uv", "run", "task", "pre_deploy" ]
+
+# Environment variables from render.yaml
+env:
+# Basic configuration
+- name: WEB_CONCURRENCY
+  value: "2"
+- name: FORWARDED_ALLOW_IPS
+  value: "*"
+- name: POLAR_ALLOWED_HOSTS
+  value: '["polar.sh","docs.polar.sh"]'
+- name: POLAR_CORS_ORIGINS
+  value: '["https://dashboard.polar.sh", "https://github.com" , "https://polar.sh", "https://docs.polar.sh", "https://polar-polar-sh.vercel.app"]'
+
+# Database variables
+- name: POLAR_POSTGRES_DATABASE
+  value: ""
+- name: POLAR_POSTGRES_HOST
+  value: ""
+- name: POLAR_POSTGRES_PORT
+  value: ""
+- name: POLAR_POSTGRES_PWD
+  value: ""
+- name: POLAR_POSTGRES_USER
+  value: ""
+
+# Redis variables
+- name: POLAR_REDIS_HOST
+  value: ""
+- name: POLAR_REDIS_PORT
+  value: ""
+- name: POLAR_REDIS_DB
+  value: "0"
+
+# AWS S3 variables
+- name: POLAR_AWS_ACCESS_KEY_ID
+  value: ""
+- name: POLAR_AWS_REGION
+  value: "us-east-2"
+- name: POLAR_AWS_SECRET_ACCESS_KEY
+  value: ""
+- name: POLAR_AWS_SIGNATURE_VERSION
+  value: "v4"
+- name: POLAR_S3_FILES_BUCKET_NAME
+  value: "polar-production-files"
+- name: POLAR_S3_FILES_DOWNLOAD_SALT
+  value: ""
+- name: POLAR_S3_FILES_DOWNLOAD_SECRET
+  value: ""
+- name: POLAR_S3_FILES_PRESIGN_TTL
+  value: "600"
+- name: POLAR_S3_FILES_PUBLIC_BUCKET_NAME
+  value: "polar-public-files"
+
+# Google variables
+- name: POLAR_GOOGLE_CLIENT_ID
+  value: ""
+- name: POLAR_GOOGLE_CLIENT_SECRET
+  value: ""
+
+# Backend variables
+- name: POLAR_USER_SESSION_COOKIE_DOMAIN
+  value: "polar.sh"
+- name: POLAR_BASE_URL
+  value: "https://api.polar.sh/v1"
+- name: POLAR_CURRENT_JWK_KID
+  value: ""
+- name: POLAR_DEBUG
+  value: "0"
+- name: POLAR_DISCORD_BOT_TOKEN
+  value: ""
+- name: POLAR_DISCORD_CLIENT_ID
+  value: ""
+- name: POLAR_DISCORD_CLIENT_SECRET
+  value: ""
+- name: POLAR_DISCORD_WEBHOOK_URL
+  value: ""
+- name: POLAR_EMAIL_SENDER
+  value: "resend"
+- name: POLAR_EMAIL_FROM_NAME
+  value: "Solomon-AI"
+- name: POLAR_EMAIL_FROM_EMAIL_ADDRESS
+  value: "noreply@notifications.polar.sh"
+- name: POLAR_ENV
+  value: "production"
+- name: POLAR_FRONTEND_BASE_URL
+  value: "https://polar.sh"
+- name: POLAR_CHECKOUT_BASE_URL
+  value: "https://buy.polar.sh/{client_secret}"
+- name: POLAR_GITHUB_APP_NAMESPACE
+  value: "polar-sh"
+- name: POLAR_GITHUB_BADGE_EMBED
+  value: "1"
+- name: POLAR_GITHUB_POLAR_USER_ACCESS_TOKEN
+  value: ""
+- name: POLAR_JWKS
+  value: "/etc/secrets/jwks.json"
+- name: POLAR_LOG_LEVEL
+  value: "INFO"
+- name: POLAR_LOOPS_API_KEY
+  value: ""
+- name: POLAR_POSTHOG_PROJECT_API_KEY
+  value: ""
+- name: POLAR_RESEND_API_KEY
+  value: ""
+- name: POLAR_SECRET
+  value: ""
+- name: POLAR_SENTRY_DSN
+  value: ""
+- name: POLAR_TESTING
+  value: "0"
+
+# GitHub variables
+- name: POLAR_GITHUB_APP_IDENTIFIER
+  value: ""
+- name: POLAR_GITHUB_APP_PRIVATE_KEY
+  value: ""
+- name: POLAR_GITHUB_APP_WEBHOOK_SECRET
+  value: ""
+- name: POLAR_GITHUB_CLIENT_ID
+  value: ""
+- name: POLAR_GITHUB_CLIENT_SECRET
+  value: ""
+- name: POLAR_GITHUB_REPOSITORY_BENEFITS_APP_IDENTIFIER
+  value: ""
+- name: POLAR_GITHUB_REPOSITORY_BENEFITS_APP_NAMESPACE
+  value: ""
+- name: POLAR_GITHUB_REPOSITORY_BENEFITS_APP_PRIVATE_KEY
+  value: ""
+- name: POLAR_GITHUB_REPOSITORY_BENEFITS_CLIENT_ID
+  value: ""
+- name: POLAR_GITHUB_REPOSITORY_BENEFITS_CLIENT_SECRET
+  value: ""
+
+# Stripe variables
+- name: POLAR_STRIPE_CONNECT_WEBHOOK_SECRET
+  value: ""
+- name: POLAR_STRIPE_SECRET_KEY
+  value: ""
+- name: POLAR_STRIPE_WEBHOOK_SECRET
+  value: ""
+
+# Logfire variables
+- name: POLAR_LOGFIRE_TOKEN
+  value: ""
+
+# Worker Configuration
+worker:
+  enabled: true
+  replicaCount: 2
+  command: [ "uv", "run", "supervisord", "-c", "supervisord.worker.conf" ]
+  
+  # Resource configuration for workers
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+  
+  # Autoscaling configuration for workers
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 15     # Allow more worker replicas for processing
+    targetCPUUtilizationPercentage: 65  # Scale up earlier than API
+    targetMemoryUtilizationPercentage: 75
+    # Custom metrics for queue-based scaling could be added here
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 180  # Faster scale up for workers
+        policies:
+        - type: Pods
+          value: 3                       # Add up to 3 pods at a time
+          periodSeconds: 60
+      scaleDown:
+        stabilizationWindowSeconds: 600  # Slower scale down
+        policies:
+        - type: Pods
+          value: 1                       # Remove 1 pod at a time
+          periodSeconds: 120
+
+  # Pod disruption budget for workers
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1     # Always keep at least 1 worker running
+
+  # Anti-affinity rules to spread workers across nodes
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+  # Topology spread constraints
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/component: worker
+
+  # Resource quotas
+  resourceQuota:
+    enabled: true
+    hard:
+      cpu: "5"
+      memory: 8Gi
+      pods: "20"
+
+  # Quality of Service class
+  priorityClassName: "high-priority-workers"
+
+  # Pod security context
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 2000
+  
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  # Worker-specific environment variables
+  env:
+    - name: POLAR_LOGFIRE_WORKER_TOKEN
+      value: ""
+
+# GitHub Worker Configuration
+githubWorker:
+  enabled: true
+  replicaCount: 1
+  command: [ "uv", "run", "supervisord", "-c", "supervisord.worker_github.conf" ]
+  
+  # Resource configuration for github workers
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+  
+  # Autoscaling configuration for github workers
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 15
+    targetCPUUtilizationPercentage: 65
+    targetMemoryUtilizationPercentage: 75
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 180
+        policies:
+        - type: Pods
+          value: 3
+          periodSeconds: 60
+      scaleDown:
+        stabilizationWindowSeconds: 600
+        policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 120
+
+  # Pod disruption budget for github workers
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  # Anti-affinity rules to spread github workers across nodes
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/component
+              operator: In
+              values:
+              - github-worker
+          topologyKey: "kubernetes.io/hostname"
+
+  # Topology spread constraints
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/component: github-worker
+
+  # Resource quotas
+  resourceQuota:
+    enabled: true
+    hard:
+      cpu: "5"
+      memory: 8Gi
+      pods: "20"
+
+  # Quality of Service class
+  priorityClassName: "high-priority-workers"
+
+  # Pod security context
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 2000
+  
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  # Worker-specific environment variables
+  env:
+    - name: POLAR_LOGFIRE_WORKER_TOKEN
+      value: ""

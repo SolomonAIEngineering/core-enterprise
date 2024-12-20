@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "core-enterprise-production.fullname" . }}
+  labels:
+    {{- include "core-enterprise-production.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "core-enterprise-production.selectorLabels" . | nindent 4 }}

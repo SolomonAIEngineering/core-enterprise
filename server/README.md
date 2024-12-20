@@ -41,6 +41,74 @@ uv run task lint
 
 ```
 
+## Quick Start with Make
+
+We provide a Makefile and helper scripts to automate the development setup and common tasks. The setup process will:
+1. Create a `.env` file from template
+2. Start Docker services
+3. Install dependencies
+4. Generate development JWKS (JSON Web Key Set) file
+5. Run database migrations
+
+Here are the available commands:
+
+```bash
+# First-time setup (copies .env, generates JWKS, installs dependencies, runs migrations)
+make setup
+
+# If you need to generate JWKS manually
+uv run task generate_dev_jwks
+
+# Start the development server
+make dev
+
+# Start the worker (run in a separate terminal)
+make worker
+
+# Other useful commands:
+make test           # Run tests
+make lint           # Run linter
+make migrate        # Run database migrations
+make verify-github  # Verify GitHub app configuration
+make docker-up      # Start Docker services
+make docker-down    # Stop Docker services
+
+# Create a new migration
+make new-migration m="your migration description"
+```
+
+### Development Requirements
+
+Before running the server, ensure you have:
+1. Set up a GitHub app with proper permissions
+2. A valid `.env` file (created from template)
+3. A JWKS file (generated automatically during setup)
+
+If you encounter JWKS-related errors, you can regenerate the JWKS file using:
+```bash
+uv run task generate_dev_jwks
+```
+
+### Helper Scripts
+
+The `scripts/` directory contains Python scripts that help automate common tasks:
+
+- `scripts/dev.py`: Handles development server setup and startup
+- `scripts/worker.py`: Manages the worker process
+- `scripts/setup_scripts.sh`: Makes the scripts executable
+
+To use the scripts directly:
+
+```bash
+# First make them executable
+chmod +x scripts/setup_scripts.sh
+./scripts/setup_scripts.sh
+
+# Then you can run
+./scripts/dev.py    # Start development server
+./scripts/worker.py # Start worker
+```
+
 ## Create a database migration
 
 Modify the model in polar.model, then run
