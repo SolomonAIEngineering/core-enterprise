@@ -4,7 +4,7 @@ import subprocess
 from pathlib import Path
 
 
-def ensure_env_file():
+def ensure_env_file() -> None:
     """Ensure .env file exists"""
     env_template = Path(".env.template")
     env_file = Path(".env")
@@ -14,7 +14,7 @@ def ensure_env_file():
         print("Created .env file from template")
 
 
-def ensure_jwks():
+def ensure_jwks() -> None:
     """Ensure JWKS file exists"""
     try:
         subprocess.run(["uv", "run", "task", "generate_dev_jwks"], check=True)
@@ -23,7 +23,7 @@ def ensure_jwks():
         print("Warning: Failed to generate JWKS file")
 
 
-def main():
+def main() -> None:
     # Ensure we're in the server directory
     server_dir = Path(__file__).parent.parent
     os.chdir(server_dir)
