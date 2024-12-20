@@ -47,6 +47,8 @@ jobs:
 
       - name: Build
         working-directory: ./clients
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
         run: pnpm build
 
       - name: Test
@@ -89,3 +91,5 @@ jobs:
       - name: Build
         working-directory: ./clients/apps/web
         run: pnpm build-storybook
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"

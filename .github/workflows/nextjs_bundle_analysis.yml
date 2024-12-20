@@ -58,6 +58,8 @@ jobs:
       - name: Build
         working-directory: ./clients
         run: pnpm build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
