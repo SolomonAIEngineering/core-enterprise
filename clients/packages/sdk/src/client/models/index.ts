@@ -1459,13 +1459,13 @@ export interface BackofficePledge {
      */
     currency: string;
     /**
-     * 
+     * Current state of the pledge
      * @type {PledgeState}
      * @memberof BackofficePledge
      */
     state: PledgeState;
     /**
-     * 
+     * Type of pledge
      * @type {PledgeType}
      * @memberof BackofficePledge
      */
@@ -1483,7 +1483,7 @@ export interface BackofficePledge {
      */
     scheduled_payout_at?: string | null;
     /**
-     * 
+     * The issue that the pledge was made towards
      * @type {Issue}
      * @memberof BackofficePledge
      */
@@ -1558,7 +1558,7 @@ export interface BackofficePledge {
  */
 export interface BackofficeReward {
     /**
-     * 
+     * The pledge that the reward was split from
      * @type {Pledge}
      * @memberof BackofficeReward
      */
@@ -1896,7 +1896,7 @@ export interface BenefitBase {
      */
     id: string;
     /**
-     * 
+     * The type of the benefit.
      * @type {BenefitType}
      * @memberof BenefitBase
      */
@@ -2063,18 +2063,11 @@ export type BenefitCustomCreateTypeEnum = typeof BenefitCustomCreateTypeEnum[key
 export interface BenefitCustomCreateProperties {
     /**
      * 
-     * @type {BenefitCustomCreatePropertiesNote}
+     * @type {string}
      * @memberof BenefitCustomCreateProperties
      */
-    note?: BenefitCustomCreatePropertiesNote | null;
+    note?: string | null;
 }
-/**
- * @type BenefitCustomCreatePropertiesNote
- * Private note to be shared with customers who have this benefit granted.
- * @export
- */
-export type BenefitCustomCreatePropertiesNote = string;
-
 /**
  * Properties for a benefit of type `custom`.
  * @export
@@ -2083,10 +2076,10 @@ export type BenefitCustomCreatePropertiesNote = string;
 export interface BenefitCustomProperties {
     /**
      * 
-     * @type {BenefitCustomCreatePropertiesNote}
+     * @type {string}
      * @memberof BenefitCustomProperties
      */
-    note: BenefitCustomCreatePropertiesNote | null;
+    note: string | null;
 }
 /**
  * 
@@ -2173,10 +2166,10 @@ export type BenefitCustomSubscriberTypeEnum = typeof BenefitCustomSubscriberType
 export interface BenefitCustomSubscriberProperties {
     /**
      * 
-     * @type {BenefitCustomCreatePropertiesNote}
+     * @type {string}
      * @memberof BenefitCustomSubscriberProperties
      */
-    note: BenefitCustomCreatePropertiesNote | null;
+    note: string | null;
 }
 /**
  * 
@@ -3181,6 +3174,12 @@ export interface BenefitGrant {
     benefit_id: string;
     /**
      * 
+     * @type {Customer}
+     * @memberof BenefitGrant
+     */
+    customer: Customer;
+    /**
+     * 
      * @type {Properties}
      * @memberof BenefitGrant
      */
@@ -3382,6 +3381,12 @@ export interface BenefitGrantWebhook {
     benefit_id: string;
     /**
      * 
+     * @type {Customer}
+     * @memberof BenefitGrantWebhook
+     */
+    customer: Customer;
+    /**
+     * 
      * @type {Properties}
      * @memberof BenefitGrantWebhook
      */
@@ -3404,7 +3409,7 @@ export interface BenefitGrantWebhook {
  * Filter products granting specific benefit.
  * @export
  */
-export type BenefitIDFilter = Array<string> | string;
+export type BenefitIDFilter = Array<string | null> | string;
 
 /**
  * @type BenefitIDFilter1
@@ -3419,6 +3424,13 @@ export type BenefitIDFilter1 = Array<string> | string;
  * @export
  */
 export type BenefitIDFilter2 = Array<string> | string;
+
+/**
+ * @type BenefitIDFilter3
+ * Filter by benefit ID.
+ * @export
+ */
+export type BenefitIDFilter3 = Array<string> | string;
 
 /**
  * 
@@ -3846,13 +3858,13 @@ export interface Checkout {
      */
     custom_field_data?: object;
     /**
-     * 
+     * Payment processor used.
      * @type {PolarEnumsPaymentProcessor}
      * @memberof Checkout
      */
     payment_processor: PolarEnumsPaymentProcessor;
     /**
-     * 
+     * Status of the checkout session.
      * @type {CheckoutStatus}
      * @memberof Checkout
      */
@@ -3990,13 +4002,13 @@ export interface Checkout {
      */
     customer_email: string | null;
     /**
-     * IP address of the customer. Used to detect tax location.
+     * 
      * @type {string}
      * @memberof Checkout
      */
     customer_ip_address: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof Checkout
      */
@@ -4095,7 +4107,7 @@ export interface CheckoutConfirmStripe {
      */
     customer_email?: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutConfirmStripe
      */
@@ -4480,7 +4492,7 @@ export interface CheckoutLink {
      */
     metadata: { [key: string]: MetadataValue; };
     /**
-     * 
+     * Payment processor used.
      * @type {PolarEnumsPaymentProcessor}
      * @memberof CheckoutLink
      */
@@ -4911,13 +4923,13 @@ export interface CheckoutPriceCreate {
      */
     customer_email?: string | null;
     /**
-     * IP address of the customer. Used to detect tax location.
+     * 
      * @type {string}
      * @memberof CheckoutPriceCreate
      */
     customer_ip_address?: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutPriceCreate
      */
@@ -5124,13 +5136,13 @@ export interface CheckoutProductCreate {
      */
     customer_email?: string | null;
     /**
-     * IP address of the customer. Used to detect tax location.
+     * 
      * @type {string}
      * @memberof CheckoutProductCreate
      */
     customer_ip_address?: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutProductCreate
      */
@@ -5222,13 +5234,13 @@ export interface CheckoutPublic {
      */
     custom_field_data?: object;
     /**
-     * 
+     * Payment processor used.
      * @type {PolarEnumsPaymentProcessor}
      * @memberof CheckoutPublic
      */
     payment_processor: PolarEnumsPaymentProcessor;
     /**
-     * 
+     * Status of the checkout session.
      * @type {CheckoutStatus}
      * @memberof CheckoutPublic
      */
@@ -5366,13 +5378,13 @@ export interface CheckoutPublic {
      */
     customer_email: string | null;
     /**
-     * IP address of the customer. Used to detect tax location.
+     * 
      * @type {string}
      * @memberof CheckoutPublic
      */
     customer_ip_address: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutPublic
      */
@@ -5456,7 +5468,7 @@ export interface CheckoutPublicConfirmed {
      */
     custom_field_data?: object;
     /**
-     * 
+     * Payment processor used.
      * @type {PolarEnumsPaymentProcessor}
      * @memberof CheckoutPublicConfirmed
      */
@@ -5600,13 +5612,13 @@ export interface CheckoutPublicConfirmed {
      */
     customer_email: string | null;
     /**
-     * IP address of the customer. Used to detect tax location.
+     * 
      * @type {string}
      * @memberof CheckoutPublicConfirmed
      */
     customer_ip_address: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutPublicConfirmed
      */
@@ -5734,7 +5746,7 @@ export interface CheckoutUpdate {
      */
     customer_email?: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutUpdate
      */
@@ -5773,7 +5785,7 @@ export interface CheckoutUpdate {
      */
     allow_discount_codes?: boolean | null;
     /**
-     * IP address of the customer. Used to detect tax location.
+     * 
      * @type {string}
      * @memberof CheckoutUpdate
      */
@@ -5843,7 +5855,7 @@ export interface CheckoutUpdatePublic {
      */
     customer_email?: string | null;
     /**
-     * 
+     * Billing address of the customer.
      * @type {Address}
      * @memberof CheckoutUpdatePublic
      */
@@ -7217,10 +7229,10 @@ export interface Customer {
     billing_address: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof Customer
      */
-    tax_id: Array<string> | null;
+    tax_id: Array<any> | null;
     /**
      * 
      * @type {string}
@@ -7312,6 +7324,12 @@ export interface CustomerBenefitGrantAds {
      * @memberof CustomerBenefitGrantAds
      */
     is_revoked: boolean;
+    /**
+     * 
+     * @type {CustomerPortalCustomer}
+     * @memberof CustomerBenefitGrantAds
+     */
+    customer: CustomerPortalCustomer;
     /**
      * 
      * @type {BenefitAdsSubscriber}
@@ -7422,6 +7440,12 @@ export interface CustomerBenefitGrantCustom {
     is_revoked: boolean;
     /**
      * 
+     * @type {CustomerPortalCustomer}
+     * @memberof CustomerBenefitGrantCustom
+     */
+    customer: CustomerPortalCustomer;
+    /**
+     * 
      * @type {BenefitCustomSubscriber}
      * @memberof CustomerBenefitGrantCustom
      */
@@ -7528,6 +7552,12 @@ export interface CustomerBenefitGrantDiscord {
      * @memberof CustomerBenefitGrantDiscord
      */
     is_revoked: boolean;
+    /**
+     * 
+     * @type {CustomerPortalCustomer}
+     * @memberof CustomerBenefitGrantDiscord
+     */
+    customer: CustomerPortalCustomer;
     /**
      * 
      * @type {BenefitDiscordSubscriber}
@@ -7657,6 +7687,12 @@ export interface CustomerBenefitGrantDownloadables {
     is_revoked: boolean;
     /**
      * 
+     * @type {CustomerPortalCustomer}
+     * @memberof CustomerBenefitGrantDownloadables
+     */
+    customer: CustomerPortalCustomer;
+    /**
+     * 
      * @type {BenefitDownloadablesSubscriber}
      * @memberof CustomerBenefitGrantDownloadables
      */
@@ -7763,6 +7799,12 @@ export interface CustomerBenefitGrantGitHubRepository {
      * @memberof CustomerBenefitGrantGitHubRepository
      */
     is_revoked: boolean;
+    /**
+     * 
+     * @type {CustomerPortalCustomer}
+     * @memberof CustomerBenefitGrantGitHubRepository
+     */
+    customer: CustomerPortalCustomer;
     /**
      * 
      * @type {BenefitGitHubRepositorySubscriber}
@@ -7892,6 +7934,12 @@ export interface CustomerBenefitGrantLicenseKeys {
     is_revoked: boolean;
     /**
      * 
+     * @type {CustomerPortalCustomer}
+     * @memberof CustomerBenefitGrantLicenseKeys
+     */
+    customer: CustomerPortalCustomer;
+    /**
+     * 
      * @type {BenefitLicenseKeysSubscriber}
      * @memberof CustomerBenefitGrantLicenseKeys
      */
@@ -7973,10 +8021,10 @@ export interface CustomerCreate {
     billing_address?: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof CustomerCreate
      */
-    tax_id?: Array<string> | null;
+    tax_id?: Array<any> | null;
     /**
      * The organization ID.
      * @type {string}
@@ -7997,6 +8045,13 @@ export type CustomerIDFilter = Array<string> | string;
  * @export
  */
 export type CustomerIDFilter1 = Array<string> | string;
+
+/**
+ * @type CustomerIDFilter2
+ * Filter by customer ID.
+ * @export
+ */
+export type CustomerIDFilter2 = Array<string> | string;
 
 
 /**
@@ -8373,10 +8428,10 @@ export interface CustomerPortalCustomer {
     billing_address: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof CustomerPortalCustomer
      */
-    tax_id: Array<string> | null;
+    tax_id: Array<any> | null;
     /**
      * 
      * @type {{ [key: string]: CustomerPortalOAuthAccount; }}
@@ -8792,10 +8847,10 @@ export interface CustomerUpdate {
     billing_address?: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof CustomerUpdate
      */
-    tax_id?: Array<string> | null;
+    tax_id?: Array<any> | null;
 }
 /**
  * 
@@ -9094,7 +9149,7 @@ export interface DiscountFixedOnceForeverDurationCreate {
      */
     duration: DiscountDuration;
     /**
-     * 
+     * Type of the discount.
      * @type {DiscountType}
      * @memberof DiscountFixedOnceForeverDurationCreate
      */
@@ -9411,7 +9466,7 @@ export interface DiscountFixedRepeatDurationCreate {
      */
     duration_in_months: number;
     /**
-     * 
+     * Type of the discount.
      * @type {DiscountType}
      * @memberof DiscountFixedRepeatDurationCreate
      */
@@ -9707,7 +9762,7 @@ export interface DiscountPercentageOnceForeverDurationCreate {
      */
     duration: DiscountDuration;
     /**
-     * 
+     * Type of the discount.
      * @type {DiscountType}
      * @memberof DiscountPercentageOnceForeverDurationCreate
      */
@@ -10009,7 +10064,7 @@ export interface DiscountPercentageRepeatDurationCreate {
      */
     duration_in_months: number;
     /**
-     * 
+     * Type of the discount.
      * @type {DiscountType}
      * @memberof DiscountPercentageRepeatDurationCreate
      */
@@ -10195,28 +10250,28 @@ export interface DiscountUpdate {
     name?: string | null;
     /**
      * 
-     * @type {DiscountUpdateCode}
+     * @type {string}
      * @memberof DiscountUpdate
      */
-    code?: DiscountUpdateCode | null;
+    code?: string | null;
     /**
      * 
-     * @type {DiscountUpdateStartsAt}
+     * @type {string}
      * @memberof DiscountUpdate
      */
-    starts_at?: DiscountUpdateStartsAt | null;
+    starts_at?: string | null;
     /**
      * 
-     * @type {DiscountUpdateEndsAt}
+     * @type {string}
      * @memberof DiscountUpdate
      */
-    ends_at?: DiscountUpdateEndsAt | null;
+    ends_at?: string | null;
     /**
      * 
-     * @type {DiscountUpdateMaxRedemptions}
+     * @type {number}
      * @memberof DiscountUpdate
      */
-    max_redemptions?: DiscountUpdateMaxRedemptions | null;
+    max_redemptions?: number | null;
     /**
      * 
      * @type {DiscountDuration}
@@ -10267,34 +10322,6 @@ export interface DiscountUpdate {
     products?: Array<string> | null;
 }
 
-
-/**
- * @type DiscountUpdateCode
- * Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API.
- * @export
- */
-export type DiscountUpdateCode = string;
-
-/**
- * @type DiscountUpdateEndsAt
- * Optional timestamp after which the discount is no longer redeemable.
- * @export
- */
-export type DiscountUpdateEndsAt = string;
-
-/**
- * @type DiscountUpdateMaxRedemptions
- * Optional maximum number of times the discount can be redeemed.
- * @export
- */
-export type DiscountUpdateMaxRedemptions = number;
-
-/**
- * @type DiscountUpdateStartsAt
- * Optional timestamp after which the discount is redeemable.
- * @export
- */
-export type DiscountUpdateStartsAt = string;
 
 /**
  * Schema to create a file to be associated with the downloadables benefit.
@@ -10669,6 +10696,13 @@ export interface ExternalOrganization {
  * @export
  */
 export type ExternalOrganizationNameFilter = Array<string> | string;
+
+/**
+ * @type ExternalOrganizationNameFilter1
+ * Filter by external organization name.
+ * @export
+ */
+export type ExternalOrganizationNameFilter1 = Array<string> | string;
 
 
 /**
@@ -11211,7 +11245,7 @@ export interface Issue {
      */
     id: string;
     /**
-     * 
+     * Issue platform (currently always GitHub)
      * @type {Platforms}
      * @memberof Issue
      */
@@ -11307,7 +11341,7 @@ export interface Issue {
      */
     funding: Funding;
     /**
-     * 
+     * The repository that the issue is in
      * @type {Repository}
      * @memberof Issue
      */
@@ -11646,10 +11680,10 @@ export interface LicenseKeyCustomer {
     billing_address: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof LicenseKeyCustomer
      */
-    tax_id: Array<string> | null;
+    tax_id: Array<any> | null;
     /**
      * 
      * @type {string}
@@ -11723,6 +11757,7 @@ export interface LicenseKeyRead {
      * 
      * @type {LicenseKeyUser}
      * @memberof LicenseKeyRead
+     * @deprecated
      */
     user: LicenseKeyUser;
     /**
@@ -11960,6 +11995,7 @@ export interface LicenseKeyWithActivations {
      * 
      * @type {LicenseKeyUser}
      * @memberof LicenseKeyWithActivations
+     * @deprecated
      */
     user: LicenseKeyUser;
     /**
@@ -12659,12 +12695,6 @@ export interface ListResourceWebhookEndpoint {
      */
     pagination: Pagination;
 }
-/**
- * @type LocationInner
- * @export
- */
-export type LocationInner = number | string;
-
 /**
  * 
  * @export
@@ -13648,7 +13678,7 @@ export interface Metric {
      */
     display_name: string;
     /**
-     * 
+     * Type of the metric, useful to know the unit or format of the value.
      * @type {MetricType}
      * @memberof Metric
      */
@@ -13839,31 +13869,31 @@ export interface MetricsIntervalLimit {
  */
 export interface MetricsIntervalsLimits {
     /**
-     * 
+     * Limits for the hour interval.
      * @type {MetricsIntervalLimit}
      * @memberof MetricsIntervalsLimits
      */
     hour: MetricsIntervalLimit;
     /**
-     * 
+     * Limits for the day interval.
      * @type {MetricsIntervalLimit}
      * @memberof MetricsIntervalsLimits
      */
     day: MetricsIntervalLimit;
     /**
-     * 
+     * Limits for the week interval.
      * @type {MetricsIntervalLimit}
      * @memberof MetricsIntervalsLimits
      */
     week: MetricsIntervalLimit;
     /**
-     * 
+     * Limits for the month interval.
      * @type {MetricsIntervalLimit}
      * @memberof MetricsIntervalsLimits
      */
     month: MetricsIntervalLimit;
     /**
-     * 
+     * Limits for the year interval.
      * @type {MetricsIntervalLimit}
      * @memberof MetricsIntervalsLimits
      */
@@ -13882,7 +13912,7 @@ export interface MetricsLimits {
      */
     min_date: string;
     /**
-     * 
+     * Limits for each interval.
      * @type {MetricsIntervalsLimits}
      * @memberof MetricsLimits
      */
@@ -13901,7 +13931,7 @@ export interface MetricsResponse {
      */
     periods: Array<MetricPeriod>;
     /**
-     * 
+     * Information about the returned metrics.
      * @type {Metrics}
      * @memberof MetricsResponse
      */
@@ -13937,12 +13967,6 @@ export const NotPermittedErrorEnum = {
 export type NotPermittedErrorEnum = typeof NotPermittedErrorEnum[keyof typeof NotPermittedErrorEnum];
 
 /**
- * @type NotificationsInner
- * 
- * @export
- */
-export type NotificationsInner = { type: 'MaintainerAccountReviewedNotification' } & MaintainerAccountReviewedNotification | { type: 'MaintainerAccountUnderReviewNotification' } & MaintainerAccountUnderReviewNotification | { type: 'MaintainerCreateAccountNotification' } & MaintainerCreateAccountNotification | { type: 'MaintainerNewPaidSubscriptionNotification' } & MaintainerNewPaidSubscriptionNotification | { type: 'MaintainerNewProductSaleNotification' } & MaintainerNewProductSaleNotification | { type: 'MaintainerPledgeConfirmationPendingNotification' } & MaintainerPledgeConfirmationPendingNotification | { type: 'MaintainerPledgeCreatedNotification' } & MaintainerPledgeCreatedNotification | { type: 'MaintainerPledgePaidNotification' } & MaintainerPledgePaidNotification | { type: 'MaintainerPledgePendingNotification' } & MaintainerPledgePendingNotification | { type: 'MaintainerPledgedIssueConfirmationPendingNotification' } & MaintainerPledgedIssueConfirmationPendingNotification | { type: 'MaintainerPledgedIssuePendingNotification' } & MaintainerPledgedIssuePendingNotification | { type: 'PledgerPledgePendingNotification' } & PledgerPledgePendingNotification | { type: 'RewardPaidNotification' } & RewardPaidNotification | { type: 'TeamAdminMemberPledgedNotification' } & TeamAdminMemberPledgedNotification;
-/**
  * 
  * @export
  * @interface NotificationsList
@@ -13950,10 +13974,10 @@ export type NotificationsInner = { type: 'MaintainerAccountReviewedNotification'
 export interface NotificationsList {
     /**
      * 
-     * @type {Array<NotificationsInner>}
+     * @type {Array<NotificationsListNotificationsInner>}
      * @memberof NotificationsList
      */
-    notifications: Array<NotificationsInner>;
+    notifications: Array<NotificationsListNotificationsInner>;
     /**
      * 
      * @type {string}
@@ -13961,6 +13985,12 @@ export interface NotificationsList {
      */
     last_read_notification_id: string | null;
 }
+/**
+ * @type NotificationsListNotificationsInner
+ * 
+ * @export
+ */
+export type NotificationsListNotificationsInner = { type: 'MaintainerAccountReviewedNotification' } & MaintainerAccountReviewedNotification | { type: 'MaintainerAccountUnderReviewNotification' } & MaintainerAccountUnderReviewNotification | { type: 'MaintainerCreateAccountNotification' } & MaintainerCreateAccountNotification | { type: 'MaintainerNewPaidSubscriptionNotification' } & MaintainerNewPaidSubscriptionNotification | { type: 'MaintainerNewProductSaleNotification' } & MaintainerNewProductSaleNotification | { type: 'MaintainerPledgeConfirmationPendingNotification' } & MaintainerPledgeConfirmationPendingNotification | { type: 'MaintainerPledgeCreatedNotification' } & MaintainerPledgeCreatedNotification | { type: 'MaintainerPledgePaidNotification' } & MaintainerPledgePaidNotification | { type: 'MaintainerPledgePendingNotification' } & MaintainerPledgePendingNotification | { type: 'MaintainerPledgedIssueConfirmationPendingNotification' } & MaintainerPledgedIssueConfirmationPendingNotification | { type: 'MaintainerPledgedIssuePendingNotification' } & MaintainerPledgedIssuePendingNotification | { type: 'PledgerPledgePendingNotification' } & PledgerPledgePendingNotification | { type: 'RewardPaidNotification' } & RewardPaidNotification | { type: 'TeamAdminMemberPledgedNotification' } & TeamAdminMemberPledgedNotification;
 /**
  * 
  * @export
@@ -14535,6 +14565,7 @@ export interface Order {
      * 
      * @type {OrderUser}
      * @memberof Order
+     * @deprecated
      */
     user: OrderUser;
     /**
@@ -14633,10 +14664,10 @@ export interface OrderCustomer {
     billing_address: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof OrderCustomer
      */
-    tax_id: Array<string> | null;
+    tax_id: Array<any> | null;
     /**
      * 
      * @type {string}
@@ -15355,7 +15386,14 @@ export interface OrganizationFeatureSettings {
  * Filter by organization ID.
  * @export
  */
-export type OrganizationIDFilter = Array<string> | string;
+export type OrganizationIDFilter = Array<string | null> | string;
+
+/**
+ * @type OrganizationIDFilter1
+ * Filter by organization ID.
+ * @export
+ */
+export type OrganizationIDFilter1 = Array<string> | string;
 
 /**
  * @type OrganizationId
@@ -15630,7 +15668,7 @@ export interface PaymentMethod {
      * @type {string}
      * @memberof PaymentMethod
      */
-    type: PaymentMethodTypeEnum;
+    type: PaymentMethodTypeEnum | null;
     /**
      * 
      * @type {string}
@@ -15662,8 +15700,7 @@ export interface PaymentMethod {
  * @export
  */
 export const PaymentMethodTypeEnum = {
-    CARD: 'card',
-    NULL: 'null'
+    CARD: 'card'
 } as const;
 export type PaymentMethodTypeEnum = typeof PaymentMethodTypeEnum[keyof typeof PaymentMethodTypeEnum];
 
@@ -15875,13 +15912,13 @@ export interface Pledge {
      */
     currency: string;
     /**
-     * 
+     * Current state of the pledge
      * @type {PledgeState}
      * @memberof Pledge
      */
     state: PledgeState;
     /**
-     * 
+     * Type of pledge
      * @type {PledgeType}
      * @memberof Pledge
      */
@@ -15899,7 +15936,7 @@ export interface Pledge {
      */
     scheduled_payout_at?: string | null;
     /**
-     * 
+     * The issue that the pledge was made towards
      * @type {Issue}
      * @memberof Pledge
      */
@@ -16782,10 +16819,10 @@ export interface ProductOneTimeCreate {
     description?: string | null;
     /**
      * List of available prices for this product.
-     * @type {Array<ProductPriceOneTimeCreateInner>}
+     * @type {Array<ProductOneTimeCreatePricesInner>}
      * @memberof ProductOneTimeCreate
      */
-    prices: Array<ProductPriceOneTimeCreateInner>;
+    prices: Array<ProductOneTimeCreatePricesInner>;
     /**
      * 
      * @type {Array<string>}
@@ -16806,6 +16843,12 @@ export interface ProductOneTimeCreate {
     organization_id?: string | null;
 }
 /**
+ * @type ProductOneTimeCreatePricesInner
+ * @export
+ */
+export type ProductOneTimeCreatePricesInner = ProductPriceOneTimeCustomCreate | ProductPriceOneTimeFixedCreate | ProductPriceOneTimeFreeCreate;
+
+/**
  * @type ProductPrice
  * 
  * @export
@@ -16817,12 +16860,6 @@ export type ProductPrice = { type: 'one_time' } & ProductPriceOneTime | { type: 
  * @export
  */
 export type ProductPriceOneTime = { amount_type: 'custom' } & ProductPriceOneTimeCustom | { amount_type: 'fixed' } & ProductPriceOneTimeFixed | { amount_type: 'free' } & ProductPriceOneTimeFree;
-/**
- * @type ProductPriceOneTimeCreateInner
- * @export
- */
-export type ProductPriceOneTimeCreateInner = ProductPriceOneTimeCustomCreate | ProductPriceOneTimeFixedCreate | ProductPriceOneTimeFreeCreate;
-
 /**
  * A pay-what-you-want price for a one-time product.
  * @export
@@ -17286,7 +17323,7 @@ export interface ProductPriceRecurringCustom {
      */
     type: ProductPriceRecurringCustomTypeEnum;
     /**
-     * 
+     * The recurring interval of the price.
      * @type {SubscriptionRecurringInterval}
      * @memberof ProductPriceRecurringCustom
      */
@@ -17371,7 +17408,7 @@ export interface ProductPriceRecurringFixed {
      */
     type: ProductPriceRecurringFixedTypeEnum;
     /**
-     * 
+     * The recurring interval of the price.
      * @type {SubscriptionRecurringInterval}
      * @memberof ProductPriceRecurringFixed
      */
@@ -17426,7 +17463,7 @@ export interface ProductPriceRecurringFixedCreate {
      */
     price_currency?: string;
     /**
-     * 
+     * The recurring interval of the price.
      * @type {SubscriptionRecurringInterval}
      * @memberof ProductPriceRecurringFixedCreate
      */
@@ -17499,7 +17536,7 @@ export interface ProductPriceRecurringFree {
      */
     type: ProductPriceRecurringFreeTypeEnum;
     /**
-     * 
+     * The recurring interval of the price.
      * @type {SubscriptionRecurringInterval}
      * @memberof ProductPriceRecurringFree
      */
@@ -17542,7 +17579,7 @@ export interface ProductPriceRecurringFreeCreate {
      */
     amount_type: ProductPriceRecurringFreeCreateAmountTypeEnum;
     /**
-     * 
+     * The recurring interval of the price.
      * @type {SubscriptionRecurringInterval}
      * @memberof ProductPriceRecurringFreeCreate
      */
@@ -18050,14 +18087,21 @@ export interface RepositoryBadgeSettingsUpdate {
  * Filter by name.
  * @export
  */
-export type RepositoryNameFilter = Array<string> | string;
+export type RepositoryNameFilter = Array<string | null> | string;
 
 /**
  * @type RepositoryNameFilter1
- * Filter by repository name.
+ * Filter by name.
  * @export
  */
 export type RepositoryNameFilter1 = Array<string> | string;
+
+/**
+ * @type RepositoryNameFilter2
+ * Filter by repository name.
+ * @export
+ */
+export type RepositoryNameFilter2 = Array<string> | string;
 
 /**
  * 
@@ -18233,7 +18277,7 @@ export type ResponseOauth2Userinfo = UserInfoOrganization | UserInfoUser;
  */
 export interface Reward {
     /**
-     * 
+     * The pledge that the reward was split from
      * @type {Pledge}
      * @memberof Reward
      */
@@ -18862,6 +18906,7 @@ export interface Subscription {
      * 
      * @type {SubscriptionUser}
      * @memberof Subscription
+     * @deprecated
      */
     user: SubscriptionUser;
     /**
@@ -18941,10 +18986,10 @@ export interface SubscriptionCustomer {
     billing_address: Address | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<any>}
      * @memberof SubscriptionCustomer
      */
-    tax_id: Array<string> | null;
+    tax_id: Array<any> | null;
     /**
      * 
      * @type {string}
@@ -18970,6 +19015,13 @@ export type SubscriptionDiscount = DiscountFixedOnceForeverDurationBase | Discou
  * @export
  */
 export type SubscriptionIDFilter = Array<string> | string;
+
+/**
+ * @type SubscriptionIDFilter1
+ * Filter by subscription ID.
+ * @export
+ */
+export type SubscriptionIDFilter1 = Array<string> | string;
 
 
 /**
@@ -19065,7 +19117,7 @@ export interface SubscriptionUser {
  */
 export interface SummaryPledge {
     /**
-     * 
+     * Type of pledge
      * @type {PledgeType}
      * @memberof SummaryPledge
      */
@@ -20513,6 +20565,7 @@ export interface ValidatedLicenseKey {
      * 
      * @type {LicenseKeyUser}
      * @memberof ValidatedLicenseKey
+     * @deprecated
      */
     user: LicenseKeyUser;
     /**
@@ -20598,10 +20651,10 @@ export interface ValidatedLicenseKey {
 export interface ValidationError {
     /**
      * 
-     * @type {Array<LocationInner>}
+     * @type {Array<ValidationErrorLocInner>}
      * @memberof ValidationError
      */
-    loc: Array<LocationInner>;
+    loc: Array<ValidationErrorLocInner>;
     /**
      * 
      * @type {string}
@@ -20615,6 +20668,12 @@ export interface ValidationError {
      */
     type: string;
 }
+/**
+ * @type ValidationErrorLocInner
+ * @export
+ */
+export type ValidationErrorLocInner = number | string;
+
 /**
  * Sent when a new benefit is created.
  * 
@@ -20869,7 +20928,7 @@ export interface WebhookDelivery {
      */
     succeeded: boolean;
     /**
-     * 
+     * The webhook event sent by this delivery.
      * @type {WebhookEvent}
      * @memberof WebhookDelivery
      */
@@ -20906,7 +20965,7 @@ export interface WebhookEndpoint {
      */
     url: string;
     /**
-     * 
+     * The format of the webhook payload.
      * @type {WebhookFormat}
      * @memberof WebhookEndpoint
      */
@@ -20945,7 +21004,7 @@ export interface WebhookEndpointCreate {
      */
     url: string;
     /**
-     * 
+     * The format of the webhook payload.
      * @type {WebhookFormat}
      * @memberof WebhookEndpointCreate
      */
@@ -20984,7 +21043,7 @@ export interface WebhookEndpointUpdate {
      */
     url?: string | null;
     /**
-     * 
+     * The format of the webhook payload.
      * @type {WebhookFormat}
      * @memberof WebhookEndpointUpdate
      */
