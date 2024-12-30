@@ -155,6 +155,13 @@ const BaseCheckoutForm = ({
           }
           clearErrors('customer_billing_address')
         }
+      } else if (name === 'discount_code') {
+        const { discount_code } = value
+        clearErrors('discount_code')
+        // Ensure we don't submit an empty discount code
+        if (discount_code === '') {
+          setValue('discount_code', undefined)
+        }
       }
 
       if (Object.keys(payload).length === 0) {
@@ -165,7 +172,7 @@ const BaseCheckoutForm = ({
         await onCheckoutUpdate(payload)
       } catch {}
     },
-    [clearErrors, resetField, onCheckoutUpdate],
+    [clearErrors, resetField, onCheckoutUpdate, setValue],
   )
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedWatcher = useCallback(debounce(watcher, 500), [watcher])
@@ -207,6 +214,8 @@ const BaseCheckoutForm = ({
       setShowTaxID(true)
     }
   }, [taxId])
+
+  const checkoutDiscounted = !!checkout.discount
 
   return (
     <div className="flex flex-col justify-between gap-y-24">
@@ -479,9 +488,16 @@ const BaseCheckoutForm = ({
                               className="bg-white shadow-sm"
                               {...field}
                               value={field.value || ''}
+                              disabled={checkoutDiscounted}
+                              onKeyDown={(e) => {
+                                if (e.key !== 'Enter') return
+
+                                e.preventDefault()
+                                addDiscountCode()
+                              }}
                             />
                             <div className="absolute inset-y-0 right-1 z-10 flex items-center">
-                              {!checkout.discount && (
+                              {!checkoutDiscounted && discountCode && (
                                 <Button
                                   type="button"
                                   variant="secondary"
@@ -490,7 +506,7 @@ const BaseCheckoutForm = ({
                                   Apply
                                 </Button>
                               )}
-                              {checkout.discount && (
+                              {checkoutDiscounted && (
                                 <Button
                                   type="button"
                                   variant="secondary"
