@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { fail } from 'assert';
+import { fail } from 'node:assert';
 import { validation } from './index';
 import { z } from 'zod';
 
@@ -73,7 +73,7 @@ describe('validation schemas', () => {
       it('should handle various combinations of allowed characters', () => {
         const validCombinations = [
           'a-b_c.d:e',
-          'a'.repeat(3) + '-' + 'b'.repeat(250),
+          `${'a'.repeat(3)}-${'b'.repeat(250)}`,
           '123-456_789',
           'a:b:c:d:e:f',
           'a.b.c.d.e.f',
@@ -155,9 +155,9 @@ describe('validation schemas', () => {
     describe('edge cases', () => {
       it('should handle various whitespace combinations', () => {
         const whitespaceTests = [
-          ' '.repeat(3) + 'valid' + ' '.repeat(3),
-          '\t'.repeat(3) + 'valid' + '\t'.repeat(3),
-          '\n'.repeat(3) + 'valid' + '\n'.repeat(3),
+          `${' '.repeat(3)}valid${' '.repeat(3)}`,
+          `${'\t'.repeat(3)}valid${'\t'.repeat(3)}`,
+          `${'\n'.repeat(3)}valid${'\n'.repeat(3)}`,
           'multiple    spaces    between    words',
           'mixed\tspaces\nand\ttabs',
           'unicode\u2003spaces\u2003here', // em space
@@ -431,6 +431,7 @@ describe('validation schemas', () => {
 
       for (const { schema, value, expectedError } of testCases) {
         try {
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           (validation as any)[schema].parse(value);
           fail('Should have thrown an error');
         } catch (error) {
