@@ -5,5 +5,7 @@
   "description": "Solomon AI's assets package",
   "license": "MIT",
   "author": "Yoan Yomba",
-  "files": ["**/*"]
+  "files": [
+    "**/*"
+  ]
 }

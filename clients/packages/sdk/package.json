@@ -18,9 +18,9 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*",
-    "tsup": "^8.3.5",
-    "typescript": "5.3.3"
+    "@repo/tsconfig": "workspace:*",
+    "tsup": "^8.0.2",
+    "typescript": "^5.7.2"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { SchemaError } from '../errors/schema-error';
 import { BaseError } from '../errors/base';
+import { SchemaError } from '../errors/schema-error';
+import { z } from 'zod';
 
 describe('SchemaError', () => {
   const userSchema = z.object({

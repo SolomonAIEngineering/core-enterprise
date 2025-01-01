@@ -6,12 +6,12 @@
   "types": "src/index.ts",
   "keywords": [],
   "devDependencies": {
-    "@types/node": "^20.14.9",
     "@repo/tsconfig": "workspace:*",
-    "typescript": "^5.5.3"
+    "@types/node": "22.10.1",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "zod": "^3.23.5"
+    "zod": "^3.23.8"
   },
   "scripts": {
     "test": "vitest"

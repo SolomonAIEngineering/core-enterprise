@@ -8,8 +8,8 @@
     "svix": "^1.43.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.2",
-    "@repo/tsconfig": "workspace:*"
+    "@repo/tsconfig": "workspace:*",
+    "typescript": "^5.7.2"
   },
   "author": "Yoan Yomba",
   "license": "MIT"
