@@ -18,7 +18,7 @@
     "base64-arraybuffer": "^1.0.2",
     "change-case": "^5.4.4",
     "heic-convert": "1.2.4",
-    "zod": "^3.23.8"
+    "zod": "^3.23.5"
   },
   "devDependencies": {
     "@types/bun": "^1.1.9",

@@ -1,8 +1,9 @@
+import { describe, expect, it } from 'vitest'
 import {
-    priorityLevel,
-    ratelimitSchemaV1,
-    rateLimitStrategy,
-    sharding
+  priorityLevel,
+  rateLimitStrategy,
+  ratelimitSchemaV1,
+  sharding
 } from './ratelimit-tinybird';
 
 describe('Rate Limit Schema', () => {
@@ -27,12 +28,12 @@ describe('Rate Limit Schema', () => {
   };
 
   // Core Validation Tests
-  test('validates a correct rate limit entry', () => {
+  it('validates a correct rate limit entry', () => {
     const result = ratelimitSchemaV1.safeParse(validRateLimit);
     expect(result.success).toBe(true);
   });
 
-  test('requires all mandatory fields', () => {
+  it('requires all mandatory fields', () => {
     const requiredFields = ['workspaceId', 'namespaceId', 'requestId', 'identifier'];
     for (const field of requiredFields) {
       const invalidLimit: any = { ...validRateLimit };
@@ -43,7 +44,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Sharding Tests
-  test('validates all sharding options', () => {
+  it('validates all sharding options', () => {
     const shardingOptions = Object.values(sharding.enum);
     shardingOptions.forEach(shardingOption => {
       const rateLimit = {
@@ -56,7 +57,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Strategy Tests
-  test('validates all rate limit strategies', () => {
+  it('validates all rate limit strategies', () => {
     const strategies = Object.values(rateLimitStrategy.enum);
     strategies.forEach(strategy => {
       const rateLimit = {
@@ -69,7 +70,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Priority Tests
-  test('validates all priority levels', () => {
+  it('validates all priority levels', () => {
     const priorities = Object.values(priorityLevel.enum);
     priorities.forEach(priority => {
       const rateLimit = {
@@ -82,7 +83,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Quota Policy Tests
-  test('validates quota policy configurations', () => {
+  it('validates quota policy configurations', () => {
     const quotaPolicies = [
       { resetPeriod: 'daily', carryOver: false },
       { resetPeriod: 'monthly', carryOver: true, gracePeriod: 3600 },
@@ -103,7 +104,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Circuit Breaker Tests
-  test('validates circuit breaker configurations', () => {
+  it('validates circuit breaker configurations', () => {
     const circuitBreakers = [
       { enabled: true, errorThreshold: 0.5 },
       { enabled: true, breakDuration: 300, halfOpenRequests: 5 },
@@ -124,7 +125,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Metrics Tests
-  test('validates different metric combinations', () => {
+  it('validates different metric combinations', () => {
     const metricsCases = [
       { concurrentRequests: 10, requestSize: 1024 },
       { cpuTime: 30, memoryUsage: 1048576, ioOperations: 5 },
@@ -142,7 +143,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Context Tests
-  test('validates context with different geo locations', () => {
+  it('validates context with different geo locations', () => {
     const geoContexts = [
       { country: 'US', continent: 'NA', city: 'New York' },
       { country: 'GB', region: 'eu-west-1', timezone: 'Europe/London' },
@@ -163,7 +164,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Client Information Tests
-  test('validates different client contexts', () => {
+  it('validates different client contexts', () => {
     const clientContexts = [
       { clientId: 'mobile_app', clientType: 'ios', clientVersion: '2.0.0' },
       { clientId: 'web_app', clientType: 'browser', sdkVersion: '1.5.0' },
@@ -184,7 +185,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Error Cases
-  test('rejects invalid numeric values', () => {
+  it('rejects invalid numeric values', () => {
     const invalidCases = [
       { remaining: -1 },
       { serviceLatency: -100 },
@@ -203,7 +204,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Security Context Tests
-  test('validates security-related context', () => {
+  it('validates security-related context', () => {
     const securityContexts = [
       { authenticated: true, authMethod: 'bearer', roles: ['admin'] },
       { authenticated: true, authMethod: 'oauth', permissions: ['read', 'write'] },
@@ -224,7 +225,7 @@ describe('Rate Limit Schema', () => {
   });
 
   // Complex Scenarios
-  test('validates complete rate limit with all optional fields', () => {
+  it('validates complete rate limit with all optional fields', () => {
     const complexRateLimit = {
       ...validRateLimit,
       config: {

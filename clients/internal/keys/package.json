@@ -9,10 +9,11 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "typescript": "^5.5.3"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@repo/hash": "workspace:^",
+    "@repo/tsconfig": "workspace:*",
     "base-x": "^4.0.0"
   },
   "license": "MIT"

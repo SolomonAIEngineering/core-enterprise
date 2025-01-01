@@ -1,4 +1,5 @@
 import { auditLogSchemaV1, solomonaiAuditLogEvents } from './auditlog';
+import { describe, expect, it } from 'vitest'
 
 describe('Audit Log Schema', () => {
   const validAuditLog = {
@@ -27,12 +28,12 @@ describe('Audit Log Schema', () => {
   };
 
   // Core Schema Tests
-  test('validates a correct audit log entry', () => {
+  it('validates a correct audit log entry', () => {
     const result = auditLogSchemaV1.safeParse(validAuditLog);
     expect(result.success).toBe(true);
   });
 
-  test('requires mandatory fields', () => {
+  it('requires mandatory fields', () => {
     const invalidLog: any = { ...validAuditLog };
     delete invalidLog.workspaceId;
     const result = auditLogSchemaV1.safeParse(invalidLog);
@@ -40,7 +41,7 @@ describe('Audit Log Schema', () => {
   });
 
   // Actor Tests
-  test('validates actor with minimum required fields', () => {
+  it('validates actor with minimum required fields', () => {
     const minimalActor = {
       ...validAuditLog,
       actor: { type: 'user', id: 'user_123' }
@@ -49,7 +50,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(true);
   });
 
-  test('validates all actor types', () => {
+  it('validates all actor types', () => {
     const actorTypes = ['user', 'system', 'api'];
     actorTypes.forEach(type => {
       const log = { ...validAuditLog, actor: { ...validAuditLog.actor, type } };
@@ -58,7 +59,7 @@ describe('Audit Log Schema', () => {
     });
   });
 
-  test('validates actor authentication types', () => {
+  it('validates actor authentication types', () => {
     const authTypes = ['password', 'sso', 'mfa', 'api_key', 'oauth'];
     authTypes.forEach(authenticationType => {
       const log = {
@@ -71,13 +72,13 @@ describe('Audit Log Schema', () => {
   });
 
   // Resource Tests
-  test('validates empty resources array', () => {
+  it('validates empty resources array', () => {
     const log = { ...validAuditLog, resources: [] };
     const result = auditLogSchemaV1.safeParse(log);
     expect(result.success).toBe(true);
   });
 
-  test('validates multiple resources', () => {
+  it('validates multiple resources', () => {
     const log = {
       ...validAuditLog,
       resources: [
@@ -89,7 +90,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(true);
   });
 
-  test('validates resource visibility options', () => {
+  it('validates resource visibility options', () => {
     const visibilities = ['public', 'private', 'restricted'];
     visibilities.forEach(visibility => {
       const log = {
@@ -105,7 +106,7 @@ describe('Audit Log Schema', () => {
   });
 
   // Meta Tests
-  test('validates financial meta data', () => {
+  it('validates financial meta data', () => {
     const log = {
       ...validAuditLog,
       meta: {
@@ -120,7 +121,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(true);
   });
 
-  test('validates threshold types in meta', () => {
+  it('validates threshold types in meta', () => {
     const thresholdTypes = ['amount', 'percentage', 'count', 'frequency'];
     thresholdTypes.forEach(thresholdType => {
       const log = {
@@ -132,7 +133,7 @@ describe('Audit Log Schema', () => {
     });
   });
 
-  test('validates priority levels in meta', () => {
+  it('validates priority levels in meta', () => {
     const priorities = ['low', 'medium', 'high', 'critical'];
     priorities.forEach(priority => {
       const log = { ...validAuditLog, meta: { priority } };
@@ -142,7 +143,7 @@ describe('Audit Log Schema', () => {
   });
 
   // Context Tests
-  test('validates environment types in context', () => {
+  it('validates environment types in context', () => {
     const environments = ['production', 'staging', 'development'];
     environments.forEach(environment => {
       const log = {
@@ -154,7 +155,7 @@ describe('Audit Log Schema', () => {
     });
   });
 
-  test('validates context with performance metrics', () => {
+  it('validates context with performance metrics', () => {
     const log = {
       ...validAuditLog,
       context: {
@@ -172,7 +173,7 @@ describe('Audit Log Schema', () => {
   });
 
   // Event Tests
-  test('validates all audit log event types', () => {
+  it('validates all audit log event types', () => {
     const events = Object.values(solomonaiAuditLogEvents.enum);
     events.forEach(event => {
       const log = { ...validAuditLog, event };
@@ -182,7 +183,7 @@ describe('Audit Log Schema', () => {
   });
 
   // Developer Platform Specific Tests
-  test('validates developer tier levels', () => {
+  it('validates developer tier levels', () => {
     const tiers = ['free', 'pro', 'enterprise'];
     tiers.forEach(developerTier => {
       const log = {
@@ -194,7 +195,7 @@ describe('Audit Log Schema', () => {
     });
   });
 
-  test('validates API version and SDK information', () => {
+  it('validates API version and SDK information', () => {
     const log = {
       ...validAuditLog,
       meta: {
@@ -208,13 +209,13 @@ describe('Audit Log Schema', () => {
   });
 
   // Error Cases
-  test('rejects invalid workspace ID format', () => {
+  it('rejects invalid workspace ID format', () => {
     const log = { ...validAuditLog, workspaceId: '' };
     const result = auditLogSchemaV1.safeParse(log);
     expect(result.success).toBe(false);
   });
 
-  test('rejects invalid actor type', () => {
+  it('rejects invalid actor type', () => {
     const log = {
       ...validAuditLog,
       actor: { ...validAuditLog.actor, type: 'invalid' }
@@ -223,7 +224,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(false);
   });
 
-  test('rejects invalid meta number values', () => {
+  it('rejects invalid meta number values', () => {
     const log = {
       ...validAuditLog,
       meta: { amount: 'invalid' }
@@ -233,7 +234,7 @@ describe('Audit Log Schema', () => {
   });
 
   // Complex Scenarios
-  test('validates complete audit trail with all optional fields', () => {
+  it('validates complete audit trail with all optional fields', () => {
     const complexLog = {
       workspaceId: 'ws_123',
       bucket: 'api_logs',
@@ -281,7 +282,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(true);
   });
 
-  test('validates resource with complete meta information', () => {
+  it('validates resource with complete meta information', () => {
     const log = {
       ...validAuditLog,
       resources: [{
@@ -312,7 +313,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(true);
   });
 
-  test('validates ML/AI specific audit fields', () => {
+  it('validates ML/AI specific audit fields', () => {
     const log = {
       ...validAuditLog,
       meta: {
@@ -329,7 +330,7 @@ describe('Audit Log Schema', () => {
     expect(result.success).toBe(true);
   });
 
-  test('validates security-related audit fields', () => {
+  it('validates security-related audit fields', () => {
     const log = {
       ...validAuditLog,
       context: {

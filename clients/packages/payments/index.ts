@@ -1,9 +1,10 @@
 import 'server-only';
-import { env } from '@repo/env';
+
 import Stripe from 'stripe';
+import { env } from '@repo/env';
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-11-20.acacia',
+  apiVersion: '2024-12-18.acacia',
 });
 
 export type { Stripe } from 'stripe';

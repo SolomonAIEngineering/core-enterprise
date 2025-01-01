@@ -7,11 +7,11 @@
   "keywords": [],
   "author": "Yoan Yomba",
   "devDependencies": {
-    "@types/react": "^18.3.11",
-    "@repo/tsconfig": "workspace:^"
+    "@repo/tsconfig": "workspace:^",
+    "@types/react": "19.0.1"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "react": "^19.0.0"
   },
   "license": "MIT"
 }

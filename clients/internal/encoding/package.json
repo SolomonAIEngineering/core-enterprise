@@ -6,7 +6,8 @@
   "types": "./src/index.ts",
   "author": "Yoan Yomba",
   "devDependencies": {
-    "typescript": "^5.5.3",
+    "@repo/tsconfig": "workspace:*",
+    "typescript": "^5.7.2",
     "vitest": "^1.6.0"
   },
   "scripts": {

@@ -12,10 +12,10 @@
     "format": "biome format --write"
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "@types/react": "^18.3.11",
     "@repo/tsconfig": "workspace:^",
-    "typescript": "^5.5.3"
+    "@types/node": "22.10.1",
+    "@types/react": "19.0.1",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@react-email/body": "^0.0.10",
@@ -30,9 +30,9 @@
     "@react-email/section": "^0.0.11",
     "@react-email/tailwind": "0.1.0",
     "@react-email/text": "^0.0.7",
-    "react": "^18.2.0",
+    "react": "^19.0.0",
     "react-email": "2.1.1",
-    "resend": "^4.0.0"
+    "resend": "^4.0.1"
   },
   "license": "MIT"
 }

@@ -7,11 +7,12 @@
   "keywords": [],
   "author": "Yoan Yomba",
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "typescript": "^5.5.3"
+    "@types/node": "22.10.1",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@repo/error": "workspace:^",
+    "@repo/tsconfig": "workspace:*",
     "zod": "^3.23.5"
   },
   "license": "MIT"

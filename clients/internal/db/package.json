@@ -13,19 +13,19 @@
     "format": "biome format --write ."
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
     "@repo/events": "workspace:^",
     "@repo/tsconfig": "workspace:^",
+    "@types/node": "22.10.1",
     "dotenv-cli": "^7.4.1",
-    "drizzle-kit": "0.22.7",
+    "drizzle-kit": "^0.25.0",
     "mysql2": "^3.10.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@planetscale/database": "^1.16.0",
     "@repo/billing": "workspace:^",
     "@repo/id": "workspace:^",
-    "drizzle-orm": "^0.31.2"
+    "drizzle-orm": "^0.34.1"
   },
   "license": "MIT"
 }
