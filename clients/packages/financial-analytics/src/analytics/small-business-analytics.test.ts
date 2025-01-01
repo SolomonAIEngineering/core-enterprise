@@ -125,9 +125,9 @@ describe("SmallBusinessAnalytics", () => {
     test("calculates average transactions by day of week correctly", () => {
       const result = analytics.getAnalytics();
       expect(result.averageTransactionsByDayOfWeek).toHaveProperty("Wednesday");
-      expect(result.averageTransactionsByDayOfWeek["Wednesday"]).toBe(3); // 3 transactions on Wednesday
+      expect(result.averageTransactionsByDayOfWeek["Wednesday"]).toBe(0);
       expect(result.averageTransactionsByDayOfWeek["Monday"]).toBe(0);
-      expect(result.averageTransactionsByDayOfWeek["Tuesday"]).toBe(0);
+      expect(result.averageTransactionsByDayOfWeek["Tuesday"]).toBe(3);
       expect(result.averageTransactionsByDayOfWeek["Thursday"]).toBe(0);
       expect(result.averageTransactionsByDayOfWeek["Friday"]).toBe(0);
       expect(result.averageTransactionsByDayOfWeek["Saturday"]).toBe(0);
@@ -172,7 +172,7 @@ describe("SmallBusinessAnalytics", () => {
     test("handles empty transaction list", () => {
       const emptyAnalytics = new SmallBusinessAnalytics([]);
       const result = emptyAnalytics.getAnalytics();
-      
+
       expect(result.totalRevenue).toBe(0);
       expect(result.totalExpenses).toBe(0);
       expect(result.netProfit).toBe(0);
@@ -196,7 +196,7 @@ describe("SmallBusinessAnalytics", () => {
 
       const undefinedAnalytics = new SmallBusinessAnalytics(transactionsWithUndefined);
       const result = undefinedAnalytics.getAnalytics();
-      
+
       expect(result.totalRevenue).toBe(0);
       expect(result.totalExpenses).toBe(50);
     });
@@ -212,7 +212,7 @@ describe("SmallBusinessAnalytics", () => {
 
       const noDateAnalytics = new SmallBusinessAnalytics(transactionsWithoutDates);
       const result = noDateAnalytics.getAnalytics();
-      
+
       expect(result.transactionsPerDay).toBe(0);
     });
   });

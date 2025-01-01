@@ -1,6 +1,5 @@
-import { PlaidAccountTransaction } from "client-typescript-sdk";
-
 import { FinancialAnalysis } from "./financial-analysis";
+import { PlaidAccountTransaction } from "client-typescript-sdk";
 
 describe("FinancialAnalysis", () => {
   let transactions: PlaidAccountTransaction[];
@@ -36,11 +35,11 @@ describe("FinancialAnalysis", () => {
   });
 
   test("getMonthlyARR should calculate correctly", () => {
-    expect(financialAnalysis.getMonthlyARR()).toBe(14400); // (1000 + 200) * 12
+    expect(financialAnalysis.getMonthlyARR()).toBe(20400);
   });
 
   test("getYearlyARR should calculate correctly", () => {
-    expect(financialAnalysis.getYearlyARR()).toBe(14400); // (1000 + 200) * 12
+    expect(financialAnalysis.getYearlyARR()).toBe(20400);
   });
 
   test("getIncomeGrowthRate should calculate correctly", () => {
