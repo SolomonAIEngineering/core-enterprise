@@ -11,9 +11,9 @@ const toRgba = (hexCode, opacity = 50) => {
     hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`
   }
 
-  const r = parseInt(hex.substring(0, 2), 16)
-  const g = parseInt(hex.substring(2, 4), 16)
-  const b = parseInt(hex.substring(4, 6), 16)
+  const r = Number.parseInt(hex.substring(0, 2), 16)
+  const g = Number.parseInt(hex.substring(2, 4), 16)
+  const b = Number.parseInt(hex.substring(4, 6), 16)
 
   return `rgba(${r},${g},${b},${opacity / 100})`
 }
@@ -60,7 +60,7 @@ module.exports = {
         DEFAULT: 'rgb(0 0 0 / 0.07)',
       },
       boxShadow: {
-        DEFAULT: `0 0px 15px rgba(0 0 0 / 0.04), 0 0px 2px rgba(0 0 0 / 0.06)`,
+        DEFAULT: '0 0px 15px rgba(0 0 0 / 0.04), 0 0px 2px rgba(0 0 0 / 0.06)',
         lg: '0 0px 20px rgba(0 0 0 / 0.04), 0 0px 5px rgba(0 0 0 / 0.06)',
         xl: '0 0px 30px rgba(0 0 0 / 0.04), 0 0px 10px rgba(0 0 0 / 0.06)',
         hidden: '0 1px 8px rgb(0 0 0 / 0), 0 0.5px 2.5px rgb(0 0 0 / 0)',
@@ -214,7 +214,9 @@ module.exports = {
     require('@tailwindcss/typography'),
 
     // Striped backgrounds
-    function ({ addUtilities, theme, addVariant }) {
+    // biome-ignore lint/complexity/useArrowFunction: <explanation>
+    // biome-ignore lint/complexity/useArrowFunction: <explanation>
+    ({ addUtilities, theme, addVariant }) => {
       const utilities = {
         '.bg-stripes': {
           backgroundImage:
@@ -225,10 +227,11 @@ module.exports = {
       }
 
       const addColor = (name, color) =>
+        // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
         (utilities[`.bg-stripes-${name}`] = { '--stripes-color': color })
 
       const colors = flattenColorPalette(theme('backgroundColor'))
-      for (let name in colors) {
+      for (const name in colors) {
         try {
           const [r, g, b, a] = toRgba(colors[name])
           if (a !== undefined) {

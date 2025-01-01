@@ -149,7 +149,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "tsconfig": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
     "typescript": "5.3.3",
     "unist-util-visit": "^5.0.0"
   },
