@@ -37,10 +37,10 @@ const solomonAiId = z
     (value) => {
       const parts = value.split('_');
       if (parts.length !== 2) return false;
-      const [prefix, id] = parts;
-      return prefix.length === 3;
+      const [prefix] = parts;
+      return prefix.length >= 3 && prefix.length <= 4;
     },
-    "Prefix must be exactly 3 characters long"
+    "Prefix must be between 3 and 4 characters long"
   )
   .refine(
     (value) => /^[a-z]+$/.test(value.split('_')[0]),

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { validation } from './index';
 
 describe('validation schemas', () => {
@@ -94,9 +95,9 @@ describe('validation schemas', () => {
         'keyy_12345678',
       ];
 
-      validIds.forEach(id => {
+      for (const id of validIds) {
         expect(() => validation.solomonAiId.parse(id)).not.toThrow();
-      });
+      }
     });
 
     it('should reject invalid Solomon AI IDs', () => {
@@ -109,12 +110,12 @@ describe('validation schemas', () => {
         { id: 'KEY_12345678', reason: 'uppercase prefix' },
       ];
 
-      testCases.forEach(({ id, reason }) => {
+      for (const { id, reason } of testCases) {
         expect(
           () => validation.solomonAiId.parse(id),
           `Should reject "${id}" (${reason})`
         ).toThrow();
-      });
+      }
     });
 
     // Add specific test for uppercase rejection
