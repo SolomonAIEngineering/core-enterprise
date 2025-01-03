@@ -5,18 +5,29 @@
   "dependencies": {
     "@ai-sdk/openai": "^1.0.7",
     "@repo/env": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "ai": "^4.0.13",
     "react": "^19.0.0",
+    "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "tailwind-merge": "^2.5.5"
   },
   "devDependencies": {
     "@repo/tsconfig": "workspace:*",
+    "@storybook/addon-a11y": "^7.6.0",
+    "@storybook/addon-essentials": "^8.4.5",
+    "@storybook/addon-interactions": "^8.4.5",
+    "@storybook/addon-links": "^8.4.5",
+    "@storybook/blocks": "^8.4.5",
+    "@storybook/react": "^8.4.5",
+    "@storybook/react-vite": "^8.1.11",
+    "@storybook/testing-library": "^0.2.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^14.3.1",
     "@types/node": "22.10.1",
     "@types/react": "19.0.1",
     "@types/react-dom": "^19.0.1",
+    "storybook": "^8.4.5",
     "vitest": "^1.6.0"
   },
   "author": "Yoan Yomba",
@@ -24,6 +35,8 @@
   "scripts": {
     "test": "vitest",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   }
 }

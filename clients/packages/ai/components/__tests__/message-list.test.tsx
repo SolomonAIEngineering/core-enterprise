@@ -84,7 +84,7 @@ describe('MessageList', () => {
         render(<MessageList messages={mockMessages} />);
         const list = screen.getByRole('list');
         const items = screen.getAllByRole('listitem');
-        
+
         expect(list).toBeInTheDocument();
         expect(items).toHaveLength(mockMessages.length);
     });
