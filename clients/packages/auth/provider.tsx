@@ -1,12 +1,54 @@
+/**
+ * @fileoverview Authentication Provider component that wraps the application with Clerk authentication
+ * and handles theme integration with next-themes.
+ */
+
 'use client';
 
 import { ClerkProvider } from '@clerk/nextjs';
-import { dark } from '@clerk/themes';
+import type { ComponentProps } from 'react';
 import type { Theme } from '@clerk/types';
+import { dark } from '@clerk/themes';
 import { tailwind } from '@repo/tailwind-config';
 import { useTheme } from 'next-themes';
-import type { ComponentProps } from 'react';
 
+/**
+ * AuthProvider component provides authentication context to the application using Clerk.
+ * It automatically handles theme synchronization with next-themes and applies consistent
+ * styling based on the application's design system.
+ * 
+ * @component
+ * @example
+ * // Basic usage in your app's root layout
+ * import { AuthProvider } from './path-to/provider';
+ * 
+ * function RootLayout({ children }) {
+ *   return (
+ *     <AuthProvider>
+ *       {children}
+ *     </AuthProvider>
+ *   );
+ * }
+ * 
+ * @example
+ * // Usage with custom Clerk props
+ * import { AuthProvider } from './path-to/provider';
+ * 
+ * function RootLayout({ children }) {
+ *   return (
+ *     <AuthProvider
+ *       appearance={{
+ *         layout: { socialButtonsPlacement: "bottom" }
+ *       }}
+ *     >
+ *       {children}
+ *     </AuthProvider>
+ *   );
+ * }
+ * 
+ * @param {ComponentProps<typeof ClerkProvider>} properties - All properties supported by Clerk's ClerkProvider
+ * @returns {JSX.Element} A configured ClerkProvider component with theme integration
+ */
 export const AuthProvider = (
   properties: ComponentProps<typeof ClerkProvider>
 ) => {
