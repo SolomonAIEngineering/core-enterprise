@@ -1,31 +1,31 @@
-import type { StorybookConfig } from '@storybook/react-vite';
-import { mergeConfig } from 'vite';
-import path from 'node:path';
+import { dirname, join } from 'node:path'
+
+import type { StorybookConfig } from '@storybook/nextjs'
 
 const config: StorybookConfig = {
-    stories: ['../components/**/*.stories.@(js|jsx|ts|tsx)'],
-    addons: [
-        '@storybook/addon-links',
-        '@storybook/addon-essentials',
-        '@storybook/addon-interactions',
-        '@storybook/addon-a11y',
-    ],
-    framework: {
-        name: '@storybook/react-vite',
-        options: {},
-    },
-    docs: {
-        autodocs: 'tag',
-    },
-    viteFinal: async (config) => {
-        return mergeConfig(config, {
-            resolve: {
-                alias: {
-                    '@': path.resolve(__dirname, '../'),
-                },
-            },
-        });
-    },
-};
+  stories: [
+    '../components/**/*.mdx',
+    '../components/**/*.stories.@(js|jsx|ts|tsx)',
+  ],
+  addons: [
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-essentials'),
+    getAbsolutePath('@storybook/addon-interactions'),
+  ],
+  framework: {
+    name: getAbsolutePath('@storybook/nextjs'),
+    options: {},
+  },
+  docs: {
+    autodocs: 'tag',
+  },
+  previewHead: (head) => `
+  ${head}
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  `,
+}
+export default config
 
-export default config; 
+function getAbsolutePath(value: string): string {
+  return dirname(require.resolve(join(value, 'package.json')))
+}
