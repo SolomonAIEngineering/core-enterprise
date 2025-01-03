@@ -1,120 +1,230 @@
+/**
+ * @fileoverview This module provides the main SolomonAI SDK client for interacting with the Solomon AI API.
+ * The client handles authentication, request management, and provides typed interfaces for all API endpoints.
+ */
+
 import type { PermissionQuery } from "@repo/rbac";
 import type { ErrorResponse } from "./errors";
 import type { paths } from "./openapi";
 
 import { type Telemetry, getTelemetry } from "./telemetry";
 
+/**
+ * Configuration options for initializing the SolomonAI client.
+ * 
+ * @example
+ * ```typescript
+ * // Initialize with root key (recommended)
+ * const client = new SolomonAI({
+ *   rootKey: 'your-root-key',
+ *   baseUrl: 'https://api.solomon-ai.dev',
+ *   retry: {
+ *     attempts: 3,
+ *     backoff: (retryCount) => retryCount * 1000
+ *   }
+ * });
+ * 
+ * // Initialize with legacy token
+ * const legacyClient = new SolomonAI({
+ *   token: 'your-workspace-token'
+ * });
+ * ```
+ */
 export type SolomonAIOptions = (
   | {
-      token?: never;
+    token?: never;
 
-      /**
-       * The root key from solomon-ai.dev.
-       *
-       * You can create/manage your root keys here:
-       * https://solomon-ai.dev/app/settings/root-keys
-       */
-      rootKey: string;
-    }
+    /**
+     * The root key from solomon-ai.dev.
+     * Required for authentication with the API.
+     * 
+     * You can create/manage your root keys here:
+     * https://solomon-ai.dev/app/settings/root-keys
+     */
+    rootKey: string;
+  }
   | {
-      /**
-       * The workspace key from solomon-ai.dev
-       *
-       * @deprecated Use `rootKey`
-       */
-      token: string;
-      rootKey?: never;
-    }
+    /**
+     * The workspace key from solomon-ai.dev
+     * 
+     * @deprecated Use `rootKey` instead for better security and features
+     */
+    token: string;
+    rootKey?: never;
+  }
 ) & {
   /**
-   * @default https://api.solomon-ai.dev
+   * The base URL for the Solomon AI API.
+   * @default "https://api.solomon-ai.dev"
    */
   baseUrl?: string;
 
   /**
-   *
-   * By default telemetry data is enabled, and sends:
-   * runtime (Node.js / Edge)
-   * platform (Node.js / Vercel / AWS)
-   * SDK version
+   * Controls the SDK's telemetry data collection.
+   * When enabled (default), the SDK sends:
+   * - Runtime environment (Node.js / Edge)
+   * - Platform information (Node.js / Vercel / AWS)
+   * - SDK version
+   * 
+   * Set to true to opt out of telemetry collection.
    */
   disableTelemetry?: boolean;
 
   /**
-   * Retry on network errors
+   * Configuration for automatic retry behavior on network errors.
    */
   retry?: {
     /**
-     * How many attempts should be made
-     * The maximum number of requests will be `attempts + 1`
-     * `0` means no retries
-     *
+     * Number of retry attempts for failed requests.
+     * Total requests made will be attempts + 1.
+     * Set to 0 to disable retries.
      * @default 5
      */
     attempts?: number;
+
     /**
-     * Return how many milliseconds to wait until the next attempt is made
-     *
-     * @default `(retryCount) => Math.round(Math.exp(retryCount) * 10)),`
+     * Function to determine delay between retry attempts.
+     * @param retryCount - The current retry attempt number (starts at 1)
+     * @returns Number of milliseconds to wait before next attempt
+     * @default (retryCount) => Math.round(Math.exp(retryCount) * 10)
      */
     backoff?: (retryCount: number) => number;
   };
+
   /**
-   * Customize the `fetch` cache behaviour
+   * Controls the fetch cache behavior for requests.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Request/cache
    */
   cache?: RequestCache;
 
   /**
-   * The version of the SDK instantiating this client.
-   *
-   * This is used for internal metrics and is not covered by semver, and may change at any time.
-   *
-   * You can leave this blank unless you are building a wrapper around this SDK.
+   * SDK version identifier for wrapper libraries.
+   * Only needed when building a wrapper around this SDK.
+   * @internal
    */
   wrapperSdkVersion?: string;
 };
 
+/**
+ * Represents an API request configuration.
+ * @internal
+ */
 type ApiRequest = {
   path: string[];
 } & (
-  | {
+    | {
       method: "GET";
       body?: never;
       query?: Record<string, string | number | boolean | null>;
     }
-  | {
+    | {
       method: "POST";
       body?: unknown;
       query?: never;
     }
-);
+  );
 
+/**
+ * Generic type for API response handling.
+ * Represents either a successful result or an error response.
+ * 
+ * @template R - The expected result type for successful responses
+ * @internal
+ */
 type Result<R> =
   | {
-      result: R;
-      error?: never;
-    }
+    result: R;
+    error?: never;
+  }
   | {
-      result?: never;
-      error: {
-        code: ErrorResponse["error"]["code"];
-        message: ErrorResponse["error"]["message"];
-        docs: ErrorResponse["error"]["docs"];
-        requestId: string;
-      };
+    result?: never;
+    error: {
+      code: ErrorResponse["error"]["code"];
+      message: ErrorResponse["error"]["message"];
+      docs: ErrorResponse["error"]["docs"];
+      requestId: string;
     };
+  };
 
+/**
+ * The main SolomonAI client class for interacting with the Solomon AI API.
+ * Provides typed methods for all API endpoints and handles authentication, retries, and error handling.
+ * 
+ * @example
+ * ```typescript
+ * // Initialize the client
+ * const solomon = new SolomonAI({
+ *   rootKey: 'your-root-key'
+ * });
+ * 
+ * // Use the client to interact with different API endpoints
+ * const keys = await solomon.keys.list();
+ * const apis = await solomon.apis.list();
+ * 
+ * // Handle rate limits
+ * const limits = await solomon.ratelimits.get();
+ * 
+ * // Work with identities
+ * const identity = await solomon.identities.create({
+ *   name: 'test-identity'
+ * });
+ * ```
+ */
 export class SolomonAI {
+  /**
+   * The base URL for the Solomon AI API.
+   * This is set during client initialization and used for all API requests.
+   */
   public readonly baseUrl: string;
+
+  /**
+   * The authentication root key for the API.
+   * This is used to authenticate all requests to the API.
+   * @private
+   */
   private readonly rootKey: string;
+
+  /**
+   * Cache configuration for fetch requests.
+   * Controls how responses are cached by the fetch API.
+   * @private
+   */
   private readonly cache?: RequestCache;
+
+  /**
+   * Telemetry information for SDK usage tracking.
+   * Contains runtime, platform, and SDK version information.
+   * @private
+   */
   private readonly telemetry?: Telemetry | null;
 
+  /**
+   * Retry configuration for failed requests.
+   * Defines the number of retry attempts and backoff strategy.
+   */
   public readonly retry: {
     attempts: number;
     backoff: (retryCount: number) => number;
   };
 
+  /**
+   * Creates a new instance of the SolomonAI client.
+   * 
+   * @param opts - Configuration options for the client
+   * @throws {Error} If neither rootKey nor token is provided
+   * 
+   * @example
+   * ```typescript
+   * const client = new SolomonAI({
+   *   rootKey: 'your-root-key',
+   *   baseUrl: 'https://api.solomon-ai.dev',
+   *   retry: {
+   *     attempts: 3,
+   *     backoff: (retryCount) => retryCount * 1000
+   *   }
+   * });
+   * ```
+   */
   constructor(opts: SolomonAIOptions) {
     this.baseUrl = opts.baseUrl ?? "https://api.solomon-ai.dev";
     this.rootKey = opts.rootKey ?? opts.token;
@@ -138,6 +248,13 @@ export class SolomonAI {
     };
   }
 
+  /**
+   * Generates the headers required for API requests.
+   * Includes authentication, content type, and telemetry information.
+   * 
+   * @returns {Record<string, string>} Headers object for fetch requests
+   * @private
+   */
   private getHeaders(): Record<string, string> {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -155,10 +272,29 @@ export class SolomonAI {
     return headers;
   }
 
+  /**
+   * Makes an HTTP request to the Solomon AI API with retry capability.
+   * Handles request formatting, error responses, and implements the retry strategy.
+   * 
+   * @template TResult - The expected response type
+   * @param {ApiRequest} req - The request configuration
+   * @returns {Promise<Result<TResult>>} A promise that resolves to either a success result or error response
+   * @private
+   * 
+   * @example
+   * ```typescript
+   * // Internal usage
+   * const result = await this.fetch<ApiResponse>({
+   *   path: ['v1', 'endpoint'],
+   *   method: 'GET',
+   *   query: { param: 'value' }
+   * });
+   * ```
+   */
   private async fetch<TResult>(req: ApiRequest): Promise<Result<TResult>> {
     let res: Response | null = null;
     let err: Error | null = null;
-    
+
     for (let i = 0; i <= this.retry.attempts; i++) {
       const url = new URL(`${this.baseUrl}/${req.path.join("/")}`);
       if (req.query) {
@@ -169,7 +305,7 @@ export class SolomonAI {
           url.searchParams.set(k, v.toString());
         }
       }
-      
+
       try {
         res = await fetch(url, {
           method: req.method,
@@ -247,8 +383,46 @@ export class SolomonAI {
     };
   }
 
+  /**
+   * API methods for managing API keys.
+   * Provides functionality to create, update, verify, and delete API keys.
+   * 
+   * @example
+   * ```typescript
+   * // Create a new API key
+   * const result = await client.keys.create({
+   *   apiId: 'api_123',
+   *   prefix: 'my_key',
+   *   byteLength: 32,
+   *   meta: { environment: 'production' }
+   * });
+   * 
+   * // Verify an API key
+   * const verified = await client.keys.verify({
+   *   key: 'my_key_123',
+   *   authorization: {
+   *     permissions: { resource: 'users', action: 'read' }
+   *   }
+   * });
+   * ```
+   */
   public get keys() {
     return {
+      /**
+       * Creates a new API key with specified configuration.
+       * 
+       * @param req - The key creation request parameters
+       * @returns A promise resolving to the created key details
+       * 
+       * @example
+       * ```typescript
+       * const key = await client.keys.create({
+       *   apiId: 'api_123',
+       *   prefix: 'test',
+       *   meta: { environment: 'staging' }
+       * });
+       * ```
+       */
       create: async (
         req: paths["/v1/keys.createKey"]["post"]["requestBody"]["content"]["application/json"],
       ): Promise<
@@ -262,6 +436,21 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Updates an existing API key's configuration.
+       * 
+       * @param req - The key update request parameters
+       * @returns A promise resolving to the updated key details
+       * 
+       * @example
+       * ```typescript
+       * const updated = await client.keys.update({
+       *   keyId: 'key_123',
+       *   meta: { environment: 'production' }
+       * });
+       * ```
+       */
       update: async (
         req: paths["/v1/keys.updateKey"]["post"]["requestBody"]["content"]["application/json"],
       ): Promise<
@@ -275,6 +464,24 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Verifies an API key and checks its permissions.
+       * 
+       * @template TPermission - The type of permissions to verify
+       * @param req - The key verification request parameters
+       * @returns A promise resolving to the verification result
+       * 
+       * @example
+       * ```typescript
+       * const result = await client.keys.verify({
+       *   key: 'my_key_123',
+       *   authorization: {
+       *     permissions: { resource: 'users', action: 'read' }
+       *   }
+       * });
+       * ```
+       */
       verify: async <TPermission extends string = string>(
         req: Omit<
           paths["/v1/keys.verifyKey"]["post"]["requestBody"]["content"]["application/json"],
@@ -291,6 +498,20 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Deletes an API key.
+       * 
+       * @param req - The key deletion request parameters
+       * @returns A promise resolving to the deletion result
+       * 
+       * @example
+       * ```typescript
+       * const result = await client.keys.delete({
+       *   keyId: 'key_123'
+       * });
+       * ```
+       */
       delete: async (
         req: paths["/v1/keys.deleteKey"]["post"]["requestBody"]["content"]["application/json"],
       ): Promise<
@@ -304,6 +525,21 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Updates the remaining uses of an API key.
+       * 
+       * @param req - The request parameters for updating remaining uses
+       * @returns A promise resolving to the updated key details
+       * 
+       * @example
+       * ```typescript
+       * const result = await client.keys.updateRemaining({
+       *   keyId: 'key_123',
+       *   remaining: 100
+       * });
+       * ```
+       */
       updateRemaining: async (
         req: paths["/v1/keys.updateRemaining"]["post"]["requestBody"]["content"]["application/json"],
       ): Promise<
@@ -317,6 +553,20 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Retrieves details of a specific API key.
+       * 
+       * @param req - The key retrieval request parameters
+       * @returns A promise resolving to the key details
+       * 
+       * @example
+       * ```typescript
+       * const key = await client.keys.get({
+       *   keyId: 'key_123'
+       * });
+       * ```
+       */
       get: async (
         req: paths["/v1/keys.getKey"]["get"]["parameters"]["query"],
       ): Promise<
@@ -328,6 +578,21 @@ export class SolomonAI {
           query: req,
         });
       },
+
+      /**
+       * Retrieves verification history for an API key.
+       * 
+       * @param req - The verification history request parameters
+       * @returns A promise resolving to the verification history
+       * 
+       * @example
+       * ```typescript
+       * const history = await client.keys.getVerifications({
+       *   keyId: 'key_123',
+       *   limit: 10
+       * });
+       * ```
+       */
       getVerifications: async (
         req: paths["/v1/keys.getVerifications"]["get"]["parameters"]["query"],
       ): Promise<
@@ -344,8 +609,41 @@ export class SolomonAI {
     };
   }
 
+  /**
+   * API methods for managing APIs.
+   * Provides functionality to create, update, and delete APIs.
+   * 
+   * @example
+   * ```typescript
+   * // Create a new API
+   * const api = await client.apis.create({
+   *   name: 'My API',
+   *   description: 'API for my service'
+   * });
+   * 
+   * // Delete an API
+   * const result = await client.apis.delete({
+   *   apiId: 'api_123'
+   * });
+   * ```
+   */
   public get apis() {
     return {
+      /**
+       * Creates a new API.
+       * 
+       * @param req - The API creation request parameters
+       * @returns A promise resolving to the created API details
+       * 
+       * @example
+       * ```typescript
+       * const api = await client.apis.create({
+       *   name: 'My API',
+       *   description: 'API for my service',
+       *   ownerId: 'owner_123'
+       * });
+       * ```
+       */
       create: async (
         req: paths["/v1/apis.createApi"]["post"]["requestBody"]["content"]["application/json"],
       ): Promise<
@@ -359,6 +657,20 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Deletes an API.
+       * 
+       * @param req - The API deletion request parameters
+       * @returns A promise resolving to the deletion result
+       * 
+       * @example
+       * ```typescript
+       * const result = await client.apis.delete({
+       *   apiId: 'api_123'
+       * });
+       * ```
+       */
       delete: async (
         req: paths["/v1/apis.deleteApi"]["post"]["requestBody"]["content"]["application/json"],
       ): Promise<
@@ -372,6 +684,20 @@ export class SolomonAI {
           body: req,
         });
       },
+
+      /**
+       * Retrieves details of a specific API.
+       * 
+       * @param req - The API retrieval request parameters
+       * @returns A promise resolving to the API details
+       * 
+       * @example
+       * ```typescript
+       * const api = await client.apis.get({
+       *   apiId: 'api_123'
+       * });
+       * ```
+       */
       get: async (
         req: paths["/v1/apis.getApi"]["get"]["parameters"]["query"],
       ): Promise<
@@ -383,6 +709,20 @@ export class SolomonAI {
           query: req,
         });
       },
+
+      /**
+       * Retrieves a list of API keys for a specific API.
+       * 
+       * @param req - The API key list request parameters
+       * @returns A promise resolving to the API key list
+       * 
+       * @example
+       * ```typescript
+       * const keys = await client.apis.listKeys({
+       *   apiId: 'api_123'
+       * });
+       * ```
+       */
       listKeys: async (
         req: paths["/v1/apis.listKeys"]["get"]["parameters"]["query"],
       ): Promise<
