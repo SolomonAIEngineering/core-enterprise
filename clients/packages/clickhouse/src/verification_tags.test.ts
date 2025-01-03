@@ -1,12 +1,12 @@
 import { describe, expect, test } from "vitest";
-import { ClickHouse } from "./index";
 
+import { ClickHouse } from "./index";
 import { ClickHouseContainer } from "./testutil";
 
 test(
   "tags are inserted correctly",
   {
-    timeout: 300_000,
+    timeout: 60_000,
   },
   async (t) => {
     const container = await ClickHouseContainer.start(t, { keepContainer: true });

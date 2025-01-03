@@ -44,10 +44,9 @@ type Props = {
  */
 export const setupAnalytics = async (options?: Props) => {
   const { userId, fullName } = options ?? {};
-
   const client = new OpenPanel({
-    clientId: process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID!,
-    clientSecret: process.env.OPENPANEL_SECRET_KEY!,
+    clientId: process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID ?? '',
+    clientSecret: process.env.OPENPANEL_SECRET_KEY ?? '',
   });
 
   if (userId && fullName) {

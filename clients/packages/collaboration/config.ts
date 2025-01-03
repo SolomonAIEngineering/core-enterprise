@@ -9,6 +9,7 @@ declare global {
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.
+    // biome-ignore lint/complexity/noBannedTypes: <explanation>
     Storage: {
       // Example, a conflict-free list
       // animals: LiveList<string>;
@@ -25,12 +26,15 @@ declare global {
     };
 
     // Custom events, for useBroadcastEvent, useEventListener
-    RoomEvent: {};
-    // Example has two events, using a union
-    // | { type: "PLAY" }
-    // | { type: "REACTION"; emoji: "🔥" };
+    // biome-ignore lint/complexity/noBannedTypes: <explanation>
+    RoomEvent: {
+      // Example has two events, using a union
+      // | { type: "PLAY" }
+      // | { type: "REACTION"; emoji: "🔥" };
+    };
 
     // Custom metadata set on threads, for useThreads, useCreateThread, etc.
+    // biome-ignore lint/complexity/noBannedTypes: <explanation>
     ThreadMetadata: {
       // Example, attaching coordinates to a thread
       // x: number;
@@ -38,6 +42,7 @@ declare global {
     };
 
     // Custom room info set with resolveRoomsInfo, for useRoomInfo
+    // biome-ignore lint/complexity/noBannedTypes: <explanation>
     RoomInfo: {
       // Example, rooms with a title and url
       // title: string;
@@ -46,4 +51,4 @@ declare global {
   }
 }
 
-export {};
+export { };
