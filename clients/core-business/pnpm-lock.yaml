@@ -53,7 +53,7 @@ importers:
         version: link:../../packages/embeds/react
       '@dub/prisma':
         specifier: workspace:*
-        version: link:../../packages/prisma
+        version: link:../../packages/prisma-postgres
       '@dub/tailwind-config':
         specifier: workspace:*
         version: link:../../packages/tailwind-config
@@ -490,6 +490,31 @@ importers:
       tsx:
         specifier: ^4.11.0
         version: 4.11.0
+      typescript:
+        specifier: 5.2.2
+        version: 5.2.2
+
+  packages/prisma-postgres:
+    dependencies:
+      '@planetscale/database':
+        specifier: ^1.18.0
+        version: 1.18.0
+      '@prisma/adapter-planetscale':
+        specifier: ^5.18.0
+        version: 5.18.0(@planetscale/database@1.18.0)
+      '@prisma/client':
+        specifier: 5.18.0
+        version: 5.18.0(prisma@5.18.0)
+    devDependencies:
+      '@types/node':
+        specifier: 18.11.9
+        version: 18.11.9
+      prisma:
+        specifier: 5.18.0
+        version: 5.18.0
+      tsx:
+        specifier: ^4.11.0
+        version: 4.19.2
       typescript:
         specifier: 5.2.2
         version: 5.2.2

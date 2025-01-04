@@ -6,7 +6,7 @@ import {
   CircleHalfDottedClock,
   CircleInfo,
   CircleWarning,
-  Icon,
+  type Icon,
 } from "./icons";
 
 const statusBadgeVariants = cva(

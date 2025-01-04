@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export const prisma =
-  global.prisma ||
+  global.prismaPostgres ||
   new PrismaClient({
     omit: {
       user: { passwordHash: true },
@@ -9,9 +9,9 @@ export const prisma =
   });
 
 declare global {
-  var prisma:
+  var prismaPostgres:
     | PrismaClient<{ omit: { user: { passwordHash: true } } }>
     | undefined;
 }
 
-if (process.env.NODE_ENV === "development") global.prisma = prisma;
+if (process.env.NODE_ENV === "development") global.prismaPostgres = prisma;
