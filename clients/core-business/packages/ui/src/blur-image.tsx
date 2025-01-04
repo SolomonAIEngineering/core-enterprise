@@ -1,6 +1,8 @@
-import { cn } from "@dub/utils";
-import Image, { ImageProps } from "next/image";
 import { useEffect, useState } from "react";
+
+import Image from "next/image";
+import type { ImageProps } from "next/image";
+import { cn } from "@dub/utils";
 
 export function BlurImage(props: ImageProps) {
   const [loading, setLoading] = useState(true);
