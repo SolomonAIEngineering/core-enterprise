@@ -7,7 +7,7 @@ import {
   formatDateTime,
 } from "@dub/utils";
 
-import { PartnerSaleResponse } from "@/lib/types";
+import type { PartnerSaleResponse } from "@/lib/types";
 import { SALES_PAGE_SIZE } from "@/lib/partners/constants";
 import { motion } from "framer-motion";
 import useSWR from "swr";

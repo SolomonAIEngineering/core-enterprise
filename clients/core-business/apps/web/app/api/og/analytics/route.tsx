@@ -71,6 +71,7 @@ export async function GET(req: NextRequest) {
           </div>
 
           <div tw="flex items-center rounded-md border border-gray-200 bg-white shadow-sm h-12 px-6">
+            {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -94,6 +95,7 @@ export async function GET(req: NextRequest) {
           <div tw="flex flex-col px-12 py-4">
             <div tw="flex items-center">
               <h1 tw="font-bold text-5xl leading-none">{nFormatter(clicks)}</h1>
+              {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
               <svg
                 fill="none"
                 shapeRendering="geometricPrecision"
@@ -154,6 +156,7 @@ const Chart = ({ data }) => {
   points += ` ${width},${height} 0,${height}`;
 
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       viewBox={`0 0 ${width} ${height}`}
       style={{ color: "#3B82F6", marginLeft: "-4px", marginTop: "-32px" }}
