@@ -1,9 +1,9 @@
-import { createContext, useContext } from "react";
-import {
+import type {
+  ChartContext as ChartContextType,
+  ChartTooltipContext as ChartTooltipContextType,
   Datum,
-  type ChartContext as ChartContextType,
-  type ChartTooltipContext as ChartTooltipContextType,
 } from "./types";
+import { createContext, useContext } from "react";
 
 export const ChartContext = createContext<ChartContextType | null>(null);
 

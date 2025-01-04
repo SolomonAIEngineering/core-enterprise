@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Areas } from "./areas";
 import { Bars } from "./bars";
+import React from "react";
 import { TimeSeriesChart } from "./time-series-chart";
 import { XAxis } from "./x-axis";
 import { YAxis } from "./y-axis";
