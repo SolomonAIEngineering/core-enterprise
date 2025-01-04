@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from './button';
 import { Tooltip } from './tooltip';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 const meta: Meta<typeof Tooltip> = {
     title: 'Components/Tooltip',
@@ -14,6 +15,13 @@ const meta: Meta<typeof Tooltip> = {
             },
         },
     },
+    decorators: [
+        (Story) => (
+            <TooltipProvider>
+                <Story />
+            </TooltipProvider>
+        ),
+    ],
 };
 
 export default meta;
@@ -50,9 +58,9 @@ export const WithDelay: Story = {
     render: () => (
         <Tooltip
             content="This tooltip has a custom delay"
-            delayDuration={1000}
+            disableHoverableContent
         >
-            <Button variant="outline">Hover me (1s delay)</Button>
+            <Button variant="outline">Hover me (with delay)</Button>
         </Tooltip>
     ),
 };
@@ -72,22 +80,11 @@ export const WithHTML: Story = {
     ),
 };
 
-export const WithArrow: Story = {
-    render: () => (
-        <Tooltip
-            content="Tooltip with arrow"
-            hasArrow
-        >
-            <Button variant="outline">Hover me</Button>
-        </Tooltip>
-    ),
-};
-
-export const CustomStyles: Story = {
+export const WithCustomStyles: Story = {
     render: () => (
         <Tooltip
             content="Custom styled tooltip"
-            className="bg-purple-500 text-white"
+            contentClassName="bg-purple-500 text-white"
         >
             <Button variant="outline">Hover for custom style</Button>
         </Tooltip>
@@ -104,25 +101,6 @@ export const WithIcon: Story = {
             >
                 <span className="i-lucide-settings" />
             </Button>
-        </Tooltip>
-    ),
-};
-
-export const Interactive: Story = {
-    render: () => (
-        <Tooltip
-            content={
-                <div className="p-2">
-                    <p className="mb-2">Are you sure?</p>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="destructive">Delete</Button>
-                        <Button size="sm" variant="outline">Cancel</Button>
-                    </div>
-                </div>
-            }
-            interactive
-        >
-            <Button variant="outline">Interactive Tooltip</Button>
         </Tooltip>
     ),
 };
@@ -152,20 +130,9 @@ export const WithLongContent: Story = {
     render: () => (
         <Tooltip
             content="This is a very long tooltip content that will wrap to multiple lines when it exceeds the maximum width of the tooltip container."
-            className="max-w-xs"
+            contentClassName="max-w-xs"
         >
             <Button variant="outline">Hover for long content</Button>
-        </Tooltip>
-    ),
-};
-
-export const WithCustomAnimation: Story = {
-    render: () => (
-        <Tooltip
-            content="Smooth animation"
-            className="transition-opacity duration-300"
-        >
-            <Button variant="outline">Smooth Tooltip</Button>
         </Tooltip>
     ),
 };
