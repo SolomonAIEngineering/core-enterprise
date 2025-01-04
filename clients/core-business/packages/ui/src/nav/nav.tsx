@@ -107,7 +107,7 @@ export function Nav({
             className={cn(
               "absolute inset-0 block border-b border-transparent transition-all",
               scrolled &&
-                "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
+              "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
             )}
           />
           <MaxWidthWrapper className={cn("relative", maxWidthWrapperClassName)}>
@@ -190,7 +190,7 @@ export function Nav({
                   <Link
                     href={APP_DOMAIN}
                     className={cn(
-                      buttonVariants({ variant: "primary" }),
+                      buttonVariants({ variant: "secondary" }),
                       "flex h-8 items-center rounded-lg border px-4 text-sm",
                       "dark:border-white dark:bg-white dark:text-black dark:hover:bg-neutral-50 dark:hover:ring-white/10",
                     )}
@@ -220,7 +220,7 @@ export function Nav({
                           : "https://d.to/register"
                       }
                       className={cn(
-                        buttonVariants({ variant: "primary" }),
+                        buttonVariants({ variant: "secondary" }),
                         "flex h-8 items-center rounded-lg border px-4 text-sm",
                         "dark:border-white dark:bg-white dark:text-black dark:hover:bg-neutral-50 dark:hover:ring-white/10",
                       )}

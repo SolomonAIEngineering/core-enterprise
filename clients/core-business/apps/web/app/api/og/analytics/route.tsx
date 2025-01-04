@@ -1,13 +1,15 @@
-import { getAnalytics } from "@/lib/analytics/get-analytics";
-import { getLinkViaEdge } from "@/lib/planetscale";
 import {
   GOOGLE_FAVICON_URL,
   getApexDomain,
   linkConstructor,
   nFormatter,
 } from "@dub/utils";
+
+import Image from "next/image";
 import { ImageResponse } from "next/og";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
+import { getAnalytics } from "@/lib/analytics/get-analytics";
+import { getLinkViaEdge } from "@/lib/planetscale";
 
 export const runtime = "edge";
 
@@ -21,7 +23,7 @@ export async function GET(req: NextRequest) {
 
   const link = await getLinkViaEdge(domain, key);
   if (!link?.publicStats) {
-    return new Response(`Stats for this link are not public`, {
+    return new Response("Stats for this link are not public", {
       status: 403,
     });
   }
@@ -42,7 +44,7 @@ export async function GET(req: NextRequest) {
       <div tw="flex flex-col bg-[#f9fafb] w-full h-full p-16">
         <div tw="flex justify-between items-center">
           <div tw="flex items-center">
-            <img
+            <Image
               tw="rounded-full w-10 h-10"
               src={`${GOOGLE_FAVICON_URL}${getApexDomain(link.url || "dub.co")}`}
               alt="favicon"
@@ -50,12 +52,14 @@ export async function GET(req: NextRequest) {
             <h1 tw="text-4xl font-bold ml-4">
               {linkConstructor({ domain, key, pretty: true })}
             </h1>
+            {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 16 16"
               width="24"
               height="24"
+              aria-label="Right arrow"
             >
               <path
                 fillRule="evenodd"
