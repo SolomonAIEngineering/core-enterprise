@@ -1,0 +1,50 @@
+{
+  "name": "billing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm dlx trigger.dev@latest dev",
+    "trigger:deploy": "pnpm dlx trigger.dev@latest deploy",
+    "db:push": "dotenv -e .env drizzle-kit push",
+    "db:studio": "dotenv -e .env drizzle-kit studio --verbose",
+    "db:generate": "dotenv -e .env drizzle-kit generate",
+    "db:migrate": "dotenv -e .env drizzle-kit migrate",
+    "db:pull": "dotenv -e .env drizzle-kit pull"
+  },
+  "keywords": [],
+  "author": "Yoan Yomba",
+  "dependencies": {
+    "@agentic/serper": "^7.0.0",
+    "@ai-sdk/openai": "^1.0.7",
+    "@clerk/nextjs": "^6.8.0",
+    "@mendable/firecrawl-js": "^1.5.2",
+    "@octokit/rest": "^21.0.2",
+    "@planetscale/database": "^1.16.0",
+    "@repo/billing": "workspace:^",
+    "@repo/clickhouse": "workspace:^",
+    "@repo/db": "workspace:^",
+    "@repo/error": "workspace:^",
+    "@repo/id": "workspace:^",
+    "@trigger.dev/nextjs": "3.3.1",
+    "@trigger.dev/sdk": "3.3.1",
+    "@trigger.dev/slack": "3.3.1",
+    "@types/js-yaml": "^4.0.9",
+    "ai": "^4.0.13",
+    "drizzle-orm": "^0.34.1",
+    "drizzle-zod": "^0.5.1",
+    "github-slugger": "^2.0.0",
+    "js-yaml": "^4.1.0",
+    "react-dom": "^18.3.1",
+    "stripe": "^17.4.0",
+    "zod": "^3.23.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.1",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "drizzle-kit": "^0.25.0",
+    "typescript": "^5.7.2"
+  }
+}

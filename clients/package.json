@@ -7,6 +7,9 @@
     "dev-web": "turbo run dev --filter=web",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "test-packages": "turbo run test --filter='./packages/*' -- --passWithNoTests",
+    "test-internal": "turbo run test --filter='./internal/*' -- --passWithNoTests",
+    "test-core": "turbo run test --filter='./core/*' -- --passWithNoTests",
     "storybook": "turbo run build --filter=@polar-sh/* && cd apps/web && pnpm storybook",
     "generate": "cd packages/sdk && pnpm generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -17,13 +20,15 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
     "@manypkg/cli": "^0.23.0",
+    "@vitest/ui": "^1.6.0",
     "eslint": "^8.57.1",
     "eslint-config-custom": "workspace:*",
     "only-allow": "1.2.1",
     "prettier": "^3.4.0",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "turbo": "^2.3.2"
+    "turbo": "^2.3.2",
+    "vitest": "^1.6.0"
   },
   "resolutions": {
     "sharp": "0.33.3"
