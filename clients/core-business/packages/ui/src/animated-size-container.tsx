@@ -1,11 +1,7 @@
+import { type ComponentPropsWithoutRef, type PropsWithChildren, forwardRef, useRef } from "react";
+
 import { cn } from "@dub/utils";
 import { motion } from "framer-motion";
-import {
-  ComponentPropsWithoutRef,
-  PropsWithChildren,
-  forwardRef,
-  useRef,
-} from "react";
 import { useResizeObserver } from "./hooks";
 
 type AnimatedSizeContainerProps = PropsWithChildren<{
