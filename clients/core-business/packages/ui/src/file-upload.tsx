@@ -253,6 +253,7 @@ export function FileUpload({
             )}
           >
             {content ?? (
+              // biome-ignore lint/complexity/noUselessFragments: <explanation>
               <>
                 <p>Drag and drop {clickToUpload && "or click"} to upload.</p>
               </>

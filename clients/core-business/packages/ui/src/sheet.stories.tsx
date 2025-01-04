@@ -25,7 +25,7 @@ export const Default: Story = {
         const [open, setOpen] = useState(false);
         return (
             <>
-                <Button onClick={() => setOpen(true)}>Open Sheet</Button>
+                <Button onClick={() => setOpen(true)} variant="primary" className="w-full bg-primary text-secondary">Open Sheet</Button>
                 <Sheet open={open} onOpenChange={setOpen}>
                     <div className="p-6">
                         <Sheet.Title>Sheet Title</Sheet.Title>

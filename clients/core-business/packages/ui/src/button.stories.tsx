@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './button';
+import { ArrowRight } from 'lucide-react';
 
 const meta = {
     title: 'Components/Button',
@@ -11,7 +12,11 @@ const meta = {
     argTypes: {
         variant: {
             control: 'select',
-            options: ['primary', 'secondary', 'outline', 'success', 'danger', 'danger-outline'],
+            options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+        },
+        size: {
+            control: 'select',
+            options: ['default', 'sm', 'lg', 'icon'],
         },
     },
 } satisfies Meta<typeof Button>;
@@ -19,10 +24,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const Default: Story = {
     args: {
-        text: 'Primary Button',
-        variant: 'primary',
+        text: 'Default Button',
+        variant: 'default',
     },
 };
 
@@ -33,18 +38,46 @@ export const Secondary: Story = {
     },
 };
 
+export const Destructive: Story = {
+    args: {
+        text: 'Destructive Button',
+        variant: 'destructive',
+    },
+};
+
+export const Outline: Story = {
+    args: {
+        text: 'Outline Button',
+        variant: 'outline',
+    },
+};
+
+export const Ghost: Story = {
+    args: {
+        text: 'Ghost Button',
+        variant: 'ghost',
+    },
+};
+
+export const Link: Story = {
+    args: {
+        text: 'Link Button',
+        variant: 'link',
+    },
+};
+
 export const WithIcon: Story = {
     args: {
         text: 'With Icon',
-        variant: 'primary',
-        icon: '→',
+        variant: 'default',
+        icon: <ArrowRight />,
     },
 };
 
 export const WithShortcut: Story = {
     args: {
         text: 'With Shortcut',
-        variant: 'primary',
+        variant: 'default',
         shortcut: '⌘K',
     },
 };
@@ -52,7 +85,23 @@ export const WithShortcut: Story = {
 export const Loading: Story = {
     args: {
         text: 'Loading',
-        variant: 'primary',
+        variant: 'default',
         loading: true,
+    },
+};
+
+export const Small: Story = {
+    args: {
+        text: 'Small Button',
+        variant: 'default',
+        size: 'sm',
+    },
+};
+
+export const Large: Story = {
+    args: {
+        text: 'Large Button',
+        variant: 'default',
+        size: 'lg',
     },
 }; 

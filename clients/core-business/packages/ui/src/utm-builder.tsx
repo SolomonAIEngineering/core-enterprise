@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@dub/utils";
-import { ReactNode, useEffect, useId, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { useMediaQuery } from "./hooks/use-media-query";
 import {
   Flag6,
@@ -87,7 +87,8 @@ export function UTMBuilder({
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Hacky fix to focus the input automatically in modals where normally it doesn't work
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useEffect(() => {
     if (inputRef.current && !isMobile && autoFocus)
       setTimeout(() => inputRef.current?.focus(), 10);
   }, []);
@@ -109,6 +110,7 @@ export function UTMBuilder({
                   sideOffset={4}
                   disableHoverableContent
                 >
+                  {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                   <div
                     className={cn(
                       "flex items-center gap-1.5 rounded-l-md border-y border-l border-gray-300 bg-gray-50 px-3 py-1.5 text-gray-700",
