@@ -5,3 +5,5 @@ packages:
   - "internal/*"
   - "core/*"
   - "smb/*"
+  - "core-business/*"
+  - "core-smb/*"
