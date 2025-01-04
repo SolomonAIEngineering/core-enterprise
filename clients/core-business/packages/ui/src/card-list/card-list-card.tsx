@@ -1,5 +1,4 @@
-import { cn, isClickOnInteractiveChild } from "@dub/utils";
-import { cva } from "class-variance-authority";
+// biome-ignore lint/style/useImportType: <explanation>
 import {
   PropsWithChildren,
   createContext,
@@ -8,7 +7,10 @@ import {
   useRef,
   useState,
 } from "react";
+import { cn, isClickOnInteractiveChild } from "@dub/utils";
+
 import { CardListContext } from "./card-list";
+import { cva } from "class-variance-authority";
 
 const cardListCardVariants = cva("w-full group/card border-gray-200 bg-white", {
   variants: {
@@ -65,24 +67,25 @@ export function CardListCard({
       onPointerLeave={() => setHovered(false)}
       data-hover-state-enabled={hoverStateEnabled}
     >
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
       <div
         className={cn(cardListCardInnerClassName, innerClassName)}
         onClick={
           onClick
             ? (e) => {
-                const existingModalBackdrop =
-                  document.getElementById("modal-backdrop");
+              const existingModalBackdrop =
+                document.getElementById("modal-backdrop");
 
-                // Don't trigger onClick if there's already an open modal
-                if (existingModalBackdrop) {
-                  return;
-                }
-
-                // Don't trigger onClick if an interactive child is clicked
-                if (isClickOnInteractiveChild(e)) return;
-
-                onClick();
+              // Don't trigger onClick if there's already an open modal
+              if (existingModalBackdrop) {
+                return;
               }
+
+              // Don't trigger onClick if an interactive child is clicked
+              if (isClickOnInteractiveChild(e)) return;
+
+              onClick();
+            }
             : undefined
         }
       >

@@ -1,9 +1,13 @@
+import type { Config } from "tailwindcss";
 // tailwind config is required for editor support
 import sharedConfig from "@dub/tailwind-config/tailwind.config.ts";
-import type { Config } from "tailwindcss";
 
-const config: Pick<Config, "presets"> = {
+const config: Pick<Config, "presets" | "content"> = {
   presets: [sharedConfig],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./.storybook/**/*.{js,ts,jsx,tsx}"
+  ],
 };
 
 export default config;

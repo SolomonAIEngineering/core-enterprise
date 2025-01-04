@@ -1,6 +1,9 @@
-import { cn } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
+// biome-ignore lint/style/useImportType: <explanation>
 import { PropsWithChildren, createContext } from "react";
+// biome-ignore lint/style/useImportType: <explanation>
+import { VariantProps, cva } from "class-variance-authority";
+
+import { cn } from "@dub/utils";
 
 const cardListVariants = cva(
   "group/card-list w-full flex flex-col transition-[gap,opacity] min-w-0",
