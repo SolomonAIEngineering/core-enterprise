@@ -6,15 +6,18 @@ export function Grid({
   strokeWidth = 1,
   patternOffset = [0, 0],
   className,
+  strokeColor,
 }: {
   cellSize?: number;
   strokeWidth?: number;
   patternOffset?: [number, number];
   className?: string;
+  strokeColor?: string;
 }) {
   const id = useId();
 
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       className={cn(
         "pointer-events-none absolute inset-0 text-black/10",

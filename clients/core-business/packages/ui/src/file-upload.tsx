@@ -1,8 +1,10 @@
+import { type DragEvent, type ReactNode, useState } from "react";
+import { type VariantProps, cva } from "class-variance-authority";
 import { cn, resizeImage } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { DragEvent, ReactNode, useState } from "react";
-import { toast } from "sonner";
+
 import { CloudUpload, LoadingCircle } from "./icons";
+
+import { toast } from "sonner";
 
 type AcceptedFileFormats = "any" | "images" | "csv";
 
@@ -38,19 +40,19 @@ const imageUploadVariants = cva(
 
 type FileUploadReadFileProps =
   | {
-      /**
-       * Whether to automatically read the file and return the result as `src` to onChange
-       */
-      readFile?: false;
-      onChange?: (data: { file: File }) => void;
-    }
+    /**
+     * Whether to automatically read the file and return the result as `src` to onChange
+     */
+    readFile?: false;
+    onChange?: (data: { file: File }) => void;
+  }
   | {
-      /**
-       * Whether to automatically read the file and return the result as `src` to onChange
-       */
-      readFile: true;
-      onChange?: (data: { file: File; src: string }) => void;
-    };
+    /**
+     * Whether to automatically read the file and return the result as `src` to onChange
+     */
+    readFile: true;
+    onChange?: (data: { file: File; src: string }) => void;
+  };
 
 export type FileUploadProps = FileUploadReadFileProps & {
   accept: AcceptedFileFormats;
@@ -131,8 +133,8 @@ export function FileUpload({
   ) => {
     const file =
       "dataTransfer" in e
-        ? e.dataTransfer.files && e.dataTransfer.files[0]
-        : e.target.files && e.target.files[0];
+        ? e.dataTransfer.files?.[0]
+        : e.target.files?.[0];
     if (!file) return;
 
     setFileName(file.name);
@@ -221,13 +223,13 @@ export function FileUpload({
           "absolute inset-0 z-[3] flex flex-col items-center justify-center rounded-[inherit] border-2 border-transparent bg-white transition-all",
           disabled && "bg-gray-50",
           dragActive &&
-            !disabled &&
-            "cursor-copy border-black bg-gray-50 opacity-100",
+          !disabled &&
+          "cursor-copy border-black bg-gray-50 opacity-100",
           imageSrc
             ? cn(
-                "opacity-0",
-                showHoverOverlay && !disabled && "group-hover:opacity-100",
-              )
+              "opacity-0",
+              showHoverOverlay && !disabled && "group-hover:opacity-100",
+            )
             : cn(!disabled && "group-hover:bg-gray-50"),
         )}
       >
@@ -236,9 +238,9 @@ export function FileUpload({
             "size-7 transition-all duration-75",
             !disabled
               ? cn(
-                  "text-gray-500 group-hover:scale-110 group-active:scale-95",
-                  dragActive ? "scale-110" : "scale-100",
-                )
+                "text-gray-500 group-hover:scale-110 group-active:scale-95",
+                dragActive ? "scale-110" : "scale-100",
+              )
               : "text-gray-400",
             iconClassName,
           )}

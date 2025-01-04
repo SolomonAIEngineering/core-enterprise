@@ -1,10 +1,12 @@
 "use client";
+
+import { Copy, Tick } from "./icons";
+import { type VariantProps, cva } from "class-variance-authority";
+
+import type { LucideIcon } from "lucide-react";
 import { cn } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "./hooks";
-import { Copy, Tick } from "./icons";
 
 const copyButtonVariants = cva(
   "relative group rounded-full p-1.5 transition-all duration-75",

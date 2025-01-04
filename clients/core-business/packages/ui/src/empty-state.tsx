@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 export type EmptyStateProps = PropsWithChildren<{
   icon: React.ElementType;
@@ -27,7 +27,7 @@ export function EmptyState({
             <a
               href={learnMore}
               target="_blank"
-              className="underline underline-offset-2 hover:text-gray-800"
+              className="underline underline-offset-2 hover:text-gray-800" rel="noreferrer"
             >
               Learn more ↗
             </a>

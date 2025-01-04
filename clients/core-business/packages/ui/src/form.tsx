@@ -1,6 +1,7 @@
-import { cn } from "@dub/utils";
-import { InputHTMLAttributes, ReactNode, useMemo, useState } from "react";
+import { type InputHTMLAttributes, type ReactNode, useMemo, useState } from "react";
+
 import { Button } from "./button";
+import { cn } from "@dub/utils";
 
 export function Form({
   title,
@@ -17,6 +18,7 @@ export function Form({
   helpText?: string | ReactNode;
   buttonText?: string;
   disabledTooltip?: string | ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   handleSubmit: (data: any) => Promise<any>;
 }) {
   const [value, setValue] = useState(inputAttrs.defaultValue);
@@ -47,7 +49,7 @@ export function Form({
             {...inputAttrs}
             type={inputAttrs.type || "text"}
             required
-            disabled={disabledTooltip ? true : false}
+            disabled={!!disabledTooltip}
             onChange={(e) => setValue(e.target.value)}
             className={cn(
               "w-full max-w-md rounded-md border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm",
@@ -65,6 +67,7 @@ export function Form({
         {typeof helpText === "string" ? (
           <p
             className="prose-sm prose-a:underline prose-a:underline-offset-4 hover:prose-a:text-gray-700 text-gray-500 transition-colors"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
             dangerouslySetInnerHTML={{ __html: helpText || "" }}
           />
         ) : (

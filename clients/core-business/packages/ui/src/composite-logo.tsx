@@ -2,6 +2,7 @@ import { cn } from "@dub/utils";
 
 export function CompositeLogo({ className }: { className?: string }) {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       width="177"
       height="64"

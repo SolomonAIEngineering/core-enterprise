@@ -62,38 +62,6 @@ export const WithContent: Story = {
     ),
 };
 
-export const AnimatedPattern: Story = {
-    render: () => (
-        <Grid
-            className="h-96 w-96 transition-all duration-300 hover:opacity-50"
-            patternOffset={[0, 0]}
-            onMouseMove={(e) => {
-                const el = e.currentTarget;
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                el.style.setProperty('--pattern-offset-x', `${x}px`);
-                el.style.setProperty('--pattern-offset-y', `${y}px`);
-            }}
-        />
-    ),
-};
-
-export const ResponsiveGrid: Story = {
-    render: () => (
-        <Grid
-            className="h-96 w-full max-w-4xl"
-            cellSize={{
-                base: 10,
-                sm: 15,
-                md: 20,
-                lg: 25,
-                xl: 30,
-            }}
-        />
-    ),
-};
-
 export const GradientOverlay: Story = {
     render: () => (
         <div className="relative h-96 w-96">
