@@ -12,7 +12,23 @@ const meta: Meta<typeof TimeSeriesChart> = {
     component: TimeSeriesChart,
     parameters: {
         layout: "centered",
+        docs: {
+            description: {
+                component: `
+# TimeSeriesChart Component
+
+A flexible container component for visualizing time-based data with support for multiple chart types.
+                `,
+            },
+        },
     },
+    decorators: [
+        (Story) => (
+            <div style={{ margin: '2em', background: 'white', padding: '1em' }}>
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 export default meta;
@@ -34,8 +50,8 @@ const generateData = (days: number) => {
         data.push({
             date,
             values: {
-                visitors: Math.floor(Math.random() * 1000),
-                conversions: Math.floor(Math.random() * 100),
+                visitors: Math.floor(Math.random() * 1000) + 100,
+                conversions: Math.floor(Math.random() * 100) + 10,
             },
         });
     }
@@ -45,20 +61,35 @@ const generateData = (days: number) => {
 const sampleData = generateData(30);
 
 export const AreaChart: Story = {
-    args: {
-        data: sampleData,
-        series: [
-            {
-                id: "visitors",
-                valueAccessor: (d) => d.values.visitors,
-                colorClassName: "text-blue-500",
+    parameters: {
+        docs: {
+            description: {
+                story: 'Basic area chart visualization with a single series.',
             },
-        ],
+        },
     },
-    render: (args) => (
-        <div className="h-[400px] w-[600px]">
-            <TimeSeriesChart {...args}>
-                <Areas />
+    render: () => (
+        <div style={{ width: '800px', height: '400px' }} className="border border-gray-200 rounded-lg p-4">
+            <TimeSeriesChart
+                data={sampleData}
+                series={[
+                    {
+                        id: "visitors",
+                        valueAccessor: (d) => d.values.visitors,
+                        colorClassName: "text-blue-500",
+                        isActive: true,
+                    },
+                ]}
+            >
+                <Areas
+                    seriesStyles={[
+                        {
+                            id: "visitors",
+                            gradientClassName: "text-blue-500/50",
+                            lineClassName: "text-blue-700",
+                        },
+                    ]}
+                />
                 <XAxis showGridLines />
                 <YAxis showGridLines />
             </TimeSeriesChart>
@@ -67,21 +98,36 @@ export const AreaChart: Story = {
 };
 
 export const BarChart: Story = {
-    args: {
-        type: "bar",
-        data: sampleData,
-        series: [
-            {
-                id: "conversions",
-                valueAccessor: (d) => d.values.conversions,
-                colorClassName: "text-green-500",
+    parameters: {
+        docs: {
+            description: {
+                story: 'Bar chart visualization showing conversion metrics.',
             },
-        ],
+        },
     },
-    render: (args) => (
-        <div className="h-[400px] w-[600px]">
-            <TimeSeriesChart {...args}>
-                <Bars />
+    render: () => (
+        <div style={{ width: '800px', height: '400px' }} className="border border-gray-200 rounded-lg p-4">
+            <TimeSeriesChart
+                type="bar"
+                data={sampleData}
+                series={[
+                    {
+                        id: "conversions",
+                        valueAccessor: (d) => d.values.conversions,
+                        colorClassName: "text-green-500",
+                        isActive: true,
+                    },
+                ]}
+            >
+                <Bars
+                    seriesStyles={[
+                        {
+                            id: "conversions",
+                            gradientClassName: "text-green-500/50",
+                            barClassName: "text-green-700",
+                        },
+                    ]}
+                />
                 <XAxis showGridLines />
                 <YAxis showGridLines />
             </TimeSeriesChart>
@@ -90,25 +136,46 @@ export const BarChart: Story = {
 };
 
 export const MultiSeriesChart: Story = {
-    args: {
-        data: sampleData,
-        series: [
-            {
-                id: "visitors",
-                valueAccessor: (d) => d.values.visitors,
-                colorClassName: "text-blue-500",
+    parameters: {
+        docs: {
+            description: {
+                story: 'Combined visualization showing multiple metrics.',
             },
-            {
-                id: "conversions",
-                valueAccessor: (d) => d.values.conversions,
-                colorClassName: "text-green-500",
-            },
-        ],
+        },
     },
-    render: (args) => (
-        <div className="h-[400px] w-[600px]">
-            <TimeSeriesChart {...args}>
-                <Areas />
+    render: () => (
+        <div style={{ width: '800px', height: '400px' }} className="border border-gray-200 rounded-lg p-4">
+            <TimeSeriesChart
+                data={sampleData}
+                series={[
+                    {
+                        id: "visitors",
+                        valueAccessor: (d) => d.values.visitors,
+                        colorClassName: "text-blue-500",
+                        isActive: true,
+                    },
+                    {
+                        id: "conversions",
+                        valueAccessor: (d) => d.values.conversions,
+                        colorClassName: "text-green-500",
+                        isActive: true,
+                    },
+                ]}
+            >
+                <Areas
+                    seriesStyles={[
+                        {
+                            id: "visitors",
+                            gradientClassName: "text-blue-500/50",
+                            lineClassName: "text-blue-700",
+                        },
+                        {
+                            id: "conversions",
+                            gradientClassName: "text-green-500/50",
+                            lineClassName: "text-green-700",
+                        },
+                    ]}
+                />
                 <XAxis showGridLines />
                 <YAxis showGridLines />
             </TimeSeriesChart>
