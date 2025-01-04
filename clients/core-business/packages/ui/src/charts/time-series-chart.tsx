@@ -1,18 +1,17 @@
+import { scaleBand, scaleLinear, scaleUtc } from "@visx/scale";
 import { Bar, Circle, Line } from "@visx/shape";
+import { type PropsWithChildren, useMemo, useState } from "react";
 import { ChartContext, ChartTooltipContext } from "./chart-context";
 import type {
   ChartContext as ChartContextType,
   ChartProps,
   Datum,
 } from "./types";
-import { type PropsWithChildren, useMemo, useState } from "react";
-import { scaleBand, scaleLinear, scaleUtc } from "@visx/scale";
 
+import { cn } from "@dub/utils";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
-import { cn } from "@dub/utils";
 import { useTooltip } from "./useTooltip";
-import React from "react";
 
 type TimeSeriesChartProps<T extends Datum> = PropsWithChildren<ChartProps<T>>;
 

@@ -1,13 +1,12 @@
-import { Fragment, useMemo, useState } from "react";
 import { cn, nFormatter } from "@dub/utils";
+import { Fragment, useMemo, useState } from "react";
 
-import { Area } from "@visx/shape";
-import { ParentSize } from "@visx/responsive";
-import React from "react";
-import { Text } from "@visx/text";
 import { curveBasis } from "@visx/curve";
-import { motion } from "framer-motion";
+import { ParentSize } from "@visx/responsive";
 import { scaleLinear } from "@visx/scale";
+import { Area } from "@visx/shape";
+import { Text } from "@visx/text";
+import { motion } from "framer-motion";
 import { useMediaQuery } from "../hooks";
 
 const layers = [

@@ -1,4 +1,5 @@
 // biome-ignore lint/style/useImportType: <explanation>
+import { cn, isClickOnInteractiveChild } from "@dub/utils";
 import {
   PropsWithChildren,
   createContext,
@@ -7,10 +8,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { cn, isClickOnInteractiveChild } from "@dub/utils";
 
-import { CardListContext } from "./card-list";
 import { cva } from "class-variance-authority";
+import { CardListContext } from "./card-list";
 
 const cardListCardVariants = cva("w-full group/card border-gray-200 bg-white", {
   variants: {
@@ -73,19 +73,19 @@ export function CardListCard({
         onClick={
           onClick
             ? (e) => {
-              const existingModalBackdrop =
-                document.getElementById("modal-backdrop");
+                const existingModalBackdrop =
+                  document.getElementById("modal-backdrop");
 
-              // Don't trigger onClick if there's already an open modal
-              if (existingModalBackdrop) {
-                return;
+                // Don't trigger onClick if there's already an open modal
+                if (existingModalBackdrop) {
+                  return;
+                }
+
+                // Don't trigger onClick if an interactive child is clicked
+                if (isClickOnInteractiveChild(e)) return;
+
+                onClick();
               }
-
-              // Don't trigger onClick if an interactive child is clicked
-              if (isClickOnInteractiveChild(e)) return;
-
-              onClick();
-            }
             : undefined
         }
       >

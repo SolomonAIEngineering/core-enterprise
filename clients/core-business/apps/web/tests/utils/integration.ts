@@ -1,8 +1,8 @@
 import { Project, User } from "@dub/prisma/client";
 import { type TaskContext } from "vitest";
 import { z } from "zod";
-import { HttpClient } from "./http";
 import { env, integrationTestEnv } from "./env";
+import { HttpClient } from "./http";
 
 interface Resources {
   user: Pick<User, "id">;

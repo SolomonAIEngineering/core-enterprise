@@ -1,7 +1,6 @@
-import { Check, LoadingSpinner, Magic } from "../icons";
-import { ChevronDown, ListFilter } from "lucide-react";
+import { cn, truncate } from "@dub/utils";
 import { Command, useCommandState } from "cmdk";
-import type { Filter, FilterOption } from "./types";
+import { ChevronDown, ListFilter } from "lucide-react";
 import {
   Fragment,
   type PropsWithChildren,
@@ -14,12 +13,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { cn, truncate } from "@dub/utils";
 import { useKeyboardShortcut, useMediaQuery } from "../hooks";
+import { Check, LoadingSpinner, Magic } from "../icons";
+import type { Filter, FilterOption } from "./types";
 
 import { AnimatedSizeContainer } from "../animated-size-container";
-import { Popover } from "../popover";
 import { useScrollProgress } from "../hooks/use-scroll-progress";
+import { Popover } from "../popover";
 
 type FilterSelectProps = {
   filters: Filter[];
@@ -78,7 +78,7 @@ export function FilterSelect({
 
   // Reset state when closed
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
+  useEffect(() => {
     if (!isOpen) reset();
   }, [isOpen]);
 
@@ -226,49 +226,49 @@ export function FilterSelect({
               >
                 {!selectedFilter
                   ? // Top-level filters
-                  filters.map((filter) => (
-                    <Fragment key={filter.key}>
-                      <FilterButton
-                        filter={filter}
-                        onSelect={() => openFilter(filter.key)}
-                      />
-                      {filter.separatorAfter && (
-                        <Command.Separator className="-mx-1 my-1 border-b border-gray-200" />
-                      )}
-                    </Fragment>
-                  ))
-                  : // Filter options
-                  selectedFilter.options
-                    ?.filter((option) => !search || !option.hideDuringSearch)
-                    ?.map((option) => {
-                      const isSelected = isOptionSelected(option.value);
-
-                      return (
+                    filters.map((filter) => (
+                      <Fragment key={filter.key}>
                         <FilterButton
-                          key={option.value}
-                          filter={selectedFilter}
-                          option={option}
-                          right={
-                            isSelected ? (
-                              <Check className="h-4 w-4" />
-                            ) : (
-                              option.right
-                            )
-                          }
-                          onSelect={() => selectOption(option.value)}
+                          filter={filter}
+                          onSelect={() => openFilter(filter.key)}
                         />
-                      );
-                    }) ?? (
-                    // Filter options loading state
-                    <Command.Loading>
-                      <div
-                        className="-m-1 flex items-center justify-center"
-                        style={listDimensions.current}
-                      >
-                        <LoadingSpinner />
-                      </div>
-                    </Command.Loading>
-                  )}
+                        {filter.separatorAfter && (
+                          <Command.Separator className="-mx-1 my-1 border-b border-gray-200" />
+                        )}
+                      </Fragment>
+                    ))
+                  : // Filter options
+                    selectedFilter.options
+                      ?.filter((option) => !search || !option.hideDuringSearch)
+                      ?.map((option) => {
+                        const isSelected = isOptionSelected(option.value);
+
+                        return (
+                          <FilterButton
+                            key={option.value}
+                            filter={selectedFilter}
+                            option={option}
+                            right={
+                              isSelected ? (
+                                <Check className="h-4 w-4" />
+                              ) : (
+                                option.right
+                              )
+                            }
+                            onSelect={() => selectOption(option.value)}
+                          />
+                        );
+                      }) ?? (
+                      // Filter options loading state
+                      <Command.Loading>
+                        <div
+                          className="-m-1 flex items-center justify-center"
+                          style={listDimensions.current}
+                        >
+                          <LoadingSpinner />
+                        </div>
+                      </Command.Loading>
+                    )}
 
                 {/* Only render CommandEmpty if not loading */}
                 {(!selectedFilter || selectedFilter.options) && (
@@ -276,7 +276,7 @@ export function FilterSelect({
                     {emptyState
                       ? isEmptyStateObject(emptyState)
                         ? emptyState?.[selectedFilterKey ?? "default"] ??
-                        "No matches"
+                          "No matches"
                         : emptyState
                       : "No matches"}
                   </CommandEmpty>
@@ -306,7 +306,9 @@ export function FilterSelect({
           </div>
         ) : (
           <ChevronDown
-            className={"size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"}
+            className={
+              "size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+            }
           />
         )}
       </button>
@@ -388,13 +390,13 @@ function FilterButton({
 
   const Icon = option
     ? option.icon ??
-    filter.getOptionIcon?.(option.value, { key: filter.key, option }) ??
-    filter.icon
+      filter.getOptionIcon?.(option.value, { key: filter.key, option }) ??
+      filter.icon
     : filter.icon;
 
   const label = option
     ? option.label ??
-    filter.getOptionLabel?.(option.value, { key: filter.key, option })
+      filter.getOptionLabel?.(option.value, { key: filter.key, option })
     : filter.label;
 
   return (
@@ -444,11 +446,11 @@ const CommandEmpty = ({
       </Command.Empty>
     );
   }
-    return (
-      <Command.Empty className="p-2 text-center text-sm text-gray-400">
-        {children}
-      </Command.Empty>
-    );
+  return (
+    <Command.Empty className="p-2 text-center text-sm text-gray-400">
+      {children}
+    </Command.Empty>
+  );
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>

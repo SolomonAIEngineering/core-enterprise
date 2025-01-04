@@ -15,7 +15,6 @@ import { MaxWidthWrapper } from "../max-width-wrapper";
 import { NavWordmark } from "../nav-wordmark";
 import { ProductContent } from "./content/product-content";
 import { ResourcesContent } from "./content/resources-content";
-import React from "react";
 
 export type NavTheme = "light" | "dark";
 
@@ -92,9 +91,7 @@ export function Nav({
   // here we need to check if the user has a dub_id cookie
   // if they do, we should just use app.dub.co links
   // if not, we can use conversion-enabled d.to links
-  const hasDubCookie =
-    !!(
-      domain === "dub.co" && Cookies.get("dub_id"));
+  const hasDubCookie = !!(domain === "dub.co" && Cookies.get("dub_id"));
 
   return (
     <NavContext.Provider value={{ theme }}>
@@ -110,7 +107,7 @@ export function Nav({
             className={cn(
               "absolute inset-0 block border-b border-transparent transition-all",
               scrolled &&
-              "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
+                "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
             )}
           />
           <MaxWidthWrapper className={cn("relative", maxWidthWrapperClassName)}>

@@ -1,5 +1,5 @@
 import { GOOGLE_FAVICON_URL, cn } from "@dub/utils";
-import React, { useId } from "react";
+import { useId } from "react";
 
 import type { SVGProps } from "react";
 

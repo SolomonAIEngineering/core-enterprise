@@ -8,7 +8,6 @@ import { type ElementType, useEffect, useState } from "react";
 import useSWR from "swr";
 import { AnimatedSizeContainer } from "../animated-size-container";
 import { navItems, type NavTheme } from "./nav";
-import React from "react";
 
 export function NavMobile({
   theme = "light",

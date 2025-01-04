@@ -1,9 +1,9 @@
 import type { DatePreset, DateRange, DateRangePreset, Preset } from "./types";
 
+import { cn } from "@dub/utils";
 import { Command } from "cmdk";
 import { Lock } from "lucide-react";
 import { Tooltip } from "../tooltip";
-import { cn } from "@dub/utils";
 
 type PresetsProps<TPreset extends Preset, TValue> = {
   presets: TPreset[];
@@ -62,7 +62,8 @@ const Presets = <TPreset extends Preset, TValue>({
       const value = currentValue as DateRange | undefined;
 
       return value && compareRanges(value, preset.dateRange);
-    } if (isDatePresets(preset)) {
+    }
+    if (isDatePresets(preset)) {
       const value = currentValue as Date | undefined;
 
       return value && compareDates(value, preset.date);

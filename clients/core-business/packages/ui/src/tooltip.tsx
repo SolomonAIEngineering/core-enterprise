@@ -20,9 +20,9 @@ export function TooltipProvider({ children }: { children: ReactNode }) {
 export interface TooltipProps
   extends Omit<TooltipPrimitive.TooltipContentProps, "content"> {
   content:
-  | ReactNode
-  | string
-  | ((props: { setOpen: (open: boolean) => void }) => ReactNode);
+    | ReactNode
+    | string
+    | ((props: { setOpen: (open: boolean) => void }) => ReactNode);
   contentClassName?: string;
   disableHoverableContent?: TooltipPrimitive.TooltipProps["disableHoverableContent"];
 }

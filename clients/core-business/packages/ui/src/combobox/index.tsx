@@ -1,14 +1,5 @@
 // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 // biome-ignore lint/style/useImportType: <explanation>
-import { Button, ButtonProps } from "../button";
-import {
-  Check2,
-  CheckboxCheckedFill,
-  CheckboxUnchecked,
-  type Icon,
-  LoadingSpinner,
-  Plus,
-} from "../icons";
 import { Command, CommandInput, CommandItem, useCommandState } from "cmdk";
 import {
   type HTMLProps,
@@ -21,12 +12,21 @@ import {
   useRef,
   useState,
 } from "react";
-import { Popover, type PopoverProps } from "../popover";
+import { Button, ButtonProps } from "../button";
 import { useMediaQuery, useScrollProgress } from "../hooks";
+import {
+  Check2,
+  CheckboxCheckedFill,
+  CheckboxUnchecked,
+  type Icon,
+  LoadingSpinner,
+  Plus,
+} from "../icons";
+import { Popover, type PopoverProps } from "../popover";
 
-import { AnimatedSizeContainer } from "../animated-size-container";
-import { ChevronDown } from "lucide-react";
 import { cn } from "@dub/utils";
+import { ChevronDown } from "lucide-react";
+import { AnimatedSizeContainer } from "../animated-size-container";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type ComboboxOption<TMeta = any> = {
@@ -42,11 +42,11 @@ export type ComboboxProps<
 > = PropsWithChildren<{
   multiple?: TMultiple;
   selected: TMultiple extends true
-  ? ComboboxOption<TMeta>[]
-  : ComboboxOption<TMeta> | null;
+    ? ComboboxOption<TMeta>[]
+    : ComboboxOption<TMeta> | null;
   setSelected: TMultiple extends true
-  ? (options: ComboboxOption<TMeta>[]) => void
-  : (option: ComboboxOption<TMeta> | null) => void;
+    ? (options: ComboboxOption<TMeta>[]) => void
+    : (option: ComboboxOption<TMeta> | null) => void;
   options?: ComboboxOption<TMeta>[];
   icon?: Icon | ReactNode;
   placeholder?: ReactNode;
@@ -100,7 +100,7 @@ export function Combobox({
   optionClassName,
   matchTriggerWidth,
   children,
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 }: ComboboxProps<boolean | undefined, any>) {
   const isMultiple = isMultipleSelection(multiple, setSelected);
 
@@ -146,11 +146,11 @@ export function Combobox({
     (options: ComboboxOption[], search: string) => {
       return search === ""
         ? [
-          ...selected,
-          ...options.filter(
-            (o) => selected.findIndex((s) => s.value === o.value) === -1,
-          ),
-        ]
+            ...selected,
+            ...options.filter(
+              (o) => selected.findIndex((s) => s.value === o.value) === -1,
+            ),
+          ]
         : options;
     },
     [selected],
@@ -316,7 +316,9 @@ export function Combobox({
             </div>
             {caret && (
               <ChevronDown
-                className={"ml-1 size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"}
+                className={
+                  "ml-1 size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+                }
               />
             )}
           </>

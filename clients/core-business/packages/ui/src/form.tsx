@@ -1,7 +1,12 @@
-import { type InputHTMLAttributes, type ReactNode, useMemo, useState } from "react";
+import {
+  type InputHTMLAttributes,
+  type ReactNode,
+  useMemo,
+  useState,
+} from "react";
 
-import { Button } from "./button";
 import { cn } from "@dub/utils";
+import { Button } from "./button";
 
 export function Form({
   title,
@@ -74,11 +79,7 @@ export function Form({
           helpText
         )}
         <div className="shrink-0">
-          <Button
-            text={buttonText}
-            loading={saving}
-            disabled={saveDisabled}
-          />
+          <Button text={buttonText} loading={saving} disabled={saveDisabled} />
         </div>
       </div>
     </form>

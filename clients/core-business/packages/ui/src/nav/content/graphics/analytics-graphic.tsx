@@ -1,6 +1,5 @@
-import React from "react";
-import type { SVGProps } from "react";
 import { cn } from "@dub/utils";
+import type { SVGProps } from "react";
 
 export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
   return (
@@ -257,12 +256,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
           <feOffset dy="2" />
           {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
           <feGaussianBlur stdDeviation="1"></feGaussianBlur>
-          <feComposite
-            in2="hardAlpha"
-            k2="-1"
-            k3="1"
-            operator="arithmetic"
-          />
+          <feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic" />
           <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.65 0" />
           <feBlend in2="shape" result="effect1_innerShadow_9_286" />
         </filter>

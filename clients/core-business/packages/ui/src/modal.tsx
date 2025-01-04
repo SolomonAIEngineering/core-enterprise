@@ -5,10 +5,9 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import type { ComponentProps, Dispatch, SetStateAction } from "react";
 
-import { Drawer } from "vaul";
 import { cn } from "@dub/utils";
+import { Drawer } from "vaul";
 import { useMediaQuery } from "./hooks";
-import { useRouter } from "next/navigation";
 
 export function Modal({
   children,

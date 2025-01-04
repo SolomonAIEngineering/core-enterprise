@@ -2,10 +2,15 @@
 
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 
-import { type Dispatch, type ReactNode, type SetStateAction, useMemo } from "react";
+import {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useMemo,
+} from "react";
 
-import { Tooltip } from "./tooltip";
 import { cn } from "@dub/utils";
+import { Tooltip } from "./tooltip";
 
 export function Switch({
   fn,

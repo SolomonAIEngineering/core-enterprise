@@ -7,7 +7,7 @@ export const DatePickerContext = createContext<{
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }>({
   isOpen: false,
-  setIsOpen: () => { },
+  setIsOpen: () => {},
 });
 
 const isBrowserLocaleClockType24h = () => {

@@ -1,5 +1,13 @@
-import { Check, ChevronDown, Search, X } from "lucide-react";
+import {
+  flip,
+  offset,
+  size,
+  useDismiss,
+  useFloating,
+  useInteractions,
+} from "@floating-ui/react";
 import { Command, useCommandState } from "cmdk";
+import { Check, ChevronDown, Search, X } from "lucide-react";
 import {
   type Dispatch,
   type InputHTMLAttributes,
@@ -13,19 +21,11 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  flip,
-  offset,
-  size,
-  useDismiss,
-  useFloating,
-  useInteractions,
-} from "@floating-ui/react";
 
+import { cn } from "@dub/utils";
+import { Drawer } from "vaul";
 import { Badge } from "./badge";
 import { BlurImage } from "./blur-image";
-import { Drawer } from "vaul";
-import { cn } from "@dub/utils";
 import { useMediaQuery } from "./hooks";
 import { useScrollProgress } from "./hooks/use-scroll-progress";
 
@@ -41,12 +41,12 @@ const InputSelectContext = createContext<{
 }>({
   inputAttrs: {},
   openCommandList: false,
-  setOpenCommandList: () => { },
+  setOpenCommandList: () => {},
   inputValue: "",
-  setInputValue: () => { },
+  setInputValue: () => {},
   disabled: false,
   selectedItem: null,
-  setSelectedItem: () => { },
+  setSelectedItem: () => {},
 });
 
 export interface InputSelectItemProps {
@@ -103,16 +103,16 @@ export function InputSelect({
 
     return inputChanged
       ? // Filter the items
-      items.filter((item: InputSelectItemProps) =>
-        item.value.toLowerCase().includes(search),
-      )
+        items.filter((item: InputSelectItemProps) =>
+          item.value.toLowerCase().includes(search),
+        )
       : inputValue
         ? // Just sort the items instead of filtering
-        items.sort(
-          (a: InputSelectItemProps, b: InputSelectItemProps) =>
-            (b.value.toLowerCase().includes(search) ? 1 : 0) -
-            (a.value.toLowerCase().includes(search) ? 1 : 0),
-        )
+          items.sort(
+            (a: InputSelectItemProps, b: InputSelectItemProps) =>
+              (b.value.toLowerCase().includes(search) ? 1 : 0) -
+              (a.value.toLowerCase().includes(search) ? 1 : 0),
+          )
         : items;
   }, [inputChanged, inputValue, items]);
 

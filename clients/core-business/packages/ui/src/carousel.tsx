@@ -94,14 +94,14 @@ const Carousel = React.forwardRef<
       [
         ...(autoplay
           ? [
-            Autoplay(
-              typeof autoplay === "object"
-                ? autoplay
-                : {
-                  delay: AUTOPLAY_DEFAULT_DELAY,
-                },
-            ),
-          ]
+              Autoplay(
+                typeof autoplay === "object"
+                  ? autoplay
+                  : {
+                      delay: AUTOPLAY_DEFAULT_DELAY,
+                    },
+              ),
+            ]
           : []),
         ...(plugins || []),
       ],

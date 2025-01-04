@@ -1,16 +1,16 @@
 "use client";
 
 import { ALL_TOOLS, cn, createHref, fetcher } from "@dub/utils";
+import { useEffect, useState } from "react";
 import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from "./content";
 import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from "./icons";
-import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { MaxWidthWrapper } from "./max-width-wrapper";
-import { NavWordmark } from "./nav-wordmark";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
+import { MaxWidthWrapper } from "./max-width-wrapper";
+import { NavWordmark } from "./nav-wordmark";
 
 const socials = [
   {
@@ -280,9 +280,9 @@ function StatusBadge() {
     ongoing_incidents: {
       name: string;
       current_worst_impact:
-      | "degraded_performance"
-      | "partial_outage"
-      | "full_outage";
+        | "degraded_performance"
+        | "partial_outage"
+        | "full_outage";
     }[];
   }>("https://status.dub.co/api/v1/summary", fetcher);
 

@@ -1,12 +1,10 @@
+import { cn, createHref } from "@dub/utils";
 import { Code, OfficeBuilding } from "../../icons";
 import {
   ContentIcon,
   ContentLinkCard,
   contentHeadingClassName,
 } from "./shared";
-import { cn, createHref } from "@dub/utils";
-
-import React from "react";
 
 const PROFILES = [
   {

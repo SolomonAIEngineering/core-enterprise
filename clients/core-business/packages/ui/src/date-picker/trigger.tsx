@@ -22,7 +22,7 @@ const triggerStyles = cva(
 
 interface TriggerProps
   extends ComponentProps<"button">,
-  VariantProps<typeof triggerStyles> {
+    VariantProps<typeof triggerStyles> {
   placeholder?: string;
 }
 
@@ -51,7 +51,9 @@ const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           ) : null}
         </span>
         <ChevronDown
-          className={"h-4 w-4 flex-shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"}
+          className={
+            "h-4 w-4 flex-shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+          }
         />
       </button>
     );

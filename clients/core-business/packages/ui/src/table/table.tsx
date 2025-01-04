@@ -1,14 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  type CSSProperties,
-  type Dispatch,
-  type MouseEvent,
-  type PropsWithChildren,
-  type ReactNode,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { cn, deepEqual, isClickOnInteractiveChild } from "@dub/utils";
 import {
   type Cell,
   type Column,
@@ -22,11 +12,20 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  type CSSProperties,
+  type Dispatch,
+  type MouseEvent,
+  type PropsWithChildren,
+  type ReactNode,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { LoadingSpinner, SortOrder } from "../icons";
-import { cn, deepEqual, isClickOnInteractiveChild } from "@dub/utils";
 
 import { Button } from "../button";
-import React from "react";
 
 const tableCellClassName = (columnId: string, clickable?: boolean) =>
   cn([
@@ -66,13 +65,13 @@ type UseTableProps<T> = {
   thClassName?: string | ((columnId: string) => string);
   tdClassName?: string | ((columnId: string) => string);
 } & (
-    | {
+  | {
       pagination?: PaginationState;
       onPaginationChange?: Dispatch<SetStateAction<PaginationState>>;
       rowCount: number;
     }
-    | { pagination?: never; onPaginationChange?: never; rowCount?: never }
-  );
+  | { pagination?: never; onPaginationChange?: never; rowCount?: never }
+);
 
 type TableProps<T> = UseTableProps<T> &
   PropsWithChildren<{
@@ -244,9 +243,9 @@ export function Table<T>({
                               {header.isPlaceholder
                                 ? null
                                 : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext(),
-                                )}
+                                    header.column.columnDef.header,
+                                    header.getContext(),
+                                  )}
                             </span>
                             {isSortableColumn && (
                               <SortOrder
@@ -275,16 +274,16 @@ export function Table<T>({
                     onRowClick && "cursor-pointer select-none",
                     // hacky fix: if there are more than 8 rows, remove the bottom border from the last row
                     table.getRowModel().rows.length > 8 &&
-                    row.index === table.getRowModel().rows.length - 1 &&
-                    "[&_td]:border-b-0",
+                      row.index === table.getRowModel().rows.length - 1 &&
+                      "[&_td]:border-b-0",
                   )}
                   onClick={
                     onRowClick
                       ? (e) => {
-                        // Ignore if click is on an interactive child
-                        if (isClickOnInteractiveChild(e)) return;
-                        onRowClick(row, e);
-                      }
+                          // Ignore if click is on an interactive child
+                          if (isClickOnInteractiveChild(e)) return;
+                          onRowClick(row, e);
+                        }
                       : undefined
                   }
                 >
@@ -341,7 +340,7 @@ export function Table<T>({
               {(pagination.pageIndex - 1) * pagination.pageSize + 1}-
               {Math.min(
                 (pagination.pageIndex - 1) * pagination.pageSize +
-                pagination.pageSize,
+                  pagination.pageSize,
                 table.getRowCount(),
               )}
             </span>{" "}
@@ -396,8 +395,8 @@ const getCommonPinningClassNames = (
   const isPinned = column.getIsPinned();
   return cn(
     isPinned &&
-    !isLastRow &&
-    "animate-table-pinned-shadow [animation-timeline:scroll(inline)]",
+      !isLastRow &&
+      "animate-table-pinned-shadow [animation-timeline:scroll(inline)]",
   );
 };
 

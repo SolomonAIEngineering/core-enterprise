@@ -1,14 +1,14 @@
 "use client";
 
-import { LoadingCircle, Photo } from "./icons";
 import { fetcher, getDomainWithoutWWW, getUrlFromString } from "@dub/utils";
-import { useEffect, useMemo, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef } from "react";
+import { LoadingCircle, Photo } from "./icons";
 
 import { Link2 } from "lucide-react";
+import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import { useMediaQuery } from "./hooks";
-import useSWR from "swr";
 
 export function LinkPreview({ defaultUrl }: { defaultUrl?: string }) {
   const router = useRouter();

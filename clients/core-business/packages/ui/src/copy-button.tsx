@@ -1,10 +1,10 @@
 "use client";
 
-import { Copy, Tick } from "./icons";
 import { type VariantProps, cva } from "class-variance-authority";
+import { Copy, Tick } from "./icons";
 
-import type { LucideIcon } from "lucide-react";
 import { cn } from "@dub/utils";
+import type { LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "./hooks";
 

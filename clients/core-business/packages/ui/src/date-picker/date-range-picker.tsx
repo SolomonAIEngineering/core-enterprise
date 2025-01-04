@@ -1,15 +1,15 @@
-import { DatePickerContext, formatDate, validatePresets } from "./shared";
-import type { DateRange, DateRangePreset, PickerProps } from "./types";
 import { useEffect, useMemo, useState } from "react";
 import { useKeyboardShortcut, useMediaQuery } from "../hooks";
+import { DatePickerContext, formatDate, validatePresets } from "./shared";
+import type { DateRange, DateRangePreset, PickerProps } from "./types";
 
-import { Calendar as CalendarPrimitive } from "./calendar";
-import { Popover } from "../popover";
-import { Presets } from "./presets";
-import type { SelectRangeEventHandler } from "react-day-picker";
-import { Trigger } from "./trigger";
 import { cn } from "@dub/utils";
 import { enUS } from "date-fns/locale";
+import type { SelectRangeEventHandler } from "react-day-picker";
+import { Popover } from "../popover";
+import { Calendar as CalendarPrimitive } from "./calendar";
+import { Presets } from "./presets";
+import { Trigger } from "./trigger";
 
 type RangeDatePickerProps = {
   presets?: DateRangePreset[];
@@ -62,7 +62,7 @@ const DateRangePickerInner = ({
 
   // Update internal state when preset props change
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
+  useEffect(() => {
     const p = presets?.find(({ id }) => id === presetId);
     setPreset(p);
     setRange(p?.dateRange ?? value ?? defaultValue);
@@ -112,8 +112,9 @@ const DateRangePickerInner = ({
   const displayRange = useMemo(() => {
     if (!range) return null;
 
-    return `${range.from ? formatDate(range.from, locale) : ""} - ${range.to ? formatDate(range.to, locale) : ""
-      }`;
+    return `${range.from ? formatDate(range.from, locale) : ""} - ${
+      range.to ? formatDate(range.to, locale) : ""
+    }`;
   }, [range, locale]);
 
   useKeyboardShortcut(

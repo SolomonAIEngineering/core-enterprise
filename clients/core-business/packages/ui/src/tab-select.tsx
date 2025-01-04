@@ -1,6 +1,6 @@
-import { type Dispatch, type SetStateAction, useId } from "react";
-import { LayoutGroup, motion } from "framer-motion";
 import { type VariantProps, cva } from "class-variance-authority";
+import { LayoutGroup, motion } from "framer-motion";
+import { type Dispatch, type SetStateAction, useId } from "react";
 
 import { cn } from "@dub/utils";
 

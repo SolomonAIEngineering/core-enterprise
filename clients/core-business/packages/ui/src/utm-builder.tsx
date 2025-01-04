@@ -88,7 +88,7 @@ export function UTMBuilder({
 
   // Hacky fix to focus the input automatically in modals where normally it doesn't work
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
+  useEffect(() => {
     if (inputRef.current && !isMobile && autoFocus)
       setTimeout(() => inputRef.current?.focus(), 10);
   }, []);

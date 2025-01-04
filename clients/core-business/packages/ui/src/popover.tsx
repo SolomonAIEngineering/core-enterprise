@@ -4,8 +4,8 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 import type { PropsWithChildren, ReactNode, WheelEventHandler } from "react";
 
-import { Drawer } from "vaul";
 import { cn } from "@dub/utils";
+import { Drawer } from "vaul";
 import { useMediaQuery } from "./hooks";
 
 export type PopoverProps = PropsWithChildren<{

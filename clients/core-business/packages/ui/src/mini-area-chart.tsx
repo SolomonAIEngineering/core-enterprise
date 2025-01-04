@@ -1,11 +1,11 @@
-import { Area, AreaClosed } from "@visx/shape";
 import { scaleLinear, scaleUtc } from "@visx/scale";
+import { Area, AreaClosed } from "@visx/shape";
 import { useId, useMemo } from "react";
 
-import { Group } from "@visx/group";
-import { LinearGradient } from "@visx/gradient";
-import { ParentSize } from "@visx/responsive";
 import { curveNatural } from "@visx/curve";
+import { LinearGradient } from "@visx/gradient";
+import { Group } from "@visx/group";
+import { ParentSize } from "@visx/responsive";
 import { motion } from "framer-motion";
 
 export type MiniAreaChartProps = {
@@ -72,7 +72,7 @@ function MiniAreaChartInner({
 
   return (
     // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg width={width} height={height} key={data.length}>
+    <svg width={width} height={height} key={data.length}>
       <defs>
         <LinearGradient
           id={`${id}-color-gradient`}

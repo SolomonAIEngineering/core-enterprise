@@ -1,8 +1,8 @@
 import { GOOGLE_FAVICON_URL, cn } from "@dub/utils";
 
+import type { ImageProps } from "next/image";
 import { BlurImage } from "./blur-image";
 import { Globe2 } from "./icons";
-import type { ImageProps } from "next/image";
 
 export function LinkLogo({
   apexDomain,
