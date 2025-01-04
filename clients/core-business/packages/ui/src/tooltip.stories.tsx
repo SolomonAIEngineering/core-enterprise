@@ -1,0 +1,202 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
+import { Button } from './button';
+import { Tooltip } from './tooltip';
+
+const meta: Meta<typeof Tooltip> = {
+    title: 'Components/Tooltip',
+    component: Tooltip,
+    parameters: {
+        layout: 'centered',
+        docs: {
+            description: {
+                component: 'A tooltip component that provides additional information on hover.'
+            },
+        },
+    },
+};
+
+export default meta;
+type Story = StoryObj<typeof Tooltip>;
+
+export const Default: Story = {
+    render: () => (
+        <Tooltip content="This is a tooltip">
+            <Button variant="outline">Hover me</Button>
+        </Tooltip>
+    ),
+};
+
+export const Positions: Story = {
+    render: () => (
+        <div className="flex gap-4 flex-wrap">
+            <Tooltip content="Top tooltip" side="top">
+                <Button variant="outline">Top</Button>
+            </Tooltip>
+            <Tooltip content="Right tooltip" side="right">
+                <Button variant="outline">Right</Button>
+            </Tooltip>
+            <Tooltip content="Bottom tooltip" side="bottom">
+                <Button variant="outline">Bottom</Button>
+            </Tooltip>
+            <Tooltip content="Left tooltip" side="left">
+                <Button variant="outline">Left</Button>
+            </Tooltip>
+        </div>
+    ),
+};
+
+export const WithDelay: Story = {
+    render: () => (
+        <Tooltip
+            content="This tooltip has a custom delay"
+            delayDuration={1000}
+        >
+            <Button variant="outline">Hover me (1s delay)</Button>
+        </Tooltip>
+    ),
+};
+
+export const WithHTML: Story = {
+    render: () => (
+        <Tooltip
+            content={
+                <div className="text-sm">
+                    <p className="font-medium">Custom HTML Content</p>
+                    <p className="text-gray-500">With multiple lines of text</p>
+                </div>
+            }
+        >
+            <Button variant="outline">Hover for rich content</Button>
+        </Tooltip>
+    ),
+};
+
+export const WithArrow: Story = {
+    render: () => (
+        <Tooltip
+            content="Tooltip with arrow"
+            hasArrow
+        >
+            <Button variant="outline">Hover me</Button>
+        </Tooltip>
+    ),
+};
+
+export const CustomStyles: Story = {
+    render: () => (
+        <Tooltip
+            content="Custom styled tooltip"
+            className="bg-purple-500 text-white"
+        >
+            <Button variant="outline">Hover for custom style</Button>
+        </Tooltip>
+    ),
+};
+
+export const WithIcon: Story = {
+    render: () => (
+        <Tooltip content="Settings">
+            <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Settings"
+            >
+                <span className="i-lucide-settings" />
+            </Button>
+        </Tooltip>
+    ),
+};
+
+export const Interactive: Story = {
+    render: () => (
+        <Tooltip
+            content={
+                <div className="p-2">
+                    <p className="mb-2">Are you sure?</p>
+                    <div className="flex gap-2">
+                        <Button size="sm" variant="destructive">Delete</Button>
+                        <Button size="sm" variant="outline">Cancel</Button>
+                    </div>
+                </div>
+            }
+            interactive
+        >
+            <Button variant="outline">Interactive Tooltip</Button>
+        </Tooltip>
+    ),
+};
+
+export const WithDisabledButton: Story = {
+    render: () => (
+        <Tooltip content="This button is disabled">
+            <button
+                type="button"
+                className="cursor-not-allowed"
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                    }
+                }}
+                onClick={(e) => e.preventDefault()}
+            >
+                <Button variant="outline" disabled>
+                    Disabled Button
+                </Button>
+            </button>
+        </Tooltip>
+    ),
+};
+
+export const WithLongContent: Story = {
+    render: () => (
+        <Tooltip
+            content="This is a very long tooltip content that will wrap to multiple lines when it exceeds the maximum width of the tooltip container."
+            className="max-w-xs"
+        >
+            <Button variant="outline">Hover for long content</Button>
+        </Tooltip>
+    ),
+};
+
+export const WithCustomAnimation: Story = {
+    render: () => (
+        <Tooltip
+            content="Smooth animation"
+            className="transition-opacity duration-300"
+        >
+            <Button variant="outline">Smooth Tooltip</Button>
+        </Tooltip>
+    ),
+};
+
+export const InContext: Story = {
+    render: () => (
+        <div className="w-96 p-6 bg-white rounded-xl shadow-lg space-y-4">
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Project Settings</h3>
+                <Tooltip content="Project configuration options">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="Project settings info"
+                    >
+                        <span className="i-lucide-info" />
+                    </Button>
+                </Tooltip>
+            </div>
+            <div className="flex items-center gap-2">
+                <Button variant="outline">Save Changes</Button>
+                <Tooltip content="Discard all changes">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="Discard changes"
+                    >
+                        <span className="i-lucide-trash-2" />
+                    </Button>
+                </Tooltip>
+            </div>
+        </div>
+    ),
+}; 
