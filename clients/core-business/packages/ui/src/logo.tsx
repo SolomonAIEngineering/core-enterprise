@@ -2,7 +2,8 @@ import { cn } from "@dub/utils";
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <svg
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
       width="64"
       height="64"
       viewBox="0 0 64 64"

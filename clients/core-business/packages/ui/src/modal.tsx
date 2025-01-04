@@ -1,12 +1,14 @@
 "use client";
 
-import { cn } from "@dub/utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
-import { ComponentProps, Dispatch, SetStateAction } from "react";
+
+import type { ComponentProps, Dispatch, SetStateAction } from "react";
+
 import { Drawer } from "vaul";
+import { cn } from "@dub/utils";
 import { useMediaQuery } from "./hooks";
+import { useRouter } from "next/navigation";
 
 export function Modal({
   children,
@@ -34,7 +36,7 @@ export function Modal({
       return;
     }
     // fire onClose event if provided
-    onClose && onClose();
+    onClose?.();
 
     // if setShowModal is defined, use it to close modal
     if (setShowModal) {
