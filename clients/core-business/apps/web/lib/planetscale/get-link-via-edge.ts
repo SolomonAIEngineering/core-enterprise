@@ -1,6 +1,6 @@
-import { punyEncode } from "@dub/utils";
+import type { EdgeLinkProps } from "./types";
 import { conn } from "./connection";
-import { EdgeLinkProps } from "./types";
+import { punyEncode } from "@dub/utils";
 
 export const getLinkViaEdge = async (domain: string, key: string) => {
   const { rows } =

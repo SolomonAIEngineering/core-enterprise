@@ -1,12 +1,15 @@
-import { getLinkViaEdge } from "@/lib/planetscale";
-import { BlurImage } from "@dub/ui";
 import {
   GOOGLE_FAVICON_URL,
   constructMetadata,
   getApexDomain,
 } from "@dub/utils";
-import { unescape } from "html-escaper";
 import { notFound, redirect } from "next/navigation";
+
+import { BlurImage } from "@dub/ui";
+import Image from 'next/image';
+import { getLinkViaEdge } from "@/lib/planetscale";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+import { unescape } from "html-escaper";
 
 export const runtime = "edge";
 
@@ -60,9 +63,11 @@ export default async function ProxyPage({
   return (
     <main className="flex h-screen w-screen items-center justify-center">
       <div className="mx-5 w-full max-w-lg overflow-hidden rounded-lg border border-gray-200 sm:mx-0">
-        <img
+        <Image
           src={data.image}
           alt={unescape(data.title || "")}
+          width={512}
+          height={320}
           className="w-full object-cover"
         />
         <div className="flex space-x-3 bg-gray-100 p-5">

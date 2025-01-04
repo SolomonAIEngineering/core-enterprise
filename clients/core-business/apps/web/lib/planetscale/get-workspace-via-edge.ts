@@ -1,4 +1,4 @@
-import { WorkspaceProps } from "../types";
+import type { WorkspaceProps } from "../types";
 import { conn } from "./connection";
 
 export const getWorkspaceViaEdge = async (workspaceId: string) => {

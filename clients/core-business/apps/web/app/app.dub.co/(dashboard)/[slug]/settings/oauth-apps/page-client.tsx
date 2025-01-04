@@ -1,15 +1,16 @@
 "use client";
 
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { OAuthAppProps } from "@/lib/types";
+import { Button, Cube, InfoTooltip, TooltipContent } from "@dub/ui";
+
+import EmptyState from "@/ui/shared/empty-state";
 import OAuthAppCard from "@/ui/oauth-apps/oauth-app-card";
 import OAuthAppPlaceholder from "@/ui/oauth-apps/oauth-app-placeholder";
-import EmptyState from "@/ui/shared/empty-state";
-import { Button, Cube, InfoTooltip, TooltipContent } from "@dub/ui";
+import { OAuthAppProps } from "@/lib/types";
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import { fetcher } from "@dub/utils";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 export default function OAuthAppsPageClient() {
   const router = useRouter();
@@ -63,13 +64,13 @@ export default function OAuthAppsPageClient() {
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4 rounded-xl border border-gray-200 py-10">
-              <EmptyState icon={Cube} title={"No OAuth applications found"} />
+              <EmptyState key="empty-oauth" icon={Cube} title={"No OAuth applications found"} />
             </div>
           )
         ) : (
           <div className="grid grid-cols-1 gap-3">
             {Array.from({ length: 3 }).map((_, idx) => (
-              <OAuthAppPlaceholder />
+              <OAuthAppPlaceholder key={idx} />
             ))}
           </div>
         )}

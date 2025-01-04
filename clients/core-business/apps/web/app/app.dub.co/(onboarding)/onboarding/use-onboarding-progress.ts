@@ -1,10 +1,11 @@
-import { setOnboardingProgress } from "@/lib/actions/set-onboarding-progress";
-import { OnboardingStep } from "@/lib/onboarding/types";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { useAction } from "next-safe-action/hooks";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+
+import type { OnboardingStep } from "@/lib/onboarding/types";
+import { setOnboardingProgress } from "@/lib/actions/set-onboarding-progress";
 import { toast } from "sonner";
+import { useAction } from "next-safe-action/hooks";
+import { useCallback } from "react";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 const PRE_WORKSPACE_STEPS = ["workspace"];
 
@@ -44,6 +45,7 @@ export function useOnboardingProgress() {
     [execute, router, slug],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const finish = useCallback(async () => {
     await executeAsync({
       onboardingStep: "completed",

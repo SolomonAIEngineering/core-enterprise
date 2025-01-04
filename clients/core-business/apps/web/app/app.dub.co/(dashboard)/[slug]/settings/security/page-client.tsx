@@ -1,17 +1,19 @@
 "use client";
 
-import useSAML from "@/lib/swr/use-saml";
-import useSCIM from "@/lib/swr/use-scim";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { useRemoveSAMLModal } from "@/ui/modals/remove-saml-modal";
-import { useRemoveSCIMModal } from "@/ui/modals/remove-scim-modal";
-import { useSAMLModal } from "@/ui/modals/saml-modal";
-import { useSCIMModal } from "@/ui/modals/scim-modal";
-import { ThreeDots } from "@/ui/shared/icons";
 import { Button, IconMenu, Popover, TooltipContent } from "@dub/ui";
-import { SAML_PROVIDERS } from "@dub/utils";
 import { FolderSync, Lock, ShieldOff } from "lucide-react";
 import { useMemo, useState } from "react";
+
+import Image from "next/image";
+import { SAML_PROVIDERS } from "@dub/utils";
+import { ThreeDots } from "@/ui/shared/icons";
+import { useRemoveSAMLModal } from "@/ui/modals/remove-saml-modal";
+import { useRemoveSCIMModal } from "@/ui/modals/remove-scim-modal";
+import useSAML from "@/lib/swr/use-saml";
+import { useSAMLModal } from "@/ui/modals/saml-modal";
+import useSCIM from "@/lib/swr/use-scim";
+import { useSCIMModal } from "@/ui/modals/scim-modal";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 export default function WorkspaceSecurityClient() {
   return (
@@ -38,9 +40,11 @@ const SAMLSection = () => {
     } else if (configured) {
       return {
         logo: (
-          <img
+          <Image
             src={SAML_PROVIDERS.find((p) => p.name === provider)!.logo}
             alt={provider + " logo"}
+            width={32}
+            height={32}
             className="h-8 w-8"
           />
         ),

@@ -1,5 +1,5 @@
 import { conn } from "./connection";
-import { EdgeDomainProps } from "./types";
+import type { EdgeDomainProps } from "./types";
 
 export const getDomainViaEdge = async (domain: string) => {
   const { rows } =

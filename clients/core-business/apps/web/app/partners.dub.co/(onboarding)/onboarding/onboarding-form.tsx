@@ -1,24 +1,25 @@
 "use client";
 
-import { onboardPartnerAction } from "@/lib/actions/partners/onboard-partner";
-import { onboardPartnerSchema } from "@/lib/zod/schemas/partners";
 import {
   Button,
-  buttonVariants,
   Combobox,
   FileUpload,
+  buttonVariants,
   useEnterSubmit,
   useMediaQuery,
 } from "@dub/ui";
+import { Controller, useForm } from "react-hook-form";
+import { useEffect, useMemo, useRef } from "react";
+
 import { COUNTRIES } from "@dub/utils";
+import ReactTextareaAutosize from "react-textarea-autosize";
 import { cn } from "@dub/utils/src/functions";
-import { useSession } from "next-auth/react";
+import { onboardPartnerAction } from "@/lib/actions/partners/onboard-partner";
+import { onboardPartnerSchema } from "@/lib/zod/schemas/partners";
+import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef } from "react";
-import { Controller, useForm } from "react-hook-form";
-import ReactTextareaAutosize from "react-textarea-autosize";
-import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 import { z } from "zod";
 
 type OnboardingFormData = z.infer<typeof onboardPartnerSchema>;

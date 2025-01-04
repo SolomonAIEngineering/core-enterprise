@@ -48,6 +48,8 @@ export async function GET(req: NextRequest) {
               tw="rounded-full w-10 h-10"
               src={`${GOOGLE_FAVICON_URL}${getApexDomain(link.url || "dub.co")}`}
               alt="favicon"
+              width={40}
+              height={40}
             />
             <h1 tw="text-4xl font-bold ml-4">
               {linkConstructor({ domain, key, pretty: true })}

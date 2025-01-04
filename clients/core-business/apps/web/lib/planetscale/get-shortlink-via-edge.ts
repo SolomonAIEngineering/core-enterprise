@@ -1,5 +1,5 @@
+import type { EdgeLinkProps } from "./types";
 import { conn } from "./connection";
-import { EdgeLinkProps } from "./types";
 
 export const getShortLinkViaEdge = async (shortLink: string) => {
   const { rows } =

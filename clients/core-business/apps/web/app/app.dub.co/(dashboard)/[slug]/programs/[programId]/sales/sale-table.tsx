@@ -1,14 +1,5 @@
 "use client";
 
-import useSalesCount from "@/lib/swr/use-sales-count";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { SaleResponse } from "@/lib/types";
-import FilterButton from "@/ui/analytics/events/filter-button";
-import { PartnerRowItem } from "@/ui/partners/partner-row-item";
-import { SaleRowMenu } from "@/ui/partners/sale-row-menu";
-import { SaleStatusBadges } from "@/ui/partners/sale-status-badges";
-import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
-import SimpleDateRangePicker from "@/ui/shared/simple-date-range-picker";
 import {
   AnimatedSizeContainer,
   Filter,
@@ -18,18 +9,28 @@ import {
   useRouterStuff,
   useTable,
 } from "@dub/ui";
-import { MoneyBill2 } from "@dub/ui/icons";
 import {
-  currencyFormatter,
   DICEBEAR_AVATAR_URL,
+  currencyFormatter,
   fetcher,
   formatDate,
   formatDateTime,
 } from "@dub/utils";
-import { useParams } from "next/navigation";
+
+import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import FilterButton from "@/ui/analytics/events/filter-button";
+import { MoneyBill2 } from "@dub/ui/icons";
+import { PartnerRowItem } from "@/ui/partners/partner-row-item";
+import type { SaleResponse } from "@/lib/types";
+import { SaleRowMenu } from "@/ui/partners/sale-row-menu";
+import { SaleStatusBadges } from "@/ui/partners/sale-status-badges";
+import SimpleDateRangePicker from "@/ui/shared/simple-date-range-picker";
 import { memo } from "react";
+import { useParams } from "next/navigation";
 import useSWR from "swr";
 import { useSaleFilters } from "./use-sale-filters";
+import useSalesCount from "@/lib/swr/use-sales-count";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 export function SaleTableBusiness({ limit }: { limit?: number }) {
   const filters = useSaleFilters();
@@ -155,8 +156,8 @@ const SaleTableBusinessInner = memo(
       cellRight: (cell) => {
         const meta = cell.column.columnDef.meta as
           | {
-              filterParams?: any;
-            }
+            filterParams?: any;
+          }
           | undefined;
 
         return (

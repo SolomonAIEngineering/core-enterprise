@@ -1,19 +1,20 @@
 "use client";
 
-import useWorkspace from "@/lib/swr/use-workspace";
 import { BlurImage, ExpandingArrow } from "@dub/ui";
 import {
-  cn,
   DICEBEAR_AVATAR_URL,
-  smartTruncate,
   STAGGER_CHILD_VARIANTS,
+  cn,
+  smartTruncate,
 } from "@dub/utils";
+import { redirect, useParams } from "next/navigation";
+
 import { COUNTRIES } from "@dub/utils/src/constants/countries";
-import NumberFlow from "@number-flow/react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, useParams } from "next/navigation";
+import NumberFlow from "@number-flow/react";
+import { motion } from "framer-motion";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 export default function WrappedPageClient() {
   const { slug, year } = useParams();
@@ -50,7 +51,7 @@ export default function WrappedPageClient() {
         <div
           className="flex h-24 flex-col items-center justify-center rounded-lg"
           style={{
-            backgroundImage: `url(https://assets.dub.co/misc/year-in-review-header.jpg)`,
+            backgroundImage: "url(https://assets.dub.co/misc/year-in-review-header.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -175,7 +176,7 @@ const StatTable = ({
           const path = pathParts.join("/") || "_root";
           return (
             <motion.div
-              key={index}
+              key={`${index}-${item}`}
               variants={STAGGER_CHILD_VARIANTS}
               className="text-sm text-gray-500"
             >
@@ -183,15 +184,15 @@ const StatTable = ({
                 href={`/${slug}/analytics?${new URLSearchParams({
                   ...(title === "Top Links"
                     ? {
-                        domain,
-                        key: path,
-                      }
+                      domain,
+                      key: path,
+                    }
                     : {
-                        country: item,
-                      }),
+                      country: item,
+                    }),
                   interval: "1y",
                 }).toString()}`}
-                key={index}
+                key={`${index}-${item}`}
                 className="group flex justify-between py-1.5"
               >
                 {item === "placeholder" ? (

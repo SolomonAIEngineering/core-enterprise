@@ -1,11 +1,13 @@
 "use client";
 
+import { Button, Wordmark, useScroll } from "@dub/ui";
+import { usePathname, useRouter } from "next/navigation";
+
+import Image from 'next/image'
+import Link from "next/link";
 import { Program } from "@dub/prisma/client";
-import { Button, useScroll, Wordmark } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 
 export function Header({
   program,
@@ -40,9 +42,12 @@ export function Header({
 
       <Link href={`/apply/${slug}`} className="animate-fade-in my-0.5 block">
         {program.wordmark || program.logo ? (
-          <img
+          <Image
             className="h-7 max-w-32"
             src={(program.wordmark ?? program.logo) as string}
+            width={128}
+            height={28}
+            alt={`${program.logo} logo`}
           />
         ) : (
           <Wordmark className="h-7" />

@@ -1,11 +1,12 @@
-import { getProgram } from "@/lib/fetchers/get-program";
-import { prisma } from "@dub/prisma";
+import Image from 'next/image';
 import { Prisma } from "@dub/prisma/client";
+import type { PropsWithChildren } from "react";
 import { Wordmark } from "@dub/ui";
-import { currencyFormatter } from "@dub/utils";
 import { constructMetadata } from "@dub/utils/src/functions";
+import { currencyFormatter } from "@dub/utils";
+import { getProgram } from "@/lib/fetchers/get-program";
 import { notFound } from "next/navigation";
-import { PropsWithChildren } from "react";
+import { prisma } from "@dub/prisma";
 
 export async function generateMetadata({
   params: { programSlug },
@@ -20,14 +21,13 @@ export async function generateMetadata({
 
   return constructMetadata({
     title: `${program.name} Affiliate Program`,
-    description: `Join the ${program.name} affiliate program and earn ${
-      program.commissionType === "percentage"
-        ? `${program.commissionAmount}%`
-        : currencyFormatter(program.commissionAmount / 100, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-    } on any subscriptions generated through your referral.`,
+    description: `Join the ${program.name} affiliate program and earn ${program.commissionType === "percentage"
+      ? `${program.commissionAmount}%`
+      : currencyFormatter(program.commissionAmount / 100, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+      } on any subscriptions generated through your referral.`,
     noIndex: true, // TODO: Remove this once we launch to GA
   });
 }
@@ -73,6 +73,7 @@ export default async function ApplyLayout({
             <a
               href="https://dub.co/legal/terms"
               target="_blank"
+              rel="noreferrer"
               className="transition-colors duration-75 hover:text-neutral-600"
             >
               Terms of Service
@@ -81,6 +82,7 @@ export default async function ApplyLayout({
             <a
               href="https://dub.co/legal/privacy"
               target="_blank"
+              rel="noreferrer"
               className="transition-colors duration-75 hover:text-neutral-600"
             >
               Privacy Policy
@@ -91,9 +93,9 @@ export default async function ApplyLayout({
 
       {/* Background grid */}
       <div className="absolute inset-0 flex h-fit w-full items-center justify-center">
-        <img
+        <Image
           src="https://assets.dub.co/misc/program-apply-grid.svg"
-          alt=""
+          alt="Program application background grid"
           width={1280}
           height={480}
           className="[mask-image:radial-gradient(70%_100%_at_50%_0%,black_30%,transparent)]"

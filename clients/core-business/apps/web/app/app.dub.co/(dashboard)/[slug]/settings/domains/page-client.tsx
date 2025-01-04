@@ -1,19 +1,5 @@
 "use client";
 
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useDomains from "@/lib/swr/use-domains";
-import useDomainsCount from "@/lib/swr/use-domains-count";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DOMAINS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/domains";
-import DomainCard from "@/ui/domains/domain-card";
-import DomainCardPlaceholder from "@/ui/domains/domain-card-placeholder";
-import { FreeDotLinkBanner } from "@/ui/domains/free-dot-link-banner";
-import { useAddEditDomainModal } from "@/ui/modals/add-edit-domain-modal";
-import { useRegisterDomainModal } from "@/ui/modals/register-domain-modal";
-import { useRegisterDomainSuccessModal } from "@/ui/modals/register-domain-success-modal";
-import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
-import EmptyState from "@/ui/shared/empty-state";
-import { SearchBoxPersisted } from "@/ui/shared/search-box";
 import {
   Badge,
   Button,
@@ -28,10 +14,25 @@ import {
   usePagination,
   useRouterStuff,
 } from "@dub/ui";
-import { capitalize, pluralize } from "@dub/utils";
 import { ChevronDown, Crown } from "lucide-react";
+import { capitalize, pluralize } from "@dub/utils";
 import { useEffect, useState } from "react";
+
+import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import { DOMAINS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/domains";
 import { DefaultDomains } from "./default-domains";
+import DomainCard from "@/ui/domains/domain-card";
+import DomainCardPlaceholder from "@/ui/domains/domain-card-placeholder";
+import EmptyState from "@/ui/shared/empty-state";
+import { FreeDotLinkBanner } from "@/ui/domains/free-dot-link-banner";
+import { SearchBoxPersisted } from "@/ui/shared/search-box";
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import { useAddEditDomainModal } from "@/ui/modals/add-edit-domain-modal";
+import useDomains from "@/lib/swr/use-domains";
+import useDomainsCount from "@/lib/swr/use-domains-count";
+import { useRegisterDomainModal } from "@/ui/modals/register-domain-modal";
+import { useRegisterDomainSuccessModal } from "@/ui/modals/register-domain-success-modal";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 export default function WorkspaceDomainsClient() {
   const {
@@ -71,7 +72,7 @@ export default function WorkspaceDomainsClient() {
 
   useEffect(
     () => setShowRegisterDomainSuccessModal(searchParams.has("registered")),
-    [searchParams],
+    [searchParams, setShowRegisterDomainSuccessModal],
   );
 
   const { error: permissionsError } = clientAccessCheck({
@@ -252,7 +253,7 @@ export default function WorkspaceDomainsClient() {
           ) : (
             <ul className="grid grid-cols-1 gap-3">
               {Array.from({ length: 10 }).map((_, idx) => (
-                <li key={idx}>
+                <li key={`${idx}-${Math.random()}`}>
                   <DomainCardPlaceholder />
                 </li>
               ))}
