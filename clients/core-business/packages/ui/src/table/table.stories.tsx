@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Table, useTable } from "./table";
 import React from "react";
-import { createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper, type VisibilityState, type PaginationState } from "@tanstack/react-table";
 
 const meta = {
     title: "Components/Table",
@@ -20,123 +20,155 @@ const meta = {
 } satisfies Meta<typeof Table>;
 
 export default meta;
-type Story = StoryObj<typeof meta> & {
-    args?: never;
-};
+type Story = Omit<StoryObj<typeof meta>, 'args'>;
 
-// Example data type
-type Person = {
+// Example data types
+type User = {
     id: string;
-    firstName: string;
-    lastName: string;
-    age: number;
+    name: string;
     email: string;
+    role: "admin" | "user" | "guest";
     status: "active" | "inactive";
+    lastLogin: string;
+    actions: string[];
 };
 
-// Sample data
-const sampleData: Person[] = [
+const userData: User[] = [
     {
         id: "1",
-        firstName: "John",
-        lastName: "Doe",
-        age: 30,
+        name: "John Doe",
         email: "john@example.com",
+        role: "admin",
         status: "active",
+        lastLogin: "2024-03-20T10:00:00",
+        actions: ["edit", "delete"],
     },
     {
         id: "2",
-        firstName: "Jane",
-        lastName: "Smith",
-        age: 25,
+        name: "Jane Smith",
         email: "jane@example.com",
-        status: "inactive",
+        role: "user",
+        status: "active",
+        lastLogin: "2024-03-19T15:30:00",
+        actions: ["edit"],
     },
-    // Add more sample data as needed
+    {
+        id: "3",
+        name: "Guest User",
+        email: "guest@example.com",
+        role: "guest",
+        status: "inactive",
+        lastLogin: "2024-03-15T09:15:00",
+        actions: [],
+    },
 ];
 
-// Column helper
-const columnHelper = createColumnHelper<Person>();
+const columnHelper = createColumnHelper<User>();
 
-// Define columns
 const columns = [
-    columnHelper.accessor("firstName", {
-        header: "First Name",
-        cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("lastName", {
-        header: "Last Name",
-        cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("age", {
-        header: "Age",
-        cell: (info) => info.getValue(),
+    columnHelper.accessor("name", {
+        header: "Name",
+        cell: (info) => (
+            <div className="font-medium text-gray-900">{info.getValue()}</div>
+        ),
     }),
     columnHelper.accessor("email", {
         header: "Email",
-        cell: (info) => info.getValue(),
+        cell: (info) => <div className="text-gray-500">{info.getValue()}</div>,
+    }),
+    columnHelper.accessor("role", {
+        header: "Role",
+        cell: (info) => {
+            const roleColors = {
+                admin: "bg-purple-100 text-purple-800",
+                user: "bg-blue-100 text-blue-800",
+                guest: "bg-gray-100 text-gray-800",
+            };
+            return (
+                <span className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${roleColors[info.getValue()]}`}>
+                    {info.getValue()}
+                </span>
+            );
+        },
     }),
     columnHelper.accessor("status", {
         header: "Status",
         cell: (info) => (
-            <span
-                className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${info.getValue() === "active"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
-                    }`}
-            >
+            <span className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${info.getValue() === "active"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+                }`}>
                 {info.getValue()}
             </span>
         ),
     }),
+    columnHelper.accessor("lastLogin", {
+        header: "Last Login",
+        cell: (info) => (
+            <div className="text-gray-500">
+                {new Date(info.getValue()).toLocaleDateString()}
+            </div>
+        ),
+    }),
+    columnHelper.accessor("actions", {
+        header: "Actions",
+        cell: (info) => (
+            <div className="flex gap-2">
+                {info.getValue().map((action) => (
+                    <button
+                        type="button"
+                        key={action}
+                        className="text-xs text-blue-600 hover:text-blue-800"
+                        onClick={() => console.log(`${action} clicked for ${info.row.original.name}`)}
+                    >
+                        {action}
+                    </button>
+                ))}
+            </div>
+        ),
+    }),
 ];
-// Basic Table Story
-export const Basic: StoryObj<typeof Table> = {
-    args: {},
+
+// Basic Table with Styling
+export const BasicStyled: Story = {
     render: () => {
         const tableInstance = useTable({
-            data: sampleData,
+            data: userData,
             columns,
+            containerClassName: "shadow-sm",
         });
-
         return <Table {...tableInstance} />;
     },
 };
 
-// Loading State Story
-export const Loading: StoryObj<typeof Table> = {
-    args: {},
+// Interactive Table with Row Click
+export const Interactive: Story = {
     render: () => {
         const tableInstance = useTable({
-            data: sampleData,
+            data: userData,
             columns,
-            loading: true,
+            onRowClick: (row) => {
+                console.log("Row clicked:", row.original);
+            },
         });
-
         return <Table {...tableInstance} />;
     },
 };
-// Empty State Story
-export const Empty: StoryObj<typeof Table> = {
-    args: {},
+// Sortable and Paginated
+export const SortableAndPaginated: Story = {
     render: () => {
-        const tableInstance = useTable({
-            data: [],
-            columns,
-            emptyState: <div>No data available</div>,
+        const [pagination, setPagination] = React.useState<PaginationState>({
+            pageIndex: 0, // Start at first page (0-based index)
+            pageSize: 2,
         });
 
-        return <Table {...tableInstance} />;
-    },
-};
-
-// Sortable Table Story
-export const Sortable: StoryObj<typeof Table> = {
-    render: () => {
         const tableInstance = useTable({
-            data: sampleData,
+            data: userData,
             columns,
-            sortableColumns: ["firstName", "lastName", "age"],
+            pagination,
+            onPaginationChange: setPagination,
+            rowCount: userData.length,
+            sortableColumns: ["name", "email", "lastLogin"],
             onSortChange: ({ sortBy, sortOrder }) => {
                 console.log("Sort changed:", { sortBy, sortOrder });
             },
@@ -146,33 +178,68 @@ export const Sortable: StoryObj<typeof Table> = {
     },
 };
 
-// Paginated Table Story
-export const Paginated: StoryObj<typeof Table> = {
+// Custom Column Visibility
+export const CustomColumns: Story = {
     render: () => {
-        const [pagination, setPagination] = React.useState({
-            pageIndex: 1,
-            pageSize: 2,
+        const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+            email: false,
+            role: true,
+            status: true,
+            lastLogin: false,
         });
 
         const tableInstance = useTable({
-            data: sampleData,
+            data: userData,
             columns,
-            pagination,
-            onPaginationChange: setPagination,
-            rowCount: sampleData.length,
+            columnVisibility,
+            onColumnVisibilityChange: (visibility) => setColumnVisibility(visibility),
+        });
+
+        return (
+            <div className="space-y-4">
+                <div className="flex gap-2">
+                    {Object.keys(columnVisibility).map((column) => (
+                        <button
+                            type="button"
+                            key={column}
+                            className={`px-3 py-1 text-sm rounded ${columnVisibility[column]
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-gray-100 text-gray-800"
+                                }`}
+                            onClick={() =>
+                                setColumnVisibility(prev => ({
+                                    ...prev,
+                                    [column]: !prev[column],
+                                }))
+                            }
+                        >
+                            {column}
+                        </button>
+                    ))}
+                </div>
+                <Table {...tableInstance} />
+            </div>
+        );
+    },
+};
+
+// Loading State with Custom Empty State
+export const LoadingAndEmpty: Story = {
+    render: () => {
+        const tableInstance = useTable({
+            data: [],
+            columns,
+            loading: true,
+            emptyState: (
+                <div className="text-center p-8">
+                    <div className="text-gray-500 text-lg">No users found</div>
+                    <button type="button" onClick={() => console.log("Add User clicked")} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md">
+                        Add User
+                    </button>
+                </div>
+            ),
         });
 
         return <Table {...tableInstance} />;
     },
-};
-
-const Button = ({ variant, text, className, onClick, disabled }) => (
-    // biome-ignore lint/a11y/useButtonType: <explanation>
-    <button
-        className={`${className} ${disabled ? 'opacity-50' : ''}`}
-        onClick={onClick}
-        disabled={disabled}
-    >
-        {text}
-    </button>
-); 
+}; 
