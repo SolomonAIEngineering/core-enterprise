@@ -1,10 +1,12 @@
-import { cn } from "@dub/utils";
-import { LinearGradient } from "@visx/gradient";
-import { Group } from "@visx/group";
-import { Area, AreaClosed, Circle } from "@visx/shape";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo } from "react";
+import { Area, AreaClosed, Circle } from "@visx/shape";
 import { useChartContext, useChartTooltipContext } from "./chart-context";
+
+import { Group } from "@visx/group";
+import { LinearGradient } from "@visx/gradient";
+import React from "react";
+import { cn } from "@dub/utils";
+import { useMemo } from "react";
 
 export function Areas({
   seriesStyles,
@@ -117,8 +119,8 @@ export function Areas({
                 {/* Latest value dot */}
                 {!tooltipData && (
                   <Circle
-                    cx={xScale(data.at(-1)!.date)}
-                    cy={yScale(s.valueAccessor(data.at(-1)!))}
+                    cx={xScale(data.at(-1)?.date ?? new Date())}
+                    cy={yScale(s.valueAccessor(data.at(-1) ?? { date: new Date(), values: {} }))}
                     r={4}
                     className={cn(
                       s.colorClassName ?? "text-blue-700",

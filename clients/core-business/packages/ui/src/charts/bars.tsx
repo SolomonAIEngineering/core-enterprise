@@ -1,11 +1,13 @@
-import { cn } from "@dub/utils";
-import { RectClipPath } from "@visx/clip-path";
-import { LinearGradient } from "@visx/gradient";
-import { Group } from "@visx/group";
-import { BarRounded } from "@visx/shape";
 import { AnimatePresence, motion } from "framer-motion";
-import { useId } from "react";
+
+import { BarRounded } from "@visx/shape";
+import { Group } from "@visx/group";
+import { LinearGradient } from "@visx/gradient";
+import React from "react";
+import { RectClipPath } from "@visx/clip-path";
+import { cn } from "@dub/utils";
 import { useChartContext } from "./chart-context";
+import { useId } from "react";
 
 export function Bars({
   seriesStyles,
