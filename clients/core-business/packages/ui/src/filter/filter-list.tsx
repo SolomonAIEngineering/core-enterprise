@@ -1,10 +1,10 @@
 import { cn, truncate } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { ReactNode, isValidElement } from "react";
+import { type ReactNode, isValidElement } from "react";
 import { AnimatedSizeContainer } from "../animated-size-container";
 import { useKeyboardShortcut } from "../hooks";
-import { Filter, FilterOption } from "./types";
+import type { Filter, FilterOption } from "./types";
 
 type FilterListProps = {
   filters: Filter[];
@@ -154,5 +154,6 @@ export function FilterList({
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const isReactNode = (element: any): element is ReactNode =>
   isValidElement(element);

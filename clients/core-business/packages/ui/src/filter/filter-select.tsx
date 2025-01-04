@@ -1,10 +1,11 @@
-import { cn, truncate } from "@dub/utils";
-import { Command, useCommandState } from "cmdk";
+import { Check, LoadingSpinner, Magic } from "../icons";
 import { ChevronDown, ListFilter } from "lucide-react";
+import { Command, useCommandState } from "cmdk";
+import type { Filter, FilterOption } from "./types";
 import {
   Fragment,
-  PropsWithChildren,
-  ReactNode,
+  type PropsWithChildren,
+  type ReactNode,
   forwardRef,
   isValidElement,
   useCallback,
@@ -13,12 +14,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatedSizeContainer } from "../animated-size-container";
+import { cn, truncate } from "@dub/utils";
 import { useKeyboardShortcut, useMediaQuery } from "../hooks";
-import { useScrollProgress } from "../hooks/use-scroll-progress";
-import { Check, LoadingSpinner, Magic } from "../icons";
+
+import { AnimatedSizeContainer } from "../animated-size-container";
 import { Popover } from "../popover";
-import { Filter, FilterOption } from "./types";
+import { useScrollProgress } from "../hooks/use-scroll-progress";
 
 type FilterSelectProps = {
   filters: Filter[];
@@ -76,7 +77,8 @@ export function FilterSelect({
   }, []);
 
   // Reset state when closed
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useEffect(() => {
     if (!isOpen) reset();
   }, [isOpen]);
 
@@ -85,6 +87,7 @@ export function FilterSelect({
     ? filters.find(({ key }) => key === selectedFilterKey)
     : null;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const openFilter = useCallback((key: Filter["key"]) => {
     // Maintain dimensions for loading options
     if (listContainer.current) {
@@ -99,6 +102,7 @@ export function FilterSelect({
     onOpenFilter?.(key);
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const isOptionSelected = useCallback(
     (value: FilterOption["value"]) => {
       if (!selectedFilter || !activeFilters) return false;
@@ -118,6 +122,7 @@ export function FilterSelect({
     [selectedFilter],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const selectOption = useCallback(
     (value: FilterOption["value"]) => {
       if (selectedFilter) {
@@ -133,10 +138,12 @@ export function FilterSelect({
     [activeFilters, selectedFilter, askAI],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     onSearchChange?.(search);
   }, [search]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     onSelectedFilterChange?.(selectedFilterKey);
   }, [selectedFilterKey]);
@@ -219,49 +226,49 @@ export function FilterSelect({
               >
                 {!selectedFilter
                   ? // Top-level filters
-                    filters.map((filter) => (
-                      <Fragment key={filter.key}>
-                        <FilterButton
-                          filter={filter}
-                          onSelect={() => openFilter(filter.key)}
-                        />
-                        {filter.separatorAfter && (
-                          <Command.Separator className="-mx-1 my-1 border-b border-gray-200" />
-                        )}
-                      </Fragment>
-                    ))
+                  filters.map((filter) => (
+                    <Fragment key={filter.key}>
+                      <FilterButton
+                        filter={filter}
+                        onSelect={() => openFilter(filter.key)}
+                      />
+                      {filter.separatorAfter && (
+                        <Command.Separator className="-mx-1 my-1 border-b border-gray-200" />
+                      )}
+                    </Fragment>
+                  ))
                   : // Filter options
-                    selectedFilter.options
-                      ?.filter((option) => !search || !option.hideDuringSearch)
-                      ?.map((option) => {
-                        const isSelected = isOptionSelected(option.value);
+                  selectedFilter.options
+                    ?.filter((option) => !search || !option.hideDuringSearch)
+                    ?.map((option) => {
+                      const isSelected = isOptionSelected(option.value);
 
-                        return (
-                          <FilterButton
-                            key={option.value}
-                            filter={selectedFilter}
-                            option={option}
-                            right={
-                              isSelected ? (
-                                <Check className="h-4 w-4" />
-                              ) : (
-                                option.right
-                              )
-                            }
-                            onSelect={() => selectOption(option.value)}
-                          />
-                        );
-                      }) ?? (
-                      // Filter options loading state
-                      <Command.Loading>
-                        <div
-                          className="-m-1 flex items-center justify-center"
-                          style={listDimensions.current}
-                        >
-                          <LoadingSpinner />
-                        </div>
-                      </Command.Loading>
-                    )}
+                      return (
+                        <FilterButton
+                          key={option.value}
+                          filter={selectedFilter}
+                          option={option}
+                          right={
+                            isSelected ? (
+                              <Check className="h-4 w-4" />
+                            ) : (
+                              option.right
+                            )
+                          }
+                          onSelect={() => selectOption(option.value)}
+                        />
+                      );
+                    }) ?? (
+                    // Filter options loading state
+                    <Command.Loading>
+                      <div
+                        className="-m-1 flex items-center justify-center"
+                        style={listDimensions.current}
+                      >
+                        <LoadingSpinner />
+                      </div>
+                    </Command.Loading>
+                  )}
 
                 {/* Only render CommandEmpty if not loading */}
                 {(!selectedFilter || selectedFilter.options) && (
@@ -269,7 +276,7 @@ export function FilterSelect({
                     {emptyState
                       ? isEmptyStateObject(emptyState)
                         ? emptyState?.[selectedFilterKey ?? "default"] ??
-                          "No matches"
+                        "No matches"
                         : emptyState
                       : "No matches"}
                   </CommandEmpty>
@@ -299,7 +306,7 @@ export function FilterSelect({
           </div>
         ) : (
           <ChevronDown
-            className={`size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180`}
+            className={"size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"}
           />
         )}
       </button>
@@ -359,8 +366,8 @@ const FilterScroll = forwardRef(
         {/* Bottom scroll fade */}
         <div
           className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full bg-gradient-to-t from-white sm:block"
-          style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
-        ></div>
+          style={{ opacity: 1 - scrollProgress ** 2 }}
+        />
       </>
     );
   },
@@ -381,13 +388,13 @@ function FilterButton({
 
   const Icon = option
     ? option.icon ??
-      filter.getOptionIcon?.(option.value, { key: filter.key, option }) ??
-      filter.icon
+    filter.getOptionIcon?.(option.value, { key: filter.key, option }) ??
+    filter.icon
     : filter.icon;
 
   const label = option
     ? option.label ??
-      filter.getOptionLabel?.(option.value, { key: filter.key, option })
+    filter.getOptionLabel?.(option.value, { key: filter.key, option })
     : filter.label;
 
   return (
@@ -436,14 +443,14 @@ const CommandEmpty = ({
         </p>
       </Command.Empty>
     );
-  } else {
+  }
     return (
       <Command.Empty className="p-2 text-center text-sm text-gray-400">
         {children}
       </Command.Empty>
     );
-  }
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const isReactNode = (element: any): element is ReactNode =>
   isValidElement(element);

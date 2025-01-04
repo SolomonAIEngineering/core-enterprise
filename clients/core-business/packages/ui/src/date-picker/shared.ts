@@ -1,13 +1,13 @@
-import { Locale, format } from "date-fns";
-import { Dispatch, SetStateAction, createContext } from "react";
-import { DatePreset, DateRangePreset, PickerProps } from "./types";
+import { type Locale, format } from "date-fns";
+import { type Dispatch, type SetStateAction, createContext } from "react";
+import type { DatePreset, DateRangePreset, PickerProps } from "./types";
 
 export const DatePickerContext = createContext<{
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }>({
   isOpen: false,
-  setIsOpen: () => {},
+  setIsOpen: () => { },
 });
 
 const isBrowserLocaleClockType24h = () => {
@@ -31,10 +31,10 @@ export const formatDate = (
 
   if (includeTime) {
     dateString = usesAmPm
-      ? format(date, `d MMM, yyyy h:mm a`, { locale })
-      : format(date, `d MMM, yyyy HH:mm`, { locale });
+      ? format(date, "d MMM, yyyy h:mm a", { locale })
+      : format(date, "d MMM, yyyy HH:mm", { locale });
   } else {
-    dateString = format(date, `d MMM, yyyy`, { locale });
+    dateString = format(date, "d MMM, yyyy", { locale });
   }
 
   return dateString;
@@ -50,6 +50,7 @@ export const validatePresets = (
     const fromYearToUse = fromYear;
     const toYearToUse = toYear;
 
+    // biome-ignore lint/complexity/noForEach: <explanation>
     presets.forEach((preset) => {
       if ("date" in preset) {
         const presetYear = preset.date.getFullYear();

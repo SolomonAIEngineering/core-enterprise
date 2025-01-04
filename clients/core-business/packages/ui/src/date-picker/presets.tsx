@@ -82,7 +82,7 @@ const Presets = <TPreset extends Preset, TValue>({
         {presets.map((preset, index) => {
           return (
             <Command.Item
-              key={index}
+              key={`${index}-${preset.id}`}
               disabled={preset.requiresUpgrade}
               onSelect={() => onSelect(preset)}
               title={preset.label}
