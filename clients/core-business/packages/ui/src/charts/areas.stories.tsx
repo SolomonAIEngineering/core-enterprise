@@ -12,6 +12,13 @@ const meta: Meta<typeof Areas> = {
     parameters: {
         layout: "centered",
     },
+    decorators: [
+        (Story) => (
+            <div style={{ margin: '2em', background: 'white', padding: '1em' }}>
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 export default meta;
@@ -22,8 +29,8 @@ const generateData = (days: number) => {
     const data: Array<{
         date: Date;
         values: {
-            primary: number;
-            secondary: number;
+            value: number;
+            secondValue: number;
         };
     }> = [];
     const now = new Date();
@@ -33,10 +40,10 @@ const generateData = (days: number) => {
         data.push({
             date,
             values: {
-                primary: Math.floor(Math.random() * 1000),
-                secondary: Math.floor(Math.random() * 500),
+                value: Math.floor(Math.random() * 1000) + 100,
+                secondValue: Math.floor(Math.random() * 500) + 50,
             },
-        } as const);
+        });
     }
     return data;
 };
@@ -45,14 +52,15 @@ const sampleData = generateData(30);
 
 export const Default: Story = {
     render: () => (
-        <div className="h-[400px] w-[600px]">
+        <div style={{ width: '800px', height: '400px' }} className="border border-gray-200 rounded-lg p-4">
             <TimeSeriesChart
                 data={sampleData}
                 series={[
                     {
-                        id: "primary",
-                        valueAccessor: (d) => d.values.primary,
+                        id: "value",
+                        valueAccessor: (d) => d.values.value,
                         colorClassName: "text-blue-500",
+                        isActive: true,
                     },
                 ]}
             >
@@ -66,21 +74,22 @@ export const Default: Story = {
 
 export const WithCustomStyles: Story = {
     render: () => (
-        <div className="h-[400px] w-[600px]">
+        <div style={{ width: '800px', height: '400px' }} className="border border-gray-200 rounded-lg p-4">
             <TimeSeriesChart
                 data={sampleData}
                 series={[
                     {
-                        id: "primary",
-                        valueAccessor: (d) => d.values.primary,
+                        id: "value",
+                        valueAccessor: (d) => d.values.value,
                         colorClassName: "text-blue-500",
+                        isActive: true,
                     },
                 ]}
             >
                 <Areas
                     seriesStyles={[
                         {
-                            id: "primary",
+                            id: "value",
                             gradientClassName: "text-blue-500/50",
                             lineClassName: "text-blue-700",
                         },
@@ -95,31 +104,33 @@ export const WithCustomStyles: Story = {
 
 export const MultiSeries: Story = {
     render: () => (
-        <div className="h-[400px] w-[600px]">
+        <div style={{ width: '800px', height: '400px' }} className="border border-gray-200 rounded-lg p-4">
             <TimeSeriesChart
                 data={sampleData}
                 series={[
                     {
-                        id: "primary",
-                        valueAccessor: (d) => d.values.primary,
+                        id: "value",
+                        valueAccessor: (d) => d.values.value,
                         colorClassName: "text-blue-500",
+                        isActive: true,
                     },
                     {
-                        id: "secondary",
-                        valueAccessor: (d) => d.values.secondary,
+                        id: "secondValue",
+                        valueAccessor: (d) => d.values.secondValue,
                         colorClassName: "text-green-500",
+                        isActive: true,
                     },
                 ]}
             >
                 <Areas
                     seriesStyles={[
                         {
-                            id: "primary",
+                            id: "value",
                             gradientClassName: "text-blue-500/50",
                             lineClassName: "text-blue-700",
                         },
                         {
-                            id: "secondary",
+                            id: "secondValue",
                             gradientClassName: "text-green-500/50",
                             lineClassName: "text-green-700",
                         },
