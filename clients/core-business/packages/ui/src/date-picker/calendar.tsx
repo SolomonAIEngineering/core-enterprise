@@ -6,7 +6,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import { ElementType, HTMLAttributes, forwardRef, useRef } from "react";
+import { type ElementType, type HTMLAttributes, forwardRef, useRef } from "react";
 import {
   DayPicker,
   useDayPicker,
@@ -88,7 +88,7 @@ function Calendar({
       weekStartsOn={weekStartsOn}
       numberOfMonths={numberOfMonths}
       locale={locale}
-      showOutsideDays={numberOfMonths === 1 ? true : false}
+      showOutsideDays={numberOfMonths  === 1}
       className={className}
       classNames={{
         months: "flex space-y-0",

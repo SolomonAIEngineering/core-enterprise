@@ -1,20 +1,4 @@
-import { cn } from "@dub/utils";
-import { Command, CommandInput, CommandItem, useCommandState } from "cmdk";
-import { ChevronDown } from "lucide-react";
-import {
-  forwardRef,
-  HTMLProps,
-  isValidElement,
-  PropsWithChildren,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { AnimatedSizeContainer } from "../animated-size-container";
 import { Button, ButtonProps } from "../button";
-import { useMediaQuery, useScrollProgress } from "../hooks";
 import {
   Check2,
   CheckboxCheckedFill,
@@ -23,7 +7,24 @@ import {
   LoadingSpinner,
   Plus,
 } from "../icons";
+import { Command, CommandInput, CommandItem, useCommandState } from "cmdk";
+import {
+  HTMLProps,
+  PropsWithChildren,
+  ReactNode,
+  forwardRef,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Popover, PopoverProps } from "../popover";
+import { useMediaQuery, useScrollProgress } from "../hooks";
+
+import { AnimatedSizeContainer } from "../animated-size-container";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@dub/utils";
 
 export type ComboboxOption<TMeta = any> = {
   label: string;
@@ -38,11 +39,11 @@ export type ComboboxProps<
 > = PropsWithChildren<{
   multiple?: TMultiple;
   selected: TMultiple extends true
-    ? ComboboxOption<TMeta>[]
-    : ComboboxOption<TMeta> | null;
+  ? ComboboxOption<TMeta>[]
+  : ComboboxOption<TMeta> | null;
   setSelected: TMultiple extends true
-    ? (options: ComboboxOption<TMeta>[]) => void
-    : (option: ComboboxOption<TMeta> | null) => void;
+  ? (options: ComboboxOption<TMeta>[]) => void
+  : (option: ComboboxOption<TMeta> | null) => void;
   options?: ComboboxOption<TMeta>[];
   icon?: Icon | ReactNode;
   placeholder?: ReactNode;
@@ -140,11 +141,11 @@ export function Combobox({
     (options: ComboboxOption[], search: string) => {
       return search === ""
         ? [
-            ...selected,
-            ...options.filter(
-              (o) => selected.findIndex((s) => s.value === o.value) === -1,
-            ),
-          ]
+          ...selected,
+          ...options.filter(
+            (o) => selected.findIndex((s) => s.value === o.value) === -1,
+          ),
+        ]
         : options;
     },
     [selected],

@@ -15,12 +15,22 @@ const config: StorybookConfig = {
     docs: {
         autodocs: "tag",
     },
-    viteFinal: async (config) => {
+    core: {
+        builder: "@storybook/builder-vite",
+    },
+    async viteFinal(config) {
         return {
             ...config,
             define: {
                 ...config.define,
                 'process.env': process.env,
+            },
+            resolve: {
+                ...config.resolve,
+                alias: {
+                    ...config.resolve?.alias,
+                    "@": "/src",
+                },
             },
         };
     },

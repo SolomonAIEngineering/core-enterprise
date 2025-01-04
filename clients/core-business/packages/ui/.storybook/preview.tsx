@@ -1,12 +1,11 @@
 import '../src/styles/globals.css';
 
-import type { Preview, StoryFn } from "@storybook/react";
-
+import type { Preview } from '@storybook/react';
 import React from 'react';
 
 const preview: Preview = {
     parameters: {
-        actions: { argTypesRegex: "^on[A-Z].*" },
+        actions: { argTypesRegex: '^on[A-Z].*' },
         controls: {
             matchers: {
                 color: /(background|color)$/i,
@@ -16,12 +15,24 @@ const preview: Preview = {
         layout: 'centered',
     },
     decorators: [
-        (Story: StoryFn) => (
+        (Story) => (
             <div className="min-h-screen">
                 <Story />
             </div>
         ),
     ],
+    globalTypes: {
+        theme: {
+            name: 'Theme',
+            description: 'Global theme for components',
+            defaultValue: 'light',
+            toolbar: {
+                icon: 'circlehollow',
+                items: ['light', 'dark'],
+                showName: true,
+            },
+        },
+    },
 };
 
 export default preview; 
