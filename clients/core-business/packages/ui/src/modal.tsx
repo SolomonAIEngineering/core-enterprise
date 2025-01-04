@@ -29,7 +29,7 @@ export function Modal({
   preventDefaultClose?: boolean;
   drawerRootProps?: ComponentProps<typeof Drawer.Root>;
 }) {
-  const router = useRouter();
+  // const router = useRouter();
 
   const closeModal = ({ dragged }: { dragged?: boolean } = {}) => {
     if (preventDefaultClose && !dragged) {
@@ -42,9 +42,10 @@ export function Modal({
     if (setShowModal) {
       setShowModal(false);
       // else, this is intercepting route @modal
-    } else {
-      router.back();
     }
+    // } else {
+    //   router.back();
+    // }
   };
   const { isMobile } = useMediaQuery();
 
