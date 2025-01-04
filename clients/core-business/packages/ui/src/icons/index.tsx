@@ -1,7 +1,8 @@
 "use client";
 
-import { LucideIcon } from "lucide-react";
-import { ComponentType, SVGProps } from "react";
+import type { ComponentType, SVGProps } from "react";
+
+import type { LucideIcon } from "lucide-react";
 
 // custom icons
 export { default as Copy } from "./copy";
