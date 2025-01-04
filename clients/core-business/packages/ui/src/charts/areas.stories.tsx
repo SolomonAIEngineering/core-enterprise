@@ -655,8 +655,8 @@ export const DarkThemeAreas: Story = {
                         },
                     ]}
                 />
-                <XAxis showGridLines gridClassName="text-gray-800" tickClassName="text-gray-400" />
-                <YAxis showGridLines gridClassName="text-gray-800" tickClassName="text-gray-400" />
+                <XAxis showGridLines />
+                <YAxis showGridLines />
             </TimeSeriesChart>
         </div>
     ),

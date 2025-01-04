@@ -1,8 +1,9 @@
 "use client";
 
+import { type ContentProps, Drawer } from "vaul";
+
+import type { ComponentProps } from "react";
 import { cn } from "@dub/utils";
-import { ComponentProps } from "react";
-import { ContentProps, Drawer } from "vaul";
 
 function SheetRoot({
   children,
