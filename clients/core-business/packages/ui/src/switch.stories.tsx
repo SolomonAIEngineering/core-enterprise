@@ -25,7 +25,7 @@ export const Default: Story = {
         return (
             <Switch
                 checked={checked}
-                onCheckedChange={setChecked}
+                fn={setChecked}
                 aria-label="Toggle switch"
             />
         );
@@ -40,7 +40,7 @@ export const WithLabel: Story = {
                 <Switch
                     id="notifications-switch"
                     checked={checked}
-                    onCheckedChange={setChecked}
+                    fn={setChecked}
                     aria-label="Enable notifications"
                 />
                 <label
@@ -98,7 +98,7 @@ export const CustomColors: Story = {
                     <Switch
                         id="purple-switch"
                         checked={checked}
-                        onCheckedChange={setChecked}
+                        fn={setChecked}
                         className="data-[state=checked]:bg-purple-600"
                         aria-label="Purple switch"
                     />
@@ -113,7 +113,7 @@ export const CustomColors: Story = {
                     <Switch
                         id="amber-switch"
                         checked={checked}
-                        onCheckedChange={setChecked}
+                        fn={setChecked}
                         className="data-[state=checked]:bg-amber-500"
                         aria-label="Amber switch"
                     />
@@ -137,7 +137,7 @@ export const WithDescription: Story = {
                 <Switch
                     id="notifications-desc-switch"
                     checked={checked}
-                    onCheckedChange={setChecked}
+                    fn={setChecked}
                     aria-label="Enable notifications with description"
                 />
                 <div>
@@ -183,7 +183,7 @@ export const WithForm: Story = {
                         <Switch
                             id="push-notifications"
                             checked={formState.notifications}
-                            onCheckedChange={(checked) =>
+                            fn={(checked) =>
                                 setFormState((prev) => ({ ...prev, notifications: checked }))
                             }
                             aria-label="Push notifications"
@@ -204,7 +204,7 @@ export const WithForm: Story = {
                         <Switch
                             id="system-updates"
                             checked={formState.updates}
-                            onCheckedChange={(checked) =>
+                            fn={(checked) =>
                                 setFormState((prev) => ({ ...prev, updates: checked }))
                             }
                             aria-label="System updates"
@@ -225,7 +225,7 @@ export const WithForm: Story = {
                         <Switch
                             id="marketing-emails"
                             checked={formState.marketing}
-                            onCheckedChange={(checked) =>
+                            fn={(checked) =>
                                 setFormState((prev) => ({ ...prev, marketing: checked }))
                             }
                             aria-label="Marketing emails"
@@ -243,7 +243,7 @@ export const WithAnimation: Story = {
         return (
             <Switch
                 checked={checked}
-                onCheckedChange={setChecked}
+                fn={setChecked}
                 className="transition-all duration-300 ease-in-out"
                 aria-label="Animated switch"
             />
@@ -260,7 +260,7 @@ export const WithCustomSize: Story = {
                     <Switch
                         id="small-switch"
                         checked={checked}
-                        onCheckedChange={setChecked}
+                        fn={setChecked}
                         className="h-3 w-[34px]"
                         aria-label="Small switch"
                     />
@@ -275,8 +275,10 @@ export const WithCustomSize: Story = {
                     <Switch
                         id="large-switch"
                         checked={checked}
-                        onCheckedChange={setChecked}
-                        className="h-6 w-[52px]"
+                        fn={setChecked}
+                        trackDimensions="h-6 w-[52px]"
+                        thumbDimensions="h-4 w-4"
+                        thumbTranslate="translate-x-4"
                         aria-label="Large switch"
                     />
                     <label

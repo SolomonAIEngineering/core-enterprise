@@ -1,7 +1,8 @@
-import { cn } from "@dub/utils";
-import { cva, VariantProps } from "class-variance-authority";
+import { type Dispatch, type SetStateAction, useId } from "react";
 import { LayoutGroup, motion } from "framer-motion";
-import { Dispatch, SetStateAction, useId } from "react";
+import { type VariantProps, cva } from "class-variance-authority";
+
+import { cn } from "@dub/utils";
 
 const tabSelectButtonVariants = cva("p-4 transition-colors duration-75", {
   variants: {
