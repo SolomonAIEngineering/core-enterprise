@@ -1,30 +1,32 @@
-import { cn, deepEqual, isClickOnInteractiveChild } from "@dub/utils";
-import {
-  Cell,
-  Column,
-  ColumnDef,
-  ColumnPinningState,
-  flexRender,
-  getCoreRowModel,
-  PaginationState,
-  Row,
-  Table as TableType,
-  useReactTable,
-  VisibilityState,
-} from "@tanstack/react-table";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  CSSProperties,
-  Dispatch,
-  MouseEvent,
-  PropsWithChildren,
-  ReactNode,
-  SetStateAction,
+  type CSSProperties,
+  type Dispatch,
+  type MouseEvent,
+  type PropsWithChildren,
+  type ReactNode,
+  type SetStateAction,
   useEffect,
   useState,
 } from "react";
-import { Button } from "../button";
+import {
+  type Cell,
+  type Column,
+  type ColumnDef,
+  type ColumnPinningState,
+  type PaginationState,
+  type Row,
+  type Table as TableType,
+  type VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { LoadingSpinner, SortOrder } from "../icons";
+import { cn, deepEqual, isClickOnInteractiveChild } from "@dub/utils";
+
+import { Button } from "../button";
+import React from "react";
 
 const tableCellClassName = (columnId: string, clickable?: boolean) =>
   cn([
@@ -35,12 +37,15 @@ const tableCellClassName = (columnId: string, clickable?: boolean) =>
   ]);
 
 type UseTableProps<T> = {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   columns: ColumnDef<T, any>[];
   data: T[];
   loading?: boolean;
   error?: string;
   emptyState?: ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   cellRight?: (cell: Cell<T, any>) => ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   defaultColumn?: Partial<ColumnDef<T, any>>;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
@@ -61,20 +66,20 @@ type UseTableProps<T> = {
   thClassName?: string | ((columnId: string) => string);
   tdClassName?: string | ((columnId: string) => string);
 } & (
-  | {
+    | {
       pagination?: PaginationState;
       onPaginationChange?: Dispatch<SetStateAction<PaginationState>>;
       rowCount: number;
     }
-  | { pagination?: never; onPaginationChange?: never; rowCount?: never }
-);
+    | { pagination?: never; onPaginationChange?: never; rowCount?: never }
+  );
 
 type TableProps<T> = UseTableProps<T> &
   PropsWithChildren<{
     table: TableType<T>;
   }>;
 
-export function useTable<T extends any>(
+export function useTable<T>(
   props: UseTableProps<T>,
 ): TableProps<T> & { table: TableType<T> } {
   const {
@@ -92,6 +97,7 @@ export function useTable<T extends any>(
   );
 
   // Update internal columnVisibility when prop value changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       props.columnVisibility &&
@@ -101,6 +107,7 @@ export function useTable<T extends any>(
   }, [props.columnVisibility]);
 
   // Call onColumnVisibilityChange when internal columnVisibility changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     props.onColumnVisibilityChange?.(columnVisibility);
   }, [columnVisibility]);
@@ -237,9 +244,9 @@ export function Table<T>({
                               {header.isPlaceholder
                                 ? null
                                 : flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext(),
-                                  )}
+                                  header.column.columnDef.header,
+                                  header.getContext(),
+                                )}
                             </span>
                             {isSortableColumn && (
                               <SortOrder
@@ -260,6 +267,7 @@ export function Table<T>({
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
+                // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
                 <tr
                   key={row.id}
                   className={cn(
@@ -267,16 +275,16 @@ export function Table<T>({
                     onRowClick && "cursor-pointer select-none",
                     // hacky fix: if there are more than 8 rows, remove the bottom border from the last row
                     table.getRowModel().rows.length > 8 &&
-                      row.index === table.getRowModel().rows.length - 1 &&
-                      "[&_td]:border-b-0",
+                    row.index === table.getRowModel().rows.length - 1 &&
+                    "[&_td]:border-b-0",
                   )}
                   onClick={
                     onRowClick
                       ? (e) => {
-                          // Ignore if click is on an interactive child
-                          if (isClickOnInteractiveChild(e)) return;
-                          onRowClick(row, e);
-                        }
+                        // Ignore if click is on an interactive child
+                        if (isClickOnInteractiveChild(e)) return;
+                        onRowClick(row, e);
+                      }
                       : undefined
                   }
                 >
@@ -333,7 +341,7 @@ export function Table<T>({
               {(pagination.pageIndex - 1) * pagination.pageSize + 1}-
               {Math.min(
                 (pagination.pageIndex - 1) * pagination.pageSize +
-                  pagination.pageSize,
+                pagination.pageSize,
                 table.getRowCount(),
               )}
             </span>{" "}
@@ -381,17 +389,19 @@ export function Table<T>({
 }
 
 const getCommonPinningClassNames = (
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   column: Column<any>,
   isLastRow: boolean,
 ): string => {
   const isPinned = column.getIsPinned();
   return cn(
     isPinned &&
-      !isLastRow &&
-      "animate-table-pinned-shadow [animation-timeline:scroll(inline)]",
+    !isLastRow &&
+    "animate-table-pinned-shadow [animation-timeline:scroll(inline)]",
   );
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
   const isPinned = column.getIsPinned();
 
