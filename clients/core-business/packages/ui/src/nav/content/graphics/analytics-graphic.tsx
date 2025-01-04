@@ -1,8 +1,10 @@
+import React from "react";
+import type { SVGProps } from "react";
 import { cn } from "@dub/utils";
-import { SVGProps } from "react";
 
 export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="349"
@@ -20,50 +22,50 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
           stroke="currentColor"
           strokeWidth="0.5"
           d="M12.667 1h48v48h-48zM60.667 1h48v48h-48zM108.667 1h48v48h-48zM156.667 1h48v48h-48zM204.667 1h48v48h-48zM252.667 1h48v48h-48z"
-        ></path>
+        />
         <path
           stroke="currentColor"
           strokeWidth="0.5"
           d="M300.667 1h48v48h-48zM12.667 49h48v48h-48zM60.667 49h48v48h-48zM108.667 49h48v48h-48zM156.667 49h48v48h-48zM204.667 49h48v48h-48zM252.667 49h48v48h-48z"
-        ></path>
+        />
         <path
           stroke="currentColor"
           strokeWidth="0.5"
           d="M300.667 49h48v48h-48zM12.667 97h48v48h-48zM60.667 97h48v48h-48zM108.667 97h48v48h-48zM156.667 97h48v48h-48zM204.667 97h48v48h-48zM252.667 97h48v48h-48z"
-        ></path>
+        />
         <path
           stroke="currentColor"
           strokeWidth="0.5"
           d="M300.667 97h48v48h-48zM12.667 145h48v48h-48zM60.667 145h48v48h-48zM108.667 145h48v48h-48zM156.667 145h48v48h-48zM204.667 145h48v48h-48zM252.667 145h48v48h-48z"
-        ></path>
+        />
         <path
           stroke="currentColor"
           strokeWidth="0.5"
           d="M300.667 145h48v48h-48zM12.667 193h48v48h-48zM60.667 193h48v48h-48zM108.667 193h48v48h-48zM156.667 193h48v48h-48zM204.667 193h48v48h-48zM252.667 193h48v48h-48z"
-        ></path>
+        />
         <path
           stroke="currentColor"
           strokeWidth="0.5"
           d="M300.667 193h48v48h-48zM12.667 241h48v48h-48zM60.667 241h48v48h-48zM108.667 241h48v48h-48zM156.667 241h48v48h-48zM204.667 241h48v48h-48zM252.667 241h48v48h-48z"
-        ></path>
+        />
         <path
           stroke="currentColor"
           strokeWidth="0.5"
           d="M300.667 241h48v48h-48z"
-        ></path>
+        />
       </g>
-      <path stroke="#14B8A6" d="M.667 196.5c93-1 267-35.5 324.5-184.5"></path>
+      <path stroke="#14B8A6" d="M.667 196.5c93-1 267-35.5 324.5-184.5" />
       <path
         fill="currentColor"
         className="text-[var(--bg)]"
         d="M204.667 145h96v48h-96z"
-      ></path>
+      />
       <path
         stroke="currentColor"
         strokeWidth="0.5"
         className="text-[var(--grid)]"
         d="M204.667 145h96v48h-96z"
-      ></path>
+      />
       <text
         xmlSpace="preserve"
         fill="#A3A3A3"
@@ -140,13 +142,13 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
         className="text-[var(--bg)]"
         d="M108.667 193h96v48h-96z"
-      ></path>
+      />
       <path
         stroke="currentColor"
         strokeWidth="0.5"
         className="text-[var(--grid)]"
         d="M108.667 193h96v48h-96z"
-      ></path>
+      />
       <text
         xmlSpace="preserve"
         fill="#A3A3A3"
@@ -220,7 +222,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         </tspan>
       </text>
       <g filter="url(#a)">
-        <circle cx="204.667" cy="145" r="3" fill="#14B8A6"></circle>
+        <circle cx="204.667" cy="145" r="3" fill="#14B8A6" />
       </g>
       <circle
         cx="204.667"
@@ -229,7 +231,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         stroke="#3EC5B8"
         strokeOpacity="0.3"
         strokeWidth="2"
-      ></circle>
+      />
       <defs>
         <filter
           id="a"
@@ -240,7 +242,8 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
           colorInterpolationFilters="sRGB"
           filterUnits="userSpaceOnUse"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
           <feBlend
             in="SourceGraphic"
             in2="BackgroundImageFix"
@@ -250,17 +253,18 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
             in="SourceAlpha"
             result="hardAlpha"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          ></feColorMatrix>
-          <feOffset dy="2"></feOffset>
+          />
+          <feOffset dy="2" />
+          {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
           <feGaussianBlur stdDeviation="1"></feGaussianBlur>
           <feComposite
             in2="hardAlpha"
             k2="-1"
             k3="1"
             operator="arithmetic"
-          ></feComposite>
-          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.65 0"></feColorMatrix>
-          <feBlend in2="shape" result="effect1_innerShadow_9_286"></feBlend>
+          />
+          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.65 0" />
+          <feBlend in2="shape" result="effect1_innerShadow_9_286" />
         </filter>
       </defs>
     </svg>

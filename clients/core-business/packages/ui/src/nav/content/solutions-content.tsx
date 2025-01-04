@@ -1,10 +1,12 @@
-import { cn, createHref } from "@dub/utils";
 import { Code, OfficeBuilding } from "../../icons";
 import {
   ContentIcon,
   ContentLinkCard,
   contentHeadingClassName,
 } from "./shared";
+import { cn, createHref } from "@dub/utils";
+
+import React from "react";
 
 const PROFILES = [
   {
@@ -29,6 +31,7 @@ export function SolutionsContent({ domain }: { domain: string }) {
         <div className="-mx-2 flex flex-col gap-0.5">
           {PROFILES.map(({ icon, title, description, href }) => (
             <ContentLinkCard
+              key={title}
               href={createHref(href, domain, {
                 utm_source: "Custom Domain",
                 utm_medium: "Navbar",

@@ -6,7 +6,7 @@ import { LayoutGroup } from "framer-motion";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { PropsWithChildren, createContext, useId } from "react";
+import { type PropsWithChildren, createContext, useId } from "react";
 import useSWR from "swr";
 import { buttonVariants } from "../button";
 import { FEATURES_LIST, RESOURCES } from "../content";
@@ -15,6 +15,7 @@ import { MaxWidthWrapper } from "../max-width-wrapper";
 import { NavWordmark } from "../nav-wordmark";
 import { ProductContent } from "./content/product-content";
 import { ResourcesContent } from "./content/resources-content";
+import React from "react";
 
 export type NavTheme = "light" | "dark";
 
@@ -92,14 +93,15 @@ export function Nav({
   // if they do, we should just use app.dub.co links
   // if not, we can use conversion-enabled d.to links
   const hasDubCookie =
-    domain === "dub.co" && Cookies.get("dub_id") ? true : false;
+    !!(
+      domain === "dub.co" && Cookies.get("dub_id"));
 
   return (
     <NavContext.Provider value={{ theme }}>
       <LayoutGroup id={layoutGroupId}>
         <div
           className={cn(
-            `sticky inset-x-0 top-0 z-30 w-full transition-all`,
+            "sticky inset-x-0 top-0 z-30 w-full transition-all",
             theme === "dark" && "dark",
           )}
         >
@@ -108,7 +110,7 @@ export function Nav({
             className={cn(
               "absolute inset-0 block border-b border-transparent transition-all",
               scrolled &&
-                "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
+              "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
             )}
           />
           <MaxWidthWrapper className={cn("relative", maxWidthWrapperClassName)}>
@@ -155,6 +157,7 @@ export function Nav({
                               </Link>
                             ) : (
                               <button
+                                type="button"
                                 className={navItemClassName}
                                 data-active={isActive}
                               >

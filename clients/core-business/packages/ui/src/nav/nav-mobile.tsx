@@ -4,10 +4,11 @@ import { APP_DOMAIN, cn, createHref, fetcher } from "@dub/utils";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { ElementType, useEffect, useState } from "react";
+import { type ElementType, useEffect, useState } from "react";
 import useSWR from "swr";
 import { AnimatedSizeContainer } from "../animated-size-container";
 import { navItems, type NavTheme } from "./nav";
+import React from "react";
 
 export function NavMobile({
   theme = "light",
@@ -41,6 +42,7 @@ export function NavMobile({
 
   return (
     <div className={cn(theme === "dark" && "dark")}>
+      {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
       <button
         onClick={() => setOpen(!open)}
         className={cn(
@@ -63,7 +65,7 @@ export function NavMobile({
         <ul className="grid divide-y divide-gray-200 dark:divide-white/[0.15]">
           {navItems.map(({ name, href, childItems }, idx) => (
             <MobileNavItem
-              key={idx}
+              key={`${name}-${idx}-${Date.now()}`}
               name={name}
               href={href}
               childItems={childItems}
@@ -132,6 +134,7 @@ const MobileNavItem = ({
       <li className="py-3">
         <AnimatedSizeContainer height>
           <button
+            type="button"
             className="flex w-full justify-between"
             onClick={() => setExpanded(!expanded)}
           >
