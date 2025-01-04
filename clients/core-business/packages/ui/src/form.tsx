@@ -78,7 +78,6 @@ export function Form({
             text={buttonText}
             loading={saving}
             disabled={saveDisabled}
-            disabledTooltip={disabledTooltip}
           />
         </div>
       </div>
