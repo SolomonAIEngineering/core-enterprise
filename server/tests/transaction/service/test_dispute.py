@@ -13,12 +13,15 @@ from polar.transaction.service.balance import (
     balance_transaction as balance_transaction_service,
 )
 from polar.transaction.service.dispute import (  # type: ignore[attr-defined]
+    DisputeNotResolved,
     DisputeUnknownPaymentTransaction,
+    platform_fee_transaction_service,
     processor_fee_transaction_service,
 )
 from polar.transaction.service.dispute import (
     dispute_transaction as dispute_transaction_service,
 )
+from polar.transaction.service.platform_fee import PlatformFeeTransactionService
 from polar.transaction.service.processor_fee import ProcessorFeeTransactionService
 from tests.fixtures.database import SaveFixture
 from tests.transaction.conftest import create_transaction
@@ -61,6 +64,7 @@ def build_stripe_charge(
 
 def build_stripe_dispute(
     *,
+    status: str,
     id: str = "STRIPE_DISPUTE_ID",
     charge_id: str = "STRIPE_CHARGE_ID",
     amount: int = 100,
@@ -69,6 +73,7 @@ def build_stripe_dispute(
     return stripe_lib.Dispute.construct_from(
         {
             "id": id,
+            "status": status,
             "charge": charge_id,
             "currency": "usd",
             "amount": amount,
@@ -97,20 +102,31 @@ def create_dispute_fees_mock(mocker: MockerFixture) -> AsyncMock:
     )
 
 
+@pytest.fixture(autouse=True)
+def create_dispute_fees_balances_mock(mocker: MockerFixture) -> AsyncMock:
+    return mocker.patch.object(
+        platform_fee_transaction_service,
+        "create_dispute_fees_balances",
+        spec=PlatformFeeTransactionService.create_dispute_fees_balances,
+        return_value=[],
+    )
+
+
 @pytest.mark.asyncio
 class TestCreateDispute:
-    async def test_refund_unknown_payment_transaction(
-        self, session: AsyncSession
-    ) -> None:
-        dispute = build_stripe_dispute(balance_transactions=[])
+    async def test_not_resolved(self, session: AsyncSession) -> None:
+        dispute = build_stripe_dispute(status="needs_response", balance_transactions=[])
 
-        # then
-        session.expunge_all()
+        with pytest.raises(DisputeNotResolved):
+            await dispute_transaction_service.create_dispute(session, dispute=dispute)
+
+    async def test_unknown_payment_transaction(self, session: AsyncSession) -> None:
+        dispute = build_stripe_dispute(status="won", balance_transactions=[])
 
         with pytest.raises(DisputeUnknownPaymentTransaction):
             await dispute_transaction_service.create_dispute(session, dispute=dispute)
 
-    async def test_valid(
+    async def test_valid_lost(
         self,
         session: AsyncSession,
         save_fixture: SaveFixture,
@@ -118,9 +134,11 @@ class TestCreateDispute:
         pledge: Pledge,
         balance_transaction_service_mock: MagicMock,
         create_dispute_fees_mock: AsyncMock,
+        create_dispute_fees_balances_mock: AsyncMock,
     ) -> None:
         charge = build_stripe_charge()
         dispute = build_stripe_dispute(
+            status="lost",
             charge_id=charge.id,
             balance_transactions=[
                 build_stripe_balance_transaction(reporting_category="dispute")
@@ -212,16 +230,16 @@ class TestCreateDispute:
         await save_fixture(outgoing_balance_2)
         await save_fixture(incoming_balance_2)
 
-        # then
-        session.expunge_all()
-
-        dispute_transaction = await dispute_transaction_service.create_dispute(
-            session, dispute=dispute
-        )
+        (
+            dispute_transaction,
+            dispute_reversal_transaction,
+        ) = await dispute_transaction_service.create_dispute(session, dispute=dispute)
 
         assert dispute_transaction.type == TransactionType.dispute
         assert dispute_transaction.processor == PaymentProcessor.stripe
         assert dispute_transaction.amount == -dispute.amount
+
+        assert dispute_reversal_transaction is None
 
         assert balance_transaction_service_mock.create_reversal_balance.call_count == 2
 
@@ -244,24 +262,9 @@ class TestCreateDispute:
         assert second_call[1]["amount"] == dispute.amount * 0.25
 
         create_dispute_fees_mock.assert_awaited_once()
+        create_dispute_fees_balances_mock.assert_awaited_once()
 
-
-@pytest.mark.asyncio
-class TestCreateDisputeReversal:
-    async def test_refund_unknown_payment_transaction(
-        self, session: AsyncSession
-    ) -> None:
-        dispute = build_stripe_dispute(balance_transactions=[])
-
-        # then
-        session.expunge_all()
-
-        with pytest.raises(DisputeUnknownPaymentTransaction):
-            await dispute_transaction_service.create_dispute_reversal(
-                session, dispute=dispute
-            )
-
-    async def test_valid(
+    async def test_valid_won(
         self,
         session: AsyncSession,
         save_fixture: SaveFixture,
@@ -269,9 +272,11 @@ class TestCreateDisputeReversal:
         pledge: Pledge,
         balance_transaction_service_mock: MagicMock,
         create_dispute_fees_mock: AsyncMock,
+        create_dispute_fees_balances_mock: AsyncMock,
     ) -> None:
         charge = build_stripe_charge()
         dispute = build_stripe_dispute(
+            status="won",
             charge_id=charge.id,
             balance_transactions=[
                 build_stripe_balance_transaction(
@@ -308,19 +313,6 @@ class TestCreateDisputeReversal:
         )
         await save_fixture(payment_transaction)
 
-        dispute_reversal_transaction = Transaction(
-            type=TransactionType.dispute,
-            processor=PaymentProcessor.stripe,
-            currency=charge.currency,
-            amount=-charge.amount,
-            account_currency=charge.currency,
-            account_amount=-charge.amount,
-            tax_amount=0,
-            charge_id=charge.id,
-            pledge=pledge,
-        )
-        await save_fixture(dispute_reversal_transaction)
-
         # First balance
         outgoing_balance_1 = Transaction(
             type=TransactionType.balance,
@@ -351,38 +343,6 @@ class TestCreateDisputeReversal:
         )
         await save_fixture(outgoing_balance_1)
         await save_fixture(incoming_balance_1)
-
-        # First balance reversal
-        outgoing_reversal_balance_1 = Transaction(
-            type=TransactionType.balance,
-            processor=PaymentProcessor.stripe,
-            account=account,
-            currency=charge.currency,
-            amount=-charge.amount * 0.75,
-            account_currency=charge.currency,
-            account_amount=-charge.amount * 0.75,
-            tax_amount=0,
-            pledge=pledge,
-            transfer_id="STRIPE_TRANSFER_ID",
-            balance_correlation_key="BALANCE_REVERSAL_1",
-            balance_reversal_transaction=incoming_balance_1,
-        )
-        incoming_reversal_balance_1 = Transaction(
-            type=TransactionType.balance,
-            processor=PaymentProcessor.stripe,
-            currency=charge.currency,
-            amount=-charge.amount * 0.75,
-            account_currency=charge.currency,
-            account_amount=-charge.amount * 0.75,
-            tax_amount=0,
-            pledge=pledge,
-            payment_transaction=payment_transaction,
-            transfer_id="STRIPE_TRANSFER_ID",
-            balance_correlation_key="BALANCE_REVERSAL_1",
-            balance_reversal_transaction=outgoing_balance_1,
-        )
-        await save_fixture(outgoing_reversal_balance_1)
-        await save_fixture(incoming_reversal_balance_1)
 
         # Second balance
         outgoing_balance_2 = Transaction(
@@ -415,62 +375,26 @@ class TestCreateDisputeReversal:
         await save_fixture(outgoing_balance_2)
         await save_fixture(incoming_balance_2)
 
-        # Second balance reversal
-        outgoing_reversal_balance_2 = Transaction(
-            type=TransactionType.balance,
-            processor=PaymentProcessor.stripe,
-            account=account,
-            currency=charge.currency,
-            amount=-charge.amount * 0.25,
-            account_currency=charge.currency,
-            account_amount=-charge.amount * 0.25,
-            tax_amount=0,
-            pledge=pledge,
-            transfer_id="STRIPE_TRANSFER_ID",
-            balance_correlation_key="BALANCE_REVERSAL_2",
-            balance_reversal_transaction=incoming_balance_2,
-        )
-        incoming_reversal_balance_2 = Transaction(
-            type=TransactionType.balance,
-            processor=PaymentProcessor.stripe,
-            currency=charge.currency,
-            amount=-charge.amount * 0.25,
-            account_currency=charge.currency,
-            account_amount=-charge.amount * 0.25,
-            tax_amount=0,
-            pledge=pledge,
-            payment_transaction=payment_transaction,
-            transfer_id="STRIPE_TRANSFER_ID",
-            balance_correlation_key="BALANCE_REVERSAL_2",
-            balance_reversal_transaction=outgoing_balance_2,
-        )
-        await save_fixture(outgoing_reversal_balance_2)
-        await save_fixture(incoming_reversal_balance_2)
+        (
+            dispute_transaction,
+            dispute_reversal_transaction,
+        ) = await dispute_transaction_service.create_dispute(session, dispute=dispute)
 
-        # then
-        session.expunge_all()
+        assert dispute_transaction.type == TransactionType.dispute
+        assert dispute_transaction.processor == PaymentProcessor.stripe
+        assert dispute_transaction.amount == -dispute.amount
 
-        dispute_reversal_transaction = (
-            await dispute_transaction_service.create_dispute_reversal(
-                session, dispute=dispute
-            )
-        )
-
+        assert dispute_reversal_transaction is not None
         assert dispute_reversal_transaction.type == TransactionType.dispute_reversal
         assert dispute_reversal_transaction.processor == PaymentProcessor.stripe
         assert dispute_reversal_transaction.amount == dispute.amount
 
-        assert balance_transaction_service_mock.create_balance.call_count == 2
+        balance_transaction_service_mock.create_reversal_balance.assert_not_called()
 
-        first_call = balance_transaction_service_mock.create_balance.call_args_list[0]
-        assert first_call[1]["destination_account"].id == account.id
-        assert first_call[1]["amount"] == incoming_balance_1.amount
+        create_dispute_fees_mock.assert_awaited()
+        assert create_dispute_fees_mock.call_count == 2
 
-        second_call = balance_transaction_service_mock.create_balance.call_args_list[1]
-        assert second_call[1]["destination_account"].id == account.id
-        assert second_call[1]["amount"] == incoming_balance_2.amount
-
-        create_dispute_fees_mock.assert_awaited_once()
+        create_dispute_fees_balances_mock.assert_awaited_once()
 
 
 @pytest.mark.asyncio

@@ -39,7 +39,6 @@ from polar.models import (
     Repository,
     Subscription,
     User,
-    UserCustomer,
     UserOrganization,
 )
 from polar.models.benefit import BenefitType
@@ -289,19 +288,15 @@ async def user_github_oauth(
     return await create_user_github_oauth(save_fixture, user)
 
 
-@pytest_asyncio.fixture
-async def user(
-    save_fixture: SaveFixture,
-) -> User:
-    return await create_user(save_fixture)
-
-
 async def create_user(
-    save_fixture: SaveFixture, stripe_customer_id: str | None = None
+    save_fixture: SaveFixture,
+    stripe_customer_id: str | None = None,
+    email_verified: bool = True,
 ) -> User:
     user = User(
         id=uuid.uuid4(),
         email=rstr("test") + "@example.com",
+        email_verified=email_verified,
         avatar_url="https://avatars.githubusercontent.com/u/47952?v=4",
         oauth_accounts=[],
         stripe_customer_id=stripe_customer_id,
@@ -311,14 +306,13 @@ async def create_user(
 
 
 @pytest_asyncio.fixture
+async def user(save_fixture: SaveFixture) -> User:
+    return await create_user(save_fixture)
+
+
+@pytest_asyncio.fixture
 async def user_second(save_fixture: SaveFixture) -> User:
-    user = User(
-        id=uuid.uuid4(),
-        email=rstr("test") + "@example.com",
-        avatar_url="https://avatars.githubusercontent.com/u/47952?v=4",
-    )
-    await save_fixture(user)
-    return user
+    return await create_user(save_fixture)
 
 
 @pytest_asyncio.fixture
@@ -660,8 +654,9 @@ async def create_product_price_fixed(
     *,
     product: Product,
     type: ProductPriceType = ProductPriceType.recurring,
-    recurring_interval: SubscriptionRecurringInterval
-    | None = SubscriptionRecurringInterval.month,
+    recurring_interval: (
+        SubscriptionRecurringInterval | None
+    ) = SubscriptionRecurringInterval.month,
     amount: int = 1000,
     is_archived: bool = False,
 ) -> ProductPriceFixed:
@@ -842,6 +837,7 @@ async def create_customer(
     name: str = "Customer",
     stripe_customer_id: str = "STRIPE_CUSTOMER_ID",
     user_metadata: dict[str, Any] = {},
+    user: User | None = None,
 ) -> Customer:
     customer = Customer(
         email=email,
@@ -850,6 +846,7 @@ async def create_customer(
         stripe_customer_id=stripe_customer_id,
         organization=organization,
         user_metadata=user_metadata,
+        user=user,
     )
     await save_fixture(customer)
     return customer
@@ -869,6 +866,9 @@ async def create_order(
     created_at: datetime | None = None,
     custom_field_data: dict[str, Any] | None = None,
 ) -> Order:
+    if product_price is None and product.prices:
+        product_price = product.prices[0]
+
     order = Order(
         created_at=created_at or utc_now(),
         amount=amount,
@@ -878,11 +878,7 @@ async def create_order(
         stripe_invoice_id=stripe_invoice_id,
         customer=customer,
         product=product,
-        product_price=product_price
-        if product_price is not None
-        else product.prices[0]
-        if product.prices
-        else None,
+        product_price=product_price,
         subscription=subscription,
         custom_field_data=custom_field_data or {},
     )
@@ -941,28 +937,48 @@ async def create_subscription(
     current_period_end: datetime | None = None,
     discount: Discount | None = None,
     stripe_subscription_id: str | None = "SUBSCRIPTION_ID",
+    cancel_at_period_end: bool = False,
+    revoke: bool = False,
 ) -> Subscription:
     price = price or product.prices[0] if product.prices else None
     now = datetime.now(UTC)
+    if not current_period_end:
+        current_period_end = now + timedelta(days=30)
+
+    ends_at = None
+    canceled_at = None
+    if revoke:
+        ended_at = now
+        ends_at = now
+        canceled_at = now
+        status = SubscriptionStatus.canceled
+    elif cancel_at_period_end:
+        ends_at = current_period_end
+        canceled_at = now
+
     subscription = Subscription(
         stripe_subscription_id=stripe_subscription_id,
         amount=price.price_amount if isinstance(price, ProductPriceFixed) else None,
-        currency=price.price_currency
-        if price is not None and isinstance(price, HasPriceCurrency)
-        else None,
-        recurring_interval=price.recurring_interval
-        if price is not None
-        else SubscriptionRecurringInterval.month,
+        currency=(
+            price.price_currency
+            if price is not None and isinstance(price, HasPriceCurrency)
+            else None
+        ),
+        recurring_interval=(
+            price.recurring_interval
+            if price is not None
+            else SubscriptionRecurringInterval.month
+        ),
         status=status,
-        current_period_start=now
-        if current_period_start is None
-        else current_period_start,
-        current_period_end=(now + timedelta(days=30))
-        if current_period_end is None
-        else current_period_end,
-        cancel_at_period_end=False,
+        current_period_start=(
+            now if current_period_start is None else current_period_start
+        ),
+        current_period_end=current_period_end,
+        cancel_at_period_end=cancel_at_period_end,
+        canceled_at=canceled_at,
         started_at=started_at,
         ended_at=ended_at,
+        ends_at=ends_at,
         customer=customer,
         product=product,
         price=price,
@@ -991,6 +1007,29 @@ async def create_active_subscription(
         status=SubscriptionStatus.active,
         started_at=started_at or utc_now(),
         ended_at=ended_at,
+        stripe_subscription_id=stripe_subscription_id,
+    )
+
+
+async def create_canceled_subscription(
+    save_fixture: SaveFixture,
+    *,
+    product: Product,
+    price: ProductPrice | None = None,
+    customer: Customer,
+    stripe_subscription_id: str | None = "SUBSCRIPTION_ID",
+    cancel_at_period_end: bool = True,
+    revoke: bool = False,
+) -> Subscription:
+    return await create_subscription(
+        save_fixture,
+        product=product,
+        price=price,
+        customer=customer,
+        status=SubscriptionStatus.active,
+        started_at=utc_now(),
+        cancel_at_period_end=cancel_at_period_end,
+        revoke=revoke,
         stripe_subscription_id=stripe_subscription_id,
     )
 
@@ -1294,29 +1333,6 @@ async def customer_second(
         email=lstr("customer.second@example.com"),
         stripe_customer_id=lstr("STRIPE_CUSTOMER_ID_2"),
     )
-
-
-async def create_user_customer(
-    save_fixture: SaveFixture,
-    *,
-    user: User,
-    organization: Organization,
-    email: str = "user.customer@example.com",
-    email_verified: bool = False,
-    name: str = "Customer",
-    stripe_customer_id: str = "STRIPE_USER_CUSTOMER_ID",
-) -> Customer:
-    customer = await create_customer(
-        save_fixture,
-        organization=organization,
-        email=email,
-        email_verified=email_verified,
-        name=name,
-        stripe_customer_id=stripe_customer_id,
-    )
-    user_customer = UserCustomer(user=user, customer=customer)
-    await save_fixture(user_customer)
-    return customer
 
 
 @pytest_asyncio.fixture

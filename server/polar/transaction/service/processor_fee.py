@@ -39,6 +39,8 @@ def _get_stripe_processor_fee_type(description: str) -> ProcessorFeeType:
         return ProcessorFeeType.payment
     if "radar" in description:
         return ProcessorFeeType.security
+    if "3d secure" in description:
+        return ProcessorFeeType.payment
     raise UnsupportedStripeFeeType(description)
 
 
@@ -137,26 +139,24 @@ class ProcessorFeeTransactionService(BaseTransactionService):
             return fee_transactions
 
         dispute = await stripe_service.get_dispute(dispute_transaction.dispute_id)
-        balance_transaction = next(
-            bt
-            for bt in dispute.balance_transactions
-            if bt.reporting_category == category
-        )
-
-        dispute_fee_transaction = Transaction(
-            type=TransactionType.processor_fee,
-            processor=PaymentProcessor.stripe,
-            processor_fee_type=ProcessorFeeType.dispute,
-            currency=dispute_transaction.currency,
-            amount=-balance_transaction.fee,
-            account_currency=dispute_transaction.currency,
-            account_amount=-balance_transaction.fee,
-            tax_amount=0,
-            incurred_by_transaction_id=dispute_transaction.id,
-        )
-
-        session.add(dispute_fee_transaction)
-        fee_transactions.append(dispute_fee_transaction)
+        for balance_transaction in dispute.balance_transactions:
+            if (
+                balance_transaction.reporting_category == category
+                and balance_transaction.fee > 0
+            ):
+                dispute_fee_transaction = Transaction(
+                    type=TransactionType.processor_fee,
+                    processor=PaymentProcessor.stripe,
+                    processor_fee_type=ProcessorFeeType.dispute,
+                    currency=dispute_transaction.currency,
+                    amount=-balance_transaction.fee,
+                    account_currency=dispute_transaction.currency,
+                    account_amount=-balance_transaction.fee,
+                    tax_amount=0,
+                    incurred_by_transaction_id=dispute_transaction.id,
+                )
+                session.add(dispute_fee_transaction)
+                fee_transactions.append(dispute_fee_transaction)
 
         await session.flush()
 

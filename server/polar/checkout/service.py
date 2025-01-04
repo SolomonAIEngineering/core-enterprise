@@ -941,9 +941,11 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                     customer=stripe_customer_id,
                     currency=checkout.currency or "usd",
                     price=stripe_price_id,
-                    coupon=checkout.discount.stripe_coupon_id
-                    if checkout.discount
-                    else None,
+                    coupon=(
+                        checkout.discount.stripe_coupon_id
+                        if checkout.discount
+                        else None
+                    ),
                     automatic_tax=checkout.product.is_tax_applicable,
                     metadata=metadata,
                     invoice_metadata={
@@ -963,9 +965,11 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                     subscription_id=subscription.stripe_subscription_id,
                     old_price=subscription.price.stripe_price_id,
                     new_price=stripe_price_id,
-                    coupon=checkout.discount.stripe_coupon_id
-                    if checkout.discount
-                    else None,
+                    coupon=(
+                        checkout.discount.stripe_coupon_id
+                        if checkout.discount
+                        else None
+                    ),
                     automatic_tax=checkout.product.is_tax_applicable,
                     metadata=metadata,
                     invoice_metadata={
@@ -984,9 +988,9 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                 customer=stripe_customer_id,
                 currency=checkout.currency or "usd",
                 price=stripe_price_id,
-                coupon=checkout.discount.stripe_coupon_id
-                if checkout.discount
-                else None,
+                coupon=(
+                    checkout.discount.stripe_coupon_id if checkout.discount else None
+                ),
                 automatic_tax=checkout.product.is_tax_applicable,
                 metadata={
                     **metadata,
@@ -1072,9 +1076,9 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                 customer=stripe_customer_id,
                 currency=checkout.currency or "usd",
                 price=stripe_price_id,
-                coupon=checkout.discount.stripe_coupon_id
-                if checkout.discount
-                else None,
+                coupon=(
+                    checkout.discount.stripe_coupon_id if checkout.discount else None
+                ),
                 automatic_tax=False,
                 metadata=metadata,
                 invoice_metadata={
@@ -1092,9 +1096,9 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                 customer=stripe_customer_id,
                 currency=checkout.currency or "usd",
                 price=stripe_price_id,
-                coupon=checkout.discount.stripe_coupon_id
-                if checkout.discount
-                else None,
+                coupon=(
+                    checkout.discount.stripe_coupon_id if checkout.discount else None
+                ),
                 automatic_tax=False,
                 metadata=metadata,
                 idempotency_key=idempotency_key,
@@ -1536,7 +1540,7 @@ class CheckoutService(ResourceServiceReader[Checkout]):
     async def _update_checkout_tax(
         self, session: AsyncSession, checkout: Checkout
     ) -> Checkout:
-        if not checkout.product.is_tax_applicable:
+        if not (checkout.is_payment_required and checkout.product.is_tax_applicable):
             checkout.tax_amount = 0
             return checkout
 
@@ -1552,9 +1556,11 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                     checkout.subtotal_amount,
                     checkout.product.stripe_product_id,
                     checkout.customer_billing_address,
-                    [checkout.customer_tax_id]
-                    if checkout.customer_tax_id is not None
-                    else [],
+                    (
+                        [checkout.customer_tax_id]
+                        if checkout.customer_tax_id is not None
+                        else []
+                    ),
                 )
                 checkout.tax_amount = tax_amount
             except TaxCalculationError:
@@ -1642,9 +1648,11 @@ class CheckoutService(ResourceServiceReader[Checkout]):
                 update_params["address"] = checkout.customer_billing_address.to_dict()  # type: ignore
             await stripe_service.update_customer(
                 stripe_customer_id,
-                tax_id=to_stripe_tax_id(checkout.customer_tax_id)
-                if checkout.customer_tax_id is not None
-                else None,
+                tax_id=(
+                    to_stripe_tax_id(checkout.customer_tax_id)
+                    if checkout.customer_tax_id is not None
+                    else None
+                ),
                 **update_params,
             )
         customer.stripe_customer_id = stripe_customer_id
@@ -1657,7 +1665,11 @@ class CheckoutService(ResourceServiceReader[Checkout]):
         await session.flush()
 
         if is_direct_user(auth_subject):
-            await customer_service.link_user(session, customer, auth_subject.subject)
+            user = auth_subject.subject
+            if user.email_verified and user.email.lower() == customer.email.lower():
+                await customer_service.link_user(
+                    session, customer, auth_subject.subject
+                )
 
         return customer
 
