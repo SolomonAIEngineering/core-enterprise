@@ -3,9 +3,9 @@
 import { AnimatedSizeContainer, useLocalStorage } from "@dub/ui";
 import { useSearchParams } from "next/navigation";
 import {
-  ComponentType,
-  Dispatch,
-  SetStateAction,
+  type ComponentType,
+  type Dispatch,
+  type SetStateAction,
   createContext,
   useEffect,
   useRef,

@@ -9,6 +9,7 @@ export const prisma =
   });
 
 declare global {
+  // biome-ignore lint/suspicious/noRedeclare: <explanation>
   var prisma:
     | PrismaClient<{ omit: { user: { passwordHash: true } } }>
     | undefined;
