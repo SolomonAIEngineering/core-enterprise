@@ -5,6 +5,9 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "check-docker": "./scripts/check-docker.sh",
+    "check-services": "./scripts/check-services.sh",
+    "start:dev": "pnpm check-docker && cd apps/web && docker-compose up -d && cd ../.. && pnpm check-services && pnpm install && pnpm -r --filter \"./packages/**\" build && pnpm dev",
     "lint": "turbo lint",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
