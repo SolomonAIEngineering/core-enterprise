@@ -8,13 +8,13 @@ check_database_services() {
     echo "Waiting 10 seconds for initial service startup..."
     sleep 10
 
-    # Try to connect to MySQL (retry for 60 seconds)
+    # Try to connect to MySQL and create database if it doesn't exist
     echo "Waiting for MySQL to be ready..."
     for i in {1..5}; do
-        # Try to connect with mysql client, showing the error if it fails
-        mysql_output=$(mysql -h127.0.0.1 -P3306 -uroot --protocol=TCP planetscale -e "SELECT 1" 2>&1)
+        # Try to connect and create database using docker exec
+        mysql_output=$(docker exec web-ps-mysql-1 mysql -uroot --protocol=TCP -e "CREATE DATABASE IF NOT EXISTS planetscale;" 2>&1)
         if [ $? -eq 0 ]; then
-            echo "MySQL is ready!"
+            echo "MySQL is ready and database is created!"
             break
         fi
 
@@ -29,7 +29,7 @@ check_database_services() {
         echo "Recent container logs:"
         docker logs $(docker ps -q --filter "name=ps-mysql") --tail 5
 
-        if [ $i -eq 60 ]; then
+        if [ $i -eq 5 ]; then
             echo "MySQL did not become ready in time"
             echo "Last MySQL container status:"
             docker ps | grep mysql
@@ -41,15 +41,32 @@ check_database_services() {
         echo -n "."
     done
 
-    # Try to connect to PlanetScale HTTP Simulator (retry for 60 seconds)
+    # Try to connect to PlanetScale HTTP Simulator (retry for 5 seconds)
     echo "Waiting for PlanetScale HTTP Simulator to be ready..."
-    for i in {1..60}; do
-        if curl -s http://localhost:3900 >/dev/null 2>&1; then
+    for i in {1..5}; do
+        # Create the authentication header (base64 encoded username:password)
+        auth_header="Basic $(echo -n "root:unused" | base64)"
+
+        response=$(curl -s -w "\n%{http_code}" \
+            -H "Authorization: $auth_header" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/json" \
+            -X POST \
+            -d '{"query": "SELECT 1", "database": "planetscale"}' \
+            http://localhost:3900/psdb.v1alpha1.Database/Execute 2>&1)
+
+        http_code=$(echo "$response" | tail -n1)
+        response_body=$(echo "$response" | head -n1)
+
+        if [ "$http_code" = "200" ] || [ "$http_code" = "204" ]; then
             echo "PlanetScale HTTP Simulator is ready!"
             return 0
         fi
 
-        if [ $i -eq 60 ]; then
+        echo "Connection attempt $i failed. HTTP Code: $http_code"
+        echo "Response: $response_body"
+
+        if [ $i -eq 5 ]; then
             echo "PlanetScale HTTP Simulator did not become ready in time"
             echo "Last PlanetScale container status:"
             docker ps | grep planetscale-proxy
