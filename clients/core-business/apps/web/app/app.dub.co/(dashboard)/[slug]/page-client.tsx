@@ -1,5 +1,16 @@
 "use client";
 
+import useLinks from "@/lib/swr/use-links";
+import useWorkspace from "@/lib/swr/use-workspace";
+import LinkDisplay from "@/ui/links/link-display";
+import LinksContainer from "@/ui/links/links-container";
+import { LinksDisplayProvider } from "@/ui/links/links-display-provider";
+import { useLinkFilters } from "@/ui/links/use-link-filters";
+import { useAddEditTagModal } from "@/ui/modals/add-edit-tag-modal";
+import { useExportLinksModal } from "@/ui/modals/export-links-modal";
+import { useLinkBuilder } from "@/ui/modals/link-builder";
+import { ThreeDots } from "@/ui/shared/icons";
+import { SearchBoxPersisted } from "@/ui/shared/search-box";
 import {
   Button,
   Filter,
@@ -10,6 +21,10 @@ import {
   TooltipContent,
   useMediaQuery,
 } from "@dub/ui";
+import { Download, Globe, TableIcon, Tag } from "@dub/ui/icons";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 import {
   Dispatch,
   ReactNode,
@@ -17,23 +32,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Download, Globe, TableIcon, Tag } from "@dub/ui/icons";
-
-import Image from "next/image";
-import LinkDisplay from "@/ui/links/link-display";
-import LinksContainer from "@/ui/links/links-container";
-import { LinksDisplayProvider } from "@/ui/links/links-display-provider";
-import { SearchBoxPersisted } from "@/ui/shared/search-box";
-import { ThreeDots } from "@/ui/shared/icons";
-import posthog from "posthog-js";
-import { useAddEditTagModal } from "@/ui/modals/add-edit-tag-modal";
-import { useExportLinksModal } from "@/ui/modals/export-links-modal";
-import { useLinkBuilder } from "@/ui/modals/link-builder";
-import { useLinkFilters } from "@/ui/links/use-link-filters";
-import useLinks from "@/lib/swr/use-links";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import useWorkspace from "@/lib/swr/use-workspace";
 
 export default function WorkspaceLinksClient() {
   const { data: session } = useSession();
@@ -201,11 +199,9 @@ const MoreLinkOptions = () => {
                 <IconMenu
                   text="Import from Bitly"
                   icon={
-                    <Image
+                    <img
                       src="https://assets.dub.co/misc/icons/bitly.svg"
                       alt="Bitly logo"
-                      width={16}
-                      height={16}
                       className="h-4 w-4"
                     />
                   }
@@ -221,11 +217,9 @@ const MoreLinkOptions = () => {
                 <IconMenu
                   text="Import from Rebrandly"
                   icon={
-                    <Image
+                    <img
                       src="https://assets.dub.co/misc/icons/rebrandly.svg"
                       alt="Rebrandly logo"
-                      width={16}
-                      height={16}
                       className="h-4 w-4"
                     />
                   }
@@ -241,11 +235,9 @@ const MoreLinkOptions = () => {
                 <IconMenu
                   text="Import from Short.io"
                   icon={
-                    <Image
+                    <img
                       src="https://assets.dub.co/misc/icons/short.svg"
                       alt="Short.io logo"
-                      width={16}
-                      height={16}
                       className="h-4 w-4"
                     />
                   }

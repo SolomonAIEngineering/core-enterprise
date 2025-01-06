@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { NewBackground } from "@/ui/shared/new-background";
-import type { ReactNode } from "react";
 import Toolbar from "@/ui/layout/toolbar/toolbar";
+import { NewBackground } from "@/ui/shared/new-background";
 import { Wordmark } from "@dub/ui";
+import Link from "next/link";
+import { ReactNode } from "react";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (

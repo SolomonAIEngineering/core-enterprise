@@ -1,7 +1,7 @@
 import { handleAndReturnErrorResponse } from "@/lib/api/errors";
 import { ratelimitOrThrow } from "@/lib/api/utils";
 import { getUrlQuerySchema } from "@/lib/zod/schemas/links";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getMetaTags } from "./utils";
 
 export const runtime = "edge";

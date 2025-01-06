@@ -1,15 +1,14 @@
 "use client";
 
-import { Button, InfoTooltip, TooltipContent } from "@dub/ui";
-import { redirect, useRouter } from "next/navigation";
-
-import EmptyState from "@/ui/shared/empty-state";
-import { Webhook } from "lucide-react";
-import WebhookCard from "@/ui/webhooks/webhook-card";
-import WebhookPlaceholder from "@/ui/webhooks/webhook-placeholder";
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWebhooks from "@/lib/swr/use-webhooks";
 import useWorkspace from "@/lib/swr/use-workspace";
+import EmptyState from "@/ui/shared/empty-state";
+import WebhookCard from "@/ui/webhooks/webhook-card";
+import WebhookPlaceholder from "@/ui/webhooks/webhook-placeholder";
+import { Button, InfoTooltip, TooltipContent } from "@dub/ui";
+import { Webhook } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
 
 export default function WebhooksPageClient() {
   const router = useRouter();
@@ -93,7 +92,7 @@ export default function WebhooksPageClient() {
         ) : (
           <div className="grid grid-cols-1 gap-3">
             {Array.from({ length: 3 }).map((_, idx) => (
-              <WebhookPlaceholder key={`${idx}-${Date.now()}`} />
+              <WebhookPlaceholder />
             ))}
           </div>
         )}

@@ -1,7 +1,17 @@
 "use client";
 
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import { scopesToName } from "@/lib/api/tokens/scopes";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { TokenProps } from "@/lib/types";
+import { useAddEditTokenModal } from "@/ui/modals/add-edit-token-modal";
+import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
+import { useTokenCreatedModal } from "@/ui/modals/token-created-modal";
+import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import { Delete } from "@/ui/shared/icons";
 import {
   Button,
+  buttonVariants,
   Dots,
   Icon,
   Key,
@@ -9,25 +19,13 @@ import {
   Popover,
   Table,
   Tooltip,
-  buttonVariants,
   usePagination,
   useTable,
 } from "@dub/ui";
-import { DICEBEAR_AVATAR_URL, cn, fetcher, timeAgo } from "@dub/utils";
-
-import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import { cn, DICEBEAR_AVATAR_URL, fetcher, timeAgo } from "@dub/utils";
 import { Command } from "cmdk";
-import { Delete } from "@/ui/shared/icons";
-import Image from 'next/image';
-import { TokenProps } from "@/lib/types";
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import { scopesToName } from "@/lib/api/tokens/scopes";
-import { useAddEditTokenModal } from "@/ui/modals/add-edit-token-modal";
-import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
-import useSWR from "swr";
 import { useState } from "react";
-import { useTokenCreatedModal } from "@/ui/modals/token-created-modal";
-import useWorkspace from "@/lib/swr/use-workspace";
+import useSWR from "swr";
 
 export default function TokensPageClient() {
   const { id: workspaceId, role } = useWorkspace();
@@ -102,16 +100,14 @@ export default function TokensPageClient() {
           return (
             <div className="flex items-center gap-2">
               <Tooltip content={row.original.user.name}>
-                <Image
+                <img
                   src={
                     row.original.user.isMachine
                       ? "https://api.dicebear.com/7.x/bottts/svg?seed=Sara"
                       : row.original.user.image ||
-                      `${DICEBEAR_AVATAR_URL}${row.original.user.id}`
+                        `${DICEBEAR_AVATAR_URL}${row.original.user.id}`
                   }
                   alt={row.original.user.name!}
-                  width={40}
-                  height={40}
                   className="size-5 rounded-full"
                 />
               </Tooltip>
@@ -165,9 +161,9 @@ export default function TokensPageClient() {
     onRowClick: accessCheckError
       ? undefined
       : (row) => {
-        setSelectedToken(row.original);
-        setShowAddEditTokenModal(true);
-      },
+          setSelectedToken(row.original);
+          setShowAddEditTokenModal(true);
+        },
     emptyState: (
       <AnimatedEmptyState
         title="No tokens found"

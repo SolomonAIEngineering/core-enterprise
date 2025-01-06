@@ -1,5 +1,5 @@
-import { checkIfKeyExists } from "./check-if-key-exists";
 import { nanoid } from "@dub/utils";
+import { checkIfKeyExists } from "./check-if-key-exists";
 
 export async function getRandomKey({
   domain,
@@ -19,6 +19,7 @@ export async function getRandomKey({
   if (exists) {
     // by the off chance that key already exists
     return getRandomKey({ domain, prefix, long });
-  }
+  } else {
     return key;
+  }
 }

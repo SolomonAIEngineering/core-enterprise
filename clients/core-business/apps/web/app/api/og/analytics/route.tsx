@@ -1,15 +1,13 @@
+import { getAnalytics } from "@/lib/analytics/get-analytics";
+import { getLinkViaEdge } from "@/lib/planetscale";
 import {
   GOOGLE_FAVICON_URL,
   getApexDomain,
   linkConstructor,
   nFormatter,
 } from "@dub/utils";
-
-import Image from "next/image";
 import { ImageResponse } from "next/og";
-import type { NextRequest } from "next/server";
-import { getAnalytics } from "@/lib/analytics/get-analytics";
-import { getLinkViaEdge } from "@/lib/planetscale";
+import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
@@ -23,7 +21,7 @@ export async function GET(req: NextRequest) {
 
   const link = await getLinkViaEdge(domain, key);
   if (!link?.publicStats) {
-    return new Response("Stats for this link are not public", {
+    return new Response(`Stats for this link are not public`, {
       status: 403,
     });
   }
@@ -44,24 +42,20 @@ export async function GET(req: NextRequest) {
       <div tw="flex flex-col bg-[#f9fafb] w-full h-full p-16">
         <div tw="flex justify-between items-center">
           <div tw="flex items-center">
-            <Image
+            <img
               tw="rounded-full w-10 h-10"
               src={`${GOOGLE_FAVICON_URL}${getApexDomain(link.url || "dub.co")}`}
               alt="favicon"
-              width={40}
-              height={40}
             />
             <h1 tw="text-4xl font-bold ml-4">
               {linkConstructor({ domain, key, pretty: true })}
             </h1>
-            {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 16 16"
               width="24"
               height="24"
-              aria-label="Right arrow"
             >
               <path
                 fillRule="evenodd"
@@ -71,7 +65,6 @@ export async function GET(req: NextRequest) {
           </div>
 
           <div tw="flex items-center rounded-md border border-gray-200 bg-white shadow-sm h-12 px-6">
-            {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -95,7 +88,6 @@ export async function GET(req: NextRequest) {
           <div tw="flex flex-col px-12 py-4">
             <div tw="flex items-center">
               <h1 tw="font-bold text-5xl leading-none">{nFormatter(clicks)}</h1>
-              {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
               <svg
                 fill="none"
                 shapeRendering="geometricPrecision"
@@ -156,7 +148,6 @@ const Chart = ({ data }) => {
   points += ` ${width},${height} 0,${height}`;
 
   return (
-    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       viewBox={`0 0 ${width} ${height}`}
       style={{ color: "#3B82F6", marginLeft: "-4px", marginTop: "-32px" }}

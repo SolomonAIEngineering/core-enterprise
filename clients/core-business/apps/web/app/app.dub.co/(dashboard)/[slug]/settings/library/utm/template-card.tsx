@@ -1,25 +1,24 @@
 "use client";
 
+import useWorkspace from "@/lib/swr/use-workspace";
+import { UtmTemplateWithUserProps } from "@/lib/types";
+import { useAddEditUtmTemplateModal } from "@/ui/modals/add-edit-utm-template.modal";
+import { Delete, ThreeDots } from "@/ui/shared/icons";
 import {
   Avatar,
   Button,
   CardList,
   Popover,
   Tooltip,
-  UTM_PARAMETERS,
   useKeyboardShortcut,
+  UTM_PARAMETERS,
 } from "@dub/ui";
-import { Delete, ThreeDots } from "@/ui/shared/icons";
 import { DiamondTurnRight, LoadingSpinner, PenWriting } from "@dub/ui/icons";
-import { Fragment, useContext, useState } from "react";
 import { cn, formatDate } from "@dub/utils";
-
-import { TemplatesListContext } from "./page-client";
-import type { UtmTemplateWithUserProps } from "@/lib/types";
-import { mutate } from "swr";
+import { Fragment, useContext, useState } from "react";
 import { toast } from "sonner";
-import { useAddEditUtmTemplateModal } from "@/ui/modals/add-edit-utm-template.modal";
-import useWorkspace from "@/lib/swr/use-workspace";
+import { mutate } from "swr";
+import { TemplatesListContext } from "./page-client";
 
 export function TemplateCard({
   template,
@@ -102,8 +101,8 @@ export function TemplateCard({
           }
         >
           <div className="xs:flex hidden shrink-0 items-center gap-1 px-2 text-gray-500">
-            {includedParams.map(({ icon: Icon, key }) => (
-              <Icon key={`param-${key}`} className="size-3.5" />
+            {includedParams.map(({ icon: Icon }) => (
+              <Icon className="size-3.5" />
             ))}
           </div>
         </Tooltip>

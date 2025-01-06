@@ -1,6 +1,6 @@
 {
   "extends": "@stripe/ui-extension-tools/tsconfig.ui-extension",
   "compilerOptions": {
-    "lib": ["es2017", "dom"]
+    "jsx": "react-jsx"
   }
 }

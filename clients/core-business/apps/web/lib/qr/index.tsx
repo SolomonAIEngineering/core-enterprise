@@ -1,3 +1,11 @@
+/**
+ * @license qrcode.react
+ * Copyright (c) Paul O'Shannessy
+ * SPDX-License-Identifier: ISC
+ */
+import { DUB_QR_LOGO } from "@dub/utils/src/constants";
+import { useEffect, useRef, useState } from "react";
+import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
@@ -6,23 +14,13 @@ import {
   DEFAULT_SIZE,
   ERROR_LEVEL_MAP,
 } from "./constants";
-import type { QRProps, QRPropsCanvas } from "./types";
+import { QRProps, QRPropsCanvas } from "./types";
 import {
   SUPPORTS_PATH2D,
   excavateModules,
   generatePath,
   getImageSettings,
 } from "./utils";
-import { useEffect, useRef, useState } from "react";
-
-/**
- * @license qrcode.react
- * Copyright (c) Paul O'Shannessy
- * SPDX-License-Identifier: ISC
- */
-import { DUB_QR_LOGO } from "@dub/utils/src/constants";
-import qrcodegen from "./codegen";
-
 export * from "./types";
 export * from "./utils";
 
@@ -45,7 +43,8 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
   // We're just using this state to trigger rerenders when images load. We
   // Don't actually read the value anywhere. A smarter use of useEffect would
   // depend on this value.
-  const [, setIsImageLoaded] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isImgLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     // Always update the canvas. It's cheap enough and we want to be correct
@@ -103,8 +102,8 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
         // $FlowFixMe: Path2D c'tor doesn't support args yet.
         ctx.fill(new Path2D(generatePath(cells, margin)));
       } else {
-        cells.forEach((row, rdx) => {
-          row.forEach((cell, cdx) => {
+        cells.forEach(function (row, rdx) {
+          row.forEach(function (cell, cdx) {
             if (cell) {
               ctx.fillRect(cdx + margin, rdx + margin, 1, 1);
             }
@@ -126,7 +125,6 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
 
   // Ensure we mark image loaded as false here so we trigger updating the
   // canvas in our other effect.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setIsImageLoaded(false);
   }, [imgSrc]);
@@ -216,12 +214,12 @@ export async function getQRAsSVGDataUri(props: QRProps) {
 }
 
 const getBase64Image = (imgUrl: string) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(function (resolve, reject) {
     const img = new Image();
     img.src = imgUrl;
     img.setAttribute("crossOrigin", "anonymous");
 
-    img.onload = () => {
+    img.onload = function () {
       const canvas = document.createElement("canvas");
 
       canvas.width = img.width;
@@ -234,7 +232,7 @@ const getBase64Image = (imgUrl: string) => {
       resolve(dataURL);
     };
 
-    img.onerror = () => {
+    img.onerror = function () {
       reject("The image could not be loaded.");
     };
   });
@@ -308,8 +306,8 @@ export async function getQRAsCanvas(
     // $FlowFixMe: Path2D c'tor doesn't support args yet.
     ctx.fill(new Path2D(generatePath(cells, margin)));
   } else {
-    cells.forEach((row, rdx) => {
-      row.forEach((cell, cdx) => {
+    cells.forEach(function (row, rdx) {
+      row.forEach(function (cell, cdx) {
         if (cell) {
           ctx.fillRect(cdx + margin, rdx + margin, 1, 1);
         }

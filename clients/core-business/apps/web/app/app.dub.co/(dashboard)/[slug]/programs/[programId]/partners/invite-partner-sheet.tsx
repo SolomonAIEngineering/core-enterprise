@@ -1,3 +1,8 @@
+import { invitePartnerAction } from "@/lib/actions/partners/invite-partner";
+import useProgram from "@/lib/swr/use-program";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { PartnerLinkSelector } from "@/ui/partners/partner-link-selector";
+import { X } from "@/ui/shared/icons";
 import {
   AnimatedSizeContainer,
   BlurImage,
@@ -5,16 +10,10 @@ import {
   Sheet,
   useMediaQuery,
 } from "@dub/ui";
-import { Dispatch, SetStateAction, useState } from "react";
-
-import { PartnerLinkSelector } from "@/ui/partners/partner-link-selector";
-import { X } from "@/ui/shared/icons";
-import { invitePartnerAction } from "@/lib/actions/invite-partner";
-import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
-import useProgram from "@/lib/swr/use-program";
-import useWorkspace from "@/lib/swr/use-workspace";
+import { toast } from "sonner";
 
 interface InvitePartnerSheetProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -229,7 +228,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
                     <strong className="font-medium text-gray-900">
                       Subject:{" "}
                     </strong>
-                    You&apos;ve been invited to Dub Partners
+                    You've been invited to Dub Partners
                   </p>
                 </div>
               </div>
