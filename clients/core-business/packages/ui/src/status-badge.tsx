@@ -28,7 +28,7 @@ const statusBadgeVariants = cva(
   },
 );
 
-const defaultIcons = {
+const defaultIcons: Record<NonNullable<BadgeProps["variant"]>, Icon> = {
   neutral: CircleInfo,
   new: CircleHalfDottedCheck,
   success: CircleCheck,

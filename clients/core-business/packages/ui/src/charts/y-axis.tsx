@@ -1,8 +1,9 @@
+import { useLayoutEffect, useMemo } from "react";
+
 import { AxisLeft } from "@visx/axis";
 import { Group } from "@visx/group";
 import { Line } from "@visx/shape";
 import { getStringWidth } from "@visx/text";
-import { useLayoutEffect, useMemo } from "react";
 import { useChartContext } from "./chart-context";
 
 export type YAxisProps = {
@@ -60,7 +61,7 @@ export function YAxis({
 
     const numTicks = numTicksProp ?? height < 350 ? 3 : 4;
 
-    return yScale.ticks(numTicks).filter((value) =>
+    return yScale.ticks(numTicks).filter((value: number) =>
       // Both of these reduce the number of ticks farther below numTicks, but this should only affect small ranges
       value >= minY && integerTicks ? Number.isInteger(value) : true,
     );
@@ -70,7 +71,7 @@ export function YAxis({
     const maxWidth =
       Math.max(
         ...tickValues.map(
-          (v) => getStringWidth(tickFormat(v), { fontSize: 12 }) ?? 0,
+          (v: number) => getStringWidth(tickFormat(v), { fontSize: 12 }) ?? 0,
         ),
       ) + tickAxisSpacing;
     if ((leftAxisMargin ?? 0) < maxWidth) setLeftAxisMargin(maxWidth);
@@ -97,7 +98,7 @@ export function YAxis({
       {showGridLines && (
         <Group left={margin.left} top={margin.top}>
           {tickValues.length > 0 &&
-            tickValues.map((value) => {
+            tickValues.map((value: number) => {
               const y = yScale(value);
               if (y === height) return undefined; // Don't draw grid line at bottom of chart area
 

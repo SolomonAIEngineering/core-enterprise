@@ -17,6 +17,9 @@ importers:
       '@manypkg/cli':
         specifier: ^0.23.0
         version: 0.23.0
+      '@types/d3-scale':
+        specifier: ^4.0.8
+        version: 4.0.8
       '@vitest/ui':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0)
@@ -24008,7 +24011,7 @@ snapshots:
       source-map: 0.7.4
       webpack: 5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))
     optionalDependencies:
-      '@types/webpack': 5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.13))
+      '@types/webpack': 5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)
       type-fest: 4.31.0
       webpack-hot-middleware: 2.26.1
 
@@ -27869,9 +27872,9 @@ snapshots:
   '@storybook/addon-docs@8.4.7(@types/react@19.0.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
     dependencies:
       '@mdx-js/react': 3.1.0(@types/react@19.0.1)(react@18.2.0)
-      '@storybook/blocks': 8.4.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))
+      '@storybook/blocks': 8.4.7(react-dom@18.3.1(react@19.0.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))
       '@storybook/csf-plugin': 8.4.7(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))
-      '@storybook/react-dom-shim': 8.4.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))
+      '@storybook/react-dom-shim': 8.4.7(react-dom@18.3.1(react@19.0.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))
       react: 18.2.0
       react-dom: 18.3.1(react@18.2.0)
       storybook: 8.4.7(bufferutil@4.0.9)(prettier@3.4.2)
@@ -28045,15 +28048,15 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/blocks@8.4.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
+  '@storybook/blocks@8.4.7(react-dom@18.3.1(react@19.0.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
     dependencies:
       '@storybook/csf': 0.1.11
-      '@storybook/icons': 1.2.12(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@storybook/icons': 1.2.12(react-dom@18.3.1(react@19.0.0))(react@18.2.0)
       storybook: 8.4.7(bufferutil@4.0.9)(prettier@3.4.2)
       ts-dedent: 2.2.0
     optionalDependencies:
       react: 18.2.0
-      react-dom: 18.3.1(react@18.2.0)
+      react-dom: 18.3.1(react@19.0.0)
 
   '@storybook/blocks@8.4.7(react-dom@18.3.1(react@19.0.0))(react@19.0.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
     dependencies:
@@ -28129,7 +28132,7 @@ snapshots:
       semver: 7.6.3
       storybook: 8.4.7(bufferutil@4.0.9)(prettier@3.4.2)
       style-loader: 3.3.4(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13)))
-      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13)))
+      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11))
       ts-dedent: 2.2.0
       url: 0.11.3
       util: 0.12.5
@@ -28331,10 +28334,10 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/icons@1.2.12(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+  '@storybook/icons@1.2.12(react-dom@18.3.1(react@19.0.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
-      react-dom: 18.3.1(react@18.2.0)
+      react-dom: 18.3.1(react@19.0.0)
 
   '@storybook/icons@1.2.12(react-dom@18.3.1(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -28636,10 +28639,10 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       storybook: 8.4.7(bufferutil@4.0.9)(prettier@3.4.2)
 
-  '@storybook/react-dom-shim@8.4.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
+  '@storybook/react-dom-shim@8.4.7(react-dom@18.3.1(react@19.0.0))(react@18.2.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
     dependencies:
       react: 18.2.0
-      react-dom: 18.3.1(react@18.2.0)
+      react-dom: 18.3.1(react@19.0.0)
       storybook: 8.4.7(bufferutil@4.0.9)(prettier@3.4.2)
 
   '@storybook/react-dom-shim@8.4.7(react-dom@18.3.1(react@19.0.0))(react@19.0.0)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2))':
@@ -29773,23 +29776,11 @@ snapshots:
 
   '@types/web@0.0.183': {}
 
-  '@types/webpack@5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.13))':
-    dependencies:
-      '@types/node': 22.10.1
-      tapable: 2.2.1
-      webpack: 5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-      - webpack-cli
-    optional: true
-
   '@types/webpack@5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)':
     dependencies:
       '@types/node': 22.10.1
       tapable: 2.2.1
-      webpack: 5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)
+      webpack: 5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -36750,7 +36741,7 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  next@14.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@19.0.0))(react@18.2.0)(sass@1.83.0):
+  next@14.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(sass@1.83.0):
     dependencies:
       '@next/env': 14.1.0
       '@swc/helpers': 0.5.2
@@ -38075,7 +38066,7 @@ snapshots:
       glob: 10.3.4
       log-symbols: 4.1.0
       mime-types: 2.1.35
-      next: 14.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@19.0.0))(react@18.2.0)(sass@1.83.0)
+      next: 14.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(sass@1.83.0)
       normalize-path: 3.0.0
       ora: 5.4.1
       postcss: 8.4.35
@@ -40015,7 +40006,7 @@ snapshots:
       '@swc/core': 1.3.101(@swc/helpers@0.5.13)
       esbuild: 0.18.20
 
-  terser-webpack-plugin@5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))):
+  terser-webpack-plugin@5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -41189,7 +41180,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13)))
+      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
@@ -41221,37 +41212,6 @@ snapshots:
       schema-utils: 3.3.0
       tapable: 2.2.1
       terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.18.20)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.18.20))
-      watchpack: 2.4.1
-      webpack-sources: 3.2.3
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-
-  webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11):
-    dependencies:
-      '@types/eslint-scope': 3.7.7
-      '@types/estree': 1.0.5
-      '@webassemblyjs/ast': 1.12.1
-      '@webassemblyjs/wasm-edit': 1.12.1
-      '@webassemblyjs/wasm-parser': 1.12.1
-      acorn: 8.11.3
-      acorn-import-assertions: 1.9.0(acorn@8.11.3)
-      browserslist: 4.24.2
-      chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.16.0
-      es-module-lexer: 1.5.4
-      eslint-scope: 5.1.1
-      events: 3.3.0
-      glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
-      json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
-      mime-types: 2.1.35
-      neo-async: 2.6.2
-      schema-utils: 3.3.0
-      tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.13))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.13)))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
