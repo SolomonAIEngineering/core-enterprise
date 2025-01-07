@@ -57,6 +57,20 @@ model Project {
   dashboards            Dashboard[]
   utmTemplates          UtmTemplate[]
   yearInReviews         YearInReview[]
+  bankConnections       BankConnection[]
+  apps                  App[]
+  Inbox Inbox[]
+  BankAccount BankAccount[]
+  Transaction Transaction[]
+  TransactionAttachment TransactionAttachment[]
+  TransactionCategory TransactionCategory[]
+  TransactionEnrichment TransactionEnrichment[]
+  TransactionTag TransactionTag[]
+  Document Document[]
+  CustomerTag CustomerTag[]
+  ContractTemplate ContractTemplate[]
+  Report Report[]
+  InvoiceTemplate InvoiceTemplate[]
 
   @@index(usageLastChecked(sort: Asc))
 }

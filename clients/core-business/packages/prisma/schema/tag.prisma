@@ -10,6 +10,8 @@ model Tag {
 
   @@unique([name, projectId])
   @@index(projectId)
+  TransactionTag TransactionTag[]
+  CustomerTag CustomerTag[]
 }
 
 model LinkTag {

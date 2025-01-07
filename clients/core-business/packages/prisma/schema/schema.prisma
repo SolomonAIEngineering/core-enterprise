@@ -29,6 +29,16 @@ model User {
   defaultPartnerId String? // the user's default partner ID
   referralLinkId   String? // this user's referral link ID
 
+  // name formats
+  fullName      String?
+
+  // date formats
+  dateFormat         String?
+  locale             String?
+  timeFormat         Int?
+  timezone           String?
+  weekStartsOnMonday Boolean?
+
   // relational data
   accounts              Account[]
   sessions              Session[]
@@ -42,9 +52,17 @@ model User {
   integrations          Integration[] // Integrations user created in their workspace
   installedIntegrations InstalledIntegration[] // Integrations user installed in their workspace
   utmTemplates          UtmTemplate[]
+  apps                  App[]
+  bankAccounts          BankAccount[]
+
+  Transaction Transaction[]
+  Document Document[]
+
+  reportAccess  ReportAccess[]
 
   @@index(source)
   @@index(defaultWorkspace)
+  Report Report[]
 }
 
 model Account {
