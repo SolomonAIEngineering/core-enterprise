@@ -1,12 +1,12 @@
-import { getServerSideAPI } from '@/utils/api/serverside'
+import { ProfilePage as JSONLDProfilePage, WithContext } from 'schema-dts'
+
+import ClientPage from './ClientPage'
 import { ListResourceIssueFunding } from '@polar-sh/sdk'
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import ClientPage from './ClientPage'
-
 import { externalURL } from '@/components/Organization'
+import { getServerSideAPI } from '@/utils/api/serverside'
 import { getStorefrontOrNotFound } from '@/utils/storefront'
-import { ProfilePage as JSONLDProfilePage, WithContext } from 'schema-dts'
+import { notFound } from 'next/navigation'
 
 const cacheConfig = {
   next: {
@@ -17,12 +17,13 @@ const cacheConfig = {
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }): Promise<Metadata> {
   const api = getServerSideAPI()
+  const { organization: organizationSlug } = await params
   const { organization } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
 
   return {
@@ -60,15 +61,16 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }) {
   const api = getServerSideAPI()
+  const { organization: organizationSlug } = await params
 
   let listIssueFunding: ListResourceIssueFunding | undefined
 
   const { organization, products } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
 
   try {
@@ -127,6 +129,7 @@ export default async function Page({
     <>
       <script
         type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ClientPage

@@ -1,17 +1,19 @@
+import { notFound, redirect } from 'next/navigation'
+
+import { Metadata } from 'next'
 import { getServerSideAPI } from '@/utils/api/serverside'
 import { getStorefrontOrNotFound } from '@/utils/storefront'
-import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
 
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }): Promise<Metadata> {
   const api = getServerSideAPI()
+  const { organization: organizationSlug } = await params
   const { organization } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
 
   return {
@@ -49,12 +51,13 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }) {
+  const { organization: organizationSlug } = await params
   const api = getServerSideAPI()
   const { organization, donation_product } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
   if (donation_product) {
     redirect(`/${organization.slug}/products/${donation_product.id}`)

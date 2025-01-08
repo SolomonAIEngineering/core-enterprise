@@ -3,15 +3,16 @@ import {
   buildFundingFilters,
   urlSearchFromObj,
 } from '@/components/Organization/filters'
+import { ListResourceIssueFunding, Organization } from '@polar-sh/sdk'
+import { notFound, redirect } from 'next/navigation'
+
+import ClientPage from './ClientPage'
+import { Metadata } from 'next'
+import type { SuccessResult } from 'open-graph-scraper-lite'
 import { getServerSideAPI } from '@/utils/api/serverside'
+import { getUserOrganizations } from '@/utils/user'
 import { organizationPageLink } from '@/utils/nav'
 import { resolveRepositoryPath } from '@/utils/repository'
-import { getUserOrganizations } from '@/utils/user'
-import { ListResourceIssueFunding, Organization } from '@polar-sh/sdk'
-import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
-import type { SuccessResult } from 'open-graph-scraper-lite'
-import ClientPage from './ClientPage'
 
 type OgObject = SuccessResult['result']
 
@@ -24,13 +25,14 @@ const cacheConfig = {
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string; repo: string }
+  params: Promise<{ organization: string; repo: string }>
 }): Promise<Metadata> {
+  const { organization: organizationSlug, repo: repoSlug } = await params
   const api = getServerSideAPI()
   const resolvedRepositoryOrganization = await resolveRepositoryPath(
     api,
-    params.organization,
-    params.repo,
+    organizationSlug,
+    repoSlug,
     cacheConfig,
   )
 
@@ -40,7 +42,7 @@ export async function generateMetadata({
 
   const [repository, organization] = resolvedRepositoryOrganization
 
-  if (organization.slug !== params.organization) {
+  if (organization.slug !== organizationSlug) {
     redirect(organizationPageLink(organization, repository.name))
   }
 
@@ -81,20 +83,22 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { organization: string; repo: string }
-  searchParams: FilterSearchParams
+  params: Promise<{ organization: string; repo: string }>
+  searchParams: Promise<FilterSearchParams>
 }) {
   const api = getServerSideAPI()
+  const { organization: organizationSlug, repo: repoSlug } = await params
+  const resolvedSearchParams = await searchParams
   const resolvedRepositoryOrganization = await resolveRepositoryPath(
     api,
-    params.organization,
-    params.repo,
+    organizationSlug,
+    repoSlug,
     {
       ...cacheConfig,
       next: {
         ...cacheConfig.next,
         // Make it possible to revalidate the page when the repository is updated from client
-        tags: [`repository:${params.organization}/${params.repo}`],
+        tags: [`repository:${organizationSlug}/${repoSlug}`],
       },
     },
   )
@@ -105,13 +109,13 @@ export default async function Page({
 
   const [repository, organization] = resolvedRepositoryOrganization
 
-  if (organization.slug !== params.organization) {
+  if (organization.slug !== organizationSlug) {
     redirect(organizationPageLink(organization, repository.name))
   }
 
   const userOrganizations = await getUserOrganizations(api)
 
-  const filters = buildFundingFilters(urlSearchFromObj(searchParams))
+  const filters = buildFundingFilters(urlSearchFromObj(resolvedSearchParams))
 
   let issuesFunding: ListResourceIssueFunding | undefined
 
@@ -119,13 +123,13 @@ export default async function Page({
     issuesFunding = await api.funding.search(
       {
         organizationId: organization.id,
-        repositoryName: params.repo,
+        repositoryName: repoSlug,
         query: filters.q,
         sorting: filters.sort,
         badged: filters.badged,
         limit: 20,
         closed: filters.closed,
-        page: searchParams.page ? parseInt(searchParams.page) : 1,
+        page: resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1,
       },
       cacheConfig,
     )
@@ -133,8 +137,8 @@ export default async function Page({
     notFound()
   }
 
-  let featuredOrganizations: Organization[] = []
-  let links: { opengraph: OgObject; url: string }[] = []
+  const featuredOrganizations: Organization[] = []
+  const links: { opengraph: OgObject; url: string }[] = []
 
   return (
     <ClientPage

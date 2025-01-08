@@ -1,15 +1,16 @@
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { getOrganizationOrNotFound } from '@/utils/customerPortal'
-import type { Metadata } from 'next'
 import ClientPage from './ClientPage'
+import type { Metadata } from 'next'
+import { getOrganizationOrNotFound } from '@/utils/customerPortal'
+import { getServerSideAPI } from '@/utils/api/serverside'
 
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }): Promise<Metadata> {
+  const { organization: organizationSlug } = await params
   const api = getServerSideAPI()
-  const organization = await getOrganizationOrNotFound(api, params.organization)
+  const organization = await getOrganizationOrNotFound(api, organizationSlug)
 
   return {
     title: `Customer Portal | ${organization.name}`, // " | Polar is added by the template"
@@ -46,11 +47,14 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { organization: string }
-  searchParams: { customer_session_token?: string }
+  params: Promise<{ organization: string }>
+  searchParams: Promise<{ customer_session_token?: string }>
 }) {
-  const api = getServerSideAPI(searchParams.customer_session_token)
-  const organization = await getOrganizationOrNotFound(api, params.organization)
+  const { organization: organizationSlug } = await params
+  const resolvedSearchParams = await searchParams
+  const { customer_session_token } = resolvedSearchParams
+  const api = getServerSideAPI(customer_session_token)
+  const organization = await getOrganizationOrNotFound(api, organizationSlug)
 
   return <ClientPage organization={organization} />
 }

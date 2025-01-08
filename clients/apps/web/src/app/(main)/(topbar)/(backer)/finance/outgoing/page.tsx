@@ -1,6 +1,7 @@
 import { DataTableSearchParams, parseSearchParams } from '@/utils/datatable'
-import { Metadata } from 'next'
+
 import ClientPage from './ClientPage'
+import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,9 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: DataTableSearchParams
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const { pagination, sorting } = parseSearchParams(searchParams, [
+  const resolvedParams = await searchParams
+  const { pagination, sorting } = parseSearchParams(resolvedParams as DataTableSearchParams, [
     { id: 'created_at', desc: true },
   ])
 

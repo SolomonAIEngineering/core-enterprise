@@ -1,7 +1,4 @@
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { fromISODate, toISODate } from '@/utils/metrics'
-import { getOrganizationBySlugOrNotFound } from '@/utils/organization'
-import { Interval } from '@polar-sh/sdk'
+import { RedirectType, redirect } from 'next/navigation'
 import {
   addDays,
   endOfMonth,
@@ -10,8 +7,12 @@ import {
   startOfMonth,
   subMonths,
 } from 'date-fns'
-import { RedirectType, redirect } from 'next/navigation'
+import { fromISODate, toISODate } from '@/utils/metrics'
+
 import ClientPage from './ClientPage'
+import { Interval } from '@polar-sh/sdk'
+import { getOrganizationBySlugOrNotFound } from '@/utils/organization'
+import { getServerSideAPI } from '@/utils/api/serverside'
 
 export default async function Page({
   params,

@@ -1,9 +1,10 @@
+import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default async function Layout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <div

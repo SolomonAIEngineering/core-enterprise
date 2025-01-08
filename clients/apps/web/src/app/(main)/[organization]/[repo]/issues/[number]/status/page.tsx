@@ -1,8 +1,9 @@
+import { Pledge, ResponseError } from '@polar-sh/sdk'
+
 import Status from '@/components/Pledge/Status'
 import { api } from '@/utils/api'
-import { resolveRepositoryPath } from '@/utils/repository'
-import { Pledge, ResponseError } from '@polar-sh/sdk'
 import { notFound } from 'next/navigation'
+import { resolveRepositoryPath } from '@/utils/repository'
 
 const cacheConfig = {
   cache: 'no-store',
@@ -12,13 +13,15 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { organization: string; repo: string; number: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ organization: string; repo: string; number: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const { organization: organizationSlug, repo: repoSlug, number: numberSlug } = await params
+  const resolvedSearchParams = await searchParams as Record<string, string | string[] | undefined>
   const resolvedRepositoryOrganization = await resolveRepositoryPath(
     api,
-    params.organization,
-    params.repo,
+    organizationSlug,
+    repoSlug,
     cacheConfig,
   )
 
@@ -28,7 +31,7 @@ export default async function Page({
 
   const [, organization] = resolvedRepositoryOrganization
 
-  const paymentIntentId = searchParams['payment_intent_id']
+  const paymentIntentId = resolvedSearchParams.payment_intent_id
   if (typeof paymentIntentId !== 'string') {
     notFound()
   }
@@ -50,7 +53,7 @@ export default async function Page({
     throw e
   }
 
-  const email = searchParams['email'] as string | undefined
+  const email = resolvedSearchParams.email as string | undefined
 
   // TODO: Handle different statuses than success... #happy-path-alpha-programming
 

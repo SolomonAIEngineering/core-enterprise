@@ -1,17 +1,19 @@
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { getOrganizationOrNotFound } from '@/utils/customerPortal'
 import { CustomerOrder, ResponseError } from '@polar-sh/sdk'
-import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+
 import ClientPage from './ClientPage'
+import type { Metadata } from 'next'
+import { getOrganizationOrNotFound } from '@/utils/customerPortal'
+import { getServerSideAPI } from '@/utils/api/serverside'
+import { redirect } from 'next/navigation'
 
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }): Promise<Metadata> {
   const api = getServerSideAPI()
-  const organization = await getOrganizationOrNotFound(api, params.organization)
+  const { organization: organizationSlug } = await params
+  const organization = await getOrganizationOrNotFound(api, organizationSlug)
 
   return {
     title: `Customer Portal | ${organization.name}`, // " | Polar is added by the template"
@@ -48,15 +50,18 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { organization: string; id: string }
-  searchParams: { customer_session_token?: string }
+  params: Promise<{ organization: string; id: string }>
+  searchParams: Promise<{ customer_session_token?: string }>
 }) {
-  const api = getServerSideAPI(searchParams.customer_session_token)
-  const organization = await getOrganizationOrNotFound(api, params.organization)
+  const { organization: organizationSlug, id: orderId } = await params
+  const resolvedSearchParams = await searchParams
+  const { customer_session_token } = resolvedSearchParams
+  const api = getServerSideAPI(customer_session_token)
+  const organization = await getOrganizationOrNotFound(api, organizationSlug)
 
   let order: CustomerOrder | undefined
   try {
-    order = await api.customerPortalOrders.get({ id: params.id })
+    order = await api.customerPortalOrders.get({ id: orderId })
   } catch (e) {
     if (e instanceof ResponseError && e.response.status === 401) {
       redirect(`/${organization.slug}/portal/request`)
@@ -69,7 +74,7 @@ export default async function Page({
     <ClientPage
       organization={organization}
       order={order}
-      customerSessionToken={searchParams.customer_session_token}
+      customerSessionToken={resolvedSearchParams.customer_session_token}
     />
   )
 }

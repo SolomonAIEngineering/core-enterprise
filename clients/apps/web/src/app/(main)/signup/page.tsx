@@ -1,9 +1,9 @@
 import Login from '@/components/Auth/Login'
 import LogoIcon from '@/components/Brand/LogoIcon'
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { getLastVisitedOrg } from '@/utils/cookies'
-import { getUserOrganizations } from '@/utils/user'
 import { cookies } from 'next/headers'
+import { getLastVisitedOrg } from '@/utils/cookies'
+import { getServerSideAPI } from '@/utils/api/serverside'
+import { getUserOrganizations } from '@/utils/user'
 import { redirect } from 'next/navigation'
 
 export default async function Page({
@@ -18,7 +18,7 @@ export default async function Page({
 
   if (userOrganizations.length > 0) {
     const org = userOrganizations.find(
-      (org) => org.slug === getLastVisitedOrg(cookies()),
+      async (org) => org.slug === getLastVisitedOrg(await cookies()),
     )
 
     const targetOrg = org?.slug ?? userOrganizations[0].slug
@@ -51,15 +51,15 @@ export default async function Page({
               <Input name="org-name" autoFocus />
             </div> */}
             <Login returnTo={return_to} returnParams={rest} signup={{
-                intent: 'creator',
-            }}/>
+              intent: 'creator',
+            }} />
           </div>
         </div>
         <div className="dark:bg-polar-950 dark:border-polar-700 rounded-4xl col-span-2 hidden overflow-hidden rounded-r-none border border-r-0 border-gray-200 bg-gray-100 md:flex">
           <picture className="flex h-full">
             <source
               media="(prefers-color-scheme: dark)"
-              srcSet={`/assets/landing/overview_dark.png`}
+              srcSet={"/assets/landing/overview_dark.png"}
             />
             <img
               className="flex h-full flex-1 object-cover object-left"

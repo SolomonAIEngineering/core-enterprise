@@ -1,8 +1,9 @@
 'use client'
 
+import { useCallback, useMemo, useState } from 'react'
+
 import GetStartedButton from '@/components/Auth/GetStartedButton'
 import { motion } from 'framer-motion'
-import { useCallback, useMemo, useState } from 'react'
 
 export const Hero = () => {
   const [slug, setSlug] = useState('')
