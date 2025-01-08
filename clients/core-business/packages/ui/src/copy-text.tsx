@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@dub/utils";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "./hooks";
 

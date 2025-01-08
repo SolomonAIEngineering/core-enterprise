@@ -1,9 +1,10 @@
+import { AnimatePresence, motion } from "framer-motion";
+
 import { cn } from "@dub/utils";
 import { RectClipPath } from "@visx/clip-path";
 import { LinearGradient } from "@visx/gradient";
 import { Group } from "@visx/group";
 import { BarRounded } from "@visx/shape";
-import { AnimatePresence, motion } from "framer-motion";
 import { useId } from "react";
 import { useChartContext } from "./chart-context";
 

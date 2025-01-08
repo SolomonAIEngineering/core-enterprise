@@ -1,30 +1,31 @@
 import { cn, deepEqual, isClickOnInteractiveChild } from "@dub/utils";
 import {
-  Cell,
-  Column,
-  ColumnDef,
-  ColumnPinningState,
+  type Cell,
+  type Column,
+  type ColumnDef,
+  type ColumnPinningState,
+  type PaginationState,
+  type Row,
+  type Table as TableType,
+  type VisibilityState,
   flexRender,
   getCoreRowModel,
-  PaginationState,
-  Row,
-  Table as TableType,
   useReactTable,
-  VisibilityState,
 } from "@tanstack/react-table";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  CSSProperties,
-  Dispatch,
-  MouseEvent,
-  PropsWithChildren,
-  ReactNode,
-  SetStateAction,
+  type CSSProperties,
+  type Dispatch,
+  type MouseEvent,
+  type PropsWithChildren,
+  type ReactNode,
+  type SetStateAction,
   useEffect,
   useState,
 } from "react";
-import { Button } from "../button";
 import { LoadingSpinner, SortOrder } from "../icons";
+
+import { Button } from "../button";
 
 const tableCellClassName = (columnId: string, clickable?: boolean) =>
   cn([
@@ -35,12 +36,15 @@ const tableCellClassName = (columnId: string, clickable?: boolean) =>
   ]);
 
 type UseTableProps<T> = {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   columns: ColumnDef<T, any>[];
   data: T[];
   loading?: boolean;
   error?: string;
   emptyState?: ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   cellRight?: (cell: Cell<T, any>) => ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   defaultColumn?: Partial<ColumnDef<T, any>>;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
@@ -74,7 +78,7 @@ type TableProps<T> = UseTableProps<T> &
     table: TableType<T>;
   }>;
 
-export function useTable<T extends any>(
+export function useTable<T>(
   props: UseTableProps<T>,
 ): TableProps<T> & { table: TableType<T> } {
   const {
@@ -92,6 +96,7 @@ export function useTable<T extends any>(
   );
 
   // Update internal columnVisibility when prop value changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       props.columnVisibility &&
@@ -101,6 +106,7 @@ export function useTable<T extends any>(
   }, [props.columnVisibility]);
 
   // Call onColumnVisibilityChange when internal columnVisibility changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     props.onColumnVisibilityChange?.(columnVisibility);
   }, [columnVisibility]);
@@ -260,6 +266,7 @@ export function Table<T>({
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
+                // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
                 <tr
                   key={row.id}
                   className={cn(
@@ -381,6 +388,7 @@ export function Table<T>({
 }
 
 const getCommonPinningClassNames = (
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   column: Column<any>,
   isLastRow: boolean,
 ): string => {
@@ -392,6 +400,7 @@ const getCommonPinningClassNames = (
   );
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const getCommonPinningStyles = (column: Column<any>): CSSProperties => {
   const isPinned = column.getIsPinned();
 

@@ -3,8 +3,8 @@ import { Command, useCommandState } from "cmdk";
 import { ChevronDown, ListFilter } from "lucide-react";
 import {
   Fragment,
-  PropsWithChildren,
-  ReactNode,
+  type PropsWithChildren,
+  type ReactNode,
   forwardRef,
   isValidElement,
   useCallback,
@@ -13,12 +13,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatedSizeContainer } from "../animated-size-container";
 import { useKeyboardShortcut, useMediaQuery } from "../hooks";
-import { useScrollProgress } from "../hooks/use-scroll-progress";
 import { Check, LoadingSpinner, Magic } from "../icons";
+import type { Filter, FilterOption } from "./types";
+
+import { AnimatedSizeContainer } from "../animated-size-container";
+import { useScrollProgress } from "../hooks/use-scroll-progress";
 import { Popover } from "../popover";
-import { Filter, FilterOption } from "./types";
 
 type FilterSelectProps = {
   filters: Filter[];
@@ -76,6 +77,7 @@ export function FilterSelect({
   }, []);
 
   // Reset state when closed
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!isOpen) reset();
   }, [isOpen]);
@@ -85,6 +87,7 @@ export function FilterSelect({
     ? filters.find(({ key }) => key === selectedFilterKey)
     : null;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const openFilter = useCallback((key: Filter["key"]) => {
     // Maintain dimensions for loading options
     if (listContainer.current) {
@@ -99,6 +102,7 @@ export function FilterSelect({
     onOpenFilter?.(key);
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const isOptionSelected = useCallback(
     (value: FilterOption["value"]) => {
       if (!selectedFilter || !activeFilters) return false;
@@ -118,6 +122,7 @@ export function FilterSelect({
     [selectedFilter],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const selectOption = useCallback(
     (value: FilterOption["value"]) => {
       if (selectedFilter) {
@@ -133,10 +138,12 @@ export function FilterSelect({
     [activeFilters, selectedFilter, askAI],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     onSearchChange?.(search);
   }, [search]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     onSelectedFilterChange?.(selectedFilterKey);
   }, [selectedFilterKey]);
@@ -299,7 +306,9 @@ export function FilterSelect({
           </div>
         ) : (
           <ChevronDown
-            className={`size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180`}
+            className={
+              "size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+            }
           />
         )}
       </button>
@@ -359,8 +368,8 @@ const FilterScroll = forwardRef(
         {/* Bottom scroll fade */}
         <div
           className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full bg-gradient-to-t from-white sm:block"
-          style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
-        ></div>
+          style={{ opacity: 1 - scrollProgress ** 2 }}
+        />
       </>
     );
   },
@@ -436,14 +445,14 @@ const CommandEmpty = ({
         </p>
       </Command.Empty>
     );
-  } else {
-    return (
-      <Command.Empty className="p-2 text-center text-sm text-gray-400">
-        {children}
-      </Command.Empty>
-    );
   }
+  return (
+    <Command.Empty className="p-2 text-center text-sm text-gray-400">
+      {children}
+    </Command.Empty>
+  );
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const isReactNode = (element: any): element is ReactNode =>
   isValidElement(element);

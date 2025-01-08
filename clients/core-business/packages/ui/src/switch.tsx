@@ -1,8 +1,15 @@
 "use client";
 
-import { cn } from "@dub/utils";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
-import { Dispatch, ReactNode, SetStateAction, useMemo } from "react";
+
+import {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useMemo,
+} from "react";
+
+import { cn } from "@dub/utils";
 import { Tooltip } from "./tooltip";
 
 export function Switch({
@@ -15,6 +22,7 @@ export function Switch({
   loading = false,
   disabled = false,
   disabledTooltip,
+  className,
 }: {
   fn?: Dispatch<SetStateAction<boolean>> | ((checked: boolean) => void);
   id?: string;
@@ -25,6 +33,7 @@ export function Switch({
   loading?: boolean;
   disabled?: boolean;
   disabledTooltip?: string | ReactNode;
+  className?: string;
 }) {
   const switchDisabled = useMemo(() => {
     return disabledTooltip ? true : disabled || loading;
@@ -42,13 +51,14 @@ export function Switch({
         "focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75",
         "data-[disabled]:cursor-not-allowed",
         trackDimensions,
+        className,
       )}
     >
       <SwitchPrimitive.Thumb
         className={cn(
           `radix-state-checked:${thumbTranslate}`,
           "radix-state-unchecked:translate-x-0",
-          `pointer-events-none h-3 w-3 translate-x-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`,
+          "pointer-events-none h-3 w-3 translate-x-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out",
           thumbDimensions,
           thumbTranslate,
         )}

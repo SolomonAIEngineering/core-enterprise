@@ -3,10 +3,11 @@ import {
   buildFundingFilters,
   urlSearchFromObj,
 } from '@/components/Organization/filters'
+
+import ClientPage from './ClientPage'
+import type { Metadata } from 'next'
 import { getServerSideAPI } from '@/utils/api/serverside'
 import { getStorefrontOrNotFound } from '@/utils/storefront'
-import type { Metadata } from 'next'
-import ClientPage from './ClientPage'
 
 const cacheConfig = {
   next: {
@@ -17,12 +18,13 @@ const cacheConfig = {
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string }
+  params: Promise<{ organization: string }>
 }): Promise<Metadata> {
+  const { organization: organizationSlug } = await params
   const api = getServerSideAPI()
   const { organization } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
 
   return {
@@ -60,16 +62,18 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { organization: string }
-  searchParams: FilterSearchParams
+  params: Promise<{ organization: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const { organization: organizationSlug } = await params
+  const resolvedSearchParams = await searchParams as FilterSearchParams
   const api = getServerSideAPI()
   const { organization } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
 
-  const filters = buildFundingFilters(urlSearchFromObj(searchParams))
+  const filters = buildFundingFilters(urlSearchFromObj(resolvedSearchParams))
 
   const issues = await api.funding.search(
     {
@@ -79,7 +83,7 @@ export default async function Page({
       badged: filters.badged,
       limit: 20,
       closed: filters.closed,
-      page: searchParams.page ? parseInt(searchParams.page) : 1,
+      page: resolvedSearchParams.page ? parseInt(resolvedSearchParams.page) : 1,
     },
     cacheConfig,
   )

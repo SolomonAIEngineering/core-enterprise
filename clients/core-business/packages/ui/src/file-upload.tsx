@@ -1,8 +1,10 @@
 import { cn, resizeImage } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { DragEvent, ReactNode, useState } from "react";
-import { toast } from "sonner";
+import { type VariantProps, cva } from "class-variance-authority";
+import { type DragEvent, type ReactNode, useState } from "react";
+
 import { CloudUpload, LoadingCircle } from "./icons";
+
+import { toast } from "sonner";
 
 type AcceptedFileFormats = "any" | "images" | "csv";
 
@@ -130,9 +132,7 @@ export function FileUpload({
     e: React.ChangeEvent<HTMLInputElement> | DragEvent,
   ) => {
     const file =
-      "dataTransfer" in e
-        ? e.dataTransfer.files && e.dataTransfer.files[0]
-        : e.target.files && e.target.files[0];
+      "dataTransfer" in e ? e.dataTransfer.files?.[0] : e.target.files?.[0];
     if (!file) return;
 
     setFileName(file.name);
@@ -178,6 +178,7 @@ export function FileUpload({
   };
 
   return (
+    // biome-ignore lint/a11y/noLabelWithoutControl: <explanation>
     <label
       className={cn(
         imageUploadVariants({ variant }),
@@ -251,6 +252,7 @@ export function FileUpload({
             )}
           >
             {content ?? (
+              // biome-ignore lint/complexity/noUselessFragments: <explanation>
               <>
                 <p>Drag and drop {clickToUpload && "or click"} to upload.</p>
               </>

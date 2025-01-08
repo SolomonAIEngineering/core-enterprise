@@ -1,7 +1,7 @@
 import { cn } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import { Calendar, ChevronDown } from "lucide-react";
-import { ComponentProps, forwardRef } from "react";
+import { type ComponentProps, forwardRef } from "react";
 
 const triggerStyles = cva(
   [
@@ -51,7 +51,9 @@ const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           ) : null}
         </span>
         <ChevronDown
-          className={`h-4 w-4 flex-shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180`}
+          className={
+            "h-4 w-4 flex-shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+          }
         />
       </button>
     );
@@ -60,4 +62,4 @@ const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
 Trigger.displayName = "DatePicker.Trigger";
 
-export { Trigger };
+export { Trigger, type TriggerProps };

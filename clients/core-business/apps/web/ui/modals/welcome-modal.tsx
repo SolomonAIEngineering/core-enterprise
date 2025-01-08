@@ -1,8 +1,4 @@
 import { Button, Modal, useRouterStuff, useScrollProgress } from "@dub/ui";
-import { cn, getPlanDetails, PLANS, PRO_PLAN } from "@dub/utils";
-import { usePlausible } from "next-plausible";
-import { useSearchParams } from "next/navigation";
-import posthog from "posthog-js";
 import {
   Dispatch,
   SetStateAction,
@@ -12,8 +8,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { PLANS, PRO_PLAN, cn, getPlanDetails } from "@dub/utils";
+
 import { ModalHero } from "../shared/modal-hero";
 import { PlanFeatures } from "../workspaces/plan-features";
+import posthog from "posthog-js";
+import { usePlausible } from "next-plausible";
+import { useSearchParams } from "next/navigation";
 
 function WelcomeModal({
   showWelcomeModal,
@@ -52,8 +53,8 @@ function WelcomeModal({
 
   const plan = planId
     ? PLANS.find(
-        (p) => p.name.toLowerCase() === planId.replace("+", " ").toLowerCase(),
-      ) ?? PRO_PLAN
+      (p) => p.name.toLowerCase() === planId.replace("+", " ").toLowerCase(),
+    ) ?? PRO_PLAN
     : undefined;
 
   return (
@@ -107,8 +108,8 @@ function WelcomeModal({
             {/* Bottom scroll fade */}
             <div
               className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full bg-gradient-to-t from-white sm:block"
-              style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
-            ></div>
+              style={{ opacity: 1 - scrollProgress ** 2 }}
+            />
           </div>
           <Button
             type="button"

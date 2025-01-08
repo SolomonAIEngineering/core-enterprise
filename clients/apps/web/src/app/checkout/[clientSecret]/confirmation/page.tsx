@@ -1,8 +1,8 @@
 import { CheckoutConfirmation } from '@/components/Checkout/CheckoutConfirmation'
 import CheckoutLayout from '@/components/Checkout/CheckoutLayout'
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { getCheckoutByClientSecret } from '@/utils/checkout'
 import { CheckoutStatus } from '@polar-sh/sdk'
+import { getCheckoutByClientSecret } from '@/utils/checkout'
+import { getServerSideAPI } from '@/utils/api/serverside'
 import { redirect } from 'next/navigation'
 
 export default async function Page({

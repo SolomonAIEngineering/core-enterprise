@@ -1,24 +1,26 @@
 import CheckoutProductInfo from '@/components/Checkout/CheckoutProductInfo'
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { isCrawler } from '@/utils/crawlers'
-import { getStorefrontOrNotFound } from '@/utils/storefront'
 import { CheckoutPublic } from '@polar-sh/sdk'
-import type { Metadata } from 'next'
-import { headers } from 'next/headers'
-import { notFound } from 'next/navigation'
 import ClientPage from './ClientPage'
+import type { Metadata } from 'next'
+import { getServerSideAPI } from '@/utils/api/serverside'
+import { getStorefrontOrNotFound } from '@/utils/storefront'
+import { headers } from 'next/headers'
+import { isCrawler } from '@/utils/crawlers'
+import { notFound } from 'next/navigation'
 
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string; productId: string }
+  params: Promise<{ organization: string; productId: string }>
 }): Promise<Metadata> {
   const api = getServerSideAPI()
+  const { organization: organizationSlug, productId } = await params
+
   const { organization, products } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
-  const product = products.find((p) => p.id === params.productId)
+  const product = products.find((p) => p.id === productId)
 
   if (!product) {
     notFound()
@@ -62,36 +64,32 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: { organization: string; productId: string }
+  params: Promise<{ organization: string; productId: string }>
 }) {
+  const { organization: organizationSlug, productId } = await params
   const api = getServerSideAPI()
   const { organization, products } = await getStorefrontOrNotFound(
     api,
-    params.organization,
+    organizationSlug,
   )
-  const product = products.find((p) => p.id === params.productId)
+  const product = products.find((p) => p.id === productId)
 
   if (!product) {
     notFound()
   }
 
   /* Avoid creating a checkout for crawlers, just render a simple product info page */
-  const headersList = headers()
+  const headersList = await headers()
   const userAgent = headersList.get('user-agent')
   if (userAgent && isCrawler(userAgent)) {
     return <CheckoutProductInfo organization={organization} product={product} />
   }
 
-  let checkout: CheckoutPublic
-  try {
-    checkout = await api.checkouts.clientCreate({
-      body: {
-        product_price_id: product.prices[0].id,
-      },
-    })
-  } catch (err) {
-    throw err
-  }
+  const checkout: CheckoutPublic = await api.checkouts.clientCreate({
+    body: {
+      product_price_id: product.prices[0].id,
+    },
+  })
 
   return <ClientPage checkout={checkout} organization={organization} />
 }

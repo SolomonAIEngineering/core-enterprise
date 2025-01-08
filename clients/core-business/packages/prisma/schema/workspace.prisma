@@ -11,6 +11,7 @@ model Project {
   paymentFailedAt   DateTime?
   stripeConnectId   String?   @unique // for Stripe Integration
   payoutMethodId    String? // for Stripe Connect payouts
+  shopifyStoreId    String?   @unique // for Shopify Integration
 
   usage        Int @default(0)
   usageLimit   Int @default(1000)
@@ -56,6 +57,20 @@ model Project {
   dashboards            Dashboard[]
   utmTemplates          UtmTemplate[]
   yearInReviews         YearInReview[]
+  bankConnections       BankConnection[]
+  apps                  App[]
+  Inbox Inbox[]
+  BankAccount BankAccount[]
+  Transaction Transaction[]
+  TransactionAttachment TransactionAttachment[]
+  TransactionCategory TransactionCategory[]
+  TransactionEnrichment TransactionEnrichment[]
+  TransactionTag TransactionTag[]
+  Document Document[]
+  CustomerTag CustomerTag[]
+  ContractTemplate ContractTemplate[]
+  Report Report[]
+  InvoiceTemplate InvoiceTemplate[]
 
   @@index(usageLastChecked(sort: Asc))
 }

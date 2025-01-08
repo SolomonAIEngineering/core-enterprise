@@ -1,5 +1,6 @@
-import { LucideIcon } from "lucide-react";
-import { ComponentType, ReactNode, SVGProps } from "react";
+import type { ComponentType, ReactNode, SVGProps } from "react";
+
+import type { LucideIcon } from "lucide-react";
 
 type FilterIcon =
   | LucideIcon

@@ -1,10 +1,13 @@
-import { cn, GOOGLE_FAVICON_URL } from "@dub/utils";
-import { SVGProps, useId } from "react";
+import { GOOGLE_FAVICON_URL, cn } from "@dub/utils";
+import { useId } from "react";
+
+import type { SVGProps } from "react";
 
 export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
   const id = useId();
 
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="336"

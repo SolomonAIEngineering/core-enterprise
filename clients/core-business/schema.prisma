@@ -1,0 +1,665 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  depository
+  credit
+  other_asset
+  loan
+  other_liability
+}
+
+enum BankProvider {
+  gocardless
+  plaid
+  teller
+}
+
+enum ConnectionStatus {
+  disconnected
+  connected
+  unknown
+}
+
+enum InboxStatus {
+  processing
+  pending
+  archived
+  new
+  deleted
+}
+
+enum InboxType {
+  invoice
+  expense
+}
+
+enum InvoiceDeliveryType {
+  create
+  create_and_send
+}
+
+enum InvoiceSize {
+  a4
+  letter
+}
+
+enum InvoiceStatus {
+  draft
+  overdue
+  paid
+  unpaid
+  canceled
+}
+
+enum ReportType {
+  profit
+  revenue
+  burn_rate
+  expense
+}
+
+enum TeamRole {
+  owner
+  member
+}
+
+enum TrackerStatus {
+  in_progress
+  completed
+}
+
+enum TransactionFrequency {
+  weekly
+  biweekly
+  monthly
+  semi_monthly
+  annually
+  irregular
+  unknown
+}
+
+enum TransactionCategory {
+  travel
+  office_supplies
+  meals
+  software
+  rent
+  income
+  equipment
+  transfer
+  internet_and_telephone
+  facilities_expenses
+  activity
+  uncategorized
+  taxes
+  other
+  salary
+  fees
+}
+
+enum TransactionMethod {
+  payment
+  card_purchase
+  card_atm
+  transfer
+  other
+  unknown
+  ach
+  interest
+  deposit
+  wire
+  fee
+}
+
+enum TransactionStatus {
+  posted
+  pending
+  excluded
+  completed
+  archived
+}
+
+model App {
+  id         String    @id @default(cuid())
+  appId      String    @map("app_id")
+  config     Json?
+  createdAt  DateTime? @map("created_at")
+  createdBy  String?   @map("created_by")
+  settings   Json?
+  teamId     String?   @map("team_id")
+  creator    User?     @relation("AppCreator", fields: [createdBy], references: [id])
+  team       Team?     @relation(fields: [teamId], references: [id])
+
+  @@map("apps")
+}
+
+model BankAccount {
+  id                String       @id @default(cuid())
+  accountId         String       @map("account_id")
+  accountReference  String?      @map("account_reference")
+  balance          Float?
+  bankConnectionId String?      @map("bank_connection_id")
+  baseBalance      Float?       @map("base_balance")
+  baseCurrency     String?      @map("base_currency")
+  createdAt        DateTime     @map("created_at")
+  createdBy        String       @map("created_by")
+  currency         String?
+  enabled          Boolean      @default(true)
+  errorDetails     String?      @map("error_details")
+  errorRetries     Int?         @map("error_retries")
+  manual           Boolean?
+  name             String?
+  teamId           String       @map("team_id")
+  type             AccountType?
+  bankConnection   BankConnection? @relation(fields: [bankConnectionId], references: [id])
+  creator          User         @relation(fields: [createdBy], references: [id])
+  team             Team         @relation(fields: [teamId], references: [id])
+  transactions     Transaction[]
+
+  @@map("bank_accounts")
+}
+
+model BankConnection {
+  id            String            @id @default(cuid())
+  accessToken   String?           @map("access_token")
+  createdAt     DateTime          @map("created_at")
+  enrollmentId  String?           @map("enrollment_id")
+  errorDetails  String?           @map("error_details")
+  errorRetries  Int?              @map("error_retries")
+  expiresAt     DateTime?         @map("expires_at")
+  institutionId String            @map("institution_id")
+  lastAccessed  DateTime?         @map("last_accessed")
+  logoUrl       String?           @map("logo_url")
+  name          String
+  provider      BankProvider?
+  referenceId   String?           @map("reference_id")
+  status        ConnectionStatus?
+  teamId        String            @map("team_id")
+  bankAccounts  BankAccount[]
+  team          Team              @relation(fields: [teamId], references: [id])
+
+  @@map("bank_connections")
+}
+
+model Customer {
+  id            String          @id @default(cuid())
+  addressLine1  String?         @map("address_line_1")
+  addressLine2  String?         @map("address_line_2")
+  city          String?
+  contact       String?
+  country       String?
+  countryCode   String?         @map("country_code")
+  createdAt     DateTime        @map("created_at")
+  email         String
+  name          String
+  note          String?
+  phone         String?
+  state         String?
+  teamId        String          @map("team_id")
+  token         String
+  vatNumber     String?         @map("vat_number")
+  website       String?
+  zip           String?
+  customerTags  CustomerTag[]
+  invoices      Invoice[]
+  trackerProjects TrackerProject[]
+  team          Team            @relation(fields: [teamId], references: [id])
+
+  @@map("customers")
+}
+
+model CustomerTag {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @map("created_at")
+  customerId  String   @map("customer_id")
+  tagId       String   @map("tag_id")
+  teamId      String   @map("team_id")
+  customer    Customer @relation(fields: [customerId], references: [id])
+  tag         Tag      @relation(fields: [tagId], references: [id])
+  team        Team     @relation(fields: [teamId], references: [id])
+
+  @@map("customer_tags")
+}
+
+model Document {
+  id          String    @id @default(cuid())
+  body        String?
+  createdAt   DateTime? @map("created_at")
+  metadata    Json?
+  name        String?
+  objectId    String?   @map("object_id")
+  ownerId     String?   @map("owner_id")
+  parentId    String?   @map("parent_id")
+  pathTokens  String[]  @map("path_tokens")
+  tag         String?
+  teamId      String?   @map("team_id")
+  title       String?
+  owner       User?     @relation(fields: [ownerId], references: [id])
+  team        Team?     @relation(fields: [teamId], references: [id])
+
+  @@map("documents")
+}
+
+model ExchangeRate {
+  id        String    @id @default(cuid())
+  base      String?
+  rate      Float?
+  target    String?
+  updatedAt DateTime? @map("updated_at")
+
+  @@map("exchange_rates")
+}
+
+model Inbox {
+  id              String       @id @default(cuid())
+  amount          Float?
+  attachmentId    String?      @map("attachment_id")
+  baseAmount      Float?       @map("base_amount")
+  baseCurrency    String?      @map("base_currency")
+  contentType     String?      @map("content_type")
+  createdAt       DateTime     @map("created_at")
+  currency        String?
+  date            DateTime?
+  description     String?
+  displayName     String?      @map("display_name")
+  fileName        String?      @map("file_name")
+  filePath        String[]     @map("file_path")
+  forwardedTo     String?      @map("forwarded_to")
+  meta            Json?
+  referenceId     String?      @map("reference_id")
+  size            Int?
+  status          InboxStatus?
+  teamId          String?      @map("team_id")
+  transactionId   String?      @map("transaction_id")
+  type            InboxType?
+  website         String?
+  attachment      TransactionAttachment? @relation(fields: [attachmentId], references: [id])
+  team            Team?        @relation(fields: [teamId], references: [id])
+  transaction     Transaction? @relation(fields: [transactionId], references: [id])
+
+  @@map("inbox")
+}
+
+model Invoice {
+  id              String        @id @default(cuid())
+  amount          Float?
+  bottomBlock     Json?         @map("bottom_block")
+  companyDetails  Json?         @map("company_details")
+  createdAt       DateTime      @map("created_at")
+  currency        String?
+  customerDetails Json?         @map("customer_details")
+  customerId      String?       @map("customer_id")
+  customerName    String?       @map("customer_name")
+  discount        Float?
+  dueDate         DateTime?     @map("due_date")
+  filePath        String[]      @map("file_path")
+  fileSize        Int?          @map("file_size")
+  fromDetails     Json?         @map("from_details")
+  internalNote    String?       @map("internal_note")
+  invoiceNumber   String?       @map("invoice_number")
+  issueDate       DateTime?     @map("issue_date")
+  lineItems       Json?         @map("line_items")
+  note            String?
+  noteDetails     Json?         @map("note_details")
+  paidAt          DateTime?     @map("paid_at")
+  paymentDetails  Json?         @map("payment_details")
+  reminderSentAt  DateTime?     @map("reminder_sent_at")
+  sentTo          String?       @map("sent_to")
+  status          InvoiceStatus @default(draft)
+  subtotal        Float?
+  tax             Float?
+  teamId          String        @map("team_id")
+  template        Json?
+  token           String
+  topBlock        Json?         @map("top_block")
+  updatedAt       DateTime?     @map("updated_at")
+  url             String?
+  userId          String?       @map("user_id")
+  vat             Float?
+  viewedAt        DateTime?     @map("viewed_at")
+  customer        Customer?     @relation(fields: [customerId], references: [id])
+  creator         User?         @relation(fields: [userId], references: [id])
+  team            Team          @relation(fields: [teamId], references: [id])
+
+  @@map("invoices")
+}
+
+model InvoiceComment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @map("created_at")
+
+  @@map("invoice_comments")
+}
+
+model InvoiceTemplate {
+  id                String              @id @default(cuid())
+  createdAt         DateTime            @map("created_at")
+  currency          String?
+  customerLabel     String?             @map("customer_label")
+  dateFormat        String?             @map("date_format")
+  deliveryType      InvoiceDeliveryType
+  descriptionLabel  String?             @map("description_label")
+  discountLabel     String?             @map("discount_label")
+  dueDateLabel      String?             @map("due_date_label")
+  fromDetails       Json?               @map("from_details")
+  fromLabel         String?             @map("from_label")
+  includeDecimals   Boolean?            @map("include_decimals")
+  includeDiscount   Boolean?            @map("include_discount")
+  includeQr         Boolean?            @map("include_qr")
+  includeTax        Boolean?            @map("include_tax")
+  includeUnits      Boolean?            @map("include_units")
+  includeVat        Boolean?            @map("include_vat")
+  invoiceNoLabel    String?             @map("invoice_no_label")
+  issueDateLabel    String?             @map("issue_date_label")
+  logoUrl           String?             @map("logo_url")
+  noteLabel         String?             @map("note_label")
+  paymentDetails    Json?               @map("payment_details")
+  paymentLabel      String?             @map("payment_label")
+  priceLabel        String?             @map("price_label")
+  quantityLabel     String?             @map("quantity_label")
+  size              InvoiceSize?
+  taxLabel          String?             @map("tax_label")
+  taxRate           Float?              @map("tax_rate")
+  teamId            String              @map("team_id")
+  title             String?
+  totalLabel        String?             @map("total_label")
+  totalSummaryLabel String?             @map("total_summary_label")
+  vatLabel          String?             @map("vat_label")
+  vatRate           Float?              @map("vat_rate")
+  team              Team                @relation(fields: [teamId], references: [id])
+
+  @@map("invoice_templates")
+}
+
+model Report {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @map("created_at")
+  createdBy String?     @map("created_by")
+  currency  String?
+  expireAt  DateTime?   @map("expire_at")
+  from      DateTime?
+  linkId    String?     @map("link_id")
+  shortLink String?     @map("short_link")
+  teamId    String?     @map("team_id")
+  to        DateTime?
+  type      ReportType?
+  creator   User?       @relation(fields: [createdBy], references: [id])
+  team      Team?       @relation(fields: [teamId], references: [id])
+
+  @@map("reports")
+}
+
+model Tag {
+  id            String            @id @default(cuid())
+  createdAt     DateTime          @map("created_at")
+  name          String
+  teamId        String            @map("team_id")
+  customerTags  CustomerTag[]
+  projectTags   TrackerProjectTag[]
+  transactionTags TransactionTag[]
+  team          Team              @relation(fields: [teamId], references: [id])
+
+  @@map("tags")
+}
+
+model Team {
+  id                    String            @id @default(cuid())
+  baseCurrency         String?           @map("base_currency")
+  createdAt            DateTime          @map("created_at")
+  documentClassification Boolean?         @map("document_classification")
+  email                String?
+  flags                String[]
+  inboxEmail           String?           @map("inbox_email")
+  inboxForwarding      Boolean?          @map("inbox_forwarding")
+  inboxId              String?           @map("inbox_id")
+  logoUrl              String?           @map("logo_url")
+  name                 String?
+  apps                 App[]
+  bankAccounts         BankAccount[]
+  bankConnections      BankConnection[]
+  customers            Customer[]
+  customerTags         CustomerTag[]
+  documents            Document[]
+  inbox                Inbox[]
+  invoices             Invoice[]
+  invoiceTemplates     InvoiceTemplate[]
+  reports              Report[]
+  tags                 Tag[]
+  trackerEntries      TrackerEntry[]
+  trackerProjects     TrackerProject[]
+  trackerProjectTags  TrackerProjectTag[]
+  trackerReports      TrackerReport[]
+  transactionAttachments TransactionAttachment[]
+  transactionCategories TransactionCategory[]
+  transactionEnrichments TransactionEnrichment[]
+  transactionTags     TransactionTag[]
+  transactions        Transaction[]
+  userInvites         UserInvite[]
+  users               User[]
+  usersOnTeam        UsersOnTeam[]
+
+  @@map("teams")
+}
+
+model TrackerEntry {
+  id              String          @id @default(cuid())
+  assignedId      String?         @map("assigned_id")
+  billed          Boolean?
+  createdAt       DateTime        @map("created_at")
+  currency        String?
+  date            DateTime?
+  description     String?
+  duration        Int?
+  projectId       String?         @map("project_id")
+  rate            Float?
+  start           DateTime?
+  stop            DateTime?
+  teamId          String?         @map("team_id")
+  assignedTo      User?           @relation(fields: [assignedId], references: [id])
+  project         TrackerProject? @relation(fields: [projectId], references: [id])
+  team            Team?           @relation(fields: [teamId], references: [id])
+
+  @@map("tracker_entries")
+}
+
+model TrackerProject {
+  id              String              @id @default(cuid())
+  billable        Boolean?
+  createdAt       DateTime            @map("created_at")
+  currency        String?
+  customerId      String?             @map("customer_id")
+  description     String?
+  estimate        Float?
+  name            String
+  rate            Float?
+  status          TrackerStatus       @default(in_progress)
+  teamId          String?             @map("team_id")
+  customer        Customer?           @relation(fields: [customerId], references: [id])
+  team            Team?               @relation(fields: [teamId], references: [id])
+  entries         TrackerEntry[]
+  projectTags     TrackerProjectTag[]
+  trackerReports  TrackerReport[]
+
+  @@map("tracker_projects")
+}
+
+model TrackerProjectTag {
+  id               String         @id @default(cuid())
+  createdAt        DateTime       @map("created_at")
+  tagId            String         @map("tag_id")
+  teamId           String         @map("team_id")
+  trackerProjectId String         @map("tracker_project_id")
+  tag              Tag            @relation(fields: [tagId], references: [id])
+  team             Team           @relation(fields: [teamId], references: [id])
+  trackerProject   TrackerProject @relation(fields: [trackerProjectId], references: [id])
+
+  @@map("tracker_project_tags")
+}
+
+model TrackerReport {
+  id          String          @id @default(cuid())
+  createdAt   DateTime        @map("created_at")
+  createdBy   String?         @map("created_by")
+  linkId      String?         @map("link_id")
+  projectId   String?         @map("project_id")
+  shortLink   String?         @map("short_link")
+  teamId      String?         @map("team_id")
+  creator     User?           @relation(fields: [createdBy], references: [id])
+  project     TrackerProject? @relation(fields: [projectId], references: [id])
+  team        Team?           @relation(fields: [teamId], references: [id])
+
+  @@map("tracker_reports")
+}
+
+model Transaction {
+  id              String              @id @default(cuid())
+  amount          Float
+  assignedId      String?             @map("assigned_id")
+  balance         Float?
+  bankAccountId   String?             @map("bank_account_id")
+  baseAmount      Float?              @map("base_amount")
+  baseCurrency    String?             @map("base_currency")
+  category        TransactionCategory?
+  categorySlug    String?             @map("category_slug")
+  createdAt       DateTime            @map("created_at")
+  currency        String
+  date            DateTime
+  description     String?
+  frequency       TransactionFrequency?
+  internal        Boolean?
+  internalId      String              @map("internal_id")
+  manual          Boolean?
+  method          TransactionMethod
+  name            String
+  note            String?
+  notified        Boolean?
+  recurring       Boolean?
+  status          TransactionStatus?
+  teamId          String              @map("team_id")
+  assignedTo      User?               @relation(fields: [assignedId], references: [id])
+  bankAccount     BankAccount?        @relation(fields: [bankAccountId], references: [id])
+  team            Team                @relation(fields: [teamId], references: [id])
+  inbox           Inbox[]
+  attachments     TransactionAttachment[]
+  tags            TransactionTag[]
+
+  @@map("transactions")
+}
+
+model TransactionAttachment {
+  id            String        @id @default(cuid())
+  createdAt     DateTime      @map("created_at")
+  name          String?
+  path          String[]
+  size          Int?
+  teamId        String?       @map("team_id")
+  transactionId String?       @map("transaction_id")
+  type          String?
+  inbox         Inbox[]
+  team          Team?         @relation(fields: [teamId], references: [id])
+  transaction   Transaction?  @relation(fields: [transactionId], references: [id])
+
+  @@map("transaction_attachments")
+}
+
+model TransactionCategory {
+  id          String    @id @default(cuid())
+  color       String?
+  createdAt   DateTime? @map("created_at")
+  description String?
+  embedding   String?
+  name        String
+  slug        String
+  system      Boolean?
+  teamId      String    @map("team_id")
+  vat         Float?
+  team        Team      @relation(fields: [teamId], references: [id])
+
+  @@map("transaction_categories")
+}
+
+model TransactionEnrichment {
+  id            String    @id @default(cuid())
+  categorySlug  String?   @map("category_slug")
+  createdAt     DateTime  @map("created_at")
+  name          String?
+  system        Boolean?
+  teamId        String?   @map("team_id")
+  team          Team?     @relation(fields: [teamId], references: [id])
+
+  @@map("transaction_enrichments")
+}
+
+model TransactionTag {
+  id            String      @id @default(cuid())
+  createdAt     DateTime    @map("created_at")
+  tagId         String      @map("tag_id")
+  teamId        String      @map("team_id")
+  transactionId String      @map("transaction_id")
+  tag           Tag         @relation(fields: [tagId], references: [id])
+  team          Team        @relation(fields: [teamId], references: [id])
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+
+  @@map("transaction_tags")
+}
+
+model User {
+  id                  String           @id @default(cuid())
+  avatarUrl          String?          @map("avatar_url")
+  createdAt          DateTime?        @map("created_at") // done
+  dateFormat         String?          @map("date_format")
+  email              String?          // done
+  fullName           String?          @map("full_name")
+  locale             String?
+  teamId             String?          @map("team_id")
+  timeFormat         Int?             @map("time_format")
+  timezone           String?
+  weekStartsOnMonday Boolean?         @map("week_starts_on_monday")
+  apps               App[]            @relation("AppCreator")
+  bankAccounts       BankAccount[]
+  documents          Document[]
+  invoices           Invoice[]
+  reports            Report[]
+  trackerEntries    TrackerEntry[]
+  trackerReports    TrackerReport[]
+  transactions       Transaction[]
+  team              Team?             @relation(fields: [teamId], references: [id])
+  userInvites       UserInvite[]
+  usersOnTeam       UsersOnTeam[]
+
+  @@map("users")
+}
+
+model UserInvite {
+  id        String    @id @default(cuid())
+  code      String?
+  createdAt DateTime  @map("created_at")
+  email     String?
+  invitedBy String?   @map("invited_by")
+  role      TeamRole?
+  teamId    String?   @map("team_id")
+  inviter   User?     @relation(fields: [invitedBy], references: [id])
+  team      Team?     @relation(fields: [teamId], references: [id])
+
+  @@map("user_invites")
+}
+
+model UsersOnTeam {
+  id        String    @id @default(cuid())
+  createdAt DateTime? @map("created_at")
+  role      TeamRole?
+  teamId    String    @map("team_id")
+  userId    String    @map("user_id")
+  team      Team      @relation(fields: [teamId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("users_on_team")
+}
+

@@ -1,11 +1,12 @@
 import { cn, nFormatter } from "@dub/utils";
+import { Fragment, useMemo, useState } from "react";
+
 import { curveBasis } from "@visx/curve";
 import { ParentSize } from "@visx/responsive";
 import { scaleLinear } from "@visx/scale";
 import { Area } from "@visx/shape";
 import { Text } from "@visx/text";
 import { motion } from "framer-motion";
-import { Fragment, useMemo, useState } from "react";
 import { useMediaQuery } from "../hooks";
 
 const layers = [
@@ -81,6 +82,7 @@ function FunnelChartInner({
     );
   }, [steps]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const zeroData = useMemo(() => interpolate(0, 0), [steps]);
 
   const maxValue = useMemo(
@@ -103,6 +105,7 @@ function FunnelChartInner({
 
   return (
     <div className="relative">
+      {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
       <svg width={width} height={height}>
         {steps.map(({ id, value, colorClassName }, idx) => (
           <Fragment key={id}>
@@ -132,6 +135,7 @@ function FunnelChartInner({
             {/* Funnel */}
             {layers.map(({ opacity, padding }) => (
               <Area
+                key={id}
                 data={data[id]}
                 curve={curveBasis}
                 x={(d) => xScale(idx + d.x)}
@@ -162,7 +166,7 @@ function FunnelChartInner({
                 fontSize={16}
                 className="pointer-events-none select-none"
               >
-                {formatPercentage((value / maxValue) * 100) + "%"}
+                {`${formatPercentage((value / maxValue) * 100)}%`}
               </Text>
             )}
           </Fragment>
@@ -199,7 +203,7 @@ function FunnelChartInner({
                   )}
                 />
                 <p className="whitespace-nowrap capitalize text-gray-600">
-                  {formatPercentage((tooltipStep.value / maxValue) * 100) + "%"}
+                  {`${formatPercentage((tooltipStep.value / maxValue) * 100)}%`}
                 </p>
               </div>
               <p className="whitespace-nowrap font-medium text-gray-900">

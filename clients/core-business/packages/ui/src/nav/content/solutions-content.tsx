@@ -29,6 +29,7 @@ export function SolutionsContent({ domain }: { domain: string }) {
         <div className="-mx-2 flex flex-col gap-0.5">
           {PROFILES.map(({ icon, title, description, href }) => (
             <ContentLinkCard
+              key={title}
               href={createHref(href, domain, {
                 utm_source: "Custom Domain",
                 utm_medium: "Navbar",

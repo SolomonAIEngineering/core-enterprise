@@ -1,13 +1,14 @@
 "use client";
 
 import { ALL_TOOLS, cn, createHref, fetcher } from "@dub/utils";
+import { useEffect, useState } from "react";
+import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from "./content";
+import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from "./icons";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from "./content";
-import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from "./icons";
 import { MaxWidthWrapper } from "./max-width-wrapper";
 import { NavWordmark } from "./nav-wordmark";
 
@@ -125,7 +126,7 @@ export function Footer({
             <div className="md:grid md:grid-cols-2">
               <div>
                 <h3 className={linkListHeaderClassName}>Product</h3>
-                <ul role="list" className={linkListClassName}>
+                <ul className={linkListClassName}>
                   {navigation.features.map((item) => (
                     <li key={item.name}>
                       <Link
@@ -145,7 +146,7 @@ export function Footer({
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className={linkListHeaderClassName}>Resources</h3>
-                <ul role="list" className={linkListClassName}>
+                <ul className={linkListClassName}>
                   {navigation.product.map((item) => (
                     <li key={item.name}>
                       <Link
@@ -168,7 +169,7 @@ export function Footer({
               <div className="flex flex-col space-y-8">
                 <div>
                   <h3 className={linkListHeaderClassName}>Compare</h3>
-                  <ul role="list" className={linkListClassName}>
+                  <ul className={linkListClassName}>
                     {navigation.compare.map((item) => (
                       <li key={item.name}>
                         <Link
@@ -188,7 +189,7 @@ export function Footer({
                 </div>
                 <div>
                   <h3 className={linkListHeaderClassName}>Legal</h3>
-                  <ul role="list" className={linkListClassName}>
+                  <ul className={linkListClassName}>
                     {navigation.legal.map((item) => (
                       <li key={item.name}>
                         <Link
@@ -223,7 +224,7 @@ export function Footer({
 
               <div className="mt-10 md:mt-0">
                 <h3 className={linkListHeaderClassName}>Tools</h3>
-                <ul role="list" className={linkListClassName}>
+                <ul className={linkListClassName}>
                   {navigation.tools.map((item) => (
                     <li key={item.name}>
                       <Link

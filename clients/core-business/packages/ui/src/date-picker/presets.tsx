@@ -1,8 +1,9 @@
+import type { DatePreset, DateRange, DateRangePreset, Preset } from "./types";
+
 import { cn } from "@dub/utils";
 import { Command } from "cmdk";
 import { Lock } from "lucide-react";
 import { Tooltip } from "../tooltip";
-import { DatePreset, DateRange, DateRangePreset, Preset } from "./types";
 
 type PresetsProps<TPreset extends Preset, TValue> = {
   presets: TPreset[];
@@ -18,9 +19,11 @@ const Presets = <TPreset extends Preset, TValue>({
   // Currently selected preset
   currentValue,
 }: PresetsProps<TPreset, TValue>) => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const isDateRangePresets = (preset: any): preset is DateRangePreset =>
     "dateRange" in preset;
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const isDatePresets = (preset: any): preset is DatePreset => "date" in preset;
 
   const compareDates = (date1: Date, date2: Date) =>
@@ -59,7 +62,8 @@ const Presets = <TPreset extends Preset, TValue>({
       const value = currentValue as DateRange | undefined;
 
       return value && compareRanges(value, preset.dateRange);
-    } else if (isDatePresets(preset)) {
+    }
+    if (isDatePresets(preset)) {
       const value = currentValue as Date | undefined;
 
       return value && compareDates(value, preset.date);
@@ -79,7 +83,7 @@ const Presets = <TPreset extends Preset, TValue>({
         {presets.map((preset, index) => {
           return (
             <Command.Item
-              key={index}
+              key={`${index}-${preset.id}`}
               disabled={preset.requiresUpgrade}
               onSelect={() => onSelect(preset)}
               title={preset.label}
@@ -102,7 +106,7 @@ const Presets = <TPreset extends Preset, TValue>({
               ) : null}
               {preset.requiresUpgrade && preset.tooltipContent && (
                 <Tooltip side="bottom" content={preset.tooltipContent}>
-                  <div className="absolute inset-0 cursor-not-allowed"></div>
+                  <div className="absolute inset-0 cursor-not-allowed" />
                 </Tooltip>
               )}
             </Command.Item>

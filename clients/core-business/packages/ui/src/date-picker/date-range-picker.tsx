@@ -1,14 +1,15 @@
+import { useEffect, useMemo, useState } from "react";
+import { useKeyboardShortcut, useMediaQuery } from "../hooks";
+import { DatePickerContext, formatDate, validatePresets } from "./shared";
+import type { DateRange, DateRangePreset, PickerProps } from "./types";
+
 import { cn } from "@dub/utils";
 import { enUS } from "date-fns/locale";
-import { useEffect, useMemo, useState } from "react";
-import { SelectRangeEventHandler } from "react-day-picker";
-import { useKeyboardShortcut, useMediaQuery } from "../hooks";
+import type { SelectRangeEventHandler } from "react-day-picker";
 import { Popover } from "../popover";
 import { Calendar as CalendarPrimitive } from "./calendar";
 import { Presets } from "./presets";
-import { DatePickerContext, formatDate, validatePresets } from "./shared";
 import { Trigger } from "./trigger";
-import { DateRange, DateRangePreset, PickerProps } from "./types";
 
 type RangeDatePickerProps = {
   presets?: DateRangePreset[];
@@ -48,6 +49,7 @@ const DateRangePickerInner = ({
   );
   const [month, setMonth] = useState<Date | undefined>(range?.to);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const initialRange = useMemo(() => {
     return range;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,12 +61,14 @@ const DateRangePickerInner = ({
   }, [value]);
 
   // Update internal state when preset props change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const p = presets?.find(({ id }) => id === presetId);
     setPreset(p);
     setRange(p?.dateRange ?? value ?? defaultValue);
   }, [presets, presetId]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!open) setMonth(range?.to);
     else if (range) setMonth(range.to);

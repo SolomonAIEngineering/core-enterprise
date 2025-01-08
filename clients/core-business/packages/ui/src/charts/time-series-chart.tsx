@@ -1,15 +1,16 @@
+import { scaleBand, scaleLinear, scaleUtc } from "@visx/scale";
+import { Bar, Circle, Line } from "@visx/shape";
+import { type PropsWithChildren, useMemo, useState } from "react";
+import { ChartContext, ChartTooltipContext } from "./chart-context";
+import type {
+  ChartContext as ChartContextType,
+  ChartProps,
+  Datum,
+} from "./types";
+
 import { cn } from "@dub/utils";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
-import { scaleBand, scaleLinear, scaleUtc } from "@visx/scale";
-import { Bar, Circle, Line } from "@visx/shape";
-import { PropsWithChildren, useMemo, useState } from "react";
-import { ChartContext, ChartTooltipContext } from "./chart-context";
-import {
-  ChartProps,
-  Datum,
-  type ChartContext as ChartContextType,
-} from "./types";
 import { useTooltip } from "./useTooltip";
 
 type TimeSeriesChartProps<T extends Datum> = PropsWithChildren<ChartProps<T>>;
@@ -77,11 +78,11 @@ function TimeSeriesChartInner<T extends Datum>({
     };
   }, [data]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const { minY, maxY } = useMemo(() => {
     const values = series
       .filter(({ isActive }) => isActive !== false)
-      .map(({ valueAccessor }) => data.map((d) => valueAccessor(d)))
-      .flat()
+      .flatMap(({ valueAccessor }) => data.map((d) => valueAccessor(d)))
       .filter((v): v is number => v != null);
 
     return {
@@ -91,6 +92,7 @@ function TimeSeriesChartInner<T extends Datum>({
     };
   }, [data, series]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const { yScale, xScale } = useMemo(() => {
     const rangeY = maxY - minY;
     return {
@@ -126,6 +128,7 @@ function TimeSeriesChartInner<T extends Datum>({
     series,
     startDate,
     endDate,
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     xScale: xScale as any,
     yScale,
     minY,
@@ -158,6 +161,7 @@ function TimeSeriesChartInner<T extends Datum>({
   return (
     <ChartContext.Provider value={chartContext}>
       <ChartTooltipContext.Provider value={tooltipContext}>
+        {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
         <svg width={outerWidth} height={outerHeight} ref={containerRef}>
           {children}
           <Group left={margin.left} top={margin.top}>

@@ -1,30 +1,34 @@
-import { cn } from "@dub/utils";
+// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+// biome-ignore lint/style/useImportType: <explanation>
 import { Command, CommandInput, CommandItem, useCommandState } from "cmdk";
-import { ChevronDown } from "lucide-react";
 import {
+  type HTMLProps,
+  type PropsWithChildren,
+  type ReactNode,
   forwardRef,
-  HTMLProps,
   isValidElement,
-  PropsWithChildren,
-  ReactNode,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { AnimatedSizeContainer } from "../animated-size-container";
 import { Button, ButtonProps } from "../button";
 import { useMediaQuery, useScrollProgress } from "../hooks";
 import {
   Check2,
   CheckboxCheckedFill,
   CheckboxUnchecked,
-  Icon,
+  type Icon,
   LoadingSpinner,
   Plus,
 } from "../icons";
-import { Popover, PopoverProps } from "../popover";
+import { Popover, type PopoverProps } from "../popover";
 
+import { cn } from "@dub/utils";
+import { ChevronDown } from "lucide-react";
+import { AnimatedSizeContainer } from "../animated-size-container";
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type ComboboxOption<TMeta = any> = {
   label: string;
   value: string;
@@ -34,7 +38,7 @@ export type ComboboxOption<TMeta = any> = {
 
 export type ComboboxProps<
   TMultiple extends boolean | undefined,
-  TMeta extends any,
+  TMeta,
 > = PropsWithChildren<{
   multiple?: TMultiple;
   selected: TMultiple extends true
@@ -66,6 +70,7 @@ export type ComboboxProps<
 
 function isMultipleSelection(
   multiple: boolean | undefined,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   setSelected: any,
 ): setSelected is (tags: ComboboxOption[]) => void {
   return multiple === true;
@@ -95,6 +100,7 @@ export function Combobox({
   optionClassName,
   matchTriggerWidth,
   children,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 }: ComboboxProps<boolean | undefined, any>) {
   const isMultiple = isMultipleSelection(multiple, setSelected);
 
@@ -159,6 +165,7 @@ export function Combobox({
   }, [shouldSortOptions, options, sortOptions, search]);
 
   // Sort options when the options prop changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setShouldSortOptions(true);
   }, [options]);
@@ -171,6 +178,7 @@ export function Combobox({
     setShouldSortOptions(true);
   }, [isOpen]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => onSearchChange?.(search), [search]);
 
   return (
@@ -308,7 +316,9 @@ export function Combobox({
             </div>
             {caret && (
               <ChevronDown
-                className={`ml-1 size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180`}
+                className={
+                  "ml-1 size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+                }
               />
             )}
           </>
@@ -344,8 +354,8 @@ const Scroll = ({ children }: PropsWithChildren) => {
       {/* Bottom scroll fade */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full rounded-b-lg bg-gradient-to-t from-white sm:block"
-        style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
-      ></div>
+        style={{ opacity: 1 - scrollProgress ** 2 }}
+      />
     </>
   );
 };
@@ -404,6 +414,7 @@ function Option({
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const isReactNode = (element: any): element is ReactNode =>
   isValidElement(element);
 

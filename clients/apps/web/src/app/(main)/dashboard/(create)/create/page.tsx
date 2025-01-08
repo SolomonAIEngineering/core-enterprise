@@ -1,10 +1,11 @@
-import revalidate from '@/app/actions'
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { getAuthenticatedUser } from '@/utils/user'
 import { Organization, ResponseError, ValidationError } from '@polar-sh/sdk'
-import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+
 import ClientPage from './ClientPage'
+import { Metadata } from 'next'
+import { getAuthenticatedUser } from '@/utils/user'
+import { getServerSideAPI } from '@/utils/api/serverside'
+import { redirect } from 'next/navigation'
+import revalidate from '@/app/actions'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

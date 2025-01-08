@@ -1,5 +1,6 @@
-import { PaginationState } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
+
+import type { PaginationState } from "@tanstack/react-table";
 
 export function useTablePagination({
   pageSize,
@@ -22,6 +23,7 @@ export function useTablePagination({
     }));
   }, [page]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     onPageChange?.(pagination.pageIndex);
   }, [pagination]);

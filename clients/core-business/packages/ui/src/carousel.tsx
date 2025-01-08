@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
@@ -179,6 +179,7 @@ const Carousel = React.forwardRef<
           ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
+          // biome-ignore lint/a11y/useSemanticElements: <explanation>
           role="region"
           aria-roledescription="carousel"
           {...props}
@@ -323,7 +324,7 @@ const CarouselNavBar = ({
 
   const stopAutoplayAnd = React.useCallback(
     (fn: () => void) => () => {
-      if (autoplay && autoplay.isPlaying()) autoplay.stop();
+      if (autoplay?.isPlaying()) autoplay.stop();
       fn();
     },
     [autoplay],
@@ -344,6 +345,7 @@ const CarouselNavBar = ({
     <div className={cn(CarouselNavBarVariants({ variant }), className)}>
       {variant !== "simple" && (
         <button
+          type="button"
           className="cursor-pointer rounded-full p-2 hover:bg-gray-50 active:bg-gray-100"
           disabled={!canScrollPrev}
           onClick={stopAutoplayAnd(scrollPrev)}
@@ -357,7 +359,8 @@ const CarouselNavBar = ({
         <div className="flex items-center gap-1">
           {api.slideNodes().map((_, idx) => (
             <button
-              key={idx}
+              key={`nav-slide-${idx}-${Date.now()}`}
+              type="button"
               onClick={stopAutoplayAnd(() => api.scrollTo(idx))}
               className="rounded-full p-0.5 hover:bg-gray-100 active:bg-gray-200 sm:p-1.5"
             >
@@ -390,6 +393,7 @@ const CarouselNavBar = ({
 
       {variant !== "simple" && (
         <button
+          type="button"
           className="cursor-pointer rounded-full p-2 hover:bg-gray-50 active:bg-gray-100"
           disabled={!canScrollNext}
           onClick={stopAutoplayAnd(scrollNext)}

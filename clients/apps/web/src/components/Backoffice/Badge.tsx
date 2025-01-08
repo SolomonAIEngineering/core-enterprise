@@ -1,10 +1,11 @@
 'use client'
 
-import { useBackofficeBadgeAction } from '@/hooks/queries'
 import {
   BackofficeBadgeActionEnum,
   BackofficeBadgeResponse,
 } from '@polar-sh/sdk'
+
+import { useBackofficeBadgeAction } from '@/hooks/queries'
 import { useState } from 'react'
 
 const Badge = () => {
@@ -92,7 +93,7 @@ const Badge = () => {
           <select
             id="action"
             onChange={(e) => {
-              if (e.target.value == BackofficeBadgeActionEnum.REMOVE) {
+              if (e.target.value === BackofficeBadgeActionEnum.REMOVE) {
                 return setAction(BackofficeBadgeActionEnum.REMOVE)
               }
               setAction(BackofficeBadgeActionEnum.EMBED)
@@ -113,7 +114,7 @@ const Badge = () => {
             onSubmit()
           }}
         >
-          {action == 'embed' ? 'Embed' : 'Remove'} Badge
+          {action === 'embed' ? 'Embed' : 'Remove'} Badge
         </button>
       </form>
     </>

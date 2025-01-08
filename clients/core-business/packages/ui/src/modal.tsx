@@ -1,10 +1,11 @@
 "use client";
 
-import { cn } from "@dub/utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
-import { ComponentProps, Dispatch, SetStateAction } from "react";
+
+import type { ComponentProps, Dispatch, SetStateAction } from "react";
+
+import { cn } from "@dub/utils";
 import { Drawer } from "vaul";
 import { useMediaQuery } from "./hooks";
 
@@ -27,22 +28,23 @@ export function Modal({
   preventDefaultClose?: boolean;
   drawerRootProps?: ComponentProps<typeof Drawer.Root>;
 }) {
-  const router = useRouter();
+  // const router = useRouter();
 
   const closeModal = ({ dragged }: { dragged?: boolean } = {}) => {
     if (preventDefaultClose && !dragged) {
       return;
     }
     // fire onClose event if provided
-    onClose && onClose();
+    onClose?.();
 
     // if setShowModal is defined, use it to close modal
     if (setShowModal) {
       setShowModal(false);
       // else, this is intercepting route @modal
-    } else {
-      router.back();
     }
+    // } else {
+    //   router.back();
+    // }
   };
   const { isMobile } = useMediaQuery();
 

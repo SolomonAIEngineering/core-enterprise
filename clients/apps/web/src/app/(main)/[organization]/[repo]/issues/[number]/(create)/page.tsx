@@ -1,10 +1,11 @@
-import { getServerSideAPI } from '@/utils/api/serverside'
-import { resolveIssuePath } from '@/utils/issue'
-import { organizationPageLink } from '@/utils/nav'
 import { Pledger, ResponseError, RewardsSummary } from '@polar-sh/sdk'
-import { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
+
 import ClientPage from './ClientPage'
+import { Metadata } from 'next'
+import { getServerSideAPI } from '@/utils/api/serverside'
+import { organizationPageLink } from '@/utils/nav'
+import { resolveIssuePath } from '@/utils/issue'
 
 const cacheConfig = {
   cache: 'no-store',
@@ -13,14 +14,15 @@ const cacheConfig = {
 export async function generateMetadata({
   params,
 }: {
-  params: { organization: string; repo: string; number: string }
+  params: Promise<{ organization: string; repo: string; number: string }>
 }): Promise<Metadata> {
   const api = getServerSideAPI()
+  const { organization: organizationSlug, repo: repoSlug, number: numberSlug } = await params
   const resolvedIssueOrganization = await resolveIssuePath(
     api,
-    params.organization,
-    params.repo,
-    params.number,
+    organizationSlug,
+    repoSlug,
+    numberSlug,
     cacheConfig,
   )
 
@@ -31,7 +33,7 @@ export async function generateMetadata({
   const [issue, organization] = resolvedIssueOrganization
 
   // Redirect to the actual Polar organization if resolved from external organization
-  if (organization.slug !== params.organization) {
+  if (organization.slug !== organizationSlug) {
     redirect(
       organizationPageLink(
         organization,
@@ -73,14 +75,15 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: { organization: string; repo: string; number: string }
+  params: Promise<{ organization: string; repo: string; number: string }>
 }) {
   const api = getServerSideAPI()
+  const { organization: organizationSlug, repo: repoSlug, number: numberSlug } = await params
   const resolvedIssueOrganization = await resolveIssuePath(
     api,
-    params.organization,
-    params.repo,
-    params.number,
+    organizationSlug,
+    repoSlug,
+    numberSlug,
     cacheConfig,
   )
 
@@ -91,7 +94,7 @@ export default async function Page({
   const [issue, organization] = resolvedIssueOrganization
 
   // Redirect to the actual Polar organization if resolved from external organization
-  if (organization.slug !== params.organization) {
+  if (organization.slug !== organizationSlug) {
     redirect(
       organizationPageLink(
         organization,

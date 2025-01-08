@@ -1,4 +1,3 @@
-import { cn } from "@dub/utils";
 import {
   flip,
   offset,
@@ -10,10 +9,10 @@ import {
 import { Command, useCommandState } from "cmdk";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import {
-  Dispatch,
-  InputHTMLAttributes,
-  ReactNode,
-  SetStateAction,
+  type Dispatch,
+  type InputHTMLAttributes,
+  type ReactNode,
+  type SetStateAction,
   createContext,
   forwardRef,
   useContext,
@@ -22,6 +21,8 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { cn } from "@dub/utils";
 import { Drawer } from "vaul";
 import { Badge } from "./badge";
 import { BlurImage } from "./blur-image";
@@ -90,6 +91,7 @@ export function InputSelect({
     if (openCommandList) setInputChanged(false);
   }, [openCommandList]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => setInputChanged(true), [inputValue]);
 
   useEffect(() => {
@@ -178,7 +180,7 @@ export function InputSelect({
                 )}
               >
                 <div className="absolute inset-y-0 left-0 flex items-center justify-center pl-3 text-gray-400">
-                  {selectedItem && selectedItem.image ? (
+                  {selectedItem?.image ? (
                     <img
                       src={selectedItem.image}
                       alt={selectedItem.value}
@@ -222,7 +224,7 @@ export function InputSelect({
                   )}
                 >
                   <div className="absolute inset-y-0 left-0 flex items-center justify-center pl-3 text-gray-400">
-                    {selectedItem && selectedItem.image ? (
+                    {selectedItem?.image ? (
                       <img
                         src={selectedItem.image}
                         alt={selectedItem.value}
@@ -274,11 +276,12 @@ export function InputSelect({
               className,
             )}
           >
+            {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div
               onClick={() => setOpenCommandList((prev) => !prev)}
               className="absolute inset-y-0 left-0 flex cursor-pointer items-center justify-center pl-3 text-gray-400"
             >
-              {selectedItem && selectedItem.image ? (
+              {selectedItem?.image ? (
                 <img
                   src={selectedItem.image}
                   alt={selectedItem.value}
@@ -330,7 +333,7 @@ export function InputSelect({
               {/* Bottom scroll fade */}
               <div
                 className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full bg-gradient-to-t from-white sm:block"
-                style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
+                style={{ opacity: 1 - scrollProgress ** 2 }}
               />
             </div>
           )}
@@ -341,6 +344,7 @@ export function InputSelect({
 }
 
 const CommandInput = forwardRef<HTMLInputElement>((_, ref) => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const isEmpty = useCommandState((state: any) => state.filtered.count === 0);
 
   const {

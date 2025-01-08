@@ -1,7 +1,8 @@
-import { cn } from "@dub/utils";
-import { AlertCircle } from "lucide-react";
 import React, { useCallback, useState } from "react";
 import { Eye, EyeSlash } from "./icons";
+
+import { cn } from "@dub/utils";
+import { AlertCircle } from "lucide-react";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,6 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const toggleIsPasswordVisible = useCallback(
       () => setIsPasswordVisible(!isPasswordVisible),
       [isPasswordVisible, setIsPasswordVisible],

@@ -3,7 +3,9 @@ import { redirect } from 'next/navigation'
 export default async function Page({
   params,
 }: {
-  params: { organization: string; }
+  params: Promise<{ organization: string }>
 }) {
-  redirect(`/${params.organization}`)
+  const { organization: organizationSlug } = await params
+  redirect(`/${organizationSlug}`)
 }
+

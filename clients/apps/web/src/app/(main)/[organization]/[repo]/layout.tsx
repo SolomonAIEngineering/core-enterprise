@@ -1,14 +1,15 @@
+import { getAuthenticatedUser, getUserOrganizations } from '@/utils/user'
+
+import Avatar from 'polarkit/components/ui/atoms/avatar'
+import { BrandingMenu } from '@/components/Layout/Public/BrandingMenu'
+import Link from 'next/link'
 import LogoIcon from '@/components/Brand/LogoIcon'
 import PolarMenu from '@/components/Layout/PolarMenu'
-import { BrandingMenu } from '@/components/Layout/Public/BrandingMenu'
+import React from 'react'
 import { getServerSideAPI } from '@/utils/api/serverside'
+import { notFound } from 'next/navigation'
 import { organizationPageLink } from '@/utils/nav'
 import { resolveRepositoryPath } from '@/utils/repository'
-import { getAuthenticatedUser, getUserOrganizations } from '@/utils/user'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import Avatar from 'polarkit/components/ui/atoms/avatar'
-import React from 'react'
 
 const cacheConfig = {
   next: {
@@ -20,14 +21,15 @@ export default async function Layout({
   params,
   children,
 }: {
-  params: { organization: string; repo: string }
+  params: Promise<{ organization: string; repo: string }>
   children: React.ReactNode
 }) {
   const api = getServerSideAPI()
+  const { organization: organizationSlug, repo: repoSlug } = await params
   const resolvedRepositoryOrganization = await resolveRepositoryPath(
     api,
-    params.organization,
-    params.repo,
+    organizationSlug,
+    repoSlug,
     cacheConfig,
   )
 

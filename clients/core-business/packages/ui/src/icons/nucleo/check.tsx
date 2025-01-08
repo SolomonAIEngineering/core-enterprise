@@ -1,7 +1,8 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 
 export function Check(props: SVGProps<SVGSVGElement>) {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       height="18"
       width="18"

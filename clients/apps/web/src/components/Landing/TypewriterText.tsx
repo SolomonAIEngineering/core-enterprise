@@ -1,6 +1,7 @@
 'use client'
 
 import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
+
 import { useEffect } from 'react'
 
 const cursorVariants = {

@@ -1,8 +1,10 @@
 "use client";
 
-import { cn } from "@dub/utils";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { PropsWithChildren, ReactNode, WheelEventHandler } from "react";
+
+import type { PropsWithChildren, ReactNode, WheelEventHandler } from "react";
+
+import { cn } from "@dub/utils";
 import { Drawer } from "vaul";
 import { useMediaQuery } from "./hooks";
 

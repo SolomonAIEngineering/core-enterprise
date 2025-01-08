@@ -5,9 +5,9 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import Linkify from "linkify-react";
 import { HelpCircle } from "lucide-react";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { Badge } from "./badge";
-import { Button, ButtonProps, buttonVariants } from "./button";
+import { Button, type ButtonProps, buttonVariants } from "./button";
 
 export function TooltipProvider({ children }: { children: ReactNode }) {
   return (
@@ -105,7 +105,7 @@ export function TooltipContent({
             href={href}
             {...(target ? { target } : {})}
             className={cn(
-              buttonVariants({ variant: "primary" }),
+              buttonVariants({ variant: "default" }),
               "flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
             )}
           >
@@ -115,7 +115,7 @@ export function TooltipContent({
           <Button
             onClick={onClick}
             text={cta}
-            variant="primary"
+            variant="default"
             className="h-9"
           />
         ) : null)}

@@ -6,7 +6,7 @@ import {
   CircleHalfDottedClock,
   CircleInfo,
   CircleWarning,
-  Icon,
+  type Icon,
 } from "./icons";
 
 const statusBadgeVariants = cva(
@@ -28,7 +28,7 @@ const statusBadgeVariants = cva(
   },
 );
 
-const defaultIcons = {
+const defaultIcons: Record<NonNullable<BadgeProps["variant"]>, Icon> = {
   neutral: CircleInfo,
   new: CircleHalfDottedCheck,
   success: CircleCheck,

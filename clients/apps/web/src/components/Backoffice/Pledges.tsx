@@ -1,13 +1,13 @@
 'use client'
 
-import { useBackofficeAllPledges } from '@/hooks/queries'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
 import { BackofficePledge } from '@polar-sh/sdk'
-import Link from 'next/link'
 import Button from 'polarkit/components/ui/atoms/button'
+import Link from 'next/link'
 import { formatCurrencyAndAmount } from 'polarkit/lib/money'
-import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useBackofficeAllPledges } from '@/hooks/queries'
+import { useMemo } from 'react'
 
 const Pledges = () => {
   const pledges = useBackofficeAllPledges()
@@ -79,7 +79,11 @@ const Pledges = () => {
                     {formatCurrencyAndAmount(p.amount, p.currency)} from{' '}
                   </div>
                   {p.pledger?.avatar_url && (
-                    <img className="h-6 w-6" src={p.pledger.avatar_url} />
+                    <img
+                      className="h-6 w-6"
+                      src={p.pledger.avatar_url}
+                      alt={p.pledger.github_username || 'Anonymous'}
+                    />
                   )}
                   <div className="underline">
                     {p.pledger?.github_username ||

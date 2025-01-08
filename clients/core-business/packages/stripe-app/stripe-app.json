@@ -1,53 +1,63 @@
 {
-  "id": "dub.co",
-  "version": "0.0.3",
-  "name": "Dub Conversions",
+  "id": "solomon.ai",
+  "version": "0.0.4",
+  "name": "Solomon AI Business",
   "icon": "./logo.png",
   "permissions": [
     {
       "permission": "customer_read",
-      "purpose": "Allows Dub to read customer information."
+      "purpose": "Allows Solomon AI to read customer information for business analytics."
     },
     {
       "permission": "subscription_read",
-      "purpose": "Allows Dub to read subscription information."
+      "purpose": "Allows Solomon AI to read subscription information for business service management."
     },
     {
       "permission": "invoice_read",
-      "purpose": "Allows Dub to read invoice information."
+      "purpose": "Allows Solomon AI to read invoice information for financial tracking."
     },
     {
       "permission": "checkout_session_read",
-      "purpose": "Allows Dub to read checkout session information."
+      "purpose": "Allows Solomon AI to read checkout session information for payment processing."
     },
     {
       "permission": "user_email_read",
-      "purpose": "Access current user's email address to identify within Dub."
+      "purpose": "Access current user's email address to identify within Solomon AI Business platform."
     },
     {
       "permission": "connected_account_read",
-      "purpose": "Allows reading basic data from connected accounts, such as account name and id."
+      "purpose": "Allows reading basic data from connected accounts for business relationship management."
     },
     {
       "permission": "webhook_read",
-      "purpose": "Allows Dub to read webhook information."
+      "purpose": "Allows Solomon AI to read webhook information for real-time business updates."
     },
     {
       "permission": "event_read",
-      "purpose": "Allows Dub to read event information."
+      "purpose": "Allows Solomon AI to read event information for business activity monitoring."
+    },
+    {
+      "permission": "secret_write",
+      "purpose": "Allows storing Solomon AI access tokens in Stripe for secure account integration."
     }
   ],
   "ui_extension": {
+    "views": [
+      {
+        "viewport": "settings",
+        "component": "AppSettings"
+      }
+    ],
     "content_security_policy": {
       "connect-src": null,
       "image-src": null,
       "purpose": ""
     }
   },
-  "allowed_redirect_uris": [
-    "https://app.dub.co/api/stripe/integration/callback",
-    "https://preview.dub.co/api/stripe/integration/callback"
-  ],
-  "stripe_api_access_type": "oauth",
+  "post_install_action": {
+    "type": "settings",
+    "url": ""
+  },
+  "stripe_api_access_type": "platform",
   "distribution_type": "public"
 }

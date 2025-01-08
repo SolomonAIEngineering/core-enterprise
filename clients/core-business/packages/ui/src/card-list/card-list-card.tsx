@@ -1,5 +1,5 @@
+// biome-ignore lint/style/useImportType: <explanation>
 import { cn, isClickOnInteractiveChild } from "@dub/utils";
-import { cva } from "class-variance-authority";
 import {
   PropsWithChildren,
   createContext,
@@ -8,6 +8,8 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { cva } from "class-variance-authority";
 import { CardListContext } from "./card-list";
 
 const cardListCardVariants = cva("w-full group/card border-gray-200 bg-white", {
@@ -65,6 +67,7 @@ export function CardListCard({
       onPointerLeave={() => setHovered(false)}
       data-hover-state-enabled={hoverStateEnabled}
     >
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
       <div
         className={cn(cardListCardInnerClassName, innerClassName)}
         onClick={

@@ -1,20 +1,21 @@
 'use client'
 
 import {
+  formatCurrencyAndAmount,
+  getCentsInDollarString,
+} from 'polarkit/lib/money'
+import {
   useBackofficeIssue,
   useBackofficePledgeRewardTransfer,
   useBackofficeRewards,
 } from '@/hooks/queries'
+
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
 import Button from 'polarkit/components/ui/atoms/button'
-import {
-  formatCurrencyAndAmount,
-  getCentsInDollarString,
-} from 'polarkit/lib/money'
 import { twMerge } from 'tailwind-merge'
 
-export default function Page({ params }: { params: { id: string } }) {
-  const id = params.id
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
 
   const issue = useBackofficeIssue(typeof id === 'string' ? id : undefined)
 

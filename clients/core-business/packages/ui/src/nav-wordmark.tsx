@@ -4,9 +4,9 @@ import { cn } from "@dub/utils";
 import * as Popover from "@radix-ui/react-popover";
 import { BoxSelect, Home, LayoutGrid, Type } from "lucide-react";
 import { useParams } from "next/navigation";
-import { MouseEvent, useCallback, useContext, useState } from "react";
+import { type MouseEvent, useCallback, useContext, useState } from "react";
 import { toast } from "sonner";
-import { Button, ButtonProps } from "./button";
+import { Button, type ButtonProps } from "./button";
 import { useCopyToClipboard } from "./hooks";
 import { Logo } from "./logo";
 import { NavContext } from "./nav";
@@ -103,7 +103,7 @@ export function NavWordmark({
               icon={<BoxSelect strokeWidth={2} className="h-4 w-4" />}
             />
             {/* If it's in the app or it's a domain placeholder page (not dub.co homepage), show the home button */}
-            {isInApp || domain != "dub.co" ? (
+            {isInApp || domain !== "dub.co" ? (
               <ContextMenuButton
                 text="Home Page"
                 variant="outline"
