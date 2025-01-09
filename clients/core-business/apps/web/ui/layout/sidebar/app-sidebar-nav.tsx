@@ -228,6 +228,11 @@ const NAV_AREAS: SidebarNavAreas<{
             icon: Calendar6,
             href: "/account/settings/date-and-locale",
           },
+          {
+            name: "Assistant Settings",
+            icon: CubeSettings,
+            href: "/account/settings/assistant-settings",
+          },
           ...(session?.user?.["referralLinkId"]
             ? [
               {

@@ -8,15 +8,6 @@ import UpdateWeekStart from "@/ui/account/update-week-start";
 import { useSession } from "next-auth/react";
 import useUser from "@/lib/swr/use-user";
 
-// Extend the session user type to include our preferences
-interface UserPreferences {
-  locale?: string;
-  timezone?: string;
-  dateFormat?: string;
-  timeFormat?: string;
-  weekStart?: string;
-}
-
 export default function SettingsDateAndLocalePageClient() {
   const { user } = useUser();
 

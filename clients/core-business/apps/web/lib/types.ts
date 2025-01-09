@@ -46,6 +46,7 @@ import {
   trackSaleResponseSchema,
 } from "./zod/schemas/sales";
 
+import { AIAssistantSettingsSchema } from "./zod/schemas/ai-settings";
 import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
 import { DiscountSchema } from "./zod/schemas/discount";
 import { InvoiceSchema } from "./zod/schemas/invoices";
@@ -388,3 +389,5 @@ export type ClickEvent = z.infer<typeof clickEventResponseSchema>;
 export type SaleEvent = z.infer<typeof saleEventResponseSchema>;
 
 export type LeadEvent = z.infer<typeof leadEventResponseSchema>;
+
+export type AIAssistantSettings = z.infer<typeof AIAssistantSettingsSchema>;
