@@ -1,12 +1,12 @@
 "use client";
 
-import UpdateContextWindow from "@/ui/ai-settings/update-context-window";
-import UpdateCustomKnowledge from "@/ui/ai-settings/update-custom-knowledge";
-import UpdateFeatures from "@/ui/ai-settings/update-features";
-import UpdateHistoryRetention from "@/ui/ai-settings/update-history-retention";
-import UpdateLanguageStyle from "@/ui/ai-settings/update-language-style";
-import UpdateQuestionLimit from "@/ui/ai-settings/update-question-limit";
-import UpdateResponseLength from "@/ui/ai-settings/update-response-length";
+import UpdateContextWindow from "@/ui/assistant-settings/update-context-window";
+import UpdateCustomKnowledge from "@/ui/assistant-settings/update-custom-knowledge";
+import UpdateFeatures from "@/ui/assistant-settings/update-features";
+import UpdateHistoryRetention from "@/ui/assistant-settings/update-history-retention";
+import UpdateLanguageStyle from "@/ui/assistant-settings/update-language-style";
+import UpdateQuestionLimit from "@/ui/assistant-settings/update-question-limit";
+import UpdateResponseLength from "@/ui/assistant-settings/update-response-length";
 import { useAISettings } from "@/lib/swr/use-ai-settings";
 
 export default function SettingsAISettingsPageClient() {

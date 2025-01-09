@@ -49,6 +49,7 @@ import {
 import { AIAssistantSettingsSchema } from "./zod/schemas/ai-settings";
 import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
 import { DiscountSchema } from "./zod/schemas/discount";
+import { FinancialSettingsSchema } from "./zod/schemas/financial-settings";
 import { InvoiceSchema } from "./zod/schemas/invoices";
 import { WEBHOOK_TRIGGER_DESCRIPTIONS } from "./webhook/constants";
 import { clickEventResponseSchema } from "./zod/schemas/clicks";
@@ -391,3 +392,5 @@ export type SaleEvent = z.infer<typeof saleEventResponseSchema>;
 export type LeadEvent = z.infer<typeof leadEventResponseSchema>;
 
 export type AIAssistantSettings = z.infer<typeof AIAssistantSettingsSchema>;
+
+export type FinancialSettings = z.infer<typeof FinancialSettingsSchema>;

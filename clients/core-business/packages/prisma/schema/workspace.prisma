@@ -65,7 +65,6 @@ model Project {
   TransactionAttachment TransactionAttachment[]
   TransactionCategory TransactionCategory[]
   TransactionEnrichment TransactionEnrichment[]
-  TransactionTag TransactionTag[]
   Document Document[]
   CustomerTag CustomerTag[]
   ContractTemplate ContractTemplate[]

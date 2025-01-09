@@ -11,10 +11,12 @@ import {
   Gift,
   Globe,
   Key,
+  MoneyBills2,
   Receipt2,
   ShieldCheck,
   Users6,
   Webhook,
+  WindowSettings,
 } from "@dub/ui/icons";
 import { Calendar, useRouterStuff } from "@dub/ui";
 import { ReactNode, useMemo } from "react";
@@ -232,6 +234,11 @@ const NAV_AREAS: SidebarNavAreas<{
             name: "Assistant Settings",
             icon: CubeSettings,
             href: "/account/settings/assistant-settings",
+          },
+          {
+            name: "Financial Settings",
+            icon: WindowSettings,
+            href: "/account/settings/financial-settings",
           },
           ...(session?.user?.["referralLinkId"]
             ? [
