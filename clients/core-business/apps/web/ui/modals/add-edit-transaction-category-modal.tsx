@@ -98,10 +98,10 @@ function AddEditTransactionCategoryModal({
         <Logo />
         <div className="flex flex-col space-y-1 text-center">
           <h3 className="text-lg font-medium">
-            {props ? "Edit" : "Create"} category
+            {props ? "Edit" : "Create"} Transaction Category
           </h3>
           <p className="text-sm text-gray-500">
-            Use categories to organize and track your transactions.
+            Use transaction categories to organize and track your transactions.
           </p>
         </div>
       </div>
@@ -118,9 +118,9 @@ function AddEditTransactionCategoryModal({
             body: JSON.stringify(data),
           }).then(async (res) => {
             if (res.status === 200 || res.status === 201) {
-              posthog.capture(props ? "category_edited" : "category_created", {
-                category_id: data.id,
-                category_name: data.name,
+              posthog.capture(props ? "transaction_category_edited" : "transaction_category_created", {
+                transaction_category_id: data.id,
+                transaction_category_name: data.name,
               });
               await mutatePrefix(["/api/categories"]);
               toast.success(endpoint.successMessage);
@@ -140,8 +140,8 @@ function AddEditTransactionCategoryModal({
 
           <div>
             <label htmlFor="name" className="flex items-center space-x-2">
-              <p className="block text-sm font-medium text-gray-700">Category Name</p>
-              <InfoTooltip content="Name of the category for easy identification" />
+              <p className="block text-sm font-medium text-gray-700">Transaction Category Name</p>
+              <InfoTooltip content="Name of the transaction category for easy identification" />
             </label>
             <div className="mt-2">
               <input
@@ -162,7 +162,7 @@ function AddEditTransactionCategoryModal({
           <div>
             <label htmlFor="description" className="flex items-center space-x-2">
               <p className="block text-sm font-medium text-gray-700">Description</p>
-              <InfoTooltip content="A brief description of what this category represents" />
+              <InfoTooltip content="A brief description of what this transaction category represents" />
             </label>
             <div className="mt-2">
               <textarea

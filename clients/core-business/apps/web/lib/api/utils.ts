@@ -1,10 +1,10 @@
-import { nanoid } from "@dub/utils";
-import { ipAddress } from "@vercel/functions";
+import { DubApiError } from "./errors";
+import { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { headers } from "next/headers";
-import { NextRequest } from "next/server";
+import { ipAddress } from "@vercel/functions";
+import { nanoid } from "@dub/utils";
 import { ratelimit } from "../upstash";
-import { DubApiError } from "./errors";
 
 export const parseRequestBody = async (req: Request) => {
   try {
@@ -70,6 +70,7 @@ const prefixes = [
   "pga_",
   "dub_embed_",
   "inv_",
+  "cat_",
 ] as const;
 
 export const createId = ({

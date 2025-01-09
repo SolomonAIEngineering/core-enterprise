@@ -94,7 +94,7 @@ export const POST = withWorkspace(
 
     const response = await prisma.transactionCategory.create({
       data: {
-        id: createId({ prefix: "tag_" }),
+        id: createId({ prefix: "cat_" }),
         name,
         slug,
         description,

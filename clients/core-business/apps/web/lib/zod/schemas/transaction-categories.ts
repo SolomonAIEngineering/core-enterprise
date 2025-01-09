@@ -49,10 +49,12 @@ export const createTransactionCategoryBodySchema = z.object({
     .describe("The color of the category badge."),
   icon: z
     .string()
+    .nullable()
     .optional()
     .describe("Icon identifier for the category."),
   parentId: z
     .string()
+    .nullable()
     .optional()
     .describe("Optional parent category ID for hierarchical categories."),
   isSystem: z
@@ -82,10 +84,12 @@ export const createTransactionCategoryBodySchema = z.object({
   // Tax Information
   vatRate: z
     .number()
+    .nullable()
     .optional()
     .describe("VAT/Tax rate for this category."),
   taxCode: z
     .string()
+    .nullable()
     .optional()
     .describe("Tax code for reporting purposes."),
   taxDeductible: z
@@ -96,6 +100,7 @@ export const createTransactionCategoryBodySchema = z.object({
   // Additional Metadata
   metadata: z
     .record(z.any())
+    .nullable()
     .optional()
     .describe("Additional metadata for the category."),
 });
@@ -108,26 +113,26 @@ export const TransactionCategorySchema = z
     name: z.string().describe("The name of the category."),
     slug: z.string().describe("URL-friendly version of the name."),
     description: z.string().nullable().describe("Optional description of the category."),
-    color: z.custom<TransactionCategoryColorProps>().describe("The color of the category badge."),
-    icon: z.string().nullable().describe("Icon identifier for the category."),
-    parentId: z.string().nullable().describe("ID of the parent category if any."),
-    path: z.string().nullable().describe("Materialized path in category hierarchy."),
-    level: z.number().describe("Depth level in the category hierarchy."),
-    isSystem: z.boolean().describe("Whether this is a system-defined category."),
-    isActive: z.boolean().describe("Whether this category is active."),
+    color: z.custom<TransactionCategoryColorProps>().describe("The color of the category badge.").optional(),
+    icon: z.string().nullable().describe("Icon identifier for the category.").optional(),
+    parentId: z.string().nullable().describe("ID of the parent category if any.").optional(),
+    path: z.string().nullable().describe("Materialized path in category hierarchy.").optional(),
+    level: z.number().describe("Depth level in the category hierarchy.").optional().default(0),
+    isSystem: z.boolean().describe("Whether this is a system-defined category.").optional().default(false),
+    isActive: z.boolean().describe("Whether this category is active.").optional().default(true),
     // Budget and Analysis
-    budgetLimit: z.number().nullable().describe("Monthly budget limit for this category."),
-    warningThreshold: z.number().nullable().describe("Threshold percentage for budget warnings."),
-    trackingEnabled: z.boolean().describe("Whether to track budget for this category."),
+    budgetLimit: z.number().nullable().describe("Monthly budget limit for this category.").optional(),
+    warningThreshold: z.number().nullable().describe("Threshold percentage for budget warnings.").optional(),
+    trackingEnabled: z.boolean().describe("Whether to track budget for this category.").optional(),
     // Tax Information
-    vatRate: z.number().nullable().describe("VAT/Tax rate for this category."),
-    taxCode: z.string().nullable().describe("Tax code for reporting purposes."),
-    taxDeductible: z.boolean().describe("Whether expenses in this category are tax deductible."),
+    vatRate: z.number().nullable().describe("VAT/Tax rate for this category.").optional().default(0),
+    taxCode: z.string().nullable().describe("Tax code for reporting purposes.").optional().default(""),
+    taxDeductible: z.boolean().describe("Whether expenses in this category are tax deductible.").optional().default(false),
     // Additional Metadata
-    metadata: z.record(z.any()).nullable().describe("Additional metadata for the category."),
+    metadata: z.record(z.any()).nullable().describe("Additional metadata for the category.").optional(),
     // System fields
-    createdAt: z.date().describe("When the category was created."),
-    updatedAt: z.date().describe("When the category was last updated."),
+    createdAt: z.date().describe("When the category was created.").optional().default(new Date()),
+    updatedAt: z.date().describe("When the category was last updated.").optional().default(new Date()),
   })
   .openapi({
     title: "TransactionCategory",

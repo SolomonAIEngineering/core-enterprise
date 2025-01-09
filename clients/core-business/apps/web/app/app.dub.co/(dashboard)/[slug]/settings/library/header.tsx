@@ -24,7 +24,7 @@ export default function LibraryHeader() {
         variant="accent"
         options={[
           { id: "tags", label: "Tags" },
-          { id: "categories", label: "Categories" },
+          { id: "categories", label: "Transaction Categories" },
           { id: "utm", label: "UTM Templates" },
         ]}
         selected={page}

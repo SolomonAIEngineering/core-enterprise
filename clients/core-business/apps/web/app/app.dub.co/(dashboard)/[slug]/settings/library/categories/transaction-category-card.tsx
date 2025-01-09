@@ -14,16 +14,60 @@ import { cn, nFormatter, pluralize } from "@dub/utils";
 import { useContext, useState } from "react";
 
 import Link from "next/link";
-import TagBadge from "@/ui/links/tag-badge";
-import { TagProps } from "@/lib/types";
 import { TransactionCategoriesListContext } from "./page-client";
 import { TransactionCategoryProps } from "@/lib/swr/use-transaction-categories";
 import { mutatePrefix } from "@/lib/swr/mutate";
 import { toast } from "sonner";
-import { useAddEditTagModal } from "@/ui/modals/add-edit-tag-modal";
 import { useAddEditTransactionCategoryModal } from "@/ui/modals/add-edit-transaction-category-modal";
 import useWorkspace from "@/lib/swr/use-workspace";
 
+/**
+ * Component that displays a transaction category as a card with various interactive features.
+ * Provides functionality for editing, copying ID, and deleting transaction categories.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {Object} props.category - The transaction category data
+ * @param {Object} [props.category._count] - Optional count information for the category
+ * @param {number} [props.category._count.links] - Number of links associated with the category
+ *
+ * @example
+ * // Basic usage with minimal category data
+ * const basicCategory = {
+ *   id: "cat_123",
+ *   name: "Expenses",
+ *   color: "red",
+ * };
+ * <TransactionCategoryCard category={basicCategory} />
+ *
+ * @example
+ * // Usage with link count information
+ * const categoryWithLinks = {
+ *   id: "cat_456",
+ *   name: "Income",
+ *   color: "green",
+ *   _count: {
+ *     links: 42
+ *   }
+ * };
+ * <TransactionCategoryCard category={categoryWithLinks} />
+ *
+ * @example
+ * // Usage within a list context
+ * const categories = [
+ *   { id: "cat_1", name: "Salary", color: "blue" },
+ *   { id: "cat_2", name: "Bills", color: "red" }
+ * ];
+ *
+ * <CardList>
+ *   {categories.map((category) => (
+ *     <TransactionCategoryCard
+ *       key={category.id}
+ *       category={category}
+ *     />
+ *   ))}
+ * </CardList>
+ */
 export function TransactionCategoryCard({
   category,
 }: {
@@ -196,6 +240,67 @@ export function TransactionCategoryCard({
     </>
   );
 }
+
+/**
+ * Component that handles keyboard shortcuts for the TransactionCategoryCard.
+ * Enables specific keyboard interactions when the card is either hovered or its menu is open.
+ * This component is typically used as a child of TransactionCategoryCard to handle keyboard interactions.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {boolean} props.enabled - Whether the keyboard shortcuts should be active
+ * @param {(e: KeyboardEvent) => void} props.onKeyDown - Callback function to handle keyboard events
+ *
+ * @remarks
+ * Supported keyboard shortcuts:
+ * - 'e': Edit category
+ * - 'i': Copy category ID
+ * - 'x': Delete category
+ *
+ * @example
+ * // Basic usage with hover state
+ * <TagCardKeyboardShortcuts
+ *   enabled={isHovered}
+ *   onKeyDown={(e) => {
+ *     if (e.key === 'e') handleEdit();
+ *     if (e.key === 'i') handleCopyId();
+ *     if (e.key === 'x') handleDelete();
+ *   }}
+ * />
+ *
+ * @example
+ * // Usage with popover state
+ * const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+ *
+ * <TagCardKeyboardShortcuts
+ *   enabled={isPopoverOpen || (isHovered && !otherPopoverOpen)}
+ *   onKeyDown={(e) => {
+ *     setIsPopoverOpen(false);
+ *     switch (e.key) {
+ *       case 'e':
+ *         openEditModal();
+ *         break;
+ *       case 'i':
+ *         copyToClipboard(categoryId);
+ *         break;
+ *       case 'x':
+ *         confirmAndDelete();
+ *         break;
+ *     }
+ *   }}
+ * />
+ *
+ * @example
+ * // Usage with CardList.Card.Context
+ * <CardList.Card.Context.Consumer>
+ *   {({ hovered }) => (
+ *     <TagCardKeyboardShortcuts
+ *       enabled={hovered}
+ *       onKeyDown={handleKeyboardShortcut}
+ *     />
+ *   )}
+ * </CardList.Card.Context.Consumer>
+ */
 function TagCardKeyboardShortcuts({
   enabled,
   onKeyDown,
