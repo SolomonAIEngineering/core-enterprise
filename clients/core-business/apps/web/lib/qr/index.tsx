@@ -1,11 +1,4 @@
-/**
- * @license qrcode.react
- * Copyright (c) Paul O'Shannessy
- * SPDX-License-Identifier: ISC
- */
-import { DUB_QR_LOGO } from "@dub/utils/src/constants";
 import { useEffect, useRef, useState } from "react";
-import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
@@ -14,13 +7,22 @@ import {
   DEFAULT_SIZE,
   ERROR_LEVEL_MAP,
 } from "./constants";
-import { QRProps, QRPropsCanvas } from "./types";
+import type { QRProps, QRPropsCanvas } from "./types";
 import {
   SUPPORTS_PATH2D,
   excavateModules,
   generatePath,
   getImageSettings,
 } from "./utils";
+
+/**
+ * @license qrcode.react
+ * Copyright (c) Paul O'Shannessy
+ * SPDX-License-Identifier: ISC
+ */
+import { DUB_QR_LOGO } from "@dub/utils/src/constants";
+import qrcodegen from "./codegen";
+
 export * from "./types";
 export * from "./utils";
 
@@ -43,8 +45,7 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
   // We're just using this state to trigger rerenders when images load. We
   // Don't actually read the value anywhere. A smarter use of useEffect would
   // depend on this value.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isImgLoaded, setIsImageLoaded] = useState(false);
+  const [_, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     // Always update the canvas. It's cheap enough and we want to be correct
@@ -102,8 +103,8 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
         // $FlowFixMe: Path2D c'tor doesn't support args yet.
         ctx.fill(new Path2D(generatePath(cells, margin)));
       } else {
-        cells.forEach(function (row, rdx) {
-          row.forEach(function (cell, cdx) {
+        cells.forEach((row, rdx) => {
+          row.forEach((cell, cdx) => {
             if (cell) {
               ctx.fillRect(cdx + margin, rdx + margin, 1, 1);
             }

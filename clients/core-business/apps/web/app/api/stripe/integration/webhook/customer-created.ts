@@ -1,5 +1,6 @@
-import { createId } from "@/lib/api/utils";
 import { getClickEvent, recordLead } from "@/lib/tinybird";
+
+import { createId } from "@/lib/api/utils";
 import { sendWorkspaceWebhook } from "@/lib/webhook/publish";
 import { transformLeadEventData } from "@/lib/webhook/transform";
 import { prisma } from "@dub/prisma";
@@ -66,8 +67,9 @@ export async function customerCreated(event: Stripe.Event) {
       projectId: link.projectId,
       linkId,
       clickId,
-      clickedAt: new Date(clickData.timestamp + "Z"),
+      clickedAt: new Date(`${clickData.timestamp}Z`),
       country: clickData.country,
+      token: "",
     },
   });
 

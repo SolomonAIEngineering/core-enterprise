@@ -1,11 +1,12 @@
 "use server";
 
-import { getProgramOrThrow } from "@/lib/api/programs/get-program-or-throw";
-import { createId } from "@/lib/api/utils";
 import {
   DUB_PARTNERS_PAYOUT_FEE,
   MIN_PAYOUT_AMOUNT,
 } from "@/lib/partners/constants";
+
+import { getProgramOrThrow } from "@/lib/api/programs/get-program-or-throw";
+import { createId } from "@/lib/api/utils";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@dub/prisma";
 import z from "zod";
@@ -78,6 +79,7 @@ export const confirmPayoutsAction = authActionClient
           amount,
           fee,
           total,
+          token: "",
         },
       });
 
@@ -87,9 +89,9 @@ export const confirmPayoutsAction = authActionClient
 
       await stripe.paymentIntents.create({
         amount: invoice.total,
-        customer: workspace.stripeId!,
+        customer: workspace.stripeId as string,
         payment_method_types: ["us_bank_account"],
-        payment_method: workspace.payoutMethodId!,
+        payment_method: workspace.payoutMethodId as string,
         currency: "usd",
         confirmation_method: "automatic",
         confirm: true,

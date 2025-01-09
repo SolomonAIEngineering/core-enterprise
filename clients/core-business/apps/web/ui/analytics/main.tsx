@@ -1,17 +1,18 @@
 import { AnalyticsSaleUnit, EventType } from "@/lib/analytics/types";
-import { ChartLine, Filter2, ToggleGroup, useRouterStuff } from "@dub/ui";
-import { cn } from "@dub/utils";
+import { ToggleGroup, useRouterStuff } from "@dub/ui";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 import { ChevronRight, Lock } from "lucide-react";
+import { ReactNode, useContext, useMemo } from "react";
+
+import { cn } from "@dub/utils";
 import Link from "next/link";
-import { useContext, useMemo } from "react";
 import AnalyticsAreaChart from "./analytics-area-chart";
 import { AnalyticsFunnelChart } from "./analytics-funnel-chart";
 import { AnalyticsContext } from "./analytics-provider";
 
 type Tab = {
   id: EventType;
-  label: string;
+  label: string | ReactNode;
   colorClassName: string;
 };
 
@@ -76,11 +77,11 @@ export default function Main() {
                     indicatorClassName="border border-neutral-200 bg-white"
                     options={[
                       {
-                        label: <div className="text-base">$</div>,
+                        label: "$",
                         value: "saleAmount",
                       },
                       {
-                        label: <div className="text-[11px]">123</div>,
+                        label: "123",
                         value: "sales",
                       },
                     ]}
@@ -178,13 +179,11 @@ export default function Main() {
             indicatorClassName="border border-neutral-200 bg-white"
             options={[
               {
-                label: <ChartLine className="size-4 text-neutral-600" />,
+                label: "📈",
                 value: "timeseries",
               },
               {
-                label: (
-                  <Filter2 className="size-4 -rotate-90 text-neutral-600" />
-                ),
+                label: "🔍",
                 value: "funnel",
               },
             ]}

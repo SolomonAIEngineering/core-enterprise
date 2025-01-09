@@ -1,15 +1,16 @@
-import { DubApiError } from "@/lib/api/errors";
 import { createId, parseRequestBody } from "@/lib/api/utils";
-import { withWorkspaceEdge } from "@/lib/auth/workspace-edge";
-import { generateRandomName } from "@/lib/names";
 import { getClickEvent, recordLead } from "@/lib/tinybird";
-import { ratelimit } from "@/lib/upstash";
-import { sendWorkspaceWebhookOnEdge } from "@/lib/webhook/publish-edge";
-import { transformLeadEventData } from "@/lib/webhook/transform";
 import {
   trackLeadRequestSchema,
   trackLeadResponseSchema,
 } from "@/lib/zod/schemas/leads";
+
+import { DubApiError } from "@/lib/api/errors";
+import { withWorkspaceEdge } from "@/lib/auth/workspace-edge";
+import { generateRandomName } from "@/lib/names";
+import { ratelimit } from "@/lib/upstash";
+import { sendWorkspaceWebhookOnEdge } from "@/lib/webhook/publish-edge";
+import { transformLeadEventData } from "@/lib/webhook/transform";
 import { prismaEdge } from "@dub/prisma/edge";
 import { nanoid } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
@@ -81,7 +82,8 @@ export const POST = withWorkspaceEdge(
             clickId: clickData.click_id,
             linkId: clickData.link_id,
             country: clickData.country,
-            clickedAt: new Date(clickData.timestamp + "Z"),
+            clickedAt: new Date(`${clickData.timestamp}Z`),
+            token: "",
           },
         });
 

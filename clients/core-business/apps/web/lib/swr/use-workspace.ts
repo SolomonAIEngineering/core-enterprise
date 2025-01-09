@@ -1,7 +1,8 @@
-import { ExpandedWorkspaceProps } from "@/lib/types";
 import { PRO_PLAN, fetcher, getNextPlan } from "@dub/utils";
 import { useParams, useSearchParams } from "next/navigation";
 import useSWR, { SWRConfiguration } from "swr";
+
+import { ExpandedWorkspaceProps } from "@/lib/types";
 
 export default function useWorkspace({
   swrOpts,
@@ -30,7 +31,7 @@ export default function useWorkspace({
   return {
     ...workspace,
     nextPlan: workspace?.plan ? getNextPlan(workspace.plan) : PRO_PLAN,
-    role: (workspace?.users && workspace.users[0].role) || "member",
+    role: workspace?.users?.[0].role || "member",
     isOwner: workspace?.users && workspace.users[0].role === "owner",
     exceededClicks: workspace && workspace.usage >= workspace.usageLimit,
     exceededLinks: workspace && workspace.linksUsage >= workspace.linksLimit,
@@ -39,6 +40,7 @@ export default function useWorkspace({
       workspace?.domains && workspace.domains.length >= workspace.domainsLimit,
     error,
     mutate,
-    loading: slug && !workspace && !error ? true : false,
+    loading: !!(slug && !workspace && !error),
+    id: workspace?.id as string,
   };
 }

@@ -15,10 +15,26 @@ export default function useSalesCount(
   const { getQueryString } = useRouterStuff();
 
   const { data: salesCount, error } = useSWR<SalesCount>(
-    `/api/programs/${programId}/sales/count${getQueryString({
-      workspaceId,
-      ...opts,
-    })}`,
+    `/api/programs/${programId}/sales/count${getQueryString(
+      Object.entries({
+        workspaceId,
+        interval: opts?.interval,
+        status: opts?.status,
+        partnerId: opts?.partnerId,
+        customerId: opts?.customerId,
+        payoutId: opts?.payoutId,
+        start: opts?.start?.toISOString(),
+        end: opts?.end?.toISOString(),
+      }).reduce(
+        (acc, [key, value]) => {
+          if (value !== undefined) {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as Record<string, string | number | boolean>,
+      ),
+    )}`,
     fetcher,
   );
 

@@ -36,7 +36,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof buttonVariants> {
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   text?: React.ReactNode;
   icon?: React.ReactNode;
@@ -72,7 +72,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {icon && !loading && <span className="mr-2">{icon}</span>}
-        <div className={cn("min-w-0 grow truncate text-left", textWrapperClassName)}>
+        <div
+          className={cn(
+            "min-w-0 grow truncate text-left",
+            textWrapperClassName,
+          )}
+        >
           {text || children}
         </div>
         {shortcut && <span className="ml-2 opacity-60">{shortcut}</span>}

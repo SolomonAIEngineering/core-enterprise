@@ -1,4 +1,5 @@
 import { Button, Modal, useRouterStuff, useScrollProgress } from "@dub/ui";
+import { PLANS, PRO_PLAN, cn, getPlanDetails } from "@dub/utils";
 import {
   Dispatch,
   SetStateAction,
@@ -8,13 +9,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { PLANS, PRO_PLAN, cn, getPlanDetails } from "@dub/utils";
 
-import { ModalHero } from "../shared/modal-hero";
-import { PlanFeatures } from "../workspaces/plan-features";
-import posthog from "posthog-js";
 import { usePlausible } from "next-plausible";
 import { useSearchParams } from "next/navigation";
+import posthog from "posthog-js";
+import { ModalHero } from "../shared/modal-hero";
+import { PlanFeatures } from "../workspaces/plan-features";
 
 function WelcomeModal({
   showWelcomeModal,
@@ -53,8 +53,8 @@ function WelcomeModal({
 
   const plan = planId
     ? PLANS.find(
-      (p) => p.name.toLowerCase() === planId.replace("+", " ").toLowerCase(),
-    ) ?? PRO_PLAN
+        (p) => p.name.toLowerCase() === planId.replace("+", " ").toLowerCase(),
+      ) ?? PRO_PLAN
     : undefined;
 
   return (
@@ -84,7 +84,7 @@ function WelcomeModal({
               >
                 {plan
                   ? `Dub ${plan.name} looks good on you!`
-                  : "Welcome to Dub!"}
+                  : "Welcome to Solomon AI!"}
               </h1>
               <p
                 className={cn(
@@ -94,7 +94,7 @@ function WelcomeModal({
               >
                 {upgraded
                   ? `Thank you for upgrading to the ${plan?.name} plan! You now have access to more powerful features and higher limits.`
-                  : "Thanks for signing up – your account is ready to go! Now you have one central, organized place to build and manage all your short links."}
+                  : "Thanks for signing up – your account is ready to go! Now you have one central, organized place to manage and track all your business spending."}
               </p>
               {plan && (
                 <>

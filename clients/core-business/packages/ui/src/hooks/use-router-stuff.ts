@@ -20,7 +20,7 @@ interface RouterStuff {
     kv?: Record<string, string | number | boolean>,
     opts?: {
       ignore?: string[];
-    }
+    },
   ) => string;
 }
 
@@ -83,8 +83,9 @@ export function useRouterStuff(): RouterStuff {
       }
     }
     const queryString = newParams.toString();
-    const newPath = `${pathname}${queryString.length > 0 ? `?${queryString}` : ""
-      }`;
+    const newPath = `${pathname}${
+      queryString.length > 0 ? `?${queryString}` : ""
+    }`;
     if (getNewPath) return newPath;
     if (replace) {
       router.replace(newPath, { scroll: false });
@@ -102,4 +103,3 @@ export function useRouterStuff(): RouterStuff {
     getQueryString,
   };
 }
-
