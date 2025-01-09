@@ -1,11 +1,12 @@
-import { DubApiError } from "@/lib/api/errors";
-import { withSession } from "@/lib/auth";
-import { unsubscribe } from "@/lib/resend";
-import { storage } from "@/lib/storage";
-import { prisma } from "@dub/prisma";
 import { R2_URL, nanoid, trim } from "@dub/utils";
-import { waitUntil } from "@vercel/functions";
+
+import { DubApiError } from "@/lib/api/errors";
 import { NextResponse } from "next/server";
+import { prisma } from "@dub/prisma";
+import { storage } from "@/lib/storage";
+import { unsubscribe } from "@/lib/resend";
+import { waitUntil } from "@vercel/functions";
+import { withSession } from "@/lib/auth";
 import { z } from "zod";
 
 const updateUserSchema = z.object({
@@ -14,6 +15,11 @@ const updateUserSchema = z.object({
   image: z.string().url().optional(),
   source: z.preprocess(trim, z.string().min(1).max(32)).optional(),
   defaultWorkspace: z.preprocess(trim, z.string().min(1)).optional(),
+  locale: z.preprocess(trim, z.string().min(1)).optional(),
+  timezone: z.preprocess(trim, z.string().min(1)).optional(),
+  dateFormat: z.preprocess(trim, z.string().min(1)).optional(),
+  timeFormat: z.preprocess(trim, z.string().min(1)).optional(),
+  weekStartsOnMonday: z.boolean().optional(),
 });
 
 // GET /api/user – get a specific user
@@ -35,6 +41,11 @@ export const GET = withSession(async ({ session }) => {
         referralLinkId: true,
         passwordHash: true,
         createdAt: true,
+        locale: true,
+        timezone: true,
+        dateFormat: true,
+        timeFormat: true,
+        weekStartsOnMonday: true,
       },
     }),
 
@@ -58,7 +69,7 @@ export const GET = withSession(async ({ session }) => {
 
 // PATCH /api/user – edit a specific user
 export const PATCH = withSession(async ({ req, session }) => {
-  let { name, email, image, source, defaultWorkspace } =
+  let { name, email, image, source, defaultWorkspace, locale, timezone, dateFormat, timeFormat, weekStartsOnMonday } =
     await updateUserSchema.parseAsync(await req.json());
 
   if (image) {
@@ -101,6 +112,11 @@ export const PATCH = withSession(async ({ req, session }) => {
         ...(image && { image }),
         ...(source && { source }),
         ...(defaultWorkspace && { defaultWorkspace }),
+        ...(locale && { locale }),
+        ...(timezone && { timezone }),
+        ...(dateFormat && { dateFormat }),
+        ...(timeFormat && { timeFormat: parseInt(timeFormat) }),
+        ...(weekStartsOnMonday && { weekStartsOnMonday }),
       },
     });
 
@@ -154,8 +170,8 @@ export const DELETE = withSession(async ({ session }) => {
     const response = await Promise.allSettled([
       // if the user has a custom avatar and it is stored by their userId, delete it
       user.image &&
-        user.image.startsWith(`${R2_URL}/avatars/${session.user.id}`) &&
-        storage.delete(user.image.replace(`${R2_URL}/`, "")),
+      user.image.startsWith(`${R2_URL}/avatars/${session.user.id}`) &&
+      storage.delete(user.image.replace(`${R2_URL}/`, "")),
       unsubscribe({ email: session.user.email }),
     ]);
     return NextResponse.json(response);

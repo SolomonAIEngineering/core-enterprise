@@ -1,11 +1,8 @@
 "use client";
 
-import usePrograms from "@/lib/swr/use-programs";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { BetaFeatures } from "@/lib/types";
-import { useRouterStuff } from "@dub/ui";
 import {
   Books2,
+  Calendar6,
   CircleInfo,
   ConnectedDots,
   ConnectedDots4,
@@ -19,18 +16,23 @@ import {
   Users6,
   Webhook,
 } from "@dub/ui/icons";
-import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
-import { useParams, usePathname } from "next/navigation";
+import { Calendar, useRouterStuff } from "@dub/ui";
 import { ReactNode, useMemo } from "react";
-import UserSurveyButton from "../user-survey";
+import { SidebarNav, SidebarNavAreas } from "./sidebar-nav";
+import { useParams, usePathname } from "next/navigation";
+
+import { BetaFeatures } from "@/lib/types";
 import { CursorRays } from "./icons/cursor-rays";
 import { Gear } from "./icons/gear";
 import { Hyperlink } from "./icons/hyperlink";
 import { LinesY } from "./icons/lines-y";
-import { SidebarNav, SidebarNavAreas } from "./sidebar-nav";
+import { Session } from "next-auth";
 import { Usage } from "./usage";
+import UserSurveyButton from "../user-survey";
 import { WorkspaceDropdown } from "./workspace-dropdown";
+import usePrograms from "@/lib/swr/use-programs";
+import { useSession } from "next-auth/react";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 const NAV_AREAS: SidebarNavAreas<{
   slug: string;
@@ -73,48 +75,48 @@ const NAV_AREAS: SidebarNavAreas<{
       },
       ...(programs?.length
         ? [
-            {
-              name: "Programs",
-              items: [
-                {
-                  name: "Affiliate",
-                  icon: ConnectedDots4,
-                  href: `/${slug}/programs/${programs[0].id}`,
-                  items: [
-                    {
-                      name: "Overview",
-                      href: `/${slug}/programs/${programs[0].id}`,
-                      exact: true,
-                    },
-                    {
-                      name: "Partners",
-                      href: `/${slug}/programs/${programs[0].id}/partners`,
-                    },
-                    {
-                      name: "Sales",
-                      href: `/${slug}/programs/${programs[0].id}/sales`,
-                    },
-                    {
-                      name: "Payouts",
-                      href: `/${slug}/programs/${programs[0].id}/payouts`,
-                    },
-                    {
-                      name: "Branding",
-                      href: `/${slug}/programs/${programs[0].id}/branding`,
-                    },
-                    {
-                      name: "Resources",
-                      href: `/${slug}/programs/${programs[0].id}/resources`,
-                    },
-                    {
-                      name: "Configuration",
-                      href: `/${slug}/programs/${programs[0].id}/settings`,
-                    },
-                  ],
-                },
-              ],
-            },
-          ]
+          {
+            name: "Programs",
+            items: [
+              {
+                name: "Affiliate",
+                icon: ConnectedDots4,
+                href: `/${slug}/programs/${programs[0].id}`,
+                items: [
+                  {
+                    name: "Overview",
+                    href: `/${slug}/programs/${programs[0].id}`,
+                    exact: true,
+                  },
+                  {
+                    name: "Partners",
+                    href: `/${slug}/programs/${programs[0].id}/partners`,
+                  },
+                  {
+                    name: "Sales",
+                    href: `/${slug}/programs/${programs[0].id}/sales`,
+                  },
+                  {
+                    name: "Payouts",
+                    href: `/${slug}/programs/${programs[0].id}/payouts`,
+                  },
+                  {
+                    name: "Branding",
+                    href: `/${slug}/programs/${programs[0].id}/branding`,
+                  },
+                  {
+                    name: "Resources",
+                    href: `/${slug}/programs/${programs[0].id}/resources`,
+                  },
+                  {
+                    name: "Configuration",
+                    href: `/${slug}/programs/${programs[0].id}/settings`,
+                  },
+                ],
+              },
+            ],
+          },
+        ]
         : []),
     ],
   }),
@@ -180,12 +182,12 @@ const NAV_AREAS: SidebarNavAreas<{
           },
           ...(flags?.webhooks
             ? [
-                {
-                  name: "Webhooks",
-                  icon: Webhook,
-                  href: `/${slug}/settings/webhooks`,
-                },
-              ]
+              {
+                name: "Webhooks",
+                icon: Webhook,
+                href: `/${slug}/settings/webhooks`,
+              },
+            ]
             : []),
         ],
       },
@@ -221,14 +223,19 @@ const NAV_AREAS: SidebarNavAreas<{
             icon: ShieldCheck,
             href: "/account/settings/security",
           },
+          {
+            name: "Date and Locale",
+            icon: Calendar6,
+            href: "/account/settings/date-and-locale",
+          },
           ...(session?.user?.["referralLinkId"]
             ? [
-                {
-                  name: "Referrals",
-                  icon: Gift,
-                  href: "/account/settings/referrals",
-                },
-              ]
+              {
+                name: "Referrals",
+                icon: Gift,
+                href: "/account/settings/referrals",
+              },
+            ]
             : []),
         ],
       },

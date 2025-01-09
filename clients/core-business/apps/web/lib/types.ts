@@ -1,6 +1,15 @@
-import z from "@/lib/zod";
-import { metaTagsSchema } from "@/lib/zod/schemas/metatags";
-import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
+import {
+  CustomerSchema,
+  customerActivityResponseSchema,
+  customerActivitySchema,
+} from "./zod/schemas/customers";
+import {
+  EnrolledPartnerSchema,
+  PartnerSaleResponseSchema,
+  PartnerSchema,
+  SaleResponseSchema,
+  SaleSchema,
+} from "./zod/schemas/partners";
 import {
   Link,
   PayoutStatus,
@@ -11,30 +20,6 @@ import {
   Webhook,
   YearInReview,
 } from "@dub/prisma/client";
-import { WEBHOOK_TRIGGER_DESCRIPTIONS } from "./webhook/constants";
-import { clickEventResponseSchema } from "./zod/schemas/clicks";
-import {
-  customerActivityResponseSchema,
-  customerActivitySchema,
-  CustomerSchema,
-} from "./zod/schemas/customers";
-import { dashboardSchema } from "./zod/schemas/dashboard";
-import { DiscountSchema } from "./zod/schemas/discount";
-import { integrationSchema } from "./zod/schemas/integration";
-import { InvoiceSchema } from "./zod/schemas/invoices";
-import {
-  leadEventResponseSchema,
-  trackLeadResponseSchema,
-} from "./zod/schemas/leads";
-import { createLinkBodySchema } from "./zod/schemas/links";
-import { createOAuthAppSchema, oAuthAppSchema } from "./zod/schemas/oauth";
-import {
-  EnrolledPartnerSchema,
-  PartnerSaleResponseSchema,
-  PartnerSchema,
-  SaleResponseSchema,
-  SaleSchema,
-} from "./zod/schemas/partners";
 import {
   PartnerPayoutResponseSchema,
   PayoutResponseSchema,
@@ -46,17 +31,33 @@ import {
   ProgramInviteSchema,
   ProgramSchema,
 } from "./zod/schemas/programs";
-import {
-  saleEventResponseSchema,
-  trackSaleResponseSchema,
-} from "./zod/schemas/sales";
-import { tokenSchema } from "./zod/schemas/token";
-import { usageResponse } from "./zod/schemas/usage";
+import { createOAuthAppSchema, oAuthAppSchema } from "./zod/schemas/oauth";
 import {
   createWebhookSchema,
   webhookEventSchemaTB,
   webhookSchema,
 } from "./zod/schemas/webhooks";
+import {
+  leadEventResponseSchema,
+  trackLeadResponseSchema,
+} from "./zod/schemas/leads";
+import {
+  saleEventResponseSchema,
+  trackSaleResponseSchema,
+} from "./zod/schemas/sales";
+
+import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
+import { DiscountSchema } from "./zod/schemas/discount";
+import { InvoiceSchema } from "./zod/schemas/invoices";
+import { WEBHOOK_TRIGGER_DESCRIPTIONS } from "./webhook/constants";
+import { clickEventResponseSchema } from "./zod/schemas/clicks";
+import { createLinkBodySchema } from "./zod/schemas/links";
+import { dashboardSchema } from "./zod/schemas/dashboard";
+import { integrationSchema } from "./zod/schemas/integration";
+import { metaTagsSchema } from "@/lib/zod/schemas/metatags";
+import { tokenSchema } from "./zod/schemas/token";
+import { usageResponse } from "./zod/schemas/usage";
+import z from "@/lib/zod";
 
 export type LinkProps = Link;
 
@@ -158,6 +159,13 @@ export interface UserProps {
   isMachine: boolean;
   hasPassword: boolean;
   provider: string | null;
+
+  // date formats
+  dateFormat?: string;
+  locale?: string;
+  timeFormat?: string;
+  timezone?: string;
+  weekStartsOnMonday?: boolean;
 }
 
 export interface WorkspaceUserProps extends UserProps {
