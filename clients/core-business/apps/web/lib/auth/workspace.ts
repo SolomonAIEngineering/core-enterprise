@@ -1,24 +1,25 @@
-import { DubApiError, handleAndReturnErrorResponse } from "@/lib/api/errors";
+import { API_DOMAIN, getSearchParams } from "@dub/utils";
 import {
   AddOns,
   BetaFeatures,
   PlanProps,
   WorkspaceWithUsers,
 } from "@/lib/types";
-import { ratelimit } from "@/lib/upstash";
-import { prisma } from "@dub/prisma";
-import { API_DOMAIN, getSearchParams } from "@dub/utils";
-import { waitUntil } from "@vercel/functions";
 import { AxiomRequest, withAxiom } from "next-axiom";
+import { DubApiError, handleAndReturnErrorResponse } from "@/lib/api/errors";
 import {
   PermissionAction,
   getPermissionsByRole,
 } from "../api/rbac/permissions";
-import { throwIfNoAccess } from "../api/tokens/permissions";
 import { Scope, mapScopesToPermissions } from "../api/tokens/scopes";
+import { Session, getSession } from "./utils";
+
 import { getFeatureFlags } from "../edge-config";
 import { hashToken } from "./hash-token";
-import { Session, getSession } from "./utils";
+import { prisma } from "@dub/prisma";
+import { ratelimit } from "@/lib/upstash";
+import { throwIfNoAccess } from "../api/tokens/permissions";
+import { waitUntil } from "@vercel/functions";
 
 interface WithWorkspaceHandler {
   ({

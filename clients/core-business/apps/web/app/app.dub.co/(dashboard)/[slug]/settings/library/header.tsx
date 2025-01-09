@@ -1,8 +1,9 @@
 "use client";
 
-import useWorkspace from "@/lib/swr/use-workspace";
-import { TabSelect } from "@dub/ui";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+
+import { TabSelect } from "@dub/ui";
+import useWorkspace from "@/lib/swr/use-workspace";
 
 export default function LibraryHeader() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function LibraryHeader() {
         variant="accent"
         options={[
           { id: "tags", label: "Tags" },
+          { id: "categories", label: "Categories" },
           { id: "utm", label: "UTM Templates" },
         ]}
         selected={page}
