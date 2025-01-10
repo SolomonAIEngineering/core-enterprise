@@ -5,20 +5,21 @@ import {
   PlanProps,
   WorkspaceWithUsers,
 } from "@/lib/types";
-import { ratelimit } from "@/lib/upstash";
-import { prisma } from "@dub/prisma";
 import { API_DOMAIN, getSearchParams } from "@dub/utils";
-import { waitUntil } from "@vercel/functions";
 import { AxiomRequest, withAxiom } from "next-axiom";
 import {
   PermissionAction,
   getPermissionsByRole,
 } from "../api/rbac/permissions";
-import { throwIfNoAccess } from "../api/tokens/permissions";
 import { Scope, mapScopesToPermissions } from "../api/tokens/scopes";
+import { Session, getSession } from "./utils";
+
+import { ratelimit } from "@/lib/upstash";
+import { prisma } from "@dub/prisma";
+import { waitUntil } from "@vercel/functions";
+import { throwIfNoAccess } from "../api/tokens/permissions";
 import { getFeatureFlags } from "../edge-config";
 import { hashToken } from "./hash-token";
-import { Session, getSession } from "./utils";
 
 interface WithWorkspaceHandler {
   ({

@@ -1,16 +1,17 @@
-import { handleAndReturnErrorResponse } from "@/lib/api/errors";
-import { notifyPartnerSale } from "@/lib/api/partners/notify-partner-sale";
-import { createSaleData } from "@/lib/api/sales/create-sale-data";
-import { createId } from "@/lib/api/utils";
-import { generateRandomName } from "@/lib/names";
 import {
   getClickEvent,
   getLeadEvent,
   recordLead,
   recordSale,
 } from "@/lib/tinybird";
+
+import { handleAndReturnErrorResponse } from "@/lib/api/errors";
+import { notifyPartnerSale } from "@/lib/api/partners/notify-partner-sale";
+import { createSaleData } from "@/lib/api/sales/create-sale-data";
+import { createId } from "@/lib/api/utils";
+import { generateRandomName } from "@/lib/names";
 import { redis } from "@/lib/upstash";
-import z from "@/lib/zod";
+import type z from "@/lib/zod";
 import { leadEventSchemaTB } from "@/lib/zod/schemas/leads";
 import { prisma } from "@dub/prisma";
 import { nanoid } from "@dub/utils";
@@ -38,10 +39,11 @@ async function createLead({
       name: generateRandomName(),
       externalId,
       projectId: workspaceId,
-      clickedAt: new Date(timestamp + "Z"),
+      clickedAt: new Date(`${timestamp}Z`),
       clickId,
       linkId,
       country,
+      token: "",
     },
   });
 

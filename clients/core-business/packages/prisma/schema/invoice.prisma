@@ -80,7 +80,7 @@ model Invoice {
   sentTo          String?
   subtotal        Float?
   tax             Float?
-  teamId          String
+  teamId          String?
   template        Json?
   token           String
   topBlock        Json?
