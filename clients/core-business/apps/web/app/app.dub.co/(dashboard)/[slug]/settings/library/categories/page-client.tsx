@@ -8,31 +8,34 @@ import {
 } from "@dub/ui";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
+import useTransactionCategories from "@/lib/swr/use-transaction-categories";
+import useTransactionCategoriesCount from "@/lib/swr/use-transaction-categories-count";
+import { TRANSACTION_CATEGORIES_MAX_PAGE_SIZE } from "@/lib/zod/schemas/transaction-categories";
+import { useAddEditTransactionCategoryModal } from "@/ui/modals/add-edit-transaction-category-modal";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { SearchBoxPersisted } from "@/ui/shared/search-box";
-import { TRANSACTION_CATEGORIES_MAX_PAGE_SIZE } from "@/lib/zod/schemas/transaction-categories";
 import { Tag } from "@dub/ui/icons";
 import { TransactionCategoryCard } from "./transaction-category-card";
 import { TransactionCategoryCardPlaceholder } from "./transaction-category-card-placeholder";
-import { useAddEditTransactionCategoryModal } from "@/ui/modals/add-edit-transaction-category-modal";
-import useTransactionCategories from "@/lib/swr/use-transaction-categories";
-import useTransactionCategoriesCount from "@/lib/swr/use-transaction-categories-count";
 
 export const TransactionCategoriesListContext = createContext<{
   openMenuCategoryId: string | null;
   setOpenMenuCategoryId: Dispatch<SetStateAction<string | null>>;
 }>({
   openMenuCategoryId: null,
-  setOpenMenuCategoryId: () => { },
+  setOpenMenuCategoryId: () => {},
 });
 
 export default function WorkspaceTransactionCategoriesClient() {
   const { searchParams, queryParams } = useRouterStuff();
 
-  const { AddEditTransactionCategoryModal, AddTransactionCategoryButton } = useAddEditTransactionCategoryModal();
+  const { AddEditTransactionCategoryModal, AddTransactionCategoryButton } =
+    useAddEditTransactionCategoryModal();
 
   const search = searchParams.get("search");
-  const { pagination, setPagination } = usePagination(TRANSACTION_CATEGORIES_MAX_PAGE_SIZE);
+  const { pagination, setPagination } = usePagination(
+    TRANSACTION_CATEGORIES_MAX_PAGE_SIZE,
+  );
 
   const { categories, loading } = useTransactionCategories({
     query: {
@@ -42,10 +45,12 @@ export default function WorkspaceTransactionCategoriesClient() {
     includeTransactionsCount: true,
   });
   const { data: categoriesCount } = useTransactionCategoriesCount({
-    query: { search: search ?? "" }
+    query: { search: search ?? "" },
   });
 
-  const [openMenuCategoryId, setOpenMenuCategoryId] = useState<string | null>(null);
+  const [openMenuCategoryId, setOpenMenuCategoryId] = useState<string | null>(
+    null,
+  );
 
   return (
     <>
@@ -87,10 +92,15 @@ export default function WorkspaceTransactionCategoriesClient() {
             >
               <CardList variant="compact" loading={loading}>
                 {categories?.length
-                  ? categories.map((category) => <TransactionCategoryCard key={category.id} category={category} />)
+                  ? categories.map((category) => (
+                      <TransactionCategoryCard
+                        key={category.id}
+                        category={category}
+                      />
+                    ))
                   : Array.from({ length: 6 }).map((_, idx) => (
-                    <TransactionCategoryCardPlaceholder key={idx} />
-                  ))}
+                      <TransactionCategoryCardPlaceholder key={idx} />
+                    ))}
               </CardList>
             </TransactionCategoriesListContext.Provider>
             <div className="sticky bottom-0 rounded-b-[inherit] border-t border-gray-200 bg-white px-3.5 py-2">

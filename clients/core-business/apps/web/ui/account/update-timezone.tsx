@@ -10,29 +10,32 @@
  */
 
 import { Button, Combobox, type ComboboxOption } from "@dub/ui";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 
 // Generate timezone options with current time examples
-const TIMEZONE_OPTIONS: ComboboxOption<{ offset: string }>[] = Intl.supportedValuesOf('timeZone').map(tz => {
-  const date = new Date();
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: tz,
-    hour: 'numeric',
-    minute: 'numeric',
-    timeZoneName: 'short'
-  });
+const TIMEZONE_OPTIONS: ComboboxOption<{ offset: string }>[] =
+  Intl.supportedValuesOf("timeZone")
+    .map((tz) => {
+      const date = new Date();
+      const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: tz,
+        hour: "numeric",
+        minute: "numeric",
+        timeZoneName: "short",
+      });
 
-  // Get UTC offset
-  const tzOffset = formatter.format(date).split(' ')[2];
+      // Get UTC offset
+      const tzOffset = formatter.format(date).split(" ")[2];
 
-  return {
-    label: tz.replace(/_/g, ' '),
-    value: tz,
-    meta: { offset: tzOffset }
-  };
-}).sort((a, b) => a.label.localeCompare(b.label));
+      return {
+        label: tz.replace(/_/g, " "),
+        value: tz,
+        meta: { offset: tzOffset },
+      };
+    })
+    .sort((a, b) => a.label.localeCompare(b.label));
 
 export default function UpdateTimezone({
   currentTimezone,
@@ -41,9 +44,10 @@ export default function UpdateTimezone({
 }) {
   const { update } = useSession();
   const [saving, setSaving] = useState(false);
-  const [selectedTimezone, setSelectedTimezone] = useState<ComboboxOption | null>(
-    TIMEZONE_OPTIONS.find(opt => opt.value === currentTimezone) || null
-  );
+  const [selectedTimezone, setSelectedTimezone] =
+    useState<ComboboxOption | null>(
+      TIMEZONE_OPTIONS.find((opt) => opt.value === currentTimezone) || null,
+    );
 
   const handleUpdateTimezone = async () => {
     if (!selectedTimezone || selectedTimezone.value === currentTimezone) return;
@@ -68,7 +72,9 @@ export default function UpdateTimezone({
       await update();
       toast.success("Timezone updated successfully");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update timezone");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to update timezone",
+      );
     } finally {
       setSaving(false);
     }
@@ -103,20 +109,25 @@ export default function UpdateTimezone({
             searchPlaceholder="Search timezones..."
             emptyState="No matching timezones found"
             optionRight={(option) => (
-              <span className="text-sm text-gray-500">{option.meta.offset}</span>
+              <span className="text-sm text-gray-500">
+                {option.meta.offset}
+              </span>
             )}
           />
         </div>
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            This will affect the time at which background tasks are run on your behalf.
+            This will affect the time at which background tasks are run on your
+            behalf.
           </p>
           <div>
             <Button
               text={saving ? "Saving..." : "Save"}
               loading={saving}
-              disabled={!selectedTimezone || selectedTimezone.value === currentTimezone}
+              disabled={
+                !selectedTimezone || selectedTimezone.value === currentTimezone
+              }
               onClick={handleUpdateTimezone}
             />
           </div>

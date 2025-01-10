@@ -1,8 +1,8 @@
 import { DubApiError } from "@/lib/api/errors";
-import { NextResponse } from "next/server";
+import { withSession } from "@/lib/auth";
 import { UpdateFinancialSettingsSchema } from "@/lib/zod/schemas/financial-settings";
 import { prisma } from "@dub/prisma";
-import { withSession } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
 /**
  * GET /api/financial-settings
@@ -111,7 +111,9 @@ export const GET = withSession(async ({ session }) => {
  */
 export const PATCH = withSession(async ({ req, session }) => {
   try {
-    const data = await UpdateFinancialSettingsSchema.parseAsync(await req.json());
+    const data = await UpdateFinancialSettingsSchema.parseAsync(
+      await req.json(),
+    );
 
     const settings = await prisma.financialSettings.upsert({
       where: {
@@ -163,28 +165,66 @@ export const PATCH = withSession(async ({ req, session }) => {
       update: {
         // Only update fields that are provided in the request
         ...(data.defaultCurrency && { defaultCurrency: data.defaultCurrency }),
-        ...(data.enableMultiCurrency !== undefined && { enableMultiCurrency: data.enableMultiCurrency }),
-        ...(data.supportedCurrencies && { supportedCurrencies: data.supportedCurrencies }),
-        ...(data.plaidEnabled !== undefined && { plaidEnabled: data.plaidEnabled }),
-        ...(data.gocardlessEnabled !== undefined && { gocardlessEnabled: data.gocardlessEnabled }),
-        ...(data.allowManualBankEntry !== undefined && { allowManualBankEntry: data.allowManualBankEntry }),
-        ...(data.requireBankVerification !== undefined && { requireBankVerification: data.requireBankVerification }),
-        ...(data.stripeEnabled !== undefined && { stripeEnabled: data.stripeEnabled }),
-        ...(data.stripeCardPaymentsCapability && { stripeCardPaymentsCapability: data.stripeCardPaymentsCapability }),
-        ...(data.stripeTransfersCapability && { stripeTransfersCapability: data.stripeTransfersCapability }),
-        ...(data.activePaymentProviders && { activePaymentProviders: data.activePaymentProviders }),
+        ...(data.enableMultiCurrency !== undefined && {
+          enableMultiCurrency: data.enableMultiCurrency,
+        }),
+        ...(data.supportedCurrencies && {
+          supportedCurrencies: data.supportedCurrencies,
+        }),
+        ...(data.plaidEnabled !== undefined && {
+          plaidEnabled: data.plaidEnabled,
+        }),
+        ...(data.gocardlessEnabled !== undefined && {
+          gocardlessEnabled: data.gocardlessEnabled,
+        }),
+        ...(data.allowManualBankEntry !== undefined && {
+          allowManualBankEntry: data.allowManualBankEntry,
+        }),
+        ...(data.requireBankVerification !== undefined && {
+          requireBankVerification: data.requireBankVerification,
+        }),
+        ...(data.stripeEnabled !== undefined && {
+          stripeEnabled: data.stripeEnabled,
+        }),
+        ...(data.stripeCardPaymentsCapability && {
+          stripeCardPaymentsCapability: data.stripeCardPaymentsCapability,
+        }),
+        ...(data.stripeTransfersCapability && {
+          stripeTransfersCapability: data.stripeTransfersCapability,
+        }),
+        ...(data.activePaymentProviders && {
+          activePaymentProviders: data.activePaymentProviders,
+        }),
         ...(data.providerConfigs && { providerConfigs: data.providerConfigs }),
-        ...(data.autoCategorizeTxn !== undefined && { autoCategorizeTxn: data.autoCategorizeTxn }),
+        ...(data.autoCategorizeTxn !== undefined && {
+          autoCategorizeTxn: data.autoCategorizeTxn,
+        }),
         ...(data.minTxnAmount && { minTxnAmount: data.minTxnAmount }),
         ...(data.maxTxnAmount && { maxTxnAmount: data.maxTxnAmount }),
-        ...(data.notifyLargeTransactions !== undefined && { notifyLargeTransactions: data.notifyLargeTransactions }),
-        ...(data.largeTransactionThreshold && { largeTransactionThreshold: data.largeTransactionThreshold }),
-        ...(data.notifyFailedSync !== undefined && { notifyFailedSync: data.notifyFailedSync }),
-        ...(data.notifyLowBalance !== undefined && { notifyLowBalance: data.notifyLowBalance }),
-        ...(data.lowBalanceThreshold && { lowBalanceThreshold: data.lowBalanceThreshold }),
-        ...(data.autoReconciliation !== undefined && { autoReconciliation: data.autoReconciliation }),
-        ...(data.reconciliationWindow && { reconciliationWindow: data.reconciliationWindow }),
-        ...(data.matchingStrategy && { matchingStrategy: data.matchingStrategy }),
+        ...(data.notifyLargeTransactions !== undefined && {
+          notifyLargeTransactions: data.notifyLargeTransactions,
+        }),
+        ...(data.largeTransactionThreshold && {
+          largeTransactionThreshold: data.largeTransactionThreshold,
+        }),
+        ...(data.notifyFailedSync !== undefined && {
+          notifyFailedSync: data.notifyFailedSync,
+        }),
+        ...(data.notifyLowBalance !== undefined && {
+          notifyLowBalance: data.notifyLowBalance,
+        }),
+        ...(data.lowBalanceThreshold && {
+          lowBalanceThreshold: data.lowBalanceThreshold,
+        }),
+        ...(data.autoReconciliation !== undefined && {
+          autoReconciliation: data.autoReconciliation,
+        }),
+        ...(data.reconciliationWindow && {
+          reconciliationWindow: data.reconciliationWindow,
+        }),
+        ...(data.matchingStrategy && {
+          matchingStrategy: data.matchingStrategy,
+        }),
         ...(data.syncFrequency && { syncFrequency: data.syncFrequency }),
         ...(data.syncStatus && { syncStatus: data.syncStatus }),
       },
@@ -211,7 +251,9 @@ export const PUT = PATCH;
  */
 export const POST = withSession(async ({ req, session }) => {
   try {
-    const data = await UpdateFinancialSettingsSchema.parseAsync(await req.json());
+    const data = await UpdateFinancialSettingsSchema.parseAsync(
+      await req.json(),
+    );
 
     // Check if settings already exist
     const existingSettings = await prisma.financialSettings.findUnique({

@@ -4,10 +4,10 @@ import {
   getTransactionCategoriesQuerySchemaExtended,
 } from "@/lib/zod/schemas/transaction-categories";
 
-import { NextResponse } from "next/server";
 import { createId } from "@/lib/api/utils";
-import { prisma } from "@dub/prisma";
 import { withWorkspace } from "@/lib/auth";
+import { prisma } from "@dub/prisma";
+import { NextResponse } from "next/server";
 
 // GET /api/categories - get all categories for a workspace
 export const GET = withWorkspace(
@@ -73,7 +73,8 @@ export const POST = withWorkspace(
       });
     }
 
-    const { name, description, parentId } = createTransactionCategoryBodySchema.parse(await req.json());
+    const { name, description, parentId } =
+      createTransactionCategoryBodySchema.parse(await req.json());
 
     const existingCategory = await prisma.transactionCategory.findFirst({
       where: {
@@ -89,8 +90,8 @@ export const POST = withWorkspace(
       });
     }
 
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const level = parentId ? await getParentLevel(parentId) + 1 : 0;
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    const level = parentId ? (await getParentLevel(parentId)) + 1 : 0;
 
     const response = await prisma.transactionCategory.create({
       data: {

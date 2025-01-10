@@ -1,7 +1,7 @@
 import { DubApiError } from "@/lib/api/errors";
-import { NextResponse } from "next/server";
-import { prisma } from "@dub/prisma";
 import { withWorkspace } from "@/lib/auth";
+import { prisma } from "@dub/prisma";
+import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const updateCategoryBodySchema = z.object({
@@ -46,7 +46,9 @@ export const GET = withWorkspace(
 // PUT /api/categories/[id] - update a category
 export const PUT = withWorkspace(
   async ({ req, params, workspace, headers }) => {
-    const { name, description } = updateCategoryBodySchema.parse(await req.json());
+    const { name, description } = updateCategoryBodySchema.parse(
+      await req.json(),
+    );
 
     const existingCategory = await prisma.transactionCategory.findFirst({
       where: {

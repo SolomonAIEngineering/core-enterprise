@@ -2,8 +2,8 @@
 
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 
-import { TabSelect } from "@dub/ui";
 import useWorkspace from "@/lib/swr/use-workspace";
+import { TabSelect } from "@dub/ui";
 
 export default function LibraryHeader() {
   const router = useRouter();

@@ -1,8 +1,8 @@
 import { fetcher } from "@dub/utils";
-import { getTransactionCategoriesCountQuerySchema } from "../zod/schemas/transaction-categories";
 import useSWR from "swr";
-import useWorkspace from "./use-workspace";
 import { z } from "zod";
+import { getTransactionCategoriesCountQuerySchema } from "../zod/schemas/transaction-categories";
+import useWorkspace from "./use-workspace";
 
 const partialQuerySchema = getTransactionCategoriesCountQuerySchema.partial();
 
@@ -13,7 +13,7 @@ export default function useTransactionCategoriesCount({
 
   const { data, error } = useSWR<number>(
     id &&
-    `/api/categories/count?${new URLSearchParams({ workspaceId: id, ...query } as Record<string, any>).toString()}`,
+      `/api/categories/count?${new URLSearchParams({ workspaceId: id, ...query } as Record<string, any>).toString()}`,
     fetcher,
     {
       dedupingInterval: 60000,

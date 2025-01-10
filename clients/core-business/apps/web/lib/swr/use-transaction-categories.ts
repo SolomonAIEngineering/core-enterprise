@@ -1,13 +1,18 @@
-import { TransactionCategorySchema, getTransactionCategoriesQuerySchema } from "../zod/schemas/transaction-categories";
+import {
+  TransactionCategorySchema,
+  getTransactionCategoriesQuerySchema,
+} from "../zod/schemas/transaction-categories";
 
 import { fetcher } from "@dub/utils";
 import useSWR from "swr";
-import useWorkspace from "./use-workspace";
 import { z } from "zod";
+import useWorkspace from "./use-workspace";
 
 const partialQuerySchema = getTransactionCategoriesQuerySchema.partial();
 
-export type TransactionCategoryProps = z.infer<typeof TransactionCategorySchema>;
+export type TransactionCategoryProps = z.infer<
+  typeof TransactionCategorySchema
+>;
 
 export default function useTransactionCategories({
   query,
@@ -22,12 +27,12 @@ export default function useTransactionCategories({
 
   const { data: categories, isValidating } = useSWR<TransactionCategoryProps[]>(
     id &&
-    enabled &&
-    `/api/categories?${new URLSearchParams({
-      workspaceId: id,
-      ...query,
-      includeTransactionsCount,
-    } as Record<string, any>).toString()}`,
+      enabled &&
+      `/api/categories?${new URLSearchParams({
+        workspaceId: id,
+        ...query,
+        includeTransactionsCount,
+      } as Record<string, any>).toString()}`,
     fetcher,
     {
       dedupingInterval: 60000,

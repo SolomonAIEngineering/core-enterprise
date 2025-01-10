@@ -1,14 +1,30 @@
 import { Button } from "@dub/ui";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const LANGUAGE_STYLES = [
   { value: null, label: "Default", description: "Standard professional tone" },
-  { value: "casual", label: "Casual", description: "Friendly and conversational" },
-  { value: "formal", label: "Formal", description: "Professional and business-like" },
-  { value: "technical", label: "Technical", description: "Detailed and precise" },
-  { value: "simple", label: "Simple", description: "Clear and easy to understand" },
+  {
+    value: "casual",
+    label: "Casual",
+    description: "Friendly and conversational",
+  },
+  {
+    value: "formal",
+    label: "Formal",
+    description: "Professional and business-like",
+  },
+  {
+    value: "technical",
+    label: "Technical",
+    description: "Detailed and precise",
+  },
+  {
+    value: "simple",
+    label: "Simple",
+    description: "Clear and easy to understand",
+  },
 ] as const;
 
 export default function UpdateLanguageStyle({
@@ -18,7 +34,9 @@ export default function UpdateLanguageStyle({
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [selectedStyle, setSelectedStyle] = useState<string | null>(initialLanguageStyle);
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(
+    initialLanguageStyle,
+  );
 
   async function handleSaveStyle() {
     if (selectedStyle === initialLanguageStyle) return;
@@ -43,7 +61,11 @@ export default function UpdateLanguageStyle({
       toast.success("Language style updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating language style");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating language style",
+      );
     } finally {
       setSaving(false);
     }
@@ -60,8 +82,12 @@ export default function UpdateLanguageStyle({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Language Style</h2>
-            <p className="text-sm text-gray-500">Choose the tone and style of language used in AI responses</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Language Style
+            </h2>
+            <p className="text-sm text-gray-500">
+              Choose the tone and style of language used in AI responses
+            </p>
           </div>
         </div>
 
@@ -69,10 +95,11 @@ export default function UpdateLanguageStyle({
           {LANGUAGE_STYLES.map((style) => (
             <div
               key={style.value || "default"}
-              className={`flex items-center space-x-2 rounded-md border p-3 transition-all hover:bg-gray-50 ${selectedStyle === style.value
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200"
-                }`}
+              className={`flex items-center space-x-2 rounded-md border p-3 transition-all hover:bg-gray-50 ${
+                selectedStyle === style.value
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-200"
+              }`}
             >
               <input
                 type="radio"
@@ -88,8 +115,12 @@ export default function UpdateLanguageStyle({
                 htmlFor={`style-${style.value || "default"}`}
                 className="flex flex-1 cursor-pointer flex-col"
               >
-                <span className="text-sm font-medium text-gray-900">{style.label}</span>
-                <span className="text-sm text-gray-500">{style.description}</span>
+                <span className="text-sm font-medium text-gray-900">
+                  {style.label}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {style.description}
+                </span>
               </label>
             </div>
           ))}
@@ -97,7 +128,8 @@ export default function UpdateLanguageStyle({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            This will affect how the AI communicates with you across all conversations.
+            This will affect how the AI communicates with you across all
+            conversations.
           </p>
           <div>
             <Button

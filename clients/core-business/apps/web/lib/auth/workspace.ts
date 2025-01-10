@@ -1,12 +1,12 @@
-import { API_DOMAIN, getSearchParams } from "@dub/utils";
+import { DubApiError, handleAndReturnErrorResponse } from "@/lib/api/errors";
 import {
   AddOns,
   BetaFeatures,
   PlanProps,
   WorkspaceWithUsers,
 } from "@/lib/types";
+import { API_DOMAIN, getSearchParams } from "@dub/utils";
 import { AxiomRequest, withAxiom } from "next-axiom";
-import { DubApiError, handleAndReturnErrorResponse } from "@/lib/api/errors";
 import {
   PermissionAction,
   getPermissionsByRole,
@@ -14,12 +14,12 @@ import {
 import { Scope, mapScopesToPermissions } from "../api/tokens/scopes";
 import { Session, getSession } from "./utils";
 
+import { ratelimit } from "@/lib/upstash";
+import { prisma } from "@dub/prisma";
+import { waitUntil } from "@vercel/functions";
+import { throwIfNoAccess } from "../api/tokens/permissions";
 import { getFeatureFlags } from "../edge-config";
 import { hashToken } from "./hash-token";
-import { prisma } from "@dub/prisma";
-import { ratelimit } from "@/lib/upstash";
-import { throwIfNoAccess } from "../api/tokens/permissions";
-import { waitUntil } from "@vercel/functions";
 
 interface WithWorkspaceHandler {
   ({

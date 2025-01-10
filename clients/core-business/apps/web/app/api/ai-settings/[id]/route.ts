@@ -1,8 +1,8 @@
 import { DubApiError } from "@/lib/api/errors";
-import { NextResponse } from "next/server";
+import { withSession } from "@/lib/auth";
 import { UpdateAIAssistantSettingsSchema } from "@/lib/zod/schemas/ai-settings";
 import { prisma } from "@dub/prisma";
-import { withSession } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
 /**
  * GET /api/ai-settings/[id]
@@ -21,9 +21,9 @@ export const GET = withSession(async ({ params }) => {
             id: true,
             email: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     if (!settings) {
@@ -52,7 +52,9 @@ export const GET = withSession(async ({ params }) => {
  */
 export const PATCH = withSession(async ({ req, params }) => {
   try {
-    const data = await UpdateAIAssistantSettingsSchema.parseAsync(await req.json());
+    const data = await UpdateAIAssistantSettingsSchema.parseAsync(
+      await req.json(),
+    );
 
     const settings = await prisma.aIAssistantSettings.update({
       where: {
@@ -68,9 +70,9 @@ export const PATCH = withSession(async ({ req, params }) => {
             id: true,
             email: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     return NextResponse.json(settings);

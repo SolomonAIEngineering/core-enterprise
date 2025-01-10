@@ -10,25 +10,25 @@
  */
 
 import { Button, Combobox, type ComboboxOption } from "@dub/ui";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 
 const WEEK_START_OPTIONS: ComboboxOption<{ preview: string[] }>[] = [
   {
     label: "Monday",
     value: "monday",
     meta: {
-      preview: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    }
+      preview: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    },
   },
   {
     label: "Sunday",
     value: "sunday",
     meta: {
-      preview: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    }
-  }
+      preview: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    },
+  },
 ];
 
 export default function UpdateWeekStart({
@@ -38,12 +38,14 @@ export default function UpdateWeekStart({
 }) {
   const { update } = useSession();
   const [saving, setSaving] = useState(false);
-  const [selectedWeekStart, setSelectedWeekStart] = useState<ComboboxOption | null>(
-    WEEK_START_OPTIONS.find(opt => opt.value === currentWeekStart) || null
-  );
+  const [selectedWeekStart, setSelectedWeekStart] =
+    useState<ComboboxOption | null>(
+      WEEK_START_OPTIONS.find((opt) => opt.value === currentWeekStart) || null,
+    );
 
   const handleUpdateWeekStart = async () => {
-    if (!selectedWeekStart || selectedWeekStart.value === currentWeekStart) return;
+    if (!selectedWeekStart || selectedWeekStart.value === currentWeekStart)
+      return;
 
     setSaving(true);
     try {
@@ -53,7 +55,8 @@ export default function UpdateWeekStart({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          weekStartsOnMonday: selectedWeekStart.value === "monday" ? true : false,
+          weekStartsOnMonday:
+            selectedWeekStart.value === "monday" ? true : false,
         }),
       });
 
@@ -65,7 +68,11 @@ export default function UpdateWeekStart({
       await update();
       toast.success("Week start day updated successfully");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update week start day");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to update week start day",
+      );
     } finally {
       setSaving(false);
     }
@@ -119,7 +126,10 @@ export default function UpdateWeekStart({
             <Button
               text={saving ? "Saving..." : "Save"}
               loading={saving}
-              disabled={!selectedWeekStart || selectedWeekStart.value === currentWeekStart}
+              disabled={
+                !selectedWeekStart ||
+                selectedWeekStart.value === currentWeekStart
+              }
               onClick={handleUpdateWeekStart}
             />
           </div>

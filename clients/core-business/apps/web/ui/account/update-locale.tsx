@@ -9,15 +9,19 @@
  * ```
  */
 
-import { Button, Cards, Combobox, type ComboboxOption } from "@dub/ui";
+import { Button, Combobox, type ComboboxOption } from "@dub/ui";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 
 // Helper function to get native language name
 const getLanguageName = (locale: string): string => {
   try {
-    return new Intl.DisplayNames([locale], { type: 'language' }).of(locale.split('-')[0]) || locale;
+    return (
+      new Intl.DisplayNames([locale], { type: "language" }).of(
+        locale.split("-")[0],
+      ) || locale
+    );
   } catch {
     return locale;
   }
@@ -26,32 +30,45 @@ const getLanguageName = (locale: string): string => {
 // Helper function to get region name
 const getRegionName = (locale: string): string | null => {
   try {
-    const region = locale.split('-')[1];
-    return region ? (new Intl.DisplayNames([locale], { type: 'region' }).of(region) || null) : null;
+    const region = locale.split("-")[1];
+    return region
+      ? new Intl.DisplayNames([locale], { type: "region" }).of(region) || null
+      : null;
   } catch {
     return null;
   }
 };
 
 // Generate locale options with native names and regions
-const COMMON_LOCALES = ['en-US', 'en-GB', 'es-ES', 'fr-FR', 'de-DE', 'it-IT', 'pt-BR', 'ja-JP', 'ko-KR', 'zh-CN'];
+const COMMON_LOCALES = [
+  "en-US",
+  "en-GB",
+  "es-ES",
+  "fr-FR",
+  "de-DE",
+  "it-IT",
+  "pt-BR",
+  "ja-JP",
+  "ko-KR",
+  "zh-CN",
+];
 
-const LOCALE_OPTIONS: ComboboxOption<{ nativeName: string; region: string | null }>[] =
-  COMMON_LOCALES
-    .map(locale => {
-      const nativeName = getLanguageName(locale);
-      const region = getRegionName(locale);
+const LOCALE_OPTIONS: ComboboxOption<{
+  nativeName: string;
+  region: string | null;
+}>[] = COMMON_LOCALES.map((locale) => {
+  const nativeName = getLanguageName(locale);
+  const region = getRegionName(locale);
 
-      return {
-        label: `${nativeName}${region ? ` (${region})` : ''}`,
-        value: locale,
-        meta: {
-          nativeName,
-          region
-        }
-      };
-    })
-    .sort((a, b) => a.label.localeCompare(b.label));
+  return {
+    label: `${nativeName}${region ? ` (${region})` : ""}`,
+    value: locale,
+    meta: {
+      nativeName,
+      region,
+    },
+  };
+}).sort((a, b) => a.label.localeCompare(b.label));
 
 export default function UpdateLocale({
   currentLocale,
@@ -61,7 +78,7 @@ export default function UpdateLocale({
   const { update } = useSession();
   const [saving, setSaving] = useState(false);
   const [selectedLocale, setSelectedLocale] = useState<ComboboxOption | null>(
-    LOCALE_OPTIONS.find(opt => opt.value === currentLocale) || null
+    LOCALE_OPTIONS.find((opt) => opt.value === currentLocale) || null,
   );
 
   const handleUpdateLocale = async () => {
@@ -87,7 +104,11 @@ export default function UpdateLocale({
       await update();
       toast.success("Language preference updated successfully");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update language preference");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to update language preference",
+      );
     } finally {
       setSaving(false);
     }
@@ -108,11 +129,13 @@ export default function UpdateLocale({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Language & Region</h2>
-            <p className="text-sm text-gray-500">Choose your preferred language and regional format</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Language & Region
+            </h2>
+            <p className="text-sm text-gray-500">
+              Choose your preferred language and regional format
+            </p>
           </div>
-
-
         </div>
 
         <div className="w-full max-w-md">
@@ -124,9 +147,7 @@ export default function UpdateLocale({
             searchPlaceholder="Search languages..."
             emptyState="No matching languages found"
             optionRight={(option) => (
-              <span className="text-sm text-gray-500">
-                {option.value}
-              </span>
+              <span className="text-sm text-gray-500">{option.value}</span>
             )}
           />
         </div>
@@ -139,7 +160,9 @@ export default function UpdateLocale({
             <Button
               text={saving ? "Saving..." : "Save"}
               loading={saving}
-              disabled={!selectedLocale || selectedLocale.value === currentLocale}
+              disabled={
+                !selectedLocale || selectedLocale.value === currentLocale
+              }
               onClick={handleUpdateLocale}
             />
           </div>

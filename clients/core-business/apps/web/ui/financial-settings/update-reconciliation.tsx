@@ -1,12 +1,16 @@
 import { Button, Combobox, type ComboboxOption, Switch } from "@dub/ui";
 import { MatchingStrategy } from "@prisma/client";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const WINDOW_OPTIONS: ComboboxOption<{ description: string }>[] = [
   { label: "1 Day", value: "1", meta: { description: "Look back one day" } },
-  { label: "3 Days", value: "3", meta: { description: "Standard window (Recommended)" } },
+  {
+    label: "3 Days",
+    value: "3",
+    meta: { description: "Standard window (Recommended)" },
+  },
   { label: "7 Days", value: "7", meta: { description: "Extended window" } },
   { label: "14 Days", value: "14", meta: { description: "Wide window" } },
   { label: "30 Days", value: "30", meta: { description: "Maximum window" } },
@@ -41,13 +45,16 @@ export default function UpdateReconciliation({
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [autoReconciliation, setAutoReconciliation] = useState(initialAutoReconciliation);
+  const [autoReconciliation, setAutoReconciliation] = useState(
+    initialAutoReconciliation,
+  );
   const [selectedWindow, setSelectedWindow] = useState<ComboboxOption | null>(
-    WINDOW_OPTIONS.find(opt => opt.value === String(initialWindow)) || null
+    WINDOW_OPTIONS.find((opt) => opt.value === String(initialWindow)) || null,
   );
-  const [selectedStrategy, setSelectedStrategy] = useState<ComboboxOption | null>(
-    STRATEGY_OPTIONS.find(opt => opt.value === initialStrategy) || null
-  );
+  const [selectedStrategy, setSelectedStrategy] =
+    useState<ComboboxOption | null>(
+      STRATEGY_OPTIONS.find((opt) => opt.value === initialStrategy) || null,
+    );
 
   const handleUpdateSettings = async () => {
     if (
@@ -80,7 +87,11 @@ export default function UpdateReconciliation({
       toast.success("Reconciliation settings updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating reconciliation settings");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating reconciliation settings",
+      );
     } finally {
       setSaving(false);
     }
@@ -97,15 +108,23 @@ export default function UpdateReconciliation({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Reconciliation Settings</h2>
-            <p className="text-sm text-gray-500">Configure how transactions are reconciled</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Reconciliation Settings
+            </h2>
+            <p className="text-sm text-gray-500">
+              Configure how transactions are reconciled
+            </p>
           </div>
         </div>
 
         <div className="flex items-center justify-between rounded-lg border border-gray-200 p-4 transition-all hover:bg-gray-50">
           <div className="space-y-1">
-            <h3 className="text-sm font-medium text-gray-900">Auto-Reconciliation</h3>
-            <p className="text-sm text-gray-500">Automatically reconcile matching transactions</p>
+            <h3 className="text-sm font-medium text-gray-900">
+              Auto-Reconciliation
+            </h3>
+            <p className="text-sm text-gray-500">
+              Automatically reconcile matching transactions
+            </p>
           </div>
           <Switch
             fn={() => setAutoReconciliation(!autoReconciliation)}
@@ -117,8 +136,12 @@ export default function UpdateReconciliation({
         {autoReconciliation && (
           <div className="w-full max-w-md space-y-4">
             <div>
-              <label className="text-sm font-medium text-gray-700">Reconciliation Window</label>
-              <p className="mb-2 text-sm text-gray-500">Set how far back to look for matching transactions</p>
+              <label className="text-sm font-medium text-gray-700">
+                Reconciliation Window
+              </label>
+              <p className="mb-2 text-sm text-gray-500">
+                Set how far back to look for matching transactions
+              </p>
               <Combobox
                 options={WINDOW_OPTIONS}
                 selected={selectedWindow}
@@ -127,14 +150,20 @@ export default function UpdateReconciliation({
                 searchPlaceholder="Search window sizes..."
                 emptyState="No matching window sizes found"
                 optionRight={(option) => (
-                  <span className="text-sm text-gray-500">{option.meta.description}</span>
+                  <span className="text-sm text-gray-500">
+                    {option.meta.description}
+                  </span>
                 )}
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-700">Matching Strategy</label>
-              <p className="mb-2 text-sm text-gray-500">Choose how transactions are matched</p>
+              <label className="text-sm font-medium text-gray-700">
+                Matching Strategy
+              </label>
+              <p className="mb-2 text-sm text-gray-500">
+                Choose how transactions are matched
+              </p>
               <Combobox
                 options={STRATEGY_OPTIONS}
                 selected={selectedStrategy}
@@ -143,7 +172,9 @@ export default function UpdateReconciliation({
                 searchPlaceholder="Search strategies..."
                 emptyState="No matching strategies found"
                 optionRight={(option) => (
-                  <span className="text-sm text-gray-500">{option.meta.description}</span>
+                  <span className="text-sm text-gray-500">
+                    {option.meta.description}
+                  </span>
                 )}
               />
             </div>
@@ -152,7 +183,8 @@ export default function UpdateReconciliation({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            These settings determine how transactions are automatically reconciled in your system.
+            These settings determine how transactions are automatically
+            reconciled in your system.
           </p>
           <div>
             <Button

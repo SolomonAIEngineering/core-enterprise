@@ -1,5 +1,9 @@
 "use client";
 
+import { Delete, ThreeDots } from "@/ui/shared/icons";
+import TransactionCategoryBadge, {
+  TransactionCategoryColorProps,
+} from "@/ui/transactions/transaction-category-badge";
 import {
   Button,
   CardList,
@@ -8,18 +12,16 @@ import {
   useKeyboardShortcut,
 } from "@dub/ui";
 import { CircleCheck, Copy, LoadingSpinner, PenWriting } from "@dub/ui/icons";
-import { Delete, ThreeDots } from "@/ui/shared/icons";
-import TransactionCategoryBadge, { TransactionCategoryColorProps } from "@/ui/transactions/transaction-category-badge";
 import { cn, nFormatter, pluralize } from "@dub/utils";
 import { useContext, useState } from "react";
 
-import Link from "next/link";
-import { TransactionCategoriesListContext } from "./page-client";
-import { TransactionCategoryProps } from "@/lib/swr/use-transaction-categories";
 import { mutatePrefix } from "@/lib/swr/mutate";
-import { toast } from "sonner";
-import { useAddEditTransactionCategoryModal } from "@/ui/modals/add-edit-transaction-category-modal";
+import { TransactionCategoryProps } from "@/lib/swr/use-transaction-categories";
 import useWorkspace from "@/lib/swr/use-workspace";
+import { useAddEditTransactionCategoryModal } from "@/ui/modals/add-edit-transaction-category-modal";
+import Link from "next/link";
+import { toast } from "sonner";
+import { TransactionCategoriesListContext } from "./page-client";
 
 /**
  * Component that displays a transaction category as a card with various interactive features.
@@ -77,7 +79,9 @@ export function TransactionCategoryCard({
 
   const linksCount = category._count?.links;
 
-  const { openMenuCategoryId, setOpenMenuCategoryId } = useContext(TransactionCategoriesListContext);
+  const { openMenuCategoryId, setOpenMenuCategoryId } = useContext(
+    TransactionCategoriesListContext,
+  );
   const openPopover = openMenuCategoryId === category.id;
   const setOpenPopover = (open: boolean) => {
     setOpenMenuCategoryId(open ? category.id : null);
@@ -85,9 +89,10 @@ export function TransactionCategoryCard({
 
   const [processing, setProcessing] = useState(false);
 
-  const { AddEditTransactionCategoryModal, setShowAddEditCategoryModal } = useAddEditTransactionCategoryModal({
-    props: category,
-  });
+  const { AddEditTransactionCategoryModal, setShowAddEditCategoryModal } =
+    useAddEditTransactionCategoryModal({
+      props: category,
+    });
 
   const [copiedTagId, copyToClipboard] = useCopyToClipboard();
 
@@ -137,7 +142,11 @@ export function TransactionCategoryCard({
         )}
       >
         <div className="flex min-w-0 grow items-center gap-3">
-          <TransactionCategoryBadge color={category.color as TransactionCategoryColorProps} withIcon className="sm:p-1.5" />
+          <TransactionCategoryBadge
+            color={category.color as TransactionCategoryColorProps}
+            withIcon
+            className="sm:p-1.5"
+          />
           <span className="min-w-0 truncate whitespace-nowrap text-gray-800">
             {category.name}
           </span>
@@ -314,4 +323,3 @@ function TagCardKeyboardShortcuts({
 
   return null;
 }
-

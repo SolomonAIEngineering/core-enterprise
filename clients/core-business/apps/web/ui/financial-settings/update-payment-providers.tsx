@@ -1,11 +1,14 @@
-import { Button, Switch } from "@dub/ui";
+import { Switch } from "@dub/ui";
 
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type PaymentFeature = {
-  id: "stripeEnabled" | "stripeCardPaymentsCapability" | "stripeTransfersCapability";
+  id:
+    | "stripeEnabled"
+    | "stripeCardPaymentsCapability"
+    | "stripeTransfersCapability";
   title: string;
   description: string;
   parent?: "stripeEnabled";
@@ -53,14 +56,17 @@ export default function UpdatePaymentProviders({
   });
 
   const handleUpdateFeature = async (
-    feature: "stripeEnabled" | "stripeCardPaymentsCapability" | "stripeTransfersCapability",
-    value: boolean
+    feature:
+      | "stripeEnabled"
+      | "stripeCardPaymentsCapability"
+      | "stripeTransfersCapability",
+    value: boolean,
   ) => {
     // Don't allow enabling child features if parent is disabled
     if (feature !== "stripeEnabled" && !features.stripeEnabled) return;
 
     // Optimistically update the UI
-    setFeatures(prev => ({ ...prev, [feature]: value }));
+    setFeatures((prev) => ({ ...prev, [feature]: value }));
     setUpdating(true);
 
     try {
@@ -74,9 +80,9 @@ export default function UpdatePaymentProviders({
           // If disabling Stripe, also disable capabilities
           ...(feature === "stripeEnabled" && !value
             ? {
-              stripeCardPaymentsCapability: null,
-              stripeTransfersCapability: null,
-            }
+                stripeCardPaymentsCapability: null,
+                stripeTransfersCapability: null,
+              }
             : {}),
           // Convert boolean to status string for capabilities
           ...(feature === "stripeCardPaymentsCapability"
@@ -91,14 +97,18 @@ export default function UpdatePaymentProviders({
       if (!response.ok) {
         const error = await response.json();
         // Revert the change on error
-        setFeatures(prev => ({ ...prev, [feature]: !value }));
+        setFeatures((prev) => ({ ...prev, [feature]: !value }));
         throw new Error(error.message);
       }
 
       toast.success("Payment provider settings updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating payment provider settings");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating payment provider settings",
+      );
     } finally {
       setUpdating(false);
     }
@@ -114,8 +124,12 @@ export default function UpdatePaymentProviders({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Payment Providers</h2>
-            <p className="text-sm text-gray-500">Configure payment providers and their capabilities</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Payment Providers
+            </h2>
+            <p className="text-sm text-gray-500">
+              Configure payment providers and their capabilities
+            </p>
           </div>
         </div>
 
@@ -123,11 +137,14 @@ export default function UpdatePaymentProviders({
           {PAYMENT_FEATURES.map((feature) => (
             <div
               key={feature.id}
-              className={`flex items-center justify-between rounded-lg border border-gray-200 p-4 transition-all hover:bg-gray-50 ${feature.parent && !features[feature.parent] ? "opacity-50" : ""
-                }`}
+              className={`flex items-center justify-between rounded-lg border border-gray-200 p-4 transition-all hover:bg-gray-50 ${
+                feature.parent && !features[feature.parent] ? "opacity-50" : ""
+              }`}
             >
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-900">{feature.title}</h3>
+                <h3 className="text-sm font-medium text-gray-900">
+                  {feature.title}
+                </h3>
                 <p className="text-sm text-gray-500">{feature.description}</p>
               </div>
               <Switch
@@ -136,7 +153,9 @@ export default function UpdatePaymentProviders({
                   handleUpdateFeature(feature.id, !currentValue);
                 }}
                 checked={features[feature.id]}
-                disabled={updating || (feature.parent && !features[feature.parent])}
+                disabled={
+                  updating || (feature.parent && !features[feature.parent])
+                }
               />
             </div>
           ))}
@@ -144,7 +163,8 @@ export default function UpdatePaymentProviders({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            These settings control which payment providers are available and their capabilities.
+            These settings control which payment providers are available and
+            their capabilities.
           </p>
         </div>
       </div>

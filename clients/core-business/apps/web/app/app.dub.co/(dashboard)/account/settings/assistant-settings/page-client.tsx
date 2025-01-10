@@ -1,5 +1,6 @@
 "use client";
 
+import { useAISettings } from "@/lib/swr/use-ai-settings";
 import UpdateContextWindow from "@/ui/assistant-settings/update-context-window";
 import UpdateCustomKnowledge from "@/ui/assistant-settings/update-custom-knowledge";
 import UpdateFeatures from "@/ui/assistant-settings/update-features";
@@ -7,7 +8,6 @@ import UpdateHistoryRetention from "@/ui/assistant-settings/update-history-reten
 import UpdateLanguageStyle from "@/ui/assistant-settings/update-language-style";
 import UpdateQuestionLimit from "@/ui/assistant-settings/update-question-limit";
 import UpdateResponseLength from "@/ui/assistant-settings/update-response-length";
-import { useAISettings } from "@/lib/swr/use-ai-settings";
 
 export default function SettingsAISettingsPageClient() {
   const { settings } = useAISettings();
@@ -17,7 +17,9 @@ export default function SettingsAISettingsPageClient() {
   return (
     <div className="flex flex-col space-y-6">
       <UpdateContextWindow currentContextWindow={settings.contextWindow} />
-      <UpdateHistoryRetention currentRetentionDays={settings.historyRetentionDays} />
+      <UpdateHistoryRetention
+        currentRetentionDays={settings.historyRetentionDays}
+      />
       <UpdateCustomKnowledge
         currentKnowledgeIds={settings.customKnowledgeIds || ""}
         useCustomKnowledge={settings.useCustomKnowledge}
@@ -27,8 +29,12 @@ export default function SettingsAISettingsPageClient() {
         enableFollowUp={settings.enableFollowUp}
       />
       <UpdateLanguageStyle languageStyle={settings.languageStyle || null} />
-      <UpdateQuestionLimit maxQuestionsPerDay={settings.maxQuestionsPerDay || null} />
-      <UpdateResponseLength preferredResponseLength={settings.preferredResponseLength || null} />
+      <UpdateQuestionLimit
+        maxQuestionsPerDay={settings.maxQuestionsPerDay || null}
+      />
+      <UpdateResponseLength
+        preferredResponseLength={settings.preferredResponseLength || null}
+      />
     </div>
   );
 }

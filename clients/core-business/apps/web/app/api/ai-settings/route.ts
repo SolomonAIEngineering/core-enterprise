@@ -1,9 +1,12 @@
-import { CreateAIAssistantSettingsSchema, UpdateAIAssistantSettingsSchema } from "@/lib/zod/schemas/ai-settings";
+import {
+  CreateAIAssistantSettingsSchema,
+  UpdateAIAssistantSettingsSchema,
+} from "@/lib/zod/schemas/ai-settings";
 
 import { DubApiError } from "@/lib/api/errors";
-import { NextResponse } from "next/server";
-import { prisma } from "@dub/prisma";
 import { withSession } from "@/lib/auth";
+import { prisma } from "@dub/prisma";
+import { NextResponse } from "next/server";
 
 /**
  * @swagger
@@ -38,9 +41,9 @@ export const GET = withSession(async ({ session }) => {
             id: true,
             email: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     // If no settings exist, create default settings
@@ -64,9 +67,9 @@ export const GET = withSession(async ({ session }) => {
               id: true,
               email: true,
               name: true,
-            }
-          }
-        }
+            },
+          },
+        },
       });
     }
 
@@ -104,7 +107,9 @@ export const GET = withSession(async ({ session }) => {
  */
 export const PATCH = withSession(async ({ req, session }) => {
   try {
-    const data = await UpdateAIAssistantSettingsSchema.parseAsync(await req.json());
+    const data = await UpdateAIAssistantSettingsSchema.parseAsync(
+      await req.json(),
+    );
 
     const settings = await prisma.aIAssistantSettings.upsert({
       where: {
@@ -127,9 +132,9 @@ export const PATCH = withSession(async ({ req, session }) => {
             id: true,
             email: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     return NextResponse.json(settings);
@@ -191,9 +196,9 @@ export const DELETE = withSession(async ({ session }) => {
             id: true,
             email: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     return NextResponse.json(settings);
@@ -207,4 +212,3 @@ export const DELETE = withSession(async ({ session }) => {
 });
 
 export const PUT = PATCH;
-

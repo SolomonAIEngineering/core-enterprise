@@ -81,5 +81,9 @@ export const UpdateFinancialSettingsSchema = FinancialSettingsSchema.omit({
 }).partial();
 
 export type FinancialSettings = z.infer<typeof FinancialSettingsSchema>;
-export type CreateFinancialSettings = z.infer<typeof CreateFinancialSettingsSchema>;
-export type UpdateFinancialSettings = z.infer<typeof UpdateFinancialSettingsSchema>;
+export type CreateFinancialSettings = z.infer<
+  typeof CreateFinancialSettingsSchema
+>;
+export type UpdateFinancialSettings = z.infer<
+  typeof UpdateFinancialSettingsSchema
+>;

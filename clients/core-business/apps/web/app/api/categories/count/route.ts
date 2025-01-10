@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@dub/prisma";
 import { withWorkspace } from "@/lib/auth";
+import { prisma } from "@dub/prisma";
+import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const getCategoriesCountQuerySchema = z.object({

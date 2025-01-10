@@ -1,6 +1,6 @@
-import { AIAssistantSettings } from "../types";
 import { fetcher } from "@dub/utils";
 import useSWR from "swr";
+import { AIAssistantSettings } from "../types";
 
 /**
  * Hook for fetching AI Assistant Settings by ID
@@ -10,7 +10,7 @@ import useSWR from "swr";
 export function useAISettingsById(id?: string) {
   const { data, error } = useSWR<AIAssistantSettings>(
     id ? `/api/ai-settings/${id}` : null,
-    fetcher
+    fetcher,
   );
 
   return {

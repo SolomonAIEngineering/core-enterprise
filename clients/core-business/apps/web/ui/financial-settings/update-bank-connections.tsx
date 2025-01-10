@@ -1,8 +1,8 @@
-import { Button, Switch } from "@dub/ui";
+import { Switch } from "@dub/ui";
 
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const BANK_FEATURES = [
   {
@@ -48,11 +48,15 @@ export default function UpdateBankConnections({
   });
 
   const handleUpdateFeature = async (
-    feature: "plaidEnabled" | "gocardlessEnabled" | "allowManualBankEntry" | "requireBankVerification",
-    value: boolean
+    feature:
+      | "plaidEnabled"
+      | "gocardlessEnabled"
+      | "allowManualBankEntry"
+      | "requireBankVerification",
+    value: boolean,
   ) => {
     // Optimistically update the UI
-    setFeatures(prev => ({ ...prev, [feature]: value }));
+    setFeatures((prev) => ({ ...prev, [feature]: value }));
     setUpdating(true);
 
     try {
@@ -69,14 +73,18 @@ export default function UpdateBankConnections({
       if (!response.ok) {
         const error = await response.json();
         // Revert the change on error
-        setFeatures(prev => ({ ...prev, [feature]: !value }));
+        setFeatures((prev) => ({ ...prev, [feature]: !value }));
         throw new Error(error.message);
       }
 
       toast.success("Bank connection settings updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating bank connection settings");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating bank connection settings",
+      );
     } finally {
       setUpdating(false);
     }
@@ -92,8 +100,12 @@ export default function UpdateBankConnections({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Bank Connections</h2>
-            <p className="text-sm text-gray-500">Configure how bank accounts can be connected and managed</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Bank Connections
+            </h2>
+            <p className="text-sm text-gray-500">
+              Configure how bank accounts can be connected and managed
+            </p>
           </div>
         </div>
 
@@ -104,7 +116,9 @@ export default function UpdateBankConnections({
               className="flex items-center justify-between rounded-lg border border-gray-200 p-4 transition-all hover:bg-gray-50"
             >
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-900">{feature.title}</h3>
+                <h3 className="text-sm font-medium text-gray-900">
+                  {feature.title}
+                </h3>
                 <p className="text-sm text-gray-500">{feature.description}</p>
               </div>
               <Switch
@@ -121,7 +135,8 @@ export default function UpdateBankConnections({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            These settings control how bank accounts can be connected and managed in your system.
+            These settings control how bank accounts can be connected and
+            managed in your system.
           </p>
         </div>
       </div>

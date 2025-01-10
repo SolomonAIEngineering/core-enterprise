@@ -1,12 +1,12 @@
 import { R2_URL, nanoid, trim } from "@dub/utils";
 
 import { DubApiError } from "@/lib/api/errors";
-import { NextResponse } from "next/server";
-import { prisma } from "@dub/prisma";
-import { storage } from "@/lib/storage";
-import { unsubscribe } from "@/lib/resend";
-import { waitUntil } from "@vercel/functions";
 import { withSession } from "@/lib/auth";
+import { unsubscribe } from "@/lib/resend";
+import { storage } from "@/lib/storage";
+import { prisma } from "@dub/prisma";
+import { waitUntil } from "@vercel/functions";
+import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const updateUserSchema = z.object({
@@ -69,8 +69,18 @@ export const GET = withSession(async ({ session }) => {
 
 // PATCH /api/user – edit a specific user
 export const PATCH = withSession(async ({ req, session }) => {
-  let { name, email, image, source, defaultWorkspace, locale, timezone, dateFormat, timeFormat, weekStartsOnMonday } =
-    await updateUserSchema.parseAsync(await req.json());
+  let {
+    name,
+    email,
+    image,
+    source,
+    defaultWorkspace,
+    locale,
+    timezone,
+    dateFormat,
+    timeFormat,
+    weekStartsOnMonday,
+  } = await updateUserSchema.parseAsync(await req.json());
 
   if (image) {
     const { url } = await storage.upload(
@@ -170,8 +180,8 @@ export const DELETE = withSession(async ({ session }) => {
     const response = await Promise.allSettled([
       // if the user has a custom avatar and it is stored by their userId, delete it
       user.image &&
-      user.image.startsWith(`${R2_URL}/avatars/${session.user.id}`) &&
-      storage.delete(user.image.replace(`${R2_URL}/`, "")),
+        user.image.startsWith(`${R2_URL}/avatars/${session.user.id}`) &&
+        storage.delete(user.image.replace(`${R2_URL}/`, "")),
       unsubscribe({ email: session.user.email }),
     ]);
     return NextResponse.json(response);

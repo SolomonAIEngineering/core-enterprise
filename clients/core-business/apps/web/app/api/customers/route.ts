@@ -4,13 +4,13 @@ import {
   getCustomersQuerySchema,
 } from "@/lib/zod/schemas/customers";
 
-import { DubApiError } from "@/lib/api/errors";
-import { NextResponse } from "next/server";
-import { generateRandomName } from "@/lib/names";
-import { parseRequestBody } from "@/lib/api/utils";
-import { prisma } from "@dub/prisma";
 import { transformCustomer } from "@/lib/api/customers/transform-customer";
+import { DubApiError } from "@/lib/api/errors";
+import { parseRequestBody } from "@/lib/api/utils";
 import { withWorkspace } from "@/lib/auth";
+import { generateRandomName } from "@/lib/names";
+import { prisma } from "@dub/prisma";
+import { NextResponse } from "next/server";
 
 // GET /api/customers – Get all customers
 export const GET = withWorkspace(
@@ -30,19 +30,19 @@ export const GET = withWorkspace(
       },
       ...(includeExpandedFields
         ? {
-          include: {
-            link: {
-              include: {
-                programEnrollment: {
-                  include: {
-                    partner: true,
-                    discount: true,
+            include: {
+              link: {
+                include: {
+                  programEnrollment: {
+                    include: {
+                      partner: true,
+                      discount: true,
+                    },
                   },
                 },
               },
             },
-          },
-        }
+          }
         : {}),
     });
 

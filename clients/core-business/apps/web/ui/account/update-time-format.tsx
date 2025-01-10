@@ -10,14 +10,18 @@
  */
 
 import { Button, Combobox, type ComboboxOption } from "@dub/ui";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 
 const TIME_FORMAT_OPTIONS: ComboboxOption<{ example: string }>[] = [
   { label: "12-hour", value: "0", meta: { example: "02:30 PM" } },
   { label: "24-hour", value: "1", meta: { example: "14:30" } },
-  { label: "12-hour with seconds", value: "2", meta: { example: "02:30:45 PM" } },
+  {
+    label: "12-hour with seconds",
+    value: "2",
+    meta: { example: "02:30:45 PM" },
+  },
   { label: "24-hour with seconds", value: "3", meta: { example: "14:30:45" } },
 ];
 
@@ -29,7 +33,7 @@ export default function UpdateTimeFormat({
   const { update } = useSession();
   const [saving, setSaving] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState<ComboboxOption | null>(
-    TIME_FORMAT_OPTIONS.find(opt => opt.value === currentFormat) || null
+    TIME_FORMAT_OPTIONS.find((opt) => opt.value === currentFormat) || null,
   );
 
   const handleUpdateFormat = async () => {
@@ -55,7 +59,9 @@ export default function UpdateTimeFormat({
       await update();
       toast.success("Time format updated successfully");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update time format");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to update time format",
+      );
     } finally {
       setSaving(false);
     }
@@ -77,9 +83,10 @@ export default function UpdateTimeFormat({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-medium text-gray-700">Time Format</h2>
-            <p className="text-sm text-gray-500">Choose how times should be displayed</p>
+            <p className="text-sm text-gray-500">
+              Choose how times should be displayed
+            </p>
           </div>
-
         </div>
 
         <div className="w-full max-w-md">
@@ -91,20 +98,25 @@ export default function UpdateTimeFormat({
             searchPlaceholder="Search formats..."
             emptyState="No matching formats found"
             optionRight={(option) => (
-              <span className="text-sm text-gray-500">{option.meta.example}</span>
+              <span className="text-sm text-gray-500">
+                {option.meta.example}
+              </span>
             )}
           />
         </div>
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            This will affect the manner in which your financial data is displayed.
+            This will affect the manner in which your financial data is
+            displayed.
           </p>
           <div>
             <Button
               text={saving ? "Saving..." : "Save"}
               loading={saving}
-              disabled={!selectedFormat || selectedFormat.value === currentFormat}
+              disabled={
+                !selectedFormat || selectedFormat.value === currentFormat
+              }
               onClick={handleUpdateFormat}
             />
           </div>

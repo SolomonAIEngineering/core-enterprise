@@ -8,22 +8,22 @@ import {
 } from "@dub/ui";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
+import useTags from "@/lib/swr/use-tags";
+import useTagsCount from "@/lib/swr/use-tags-count";
+import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
+import { useAddEditTagModal } from "@/ui/modals/add-edit-tag-modal";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { SearchBoxPersisted } from "@/ui/shared/search-box";
-import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
 import { Tag } from "@dub/ui/icons";
 import { TagCard } from "./tag-card";
 import { TagCardPlaceholder } from "./tag-card-placeholder";
-import { useAddEditTagModal } from "@/ui/modals/add-edit-tag-modal";
-import useTags from "@/lib/swr/use-tags";
-import useTagsCount from "@/lib/swr/use-tags-count";
 
 export const TagsListContext = createContext<{
   openMenuTagId: string | null;
   setOpenMenuTagId: Dispatch<SetStateAction<string | null>>;
 }>({
   openMenuTagId: null,
-  setOpenMenuTagId: () => { },
+  setOpenMenuTagId: () => {},
 });
 
 export default function WorkspaceTagsClient() {
@@ -89,8 +89,8 @@ export default function WorkspaceTagsClient() {
                 {tags?.length
                   ? tags.map((tag) => <TagCard key={tag.id} tag={tag} />)
                   : Array.from({ length: 6 }).map((_, idx) => (
-                    <TagCardPlaceholder key={idx} />
-                  ))}
+                      <TagCardPlaceholder key={idx} />
+                    ))}
               </CardList>
             </TagsListContext.Provider>
             <div className="sticky bottom-0 rounded-b-[inherit] border-t border-gray-200 bg-white px-3.5 py-2">

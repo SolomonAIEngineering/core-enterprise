@@ -9,11 +9,11 @@
  * ```
  */
 
-import { Button, Switch } from "@dub/ui";
+import { Switch } from "@dub/ui";
 
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const FEATURES = [
   {
@@ -42,9 +42,12 @@ export default function UpdateFeatures({
     enableFollowUp: initialEnableFollowUp,
   });
 
-  const handleUpdateFeature = async (feature: "enableCitations" | "enableFollowUp", value: boolean) => {
+  const handleUpdateFeature = async (
+    feature: "enableCitations" | "enableFollowUp",
+    value: boolean,
+  ) => {
     // Optimistically update the UI
-    setFeatures(prev => ({ ...prev, [feature]: value }));
+    setFeatures((prev) => ({ ...prev, [feature]: value }));
     setUpdating(true);
 
     try {
@@ -61,14 +64,18 @@ export default function UpdateFeatures({
       if (!response.ok) {
         const error = await response.json();
         // Revert the change on error
-        setFeatures(prev => ({ ...prev, [feature]: !value }));
+        setFeatures((prev) => ({ ...prev, [feature]: !value }));
         throw new Error(error.message);
       }
 
       toast.success("Feature settings updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating feature settings");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating feature settings",
+      );
     } finally {
       setUpdating(false);
     }
@@ -85,7 +92,9 @@ export default function UpdateFeatures({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-medium text-gray-700">AI Features</h2>
-            <p className="text-sm text-gray-500">Enable or disable specific AI assistant capabilities</p>
+            <p className="text-sm text-gray-500">
+              Enable or disable specific AI assistant capabilities
+            </p>
           </div>
         </div>
 
@@ -96,7 +105,9 @@ export default function UpdateFeatures({
               className="flex items-center justify-between rounded-lg border border-gray-200 p-4 transition-all hover:bg-gray-50"
             >
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-900">{feature.title}</h3>
+                <h3 className="text-sm font-medium text-gray-900">
+                  {feature.title}
+                </h3>
                 <p className="text-sm text-gray-500">{feature.description}</p>
               </div>
               <Switch
@@ -113,7 +124,8 @@ export default function UpdateFeatures({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            These features can be enabled or disabled at any time to customize your AI experience.
+            These features can be enabled or disabled at any time to customize
+            your AI experience.
           </p>
         </div>
       </div>

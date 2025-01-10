@@ -1,7 +1,7 @@
 import { Button } from "@dub/ui";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const QUESTION_LIMIT_OPTIONS = [
   { value: null, label: "Unlimited", description: "No daily limit" },
@@ -18,7 +18,9 @@ export default function UpdateQuestionLimit({
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [selectedLimit, setSelectedLimit] = useState<number | null>(initialLimit);
+  const [selectedLimit, setSelectedLimit] = useState<number | null>(
+    initialLimit,
+  );
 
   async function handleSaveLimit() {
     if (selectedLimit === initialLimit) return;
@@ -43,7 +45,11 @@ export default function UpdateQuestionLimit({
       toast.success("Daily question limit updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating daily question limit");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating daily question limit",
+      );
     } finally {
       setSaving(false);
     }
@@ -60,8 +66,12 @@ export default function UpdateQuestionLimit({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Daily Question Limit</h2>
-            <p className="text-sm text-gray-500">Set a daily limit for the number of questions you can ask</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Daily Question Limit
+            </h2>
+            <p className="text-sm text-gray-500">
+              Set a daily limit for the number of questions you can ask
+            </p>
           </div>
         </div>
 
@@ -69,10 +79,11 @@ export default function UpdateQuestionLimit({
           {QUESTION_LIMIT_OPTIONS.map((option) => (
             <div
               key={option.value || "unlimited"}
-              className={`flex items-center space-x-2 rounded-md border p-3 transition-all hover:bg-gray-50 ${selectedLimit === option.value
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200"
-                }`}
+              className={`flex items-center space-x-2 rounded-md border p-3 transition-all hover:bg-gray-50 ${
+                selectedLimit === option.value
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-200"
+              }`}
             >
               <input
                 type="radio"
@@ -80,7 +91,11 @@ export default function UpdateQuestionLimit({
                 name="questionLimit"
                 value={option.value || ""}
                 checked={selectedLimit === option.value}
-                onChange={(e) => setSelectedLimit(e.target.value ? Number(e.target.value) : null)}
+                onChange={(e) =>
+                  setSelectedLimit(
+                    e.target.value ? Number(e.target.value) : null,
+                  )
+                }
                 disabled={saving}
                 className="h-4 w-4 text-blue-600"
               />
@@ -88,8 +103,12 @@ export default function UpdateQuestionLimit({
                 htmlFor={`limit-${option.value || "unlimited"}`}
                 className="flex flex-1 cursor-pointer flex-col"
               >
-                <span className="text-sm font-medium text-gray-900">{option.label}</span>
-                <span className="text-sm text-gray-500">{option.description}</span>
+                <span className="text-sm font-medium text-gray-900">
+                  {option.label}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {option.description}
+                </span>
               </label>
             </div>
           ))}
@@ -97,7 +116,8 @@ export default function UpdateQuestionLimit({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            This will control how many questions you can ask the AI assistant per day.
+            This will control how many questions you can ask the AI assistant
+            per day.
           </p>
           <div>
             <Button

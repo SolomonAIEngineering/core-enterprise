@@ -9,16 +9,28 @@
  * ```
  */
 
-import { Button } from "@dub/ui";
 import { PreferredResponseLength } from "@/lib/zod/schemas/ai-settings";
-import { toast } from "sonner";
+import { Button } from "@dub/ui";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const RESPONSE_OPTIONS = [
-  { value: "concise", label: "Concise", description: "Brief and to the point responses" },
-  { value: "balanced", label: "Balanced", description: "Moderate level of detail (Recommended)" },
-  { value: "detailed", label: "Detailed", description: "Comprehensive responses with more context" },
+  {
+    value: "concise",
+    label: "Concise",
+    description: "Brief and to the point responses",
+  },
+  {
+    value: "balanced",
+    label: "Balanced",
+    description: "Moderate level of detail (Recommended)",
+  },
+  {
+    value: "detailed",
+    label: "Detailed",
+    description: "Comprehensive responses with more context",
+  },
 ] as const;
 
 export default function UpdateResponseLength({
@@ -28,7 +40,8 @@ export default function UpdateResponseLength({
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [selectedLength, setSelectedLength] = useState<PreferredResponseLength>(initialLength);
+  const [selectedLength, setSelectedLength] =
+    useState<PreferredResponseLength>(initialLength);
 
   const handleSaveLength = async () => {
     if (selectedLength === initialLength) return;
@@ -53,7 +66,11 @@ export default function UpdateResponseLength({
       toast.success("Response length preference updated successfully!");
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error updating response length preference");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Error updating response length preference",
+      );
     } finally {
       setSaving(false);
     }
@@ -70,8 +87,12 @@ export default function UpdateResponseLength({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Response Length</h2>
-            <p className="text-sm text-gray-500">Choose your preferred level of detail in AI responses</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Response Length
+            </h2>
+            <p className="text-sm text-gray-500">
+              Choose your preferred level of detail in AI responses
+            </p>
           </div>
         </div>
 
@@ -79,10 +100,11 @@ export default function UpdateResponseLength({
           {RESPONSE_OPTIONS.map((option) => (
             <div
               key={option.value}
-              className={`flex items-center space-x-3 rounded-lg border p-4 transition-all hover:bg-gray-50 ${selectedLength === option.value
-                ? "border-blue-500 bg-blue-50 hover:bg-blue-50"
-                : "border-gray-200"
-                }`}
+              className={`flex items-center space-x-3 rounded-lg border p-4 transition-all hover:bg-gray-50 ${
+                selectedLength === option.value
+                  ? "border-blue-500 bg-blue-50 hover:bg-blue-50"
+                  : "border-gray-200"
+              }`}
             >
               <input
                 type="radio"
@@ -90,13 +112,22 @@ export default function UpdateResponseLength({
                 name="responseLength"
                 value={option.value}
                 checked={selectedLength === option.value}
-                onChange={(e) => setSelectedLength(e.target.value as PreferredResponseLength)}
+                onChange={(e) =>
+                  setSelectedLength(e.target.value as PreferredResponseLength)
+                }
                 disabled={saving}
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500"
               />
-              <label htmlFor={option.value} className="flex flex-1 cursor-pointer flex-col">
-                <span className="text-sm font-medium text-gray-900">{option.label}</span>
-                <span className="text-sm text-gray-500">{option.description}</span>
+              <label
+                htmlFor={option.value}
+                className="flex flex-1 cursor-pointer flex-col"
+              >
+                <span className="text-sm font-medium text-gray-900">
+                  {option.label}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {option.description}
+                </span>
               </label>
             </div>
           ))}
@@ -104,7 +135,8 @@ export default function UpdateResponseLength({
 
         <div className="flex items-center justify-between space-x-4 rounded-b-lg border border-gray-200 bg-gray-50 p-3 sm:px-10">
           <p className="text-sm text-gray-500">
-            This setting affects how detailed the AI's responses will be across all conversations.
+            This setting affects how detailed the AI's responses will be across
+            all conversations.
           </p>
           <div>
             <Button

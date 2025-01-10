@@ -1,8 +1,8 @@
 import { Button, Switch } from "@dub/ui";
 
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function UpdateCustomKnowledge({
   currentKnowledgeIds,
@@ -91,8 +91,12 @@ export default function UpdateCustomKnowledge({
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-medium text-gray-700">Custom Knowledge Base</h2>
-            <p className="text-sm text-gray-500">Use your own knowledge base for AI responses</p>
+            <h2 className="text-sm font-medium text-gray-700">
+              Custom Knowledge Base
+            </h2>
+            <p className="text-sm text-gray-500">
+              Use your own knowledge base for AI responses
+            </p>
           </div>
           <Switch
             fn={() => updateCustomKnowledge(!isEnabled)}
@@ -104,7 +108,10 @@ export default function UpdateCustomKnowledge({
         {isEnabled && (
           <>
             <div className="mt-4">
-              <label htmlFor="knowledgeIds" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="knowledgeIds"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Knowledge Base IDs
               </label>
               <div className="mt-1">

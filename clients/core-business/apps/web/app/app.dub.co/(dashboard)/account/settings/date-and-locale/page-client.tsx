@@ -1,12 +1,11 @@
 "use client";
 
+import useUser from "@/lib/swr/use-user";
 import UpdateDateFormat from "@/ui/account/update-date-format";
 import UpdateLocale from "@/ui/account/update-locale";
 import UpdateTimeFormat from "@/ui/account/update-time-format";
 import UpdateTimezone from "@/ui/account/update-timezone";
 import UpdateWeekStart from "@/ui/account/update-week-start";
-import { useSession } from "next-auth/react";
-import useUser from "@/lib/swr/use-user";
 
 export default function SettingsDateAndLocalePageClient() {
   const { user } = useUser();

@@ -1,13 +1,16 @@
-import { FinancialSettings } from "../zod/schemas/financial-settings";
 import { fetcher } from "@dub/utils";
 import useSWR from "swr";
+import { FinancialSettings } from "../zod/schemas/financial-settings";
 
 /**
  * Hook for fetching the current user's Financial Settings
  * @returns The Financial Settings data and SWR states
  */
 export function useFinancialSettings() {
-  const { data, error } = useSWR<FinancialSettings>("/api/financial-settings", fetcher);
+  const { data, error } = useSWR<FinancialSettings>(
+    "/api/financial-settings",
+    fetcher,
+  );
 
   return {
     settings: data,
@@ -24,7 +27,7 @@ export function useFinancialSettings() {
 export function useFinancialSettingsById(id?: string) {
   const { data, error } = useSWR<FinancialSettings>(
     id ? `/api/financial-settings/${id}` : null,
-    fetcher
+    fetcher,
   );
 
   return {

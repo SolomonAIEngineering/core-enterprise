@@ -3,18 +3,40 @@
 import { Button, Combobox, Switch } from "@dub/ui";
 
 import type { ComboboxOption } from "@dub/ui";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 // Common currency options
-const CURRENCY_OPTIONS: Array<ComboboxOption & { meta: { description: string } }> = [
-  { label: "USD - US Dollar", value: "USD", meta: { description: "United States Dollar" } },
+const CURRENCY_OPTIONS: Array<
+  ComboboxOption & { meta: { description: string } }
+> = [
+  {
+    label: "USD - US Dollar",
+    value: "USD",
+    meta: { description: "United States Dollar" },
+  },
   { label: "EUR - Euro", value: "EUR", meta: { description: "Euro" } },
-  { label: "GBP - British Pound", value: "GBP", meta: { description: "British Pound Sterling" } },
-  { label: "JPY - Japanese Yen", value: "JPY", meta: { description: "Japanese Yen" } },
-  { label: "CAD - Canadian Dollar", value: "CAD", meta: { description: "Canadian Dollar" } },
-  { label: "AUD - Australian Dollar", value: "AUD", meta: { description: "Australian Dollar" } },
+  {
+    label: "GBP - British Pound",
+    value: "GBP",
+    meta: { description: "British Pound Sterling" },
+  },
+  {
+    label: "JPY - Japanese Yen",
+    value: "JPY",
+    meta: { description: "Japanese Yen" },
+  },
+  {
+    label: "CAD - Canadian Dollar",
+    value: "CAD",
+    meta: { description: "Canadian Dollar" },
+  },
+  {
+    label: "AUD - Australian Dollar",
+    value: "AUD",
+    meta: { description: "Australian Dollar" },
+  },
 ];
 
 interface UpdateCurrencyProps {
@@ -30,10 +52,10 @@ export default function UpdateCurrency({
 }: UpdateCurrencyProps) {
   const router = useRouter();
   const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrency);
-  const [isMultiCurrencyEnabled, setIsMultiCurrencyEnabled] = useState(enableMultiCurrency);
-  const [selectedSupportedCurrencies, setSelectedSupportedCurrencies] = useState<string[]>(
-    supportedCurrencies || []
-  );
+  const [isMultiCurrencyEnabled, setIsMultiCurrencyEnabled] =
+    useState(enableMultiCurrency);
+  const [selectedSupportedCurrencies, setSelectedSupportedCurrencies] =
+    useState<string[]>(supportedCurrencies || []);
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
@@ -73,16 +95,22 @@ export default function UpdateCurrency({
 
   const handleSupportedCurrencyChange = (currency: string) => {
     if (selectedSupportedCurrencies.includes(currency)) {
-      setSelectedSupportedCurrencies(selectedSupportedCurrencies.filter((c) => c !== currency));
+      setSelectedSupportedCurrencies(
+        selectedSupportedCurrencies.filter((c) => c !== currency),
+      );
     } else {
-      setSelectedSupportedCurrencies([...selectedSupportedCurrencies, currency]);
+      setSelectedSupportedCurrencies([
+        ...selectedSupportedCurrencies,
+        currency,
+      ]);
     }
   };
 
   const isChanged =
     selectedCurrency !== defaultCurrency ||
     isMultiCurrencyEnabled !== enableMultiCurrency ||
-    JSON.stringify(selectedSupportedCurrencies) !== JSON.stringify(supportedCurrencies);
+    JSON.stringify(selectedSupportedCurrencies) !==
+      JSON.stringify(supportedCurrencies);
 
   return (
     <form
@@ -101,15 +129,25 @@ export default function UpdateCurrency({
 
           <div className="flex flex-col space-y-4 pt-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Default Currency</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Default Currency
+              </label>
               <div className="mt-1">
                 <Combobox
-                  selected={CURRENCY_OPTIONS.find(opt => opt.value === selectedCurrency) || null}
-                  setSelected={(option) => option && setSelectedCurrency(option.value)}
+                  selected={
+                    CURRENCY_OPTIONS.find(
+                      (opt) => opt.value === selectedCurrency,
+                    ) || null
+                  }
+                  setSelected={(option) =>
+                    option && setSelectedCurrency(option.value)
+                  }
                   placeholder="Select default currency"
                   options={CURRENCY_OPTIONS}
                   optionRight={(option) => (
-                    <span className="text-sm text-gray-500">{option.meta.description}</span>
+                    <span className="text-sm text-gray-500">
+                      {option.meta.description}
+                    </span>
                   )}
                 />
               </div>
@@ -117,8 +155,12 @@ export default function UpdateCurrency({
 
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Enable Multi-Currency Support</h3>
-                <p className="text-sm text-gray-500">Allow transactions in multiple currencies</p>
+                <h3 className="text-sm font-medium text-gray-900">
+                  Enable Multi-Currency Support
+                </h3>
+                <p className="text-sm text-gray-500">
+                  Allow transactions in multiple currencies
+                </p>
               </div>
               <Switch
                 fn={handleMultiCurrencyToggle}
@@ -129,18 +171,29 @@ export default function UpdateCurrency({
 
             {isMultiCurrencyEnabled && (
               <div>
-                <label className="block text-sm font-medium text-gray-700">Supported Currencies</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Supported Currencies
+                </label>
                 <div className="mt-2 space-y-2">
                   {CURRENCY_OPTIONS.map((option) => (
-                    <label key={option.value} className="flex items-center space-x-2">
+                    <label
+                      key={option.value}
+                      className="flex items-center space-x-2"
+                    >
                       <input
                         type="checkbox"
-                        checked={selectedSupportedCurrencies.includes(option.value)}
-                        onChange={() => handleSupportedCurrencyChange(option.value)}
+                        checked={selectedSupportedCurrencies.includes(
+                          option.value,
+                        )}
+                        onChange={() =>
+                          handleSupportedCurrencyChange(option.value)
+                        }
                         disabled={option.value === selectedCurrency}
                         className="h-4 w-4 rounded border-gray-300"
                       />
-                      <span className="text-sm text-gray-700">{option.label}</span>
+                      <span className="text-sm text-gray-700">
+                        {option.label}
+                      </span>
                     </label>
                   ))}
                 </div>

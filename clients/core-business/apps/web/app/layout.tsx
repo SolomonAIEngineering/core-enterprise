@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
-import { cn, constructMetadata } from "@dub/utils";
 import { geistMono, inter, satoshi } from "@/styles/fonts";
+import { cn, constructMetadata } from "@dub/utils";
 
 import RootProviders from "./providers";
 
