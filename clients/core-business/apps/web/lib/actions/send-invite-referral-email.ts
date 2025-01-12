@@ -7,7 +7,7 @@ import { ratelimit } from "../upstash";
 import { emailSchema } from "../zod/schemas/auth";
 import { authActionClient } from "./safe-action";
 
-// send invite referral email for Dub Referrals (soon to be deprecated?)
+// send invite referral email for Referrals (soon to be deprecated?)
 export const sendInviteReferralEmail = authActionClient
   .schema(
     z.object({

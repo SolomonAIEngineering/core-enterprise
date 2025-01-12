@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Sliders(props: SVGProps<SVGSVGElement>) {
   return (
@@ -70,5 +70,5 @@ export function Sliders(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

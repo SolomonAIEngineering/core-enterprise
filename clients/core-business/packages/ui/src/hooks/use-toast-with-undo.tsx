@@ -1,31 +1,31 @@
-import { useEffect } from "react";
-import { toast } from "sonner";
-import Success from "../icons/success";
+import { useEffect } from 'react'
+import { toast } from 'sonner'
+import Success from '../icons/success'
 
 function ToastWithUndo({
   id,
   message,
   undo,
 }: {
-  id: number | string;
-  message: string;
-  undo: () => void;
+  id: number | string
+  message: string
+  undo: () => void
 }) {
   const undoAndDismiss = () => {
-    undo();
-    toast.dismiss(id);
-  };
+    undo()
+    toast.dismiss(id)
+  }
 
   const handleKeyboardEvent = (event: KeyboardEvent) => {
-    if (event.key === "z" && (event.ctrlKey || event.metaKey)) {
-      undoAndDismiss();
+    if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
+      undoAndDismiss()
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyboardEvent);
-    return () => document.removeEventListener("keydown", handleKeyboardEvent);
-  }, []);
+    document.addEventListener('keydown', handleKeyboardEvent)
+    return () => document.removeEventListener('keydown', handleKeyboardEvent)
+  }, [])
 
   return (
     <div className="flex w-full items-center justify-between space-x-2">
@@ -40,7 +40,7 @@ function ToastWithUndo({
         Undo
       </button>
     </div>
-  );
+  )
 }
 
 export function useToastWithUndo() {
@@ -50,16 +50,16 @@ export function useToastWithUndo() {
     undo,
     duration,
   }: {
-    id: number | string;
-    message: string;
-    undo: () => void;
-    duration?: number;
+    id: number | string
+    message: string
+    undo: () => void
+    duration?: number
   }) => {
     return toast(<ToastWithUndo id={id} message={message} undo={undo} />, {
       id,
       ...(duration && { duration }),
-    });
-  };
+    })
+  }
 
-  return toastWithUndo;
+  return toastWithUndo
 }

@@ -1,5 +1,7 @@
-import { prisma } from "@dub/prisma";
 import "dotenv-flow/config";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { prisma } from "@dub/prisma";
 import Stripe from "stripe";
 
 /*
@@ -10,7 +12,7 @@ import Stripe from "stripe";
 export const stripe = new Stripe(`${process.env.STRIPE_APP_SECRET_KEY}`, {
   apiVersion: "2022-11-15",
   appInfo: {
-    name: "Dub.co",
+    name: platform.company,
     version: "0.1.0",
   },
 });

@@ -1,4 +1,5 @@
 import z from "@/lib/zod";
+import { BusinessConfig as platform } from "@dub/platform-config";
 
 export const metaTagsSchema = z.object({
   title: z
@@ -6,14 +7,14 @@ export const metaTagsSchema = z.object({
     .nullable()
     .describe("The meta title tag for the URL.")
     .openapi({
-      example: "Dub.co - Link Management for Modern Marketing Teams",
+      example: `${platform.domain} - Link Management for Modern Marketing Teams`,
     }),
   description: z
     .string()
     .nullable()
     .describe("The meta description tag for the URL.")
     .openapi({
-      example: "Dub.co is the open-source link management infrastructure ...",
+      example: `${platform.domain} is the open-source link management infrastructure ..`,
     }),
   image: z
     .string()

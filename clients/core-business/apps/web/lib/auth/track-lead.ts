@@ -11,7 +11,7 @@ export const trackLead = async (user: User) => {
     return;
   }
 
-  // send the lead event to Dub
+  // send the lead event to
   await dub.track.lead({
     clickId,
     eventName: "Sign Up",

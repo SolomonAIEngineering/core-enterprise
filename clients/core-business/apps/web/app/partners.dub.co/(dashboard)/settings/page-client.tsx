@@ -1,20 +1,21 @@
 "use client";
 
-import { updatePartnerProfileAction } from "@/lib/actions/partners/update-partner-profile";
-import usePartnerProfile from "@/lib/swr/use-partner-profile";
-import { PartnerProps } from "@/lib/types";
 import {
   Button,
-  buttonVariants,
   FileUpload,
   LoadingSpinner,
   MaxWidthWrapper,
+  buttonVariants,
   useEnterSubmit,
 } from "@dub/ui";
-import { cn, DICEBEAR_AVATAR_URL } from "@dub/utils";
-import { useAction } from "next-safe-action/hooks";
+import { DICEBEAR_AVATAR_URL, cn } from "@dub/utils";
 import { PropsWithChildren, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+
+import { updatePartnerProfileAction } from "@/lib/actions/partners/update-partner-profile";
+import usePartnerProfile from "@/lib/swr/use-partner-profile";
+import { PartnerProps } from "@/lib/types";
+import { useAction } from "next-safe-action/hooks";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 
@@ -180,7 +181,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
           </FormRow>
         </div>
       </div>
-      <div className="flex justify-end rounded-b-lg border-t border-neutral-200 bg-neutral-100 px-5 py-3.5">
+      <div className="flex justify-end rounded-b-lg border-t border-neutral-200 bg-neutral-50 px-5 py-3.5">
         <Button
           type="submit"
           text="Save changes"

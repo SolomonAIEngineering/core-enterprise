@@ -1,7 +1,5 @@
 "use client";
 
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useWorkspace from "@/lib/swr/use-workspace";
 import { ExistingOAuthApp, NewOAuthApp, OAuthAppProps } from "@/lib/types";
 import {
   Button,
@@ -11,11 +9,15 @@ import {
   Switch,
 } from "@dub/ui";
 import { cn, nanoid } from "@dub/utils";
+import { Paperclip, Trash2 } from "lucide-react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import slugify from "@sindresorhus/slugify";
 import { Reorder } from "framer-motion";
-import { Paperclip, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useMemo, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -255,7 +257,9 @@ export default function AddOAuthAppForm({
             <h2 className="text-sm font-medium text-gray-900">
               Application slug
             </h2>
-            <InfoTooltip content="Unique slug for this application on Dub" />
+            <InfoTooltip
+              content={`Unique slug for this application on ${platform.company}`}
+            />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input

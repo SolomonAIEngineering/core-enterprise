@@ -1,12 +1,14 @@
 "use client";
 
+import { ProgramCard, ProgramCardSkeleton } from "@/ui/partners/program-card";
+import { CircleDollar, GridIcon } from "@dub/ui/icons";
+
 import usePartnerProgramInvites from "@/lib/swr/use-partner-program-invites";
 import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
-import { ProgramCard, ProgramCardSkeleton } from "@/ui/partners/program-card";
 import { ProgramInviteCard } from "@/ui/partners/program-invite-card";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { MaxWidthWrapper } from "@dub/ui";
-import { CircleDollar, GridIcon } from "@dub/ui/icons";
 
 export function PartnersDashboardPageClient() {
   const { programEnrollments, isLoading } = useProgramEnrollments();
@@ -27,7 +29,7 @@ export function PartnersDashboardPageClient() {
               </div>
             </>
           }
-          learnMoreHref="https://dub.co/help/article/dub-conversions"
+          learnMoreHref={`${platform.webUrl}/help/article/dub-conversions`}
         />
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

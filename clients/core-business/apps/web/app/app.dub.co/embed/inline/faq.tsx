@@ -1,10 +1,12 @@
-import { BlockMarkdown } from "@/ui/partners/lander-blocks/BlockMarkdown";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@dub/ui";
+
+import { BlockMarkdown } from "@/ui/partners/lander-blocks/BlockMarkdown";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { TAB_ITEM_ANIMATION_SETTINGS } from "@dub/utils";
 import { Program } from "@prisma/client";
 import { motion } from "framer-motion";
@@ -21,8 +23,7 @@ export function EmbedFAQ({ program }: { program: Program }) {
     },
     {
       title: "How should I promote the program?",
-      content:
-        "You should promote the program by sharing your unique referral link with your audience. When you post or distribute content about Dub, your message must make it obvious that you have a financially compensated relationship with Dub. We need all promotions to be FTC compliant. A helpful guide can be found [here](https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers).",
+      content: `You should promote the program by sharing your unique referral link with your audience. When you post or distribute content about ${platform.company}, your message must make it obvious that you have a financially compensated relationship with  ${platform.company}. We need all promotions to be FTC compliant. A helpful guide can be found [here](https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers).`,
     },
     {
       title: "Can I refer myself?",

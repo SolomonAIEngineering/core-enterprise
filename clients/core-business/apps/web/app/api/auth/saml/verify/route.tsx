@@ -1,4 +1,5 @@
 import jackson from "@/lib/jackson";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { NextResponse } from "next/server";
 
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
 
   const connections = await apiController.getConnections({
     tenant: workspace.id,
-    product: "Dub",
+    product: platform.company,
   });
 
   if (!connections || connections.length === 0) {

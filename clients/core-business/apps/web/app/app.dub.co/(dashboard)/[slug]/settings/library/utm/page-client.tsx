@@ -1,12 +1,14 @@
 "use client";
 
+import { CardList, DiamondTurnRight, Flag6, GlobePointer } from "@dub/ui";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
+
 import useWorkspace from "@/lib/swr/use-workspace";
 import { UtmTemplateWithUserProps } from "@/lib/types";
 import { useAddEditUtmTemplateModal } from "@/ui/modals/add-edit-utm-template.modal";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
-import { CardList, DiamondTurnRight, Flag6, GlobePointer } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { fetcher } from "@dub/utils";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
 import useSWR from "swr";
 import { TemplateCard } from "./template-card";
 import { TemplateCardPlaceholder } from "./template-card-placeholder";
@@ -77,7 +79,7 @@ export default function WorkspaceUtmTemplatesClient() {
               </>
             }
             addButton={<AddUtmTemplateButton />}
-            learnMoreHref="https://dub.co/help/article/how-to-create-utm-templates"
+            learnMoreHref={`${platform.webUrl}/help/article/how-to-create-utm-templates`}
           />
         )}
       </div>

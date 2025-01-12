@@ -1,4 +1,5 @@
 import { resend } from "@/lib/resend";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { CreateEmailOptions } from "resend";
 
 export const sendEmailViaResend = async ({
@@ -29,11 +30,11 @@ export const sendEmailViaResend = async ({
     from:
       from ||
       (marketing
-        ? "Steven from Dub.co <steven@ship.dub.co>"
-        : "Dub.co <system@dub.co>"),
+        ? `${platform.email.from.default}`
+        : `${platform.email.from.system}`),
     bcc: bcc,
     ...(!replyToFromEmail && {
-      replyTo: "support@dub.co",
+      replyTo: platform.email.replyTo,
     }),
     subject: subject,
     text: text,
@@ -41,7 +42,7 @@ export const sendEmailViaResend = async ({
     scheduledAt,
     ...(marketing && {
       headers: {
-        "List-Unsubscribe": "https://app.dub.co/account/settings",
+        "List-Unsubscribe": `${platform.platformUrl}/account/settings`,
       },
     }),
   });

@@ -1,5 +1,3 @@
-import useWorkspace from "@/lib/swr/use-workspace";
-import { BitlyGroupProps } from "@/lib/types";
 import {
   Button,
   LoadingSpinner,
@@ -20,6 +18,10 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BitlyGroupProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 import useSWRImmutable from "swr/immutable";
 
@@ -252,7 +254,7 @@ function ImportBitlyModal({
               }}
             />
             <a
-              href="https://dub.co/help/article/migrating-from-bitly"
+              href={`${platform.webUrl}/help/article/migrating-from-bitly`}
               target="_blank"
               className="text-center text-xs text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800"
             >

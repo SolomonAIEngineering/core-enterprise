@@ -1,114 +1,114 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { ArrowRight } from "lucide-react";
-import { Button } from "./button";
+import type { Meta, StoryObj } from '@storybook/react'
+import { ArrowRight } from 'lucide-react'
+import { Button } from './button'
 
 const meta = {
-  title: "Components/Button",
+  title: 'Components/Button',
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
+      control: 'select',
       options: [
-        "default",
-        "destructive",
-        "outline",
-        "secondary",
-        "ghost",
-        "link",
+        'default',
+        'destructive',
+        'outline',
+        'secondary',
+        'ghost',
+        'link',
       ],
     },
     size: {
-      control: "select",
-      options: ["default", "sm", "lg", "icon"],
+      control: 'select',
+      options: ['default', 'sm', 'lg', 'icon'],
     },
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Button>
 
-export default meta;
-type Story = StoryObj<typeof Button>;
+export default meta
+type Story = StoryObj<typeof Button>
 
 export const Default: Story = {
   args: {
-    text: "Default Button",
-    variant: "default",
+    text: 'Default Button',
+    variant: 'default',
   },
-};
+}
 
 export const Secondary: Story = {
   args: {
-    text: "Secondary Button",
-    variant: "secondary",
+    text: 'Secondary Button',
+    variant: 'secondary',
   },
-};
+}
 
 export const Destructive: Story = {
   args: {
-    text: "Destructive Button",
-    variant: "destructive",
+    text: 'Destructive Button',
+    variant: 'destructive',
   },
-};
+}
 
 export const Outline: Story = {
   args: {
-    text: "Outline Button",
-    variant: "outline",
+    text: 'Outline Button',
+    variant: 'outline',
   },
-};
+}
 
 export const Ghost: Story = {
   args: {
-    text: "Ghost Button",
-    variant: "ghost",
+    text: 'Ghost Button',
+    variant: 'ghost',
   },
-};
+}
 
 export const Link: Story = {
   args: {
-    text: "Link Button",
-    variant: "link",
+    text: 'Link Button',
+    variant: 'link',
   },
-};
+}
 
 export const WithIcon: Story = {
   args: {
-    text: "With Icon",
-    variant: "default",
+    text: 'With Icon',
+    variant: 'default',
     icon: <ArrowRight />,
   },
-};
+}
 
 export const WithShortcut: Story = {
   args: {
-    text: "With Shortcut",
-    variant: "default",
-    shortcut: "⌘K",
+    text: 'With Shortcut',
+    variant: 'default',
+    shortcut: '⌘K',
   },
-};
+}
 
 export const Loading: Story = {
   args: {
-    text: "Loading",
-    variant: "default",
+    text: 'Loading',
+    variant: 'default',
     loading: true,
   },
-};
+}
 
 export const Small: Story = {
   args: {
-    text: "Small Button",
-    variant: "default",
-    size: "sm",
+    text: 'Small Button',
+    variant: 'default',
+    size: 'sm',
   },
-};
+}
 
 export const Large: Story = {
   args: {
-    text: "Large Button",
-    variant: "default",
-    size: "lg",
+    text: 'Large Button',
+    variant: 'default',
+    size: 'lg',
   },
-};
+}

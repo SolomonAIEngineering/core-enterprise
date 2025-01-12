@@ -1,12 +1,14 @@
-import { DubApiError } from "@/lib/api/errors";
 import { scopesToName, validateScopesForRole } from "@/lib/api/tokens/scopes";
-import { parseRequestBody } from "@/lib/api/utils";
 import { hashToken, withWorkspace } from "@/lib/auth";
-import { generateRandomName } from "@/lib/names";
 import { createTokenSchema, tokenSchema } from "@/lib/zod/schemas/token";
+import { getCurrentPlan, nanoid } from "@dub/utils";
+
+import { DubApiError } from "@/lib/api/errors";
+import { parseRequestBody } from "@/lib/api/utils";
+import { generateRandomName } from "@/lib/names";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { User } from "@dub/prisma/client";
-import { getCurrentPlan, nanoid } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
 import { sendEmail } from "emails";
 import APIKeyCreated from "emails/api-key-created";
@@ -128,7 +130,7 @@ export const POST = withWorkspace(
     waitUntil(
       sendEmail({
         email: session.user.email,
-        subject: `A new API key has been created for your workspace ${workspace.name} on Dub`,
+        subject: `A new API key has been created for your workspace ${workspace.name} on ${platform.company}`,
         react: APIKeyCreated({
           email: session.user.email,
           token: {

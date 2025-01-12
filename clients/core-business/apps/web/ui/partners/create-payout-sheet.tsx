@@ -1,15 +1,5 @@
 "use client";
 
-import { createManualPayoutAction } from "@/lib/actions/partners/create-manual-payout";
-import { AnalyticsResponseOptions } from "@/lib/analytics/types";
-import { calculateEarnings } from "@/lib/api/sales/calculate-earnings";
-import { mutatePrefix } from "@/lib/swr/mutate";
-import usePartners from "@/lib/swr/use-partners";
-import useProgram from "@/lib/swr/use-program";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { createManualPayoutSchema } from "@/lib/zod/schemas/payouts";
-import { X } from "@/ui/shared/icons";
-import { PayoutType } from "@dub/prisma/client";
 import {
   Button,
   DateRangePicker,
@@ -18,14 +8,13 @@ import {
   useRouterStuff,
 } from "@dub/ui";
 import {
+  DICEBEAR_AVATAR_URL,
   capitalize,
   cn,
   currencyFormatter,
-  DICEBEAR_AVATAR_URL,
   fetcher,
   formatDate,
 } from "@dub/utils";
-import { nFormatter } from "@dub/utils/src/functions";
 import {
   endOfMonth,
   endOfQuarter,
@@ -35,7 +24,6 @@ import {
   startOfYear,
   subMonths,
 } from "date-fns";
-import { useAction } from "next-safe-action/hooks";
 import { useParams, useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -47,6 +35,19 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { createManualPayoutAction } from "@/lib/actions/partners/create-manual-payout";
+import { AnalyticsResponseOptions } from "@/lib/analytics/types";
+import { calculateEarnings } from "@/lib/api/sales/calculate-earnings";
+import { mutatePrefix } from "@/lib/swr/mutate";
+import usePartners from "@/lib/swr/use-partners";
+import useProgram from "@/lib/swr/use-program";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { createManualPayoutSchema } from "@/lib/zod/schemas/payouts";
+import { X } from "@/ui/shared/icons";
+import { PayoutType } from "@dub/prisma/client";
+import { nFormatter } from "@dub/utils/src/functions";
+import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import useSWR from "swr";
@@ -501,7 +502,7 @@ function CreatePayoutSheetContent({
                   "block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm",
                   "pr-[6.5rem]",
                   payoutType === "sales" &&
-                    "cursor-not-allowed bg-neutral-100 text-neutral-500",
+                    "cursor-not-allowed bg-neutral-50 text-neutral-500",
                   payoutType === "custom" && "pr-12",
                   !isPercentageBased && "pl-6",
                   errors.amount &&

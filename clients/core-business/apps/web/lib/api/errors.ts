@@ -1,4 +1,5 @@
 import z from "@/lib/zod";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { capitalize } from "@dub/utils";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
@@ -62,10 +63,13 @@ const ErrorSchema = z.object({
       description: "A human readable error message.",
       example: "The requested resource was not found.",
     }),
-    doc_url: z.string().optional().openapi({
-      description: "A URL to more information about the error code reported.",
-      example: "https://dub.co/docs/api-reference",
-    }),
+    doc_url: z
+      .string()
+      .optional()
+      .openapi({
+        description: "A URL to more information about the error code reported.",
+        example: `${platform.webUrl}/docs/api-reference`,
+      }),
   }),
 });
 
@@ -91,7 +95,7 @@ export class DubApiError extends Error {
   }
 }
 
-const docErrorUrl = "https://dub.co/docs/api-reference/errors";
+const docErrorUrl = `${platform.webUrl}/docs/api-reference/errors`;
 
 export function fromZodError(error: ZodError): ErrorResponse {
   return {

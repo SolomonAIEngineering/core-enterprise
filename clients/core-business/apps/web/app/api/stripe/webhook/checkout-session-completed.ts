@@ -1,3 +1,5 @@
+import { getPlanFromPriceId, log } from "@dub/utils";
+
 import { claimDotLinkDomain } from "@/lib/api/domains/claim-dot-link-domain";
 import { inviteUser } from "@/lib/api/users";
 import { limiter } from "@/lib/cron/limiter";
@@ -5,9 +7,9 @@ import { stripe } from "@/lib/stripe";
 import { WorkspaceProps } from "@/lib/types";
 import { redis } from "@/lib/upstash";
 import { Invite } from "@/lib/zod/schemas/invites";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { User } from "@dub/prisma/client";
-import { getPlanFromPriceId, log } from "@dub/utils";
 import { sendEmail } from "emails";
 import UpgradeEmail from "emails/upgrade-email";
 import Stripe from "stripe";
@@ -100,7 +102,7 @@ export async function checkoutSessionCompleted(event: Stripe.Event) {
       limiter.schedule(() =>
         sendEmail({
           email: user.email as string,
-          subject: `Thank you for upgrading to Dub.co ${plan.name}!`,
+          subject: `Thank you for upgrading to ${platform.company} ${plan.name}!`,
           react: UpgradeEmail({
             name: user.name,
             email: user.email as string,

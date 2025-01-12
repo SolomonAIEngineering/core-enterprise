@@ -1,5 +1,7 @@
-import { REDIRECTION_QUERY_PARAM } from "@dub/utils/src/constants";
 import { describe, expect, test } from "vitest";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { REDIRECTION_QUERY_PARAM } from "@dub/utils/src/constants";
 import { env } from "../utils/env";
 import { IntegrationHarness } from "../utils/integration";
 
@@ -18,8 +20,10 @@ describe.runIf(env.CI)("Link Redirects", async () => {
   test("root", async () => {
     const response = await fetch(h.baseUrl, fetchOptions);
 
-    // the location should start with "https://dub.co"
-    expect(response.headers.get("location")).toMatch(/^https:\/\/dub\.co\//);
+    // the location should start with "https://getvector.io"
+    expect(response.headers.get("location")).toMatch(
+      new RegExp(`^${platform.webUrl}/`),
+    );
     expect(response.headers.get("x-powered-by")).toBe(poweredBy);
     expect(response.status).toBe(301);
   });
@@ -75,7 +79,7 @@ describe.runIf(env.CI)("Link Redirects", async () => {
       fetchOptions,
     );
 
-    expect(response.headers.get("location")).toBe("https://dub.co/");
+    expect(response.headers.get("location")).toBe(`${platform.webUrl}/`);
     expect(response.headers.get("x-powered-by")).toBe(poweredBy);
     expect(response.status).toBe(302);
   });
@@ -93,14 +97,14 @@ describe.runIf(env.CI)("Link Redirects", async () => {
 
   test("redirection url", async () => {
     const response = await fetch(
-      `${h.baseUrl}/redir-url-test?${REDIRECTION_QUERY_PARAM}=https://dub.co/blog`,
+      `${h.baseUrl}/redir-url-test?${REDIRECTION_QUERY_PARAM}=${platform.webUrl}/blog`,
       {
         ...fetchOptions,
         headers: {},
       },
     );
 
-    expect(response.headers.get("location")).toBe("https://dub.co/blog");
+    expect(response.headers.get("location")).toBe(`${platform.webUrl}/blog`);
     expect(response.headers.get("x-powered-by")).toBe(poweredBy);
     expect(response.status).toBe(302);
   });

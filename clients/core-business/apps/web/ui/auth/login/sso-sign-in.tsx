@@ -1,6 +1,8 @@
 "use client";
 
 import { Button, InfoTooltip, useMediaQuery } from "@dub/ui";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Lock } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useContext } from "react";
@@ -36,7 +38,7 @@ export const SSOSignIn = () => {
           setLastUsedAuthMethod("saml");
           await signIn("saml", undefined, {
             tenant: data.workspaceId,
-            product: "Dub",
+            product: platform.company,
           });
         });
       }}
@@ -50,7 +52,7 @@ export const SSOSignIn = () => {
               Workspace Slug
             </h2>
             <InfoTooltip
-              content={`This is your workspace's unique identifier on ${process.env.NEXT_PUBLIC_APP_NAME}. E.g. app.dub.co/acme is "acme".`}
+              content={`This is your workspace's unique identifier on ${platform.platformUrl.replace("https://", "")}. E.g. app.getvector.app/acme is "acme".`}
             />
           </div>
           <input

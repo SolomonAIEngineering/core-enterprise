@@ -1,4 +1,5 @@
 import AddEditIntegrationForm from "@/ui/oauth-apps/add-edit-integration-form";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { MaxWidthWrapper } from "@dub/ui";
 import { ChevronLeft } from "lucide-react";
@@ -10,9 +11,9 @@ export default async function IntegrationManagePage({
 }: {
   params: { slug: string; integrationSlug: string };
 }) {
-  // this is only available for Dub workspace for now
+  // this is only available for workspace for now
   // we might open this up to other workspaces in the future
-  if (params.slug !== "dub") {
+  if (params.slug !== platform.company.toLocaleLowerCase()) {
     notFound();
   }
   const integration = await prisma.integration.findUnique({

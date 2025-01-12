@@ -1,5 +1,6 @@
-import z from "@/lib/zod";
 import { clickEventSchema, clickEventSchemaTB } from "./clicks";
+
+import z from "@/lib/zod";
 import { CustomerSchema } from "./customers";
 import { commonDeprecatedEventFields } from "./deprecated";
 import { linkEventSchema } from "./links";
@@ -10,7 +11,7 @@ export const trackLeadRequestSchema = z.object({
     .trim()
     .min(1, "clickId is required")
     .describe(
-      "The ID of the click in th Dub. You can read this value from `dub_id` cookie.",
+      "The ID of the click in the Vector. You can read this value from `dub_id` cookie.",
     ),
   eventName: z
     .string({ required_error: "eventName is required" })

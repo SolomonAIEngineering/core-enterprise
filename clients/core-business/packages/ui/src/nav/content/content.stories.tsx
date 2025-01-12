@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   ContentIcon,
   ContentLinkCard,
   LargeLinkCard,
   ToolLinkCard,
-} from "./shared";
+} from './shared'
 
-import { Code } from "../../icons";
-import { ProductContent } from "./product-content";
-import { ResourcesContent } from "./resources-content";
-import { SolutionsContent } from "./solutions-content";
+import { Code } from '../../icons'
+import { ProductContent } from './product-content'
+import { ResourcesContent } from './resources-content'
+import { SolutionsContent } from './solutions-content'
 
 const meta: Meta<typeof ContentLinkCard> = {
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "Navigation content components used in dropdown menus and navigation panels.",
+          'Navigation content components used in dropdown menus and navigation panels.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <div className="font-sans">
@@ -29,22 +29,22 @@ const meta: Meta<typeof ContentLinkCard> = {
       </div>
     ),
   ],
-};
+}
 
-export default meta;
-type Story = StoryObj;
+export default meta
+type Story = StoryObj
 
 export const Product: Story = {
   render: () => <ProductContent domain="example.com" />,
-};
+}
 
 export const Resources: Story = {
   render: () => <ResourcesContent domain="example.com" />,
-};
+}
 
 export const Solutions: Story = {
   render: () => <SolutionsContent domain="example.com" />,
-};
+}
 
 export const SharedComponents: Story = {
   render: () => (
@@ -113,4 +113,4 @@ export const SharedComponents: Story = {
       </div>
     </div>
   ),
-};
+}

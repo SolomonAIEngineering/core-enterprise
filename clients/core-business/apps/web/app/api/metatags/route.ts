@@ -1,6 +1,7 @@
 import { handleAndReturnErrorResponse } from "@/lib/api/errors";
 import { ratelimitOrThrow } from "@/lib/api/utils";
 import { getUrlQuerySchema } from "@/lib/zod/schemas/links";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { type NextRequest, NextResponse } from "next/server";
 import { getMetaTags } from "./utils";
 
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         ...metatags,
-        poweredBy: "Dub.co - Link management for modern marketing teams",
+        poweredBy: `${platform.metadata.description}`,
       },
       {
         headers: CORS_HEADERS,

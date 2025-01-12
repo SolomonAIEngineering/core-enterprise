@@ -1,7 +1,9 @@
+import { describe, expect, test } from "vitest";
+
 import { TrackLeadResponse } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { randomCustomer } from "tests/utils/helpers";
 import { E2E_CLICK_ID } from "tests/utils/resource";
-import { describe, expect, test } from "vitest";
 import { IntegrationHarness } from "../utils/integration";
 
 describe("POST /track/lead", async () => {
@@ -54,7 +56,7 @@ describe("POST /track/lead", async () => {
     expect(response.data).toStrictEqual({
       error: {
         code: "rate_limit_exceeded",
-        doc_url: "https://dub.co/docs/api-reference/errors#rate-limit_exceeded",
+        doc_url: `${platform.webUrl}/docs/api-reference/errors#rate-limit_exceeded`,
         message: `Rate limit exceeded for customer ${customer.id}: Signup`,
       },
     });

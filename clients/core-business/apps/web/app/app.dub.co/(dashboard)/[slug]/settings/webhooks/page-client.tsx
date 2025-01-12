@@ -1,14 +1,16 @@
 "use client";
 
+import { Button, InfoTooltip, TooltipContent } from "@dub/ui";
+import { redirect, useRouter } from "next/navigation";
+
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWebhooks from "@/lib/swr/use-webhooks";
 import useWorkspace from "@/lib/swr/use-workspace";
 import EmptyState from "@/ui/shared/empty-state";
 import WebhookCard from "@/ui/webhooks/webhook-card";
 import WebhookPlaceholder from "@/ui/webhooks/webhook-placeholder";
-import { Button, InfoTooltip, TooltipContent } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Webhook } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
 
 export default function WebhooksPageClient() {
   const router = useRouter();
@@ -34,7 +36,7 @@ export default function WebhooksPageClient() {
         <EmptyState
           icon={Webhook}
           title="Webhooks"
-          description="Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub."
+          description={`Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in ${platform.company}.`}
           learnMore="https://d.to/webhooks"
           buttonText="Upgrade to Business"
           buttonLink={`/${slug}/upgrade`}
@@ -53,7 +55,7 @@ export default function WebhooksPageClient() {
           <InfoTooltip
             content={
               <TooltipContent
-                title="Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub."
+                title={`Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in ${platform.company}.`}
                 href="https://d.to/webhooks"
                 target="_blank"
                 cta="Learn more"
@@ -84,7 +86,7 @@ export default function WebhooksPageClient() {
               <EmptyState
                 icon={Webhook}
                 title="You haven't set up any webhooks yet."
-                description="Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub."
+                description={`Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in ${platform.company}.`}
                 learnMore="https://d.to/webhooks"
               />
             </div>

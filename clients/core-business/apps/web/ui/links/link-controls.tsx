@@ -1,6 +1,3 @@
-import { mutatePrefix } from "@/lib/swr/mutate";
-import { useArchiveLinkModal } from "@/ui/modals/archive-link-modal";
-import { useDeleteLinkModal } from "@/ui/modals/delete-link-modal";
 import {
   Button,
   CardList,
@@ -14,6 +11,12 @@ import {
 import { BoxArchive, CircleCheck, Copy, QRCode } from "@dub/ui/icons";
 import { cn, isDubDomain, nanoid, punycode } from "@dub/utils";
 import { CopyPlus, Delete, FolderInput } from "lucide-react";
+import { LinksListContext, ResponseLink } from "./links-container";
+
+import { mutatePrefix } from "@/lib/swr/mutate";
+import { useArchiveLinkModal } from "@/ui/modals/archive-link-modal";
+import { useDeleteLinkModal } from "@/ui/modals/delete-link-modal";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { useParams } from "next/navigation";
 import { useContext } from "react";
 import { toast } from "sonner";
@@ -21,7 +24,6 @@ import { useLinkBuilder } from "../modals/link-builder";
 import { useLinkQRModal } from "../modals/link-qr-modal";
 import { useTransferLinkModal } from "../modals/transfer-link-modal";
 import { ThreeDots } from "../shared/icons";
-import { LinksListContext, ResponseLink } from "./links-container";
 
 export function LinkControls({ link }: { link: ResponseLink }) {
   const { slug } = useParams() as { slug?: string };
@@ -224,7 +226,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                     <SimpleTooltipContent
                       title="Since this is a custom domain link, you can only transfer it to another workspace if you transfer the domain as well."
                       cta="Learn more."
-                      href="https://dub.co/help/article/how-to-transfer-domains"
+                      href={`${platform.webUrl}/help/article/how-to-transfer-domains`}
                     />
                   ),
                 })}

@@ -1,125 +1,125 @@
-"use client";
+'use client'
 
-import { APP_DOMAIN, cn, createHref, fetcher } from "@dub/utils";
-import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
-import { LayoutGroup } from "framer-motion";
-import Cookies from "js-cookie";
-import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
-import { type PropsWithChildren, createContext, useId } from "react";
-import useSWR from "swr";
-import { buttonVariants } from "../button";
-import { FEATURES_LIST, RESOURCES } from "../content";
-import { useScroll } from "../hooks";
-import { MaxWidthWrapper } from "../max-width-wrapper";
-import { NavWordmark } from "../nav-wordmark";
-import { ProductContent } from "./content/product-content";
-import { ResourcesContent } from "./content/resources-content";
-
-export type NavTheme = "light" | "dark";
+import { APP_DOMAIN, cn, createHref, fetcher } from '@dub/utils'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
+import { LayoutGroup } from 'framer-motion'
+import Cookies from 'js-cookie'
+import Link from 'next/link'
+import { useParams, usePathname } from 'next/navigation'
+import { type PropsWithChildren, createContext, useId } from 'react'
+import useSWR from 'swr'
+import { buttonVariants } from '../button'
+import { FEATURES_LIST, RESOURCES } from '../content'
+import { useScroll } from '../hooks'
+import { MaxWidthWrapper } from '../max-width-wrapper'
+import { NavWordmark } from '../nav-wordmark'
+import { ProductContent } from './content/product-content'
+import { ResourcesContent } from './content/resources-content'
+import { BusinessConfig as platform } from '@dub/platform-config'
+export type NavTheme = 'light' | 'dark'
 
 export const NavContext = createContext<{ theme: NavTheme }>({
-  theme: "light",
-});
+  theme: 'light',
+})
 
 export const navItems = [
   {
-    name: "Product",
+    name: 'Product',
     content: ProductContent,
     childItems: FEATURES_LIST,
-    segments: ["/features", "/compare"],
+    segments: ['/features', '/compare'],
   },
   {
-    name: "Resources",
+    name: 'Resources',
     content: ResourcesContent,
     childItems: RESOURCES,
-    segments: ["/solutions", "/blog", "/changelog", "/docs", "/help", "/brand"],
+    segments: ['/solutions', '/blog', '/changelog', '/docs', '/help', '/brand'],
   },
   {
-    name: "Enterprise",
-    href: "/enterprise",
-    segments: ["/enterprise"],
+    name: 'Enterprise',
+    href: '/enterprise',
+    segments: ['/enterprise'],
   },
   {
-    name: "Customers",
-    href: "/customers",
-    segments: ["/customers"],
+    name: 'Customers',
+    href: '/customers',
+    segments: ['/customers'],
   },
   {
-    name: "Pricing",
-    href: "/pricing",
-    segments: ["/pricing"],
+    name: 'Pricing',
+    href: '/pricing',
+    segments: ['/pricing'],
   },
-];
+]
 
 const navItemClassName = cn(
-  "relative block rounded-md px-4 py-2 text-sm rounded-lg font-medium text-neutral-700 hover:text-neutral-900 transition-colors",
-  "dark:text-white/90 dark:hover:text-white",
-  "hover:bg-neutral-900/5 dark:hover:bg-white/10",
-  "data-[active=true]:bg-neutral-900/5 dark:data-[active=true]:bg-white/10",
+  'relative block rounded-md px-4 py-2 text-sm rounded-lg font-medium text-neutral-700 hover:text-neutral-900 transition-colors',
+  'dark:text-white/90 dark:hover:text-white',
+  'hover:bg-neutral-900/5 dark:hover:bg-white/10',
+  'data-[active=true]:bg-neutral-900/5 dark:data-[active=true]:bg-white/10',
 
   // Hide active state when another item is hovered
-  "group-has-[:hover]:data-[active=true]:[&:not(:hover)]:bg-transparent",
-);
+  'group-has-[:hover]:data-[active=true]:[&:not(:hover)]:bg-transparent'
+)
 
 export function Nav({
-  theme = "light",
+  theme = 'light',
   staticDomain,
   maxWidthWrapperClassName,
 }: {
-  theme?: NavTheme;
-  staticDomain?: string;
-  maxWidthWrapperClassName?: string;
+  theme?: NavTheme
+  staticDomain?: string
+  maxWidthWrapperClassName?: string
 }) {
-  let { domain = "dub.co" } = useParams() as { domain: string };
+  let { domain = platform.domain } = useParams() as { domain: string }
   if (staticDomain) {
-    domain = staticDomain;
+    domain = staticDomain
   }
 
-  const layoutGroupId = useId();
+  const layoutGroupId = useId()
 
-  const scrolled = useScroll(40);
-  const pathname = usePathname();
+  const scrolled = useScroll(40)
+  const pathname = usePathname()
   const { data: session, isLoading } = useSWR(
-    domain.endsWith("dub.co") && "/api/auth/session",
+    domain.endsWith(platform.domain) && '/api/auth/session',
     fetcher,
     {
       dedupingInterval: 60000,
-    },
-  );
+    }
+  )
 
   // here we need to check if the user has a dub_id cookie
-  // if they do, we should just use app.dub.co links
+  // if they do, we should just use app.getvector.app links
   // if not, we can use conversion-enabled d.to links
-  const hasDubCookie = !!(domain === "dub.co" && Cookies.get("dub_id"));
+  const hasDubCookie = !!(domain === platform.domain && Cookies.get('dub_id'))
 
   return (
     <NavContext.Provider value={{ theme }}>
       <LayoutGroup id={layoutGroupId}>
         <div
           className={cn(
-            "sticky inset-x-0 top-0 z-30 w-full transition-all",
-            theme === "dark" && "dark",
+            'sticky inset-x-0 top-0 z-30 w-full transition-all',
+            theme === 'dark' && 'dark'
           )}
         >
           {/* Scrolled background */}
           <div
             className={cn(
-              "absolute inset-0 block border-b border-transparent transition-all",
+              'absolute inset-0 block border-b border-transparent transition-all',
               scrolled &&
-                "border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75",
+                'border-neutral-100 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-black/75'
             )}
           />
-          <MaxWidthWrapper className={cn("relative", maxWidthWrapperClassName)}>
+          <MaxWidthWrapper className={cn('relative', maxWidthWrapperClassName)}>
             <div className="flex h-14 items-center justify-between">
               <div className="grow basis-0">
                 <Link
                   className="block w-fit py-2 pr-2"
-                  href={createHref("/home", domain, {
-                    utm_source: "Custom Domain",
-                    utm_medium: "Navbar",
+                  href={createHref('/home', domain, {
+                    utm_source: 'Custom Domain',
+                    utm_medium: 'Navbar',
                     utm_campaign: domain,
-                    utm_content: "Logo",
+                    utm_content: 'Logo',
                   })}
                 >
                   <NavWordmark />
@@ -133,8 +133,8 @@ export function Nav({
                   {navItems.map(
                     ({ name, href, segments, content: Content }) => {
                       const isActive = segments.some((segment) =>
-                        pathname?.startsWith(segment),
-                      );
+                        pathname?.startsWith(segment)
+                      )
                       return (
                         <NavigationMenuPrimitive.Item key={name}>
                           <WithTrigger trigger={!!Content}>
@@ -142,8 +142,8 @@ export function Nav({
                               <Link
                                 id={`nav-${href}`}
                                 href={createHref(href, domain, {
-                                  utm_source: "Custom Domain",
-                                  utm_medium: "Navbar",
+                                  utm_source: 'Custom Domain',
+                                  utm_medium: 'Navbar',
                                   utm_campaign: domain,
                                   utm_content: name,
                                 })}
@@ -169,17 +169,17 @@ export function Nav({
                             </NavigationMenuPrimitive.Content>
                           )}
                         </NavigationMenuPrimitive.Item>
-                      );
-                    },
+                      )
+                    }
                   )}
                 </NavigationMenuPrimitive.List>
 
                 <div className="absolute left-1/2 top-full mt-3 -translate-x-1/2">
                   <NavigationMenuPrimitive.Viewport
                     className={cn(
-                      "relative flex origin-[top_center] justify-start overflow-hidden rounded-[20px] border border-gray-200 bg-white shadow-md dark:border-white/[0.15] dark:bg-black",
-                      "data-[state=closed]:animate-scale-out-content data-[state=open]:animate-scale-in-content",
-                      "h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)] transition-[width,height]",
+                      'relative flex origin-[top_center] justify-start overflow-hidden rounded-[20px] border border-gray-200 bg-white shadow-md dark:border-white/[0.15] dark:bg-black',
+                      'data-[state=closed]:animate-scale-out-content data-[state=open]:animate-scale-in-content',
+                      'h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)] transition-[width,height]'
                     )}
                   />
                 </div>
@@ -190,9 +190,9 @@ export function Nav({
                   <Link
                     href={APP_DOMAIN}
                     className={cn(
-                      buttonVariants({ variant: "secondary" }),
-                      "flex h-8 items-center rounded-lg border px-4 text-sm",
-                      "dark:border-white dark:bg-white dark:text-black dark:hover:bg-neutral-50 dark:hover:ring-white/10",
+                      buttonVariants({ variant: 'secondary' }),
+                      'flex h-8 items-center rounded-lg border px-4 text-sm',
+                      'dark:border-white dark:bg-white dark:text-black dark:hover:bg-neutral-50 dark:hover:ring-white/10'
                     )}
                   >
                     Dashboard
@@ -202,13 +202,13 @@ export function Nav({
                     <Link
                       href={
                         hasDubCookie
-                          ? "https://app.dub.co/login"
-                          : "https://d.to/login"
+                          ? `${platform.platformUrl}/login`
+                          : 'https://d.to/login'
                       }
                       className={cn(
-                        buttonVariants({ variant: "secondary" }),
-                        "flex h-8 items-center rounded-lg border px-4 text-sm",
-                        "dark:border-white/10 dark:bg-black dark:text-white dark:hover:bg-neutral-900",
+                        buttonVariants({ variant: 'secondary' }),
+                        'flex h-8 items-center rounded-lg border px-4 text-sm',
+                        'dark:border-white/10 dark:bg-black dark:text-white dark:hover:bg-neutral-900'
                       )}
                     >
                       Log in
@@ -216,13 +216,13 @@ export function Nav({
                     <Link
                       href={
                         hasDubCookie
-                          ? "https://app.dub.co/register"
-                          : "https://d.to/register"
+                          ? `${platform.platformUrl}/register`
+                          : 'https://d.to/register'
                       }
                       className={cn(
-                        buttonVariants({ variant: "secondary" }),
-                        "flex h-8 items-center rounded-lg border px-4 text-sm",
-                        "dark:border-white dark:bg-white dark:text-black dark:hover:bg-neutral-50 dark:hover:ring-white/10",
+                        buttonVariants({ variant: 'secondary' }),
+                        'flex h-8 items-center rounded-lg border px-4 text-sm',
+                        'dark:border-white dark:bg-white dark:text-black dark:hover:bg-neutral-50 dark:hover:ring-white/10'
                       )}
                     >
                       Sign up
@@ -235,7 +235,7 @@ export function Nav({
         </div>
       </LayoutGroup>
     </NavContext.Provider>
-  );
+  )
 }
 
 function WithTrigger({
@@ -248,5 +248,5 @@ function WithTrigger({
     </NavigationMenuPrimitive.Trigger>
   ) : (
     children
-  );
+  )
 }

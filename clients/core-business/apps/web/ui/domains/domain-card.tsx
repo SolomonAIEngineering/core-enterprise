@@ -1,6 +1,3 @@
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useDomains from "@/lib/swr/use-domains";
-import useWorkspace from "@/lib/swr/use-workspace";
 import {
   DomainProps,
   DomainVerificationStatusProps,
@@ -16,10 +13,10 @@ import {
   Refresh2,
   StatusBadge,
   Tooltip,
+  Wordmark,
   useCopyToClipboard,
   useInViewport,
   useMediaQuery,
-  Wordmark,
 } from "@dub/ui";
 import {
   CursorRays,
@@ -29,12 +26,17 @@ import {
   Hyperlink,
   PenWriting,
 } from "@dub/ui/icons";
-import { cn, DEFAULT_LINK_PROPS, fetcher, nFormatter } from "@dub/utils";
-import { motion } from "framer-motion";
+import { DEFAULT_LINK_PROPS, cn, fetcher, nFormatter } from "@dub/utils";
 import { Archive, ChevronDown, FolderInput, QrCode } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useDomains from "@/lib/swr/use-domains";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import useSWRImmutable from "swr/immutable";
 import { useAddEditDomainModal } from "../modals/add-edit-domain-modal";
@@ -105,11 +107,11 @@ export default function DomainCard({ props }: { props: DomainProps }) {
             <div className="flex items-center gap-1.5">
               <Wordmark className="h-4" />
               <span className="font-medium text-gray-900">
-                Provisioned by Dub
+                Provisioned by {platform.company}
               </span>
             </div>
             <a
-              href="https://dub.co/help/article/free-dot-link-domain"
+              href={`${platform.webUrl}/help/article/free-dot-link-domain`}
               target="_blank"
               className="text-gray-500 underline transition-colors hover:text-gray-800"
             >
@@ -232,7 +234,7 @@ export default function DomainCard({ props }: { props: DomainProps }) {
                     Good news! Your DNS records are set up correctly, but it can
                     take some time for them to propagate globally.{" "}
                     <Link
-                      href="https://dub.co/help/article/how-to-add-custom-domain#how-long-do-i-have-to-wait-for-my-domain-to-work"
+                      href={`${platform.webUrl}/help/article/how-to-add-custom-domain#how-long-do-i-have-to-wait-for-my-domain-to-work`}
                       target="_blank"
                       className="underline transition-colors hover:text-green-800"
                     >

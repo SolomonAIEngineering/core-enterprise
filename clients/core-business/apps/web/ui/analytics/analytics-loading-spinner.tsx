@@ -1,4 +1,5 @@
 import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { LoadingSpinner } from "@dub/ui";
 import { Lock } from "lucide-react";
 import Link from "next/link";
@@ -18,7 +19,7 @@ export function AnalyticsLoadingSpinner() {
         {nextPlan.name} plan required to view more analytics
       </p>
       <Link
-        href={slug ? `/${slug}/upgrade` : "https://dub.co/pricing"}
+        href={slug ? `/${slug}/upgrade` : `${platform.webUrl}/pricing`}
         {...(slug ? {} : { target: "_blank" })}
         className="w-full rounded-md border border-black bg-black px-3 py-1.5 text-center text-sm text-white transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200"
       >

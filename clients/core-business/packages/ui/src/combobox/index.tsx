@@ -1,6 +1,6 @@
 // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 // biome-ignore lint/style/useImportType: <explanation>
-import { Command, CommandInput, CommandItem, useCommandState } from "cmdk";
+import { Command, CommandInput, CommandItem, useCommandState } from 'cmdk'
 import {
   type HTMLProps,
   type PropsWithChildren,
@@ -11,9 +11,9 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { Button, ButtonProps } from "../button";
-import { useMediaQuery, useScrollProgress } from "../hooks";
+} from 'react'
+import { Button, ButtonProps } from '../button'
+import { useMediaQuery, useScrollProgress } from '../hooks'
 import {
   Check2,
   CheckboxCheckedFill,
@@ -21,59 +21,59 @@ import {
   type Icon,
   LoadingSpinner,
   Plus,
-} from "../icons";
-import { Popover, type PopoverProps } from "../popover";
+} from '../icons'
+import { Popover, type PopoverProps } from '../popover'
 
-import { cn } from "@dub/utils";
-import { ChevronDown } from "lucide-react";
-import { AnimatedSizeContainer } from "../animated-size-container";
+import { cn } from '@dub/utils'
+import { ChevronDown } from 'lucide-react'
+import { AnimatedSizeContainer } from '../animated-size-container'
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type ComboboxOption<TMeta = any> = {
-  label: string;
-  value: string;
-  icon?: Icon | ReactNode;
-  meta?: TMeta;
-};
+  label: string
+  value: string
+  icon?: Icon | ReactNode
+  meta?: TMeta
+}
 
 export type ComboboxProps<
   TMultiple extends boolean | undefined,
   TMeta,
 > = PropsWithChildren<{
-  multiple?: TMultiple;
+  multiple?: TMultiple
   selected: TMultiple extends true
     ? ComboboxOption<TMeta>[]
-    : ComboboxOption<TMeta> | null;
+    : ComboboxOption<TMeta> | null
   setSelected: TMultiple extends true
     ? (options: ComboboxOption<TMeta>[]) => void
-    : (option: ComboboxOption<TMeta> | null) => void;
-  options?: ComboboxOption<TMeta>[];
-  icon?: Icon | ReactNode;
-  placeholder?: ReactNode;
-  searchPlaceholder?: string;
-  emptyState?: ReactNode;
-  createLabel?: (search: string) => ReactNode;
-  onCreate?: (search: string) => Promise<boolean>;
-  buttonProps?: ButtonProps;
-  shortcutHint?: string;
-  caret?: boolean;
-  side?: PopoverProps["side"];
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  onSearchChange?: (search: string) => void;
-  shouldFilter?: boolean;
-  inputClassName?: string;
-  optionRight?: (option: ComboboxOption) => ReactNode;
-  optionClassName?: string;
-  matchTriggerWidth?: boolean;
-}>;
+    : (option: ComboboxOption<TMeta> | null) => void
+  options?: ComboboxOption<TMeta>[]
+  icon?: Icon | ReactNode
+  placeholder?: ReactNode
+  searchPlaceholder?: string
+  emptyState?: ReactNode
+  createLabel?: (search: string) => ReactNode
+  onCreate?: (search: string) => Promise<boolean>
+  buttonProps?: ButtonProps
+  shortcutHint?: string
+  caret?: boolean
+  side?: PopoverProps['side']
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  onSearchChange?: (search: string) => void
+  shouldFilter?: boolean
+  inputClassName?: string
+  optionRight?: (option: ComboboxOption) => ReactNode
+  optionClassName?: string
+  matchTriggerWidth?: boolean
+}>
 
 function isMultipleSelection(
   multiple: boolean | undefined,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  setSelected: any,
+  setSelected: any
 ): setSelected is (tags: ComboboxOption[]) => void {
-  return multiple === true;
+  return multiple === true
 }
 
 export function Combobox({
@@ -82,8 +82,8 @@ export function Combobox({
   setSelected,
   options,
   icon: Icon,
-  placeholder = "Select...",
-  searchPlaceholder = "Search...",
+  placeholder = 'Select...',
+  searchPlaceholder = 'Search...',
   emptyState,
   createLabel,
   onCreate,
@@ -102,84 +102,84 @@ export function Combobox({
   children,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 }: ComboboxProps<boolean | undefined, any>) {
-  const isMultiple = isMultipleSelection(multiple, setSelected);
+  const isMultiple = isMultipleSelection(multiple, setSelected)
 
   // Ensure selectedProp is an array
   const selected = Array.isArray(selectedProp)
     ? selectedProp
     : selectedProp
       ? [selectedProp]
-      : [];
+      : []
 
-  const { isMobile } = useMediaQuery();
+  const { isMobile } = useMediaQuery()
 
-  const [isOpenInternal, setIsOpenInternal] = useState(false);
-  const isOpen = open ?? isOpenInternal;
-  const setIsOpen = onOpenChange ?? setIsOpenInternal;
+  const [isOpenInternal, setIsOpenInternal] = useState(false)
+  const isOpen = open ?? isOpenInternal
+  const setIsOpen = onOpenChange ?? setIsOpenInternal
 
-  const [search, setSearch] = useState("");
-  const [shouldSortOptions, setShouldSortOptions] = useState(false);
+  const [search, setSearch] = useState('')
+  const [shouldSortOptions, setShouldSortOptions] = useState(false)
   const [sortedOptions, setSortedOptions] = useState<
     ComboboxOption[] | undefined
-  >(undefined);
-  const [isCreating, setIsCreating] = useState(false);
+  >(undefined)
+  const [isCreating, setIsCreating] = useState(false)
 
   const handleSelect = (option: ComboboxOption) => {
     if (isMultiple) {
       const isAlreadySelected = selected.some(
-        ({ value }) => value === option.value,
-      );
+        ({ value }) => value === option.value
+      )
       setSelected(
         isAlreadySelected
           ? selected.filter(({ value }) => value !== option.value)
-          : [...selected, option],
-      );
+          : [...selected, option]
+      )
     } else {
       setSelected(
-        selected.length && selected[0]?.value === option.value ? null : option,
-      );
-      setIsOpen(false);
+        selected.length && selected[0]?.value === option.value ? null : option
+      )
+      setIsOpen(false)
     }
-  };
+  }
 
   const sortOptions = useCallback(
     (options: ComboboxOption[], search: string) => {
-      return search === ""
+      return search === ''
         ? [
             ...selected,
             ...options.filter(
-              (o) => selected.findIndex((s) => s.value === o.value) === -1,
+              (o) => selected.findIndex((s) => s.value === o.value) === -1
             ),
           ]
-        : options;
+        : options
     },
-    [selected],
-  );
+    [selected]
+  )
 
   // Actually sort the options when needed
   useEffect(() => {
     if (shouldSortOptions) {
-      setSortedOptions(options ? sortOptions(options, search) : options);
-      setShouldSortOptions(false);
+      setSortedOptions(options ? sortOptions(options, search) : options)
+      setShouldSortOptions(false)
     }
-  }, [shouldSortOptions, options, sortOptions, search]);
+  }, [shouldSortOptions, options, sortOptions, search])
 
   // Sort options when the options prop changes
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setShouldSortOptions(true);
-  }, [options]);
+    setShouldSortOptions(true)
+  }, [options])
 
   // Reset search and sort options when the popover closes
   useEffect(() => {
-    if (isOpen) return;
+    if (isOpen) return
 
-    setSearch("");
-    setShouldSortOptions(true);
-  }, [isOpen]);
+    setSearch('')
+    setShouldSortOptions(true)
+  }, [isOpen])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => onSearchChange?.(search), [search]);
+  useEffect(() => onSearchChange?.(search), [search])
 
   return (
     <Popover
@@ -189,17 +189,17 @@ export function Combobox({
       side={side}
       onWheel={(e) => {
         // Allows scrolling to work when the popover's in a modal
-        e.stopPropagation();
+        e.stopPropagation()
       }}
       popoverContentClassName={cn(
-        matchTriggerWidth && "sm:w-[var(--radix-popover-trigger-width)]",
+        matchTriggerWidth && 'sm:w-[var(--radix-popover-trigger-width)]'
       )}
       content={
         <AnimatedSizeContainer
           width={!isMobile && !matchTriggerWidth}
           height
-          style={{ transform: "translateZ(0)" }} // Fixes overflow on some browsers
-          transition={{ ease: "easeInOut", duration: 0.1 }}
+          style={{ transform: 'translateZ(0)' }} // Fixes overflow on some browsers
+          transition={{ ease: 'easeInOut', duration: 0.1 }}
           className="pointer-events-auto"
         >
           <Command loop shouldFilter={shouldFilter}>
@@ -209,17 +209,17 @@ export function Combobox({
                 value={search}
                 onValueChange={setSearch}
                 className={cn(
-                  "grow border-0 py-3 pl-4 pr-2 outline-none placeholder:text-gray-400 focus:ring-0 sm:text-sm",
-                  inputClassName,
+                  'grow border-0 py-3 pl-4 pr-2 outline-none placeholder:text-gray-400 focus:ring-0 sm:text-sm',
+                  inputClassName
                 )}
                 onKeyDown={(e) => {
                   if (
-                    e.key === "Escape" ||
-                    (e.key === "Backspace" && !search)
+                    e.key === 'Escape' ||
+                    (e.key === 'Backspace' && !search)
                   ) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIsOpen(false);
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setIsOpen(false)
                   }
                 }}
               />
@@ -231,7 +231,7 @@ export function Combobox({
             </div>
             <Scroll>
               <Command.List
-                className={cn("flex w-full min-w-[100px] flex-col gap-1 p-1")}
+                className={cn('flex w-full min-w-[100px] flex-col gap-1 p-1')}
               >
                 {sortedOptions !== undefined ? (
                   <>
@@ -241,7 +241,7 @@ export function Combobox({
                         option={option}
                         multiple={isMultiple}
                         selected={selected.some(
-                          ({ value }) => value === option.value,
+                          ({ value }) => value === option.value
                         )}
                         onSelect={() => handleSelect(option)}
                         right={optionRight?.(option)}
@@ -251,18 +251,18 @@ export function Combobox({
                     {search.length > 0 && onCreate && (
                       <CommandItem
                         className={cn(
-                          "flex cursor-pointer items-center gap-3 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm text-gray-700",
-                          "data-[selected=true]:bg-gray-100",
-                          optionClassName,
+                          'flex cursor-pointer items-center gap-3 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm text-gray-700',
+                          'data-[selected=true]:bg-gray-100',
+                          optionClassName
                         )}
                         onSelect={async () => {
-                          setIsCreating(true);
-                          const success = await onCreate?.(search);
+                          setIsCreating(true)
+                          const success = await onCreate?.(search)
                           if (success) {
-                            setSearch("");
-                            setIsOpen(false);
+                            setSearch('')
+                            setIsOpen(false)
                           }
-                          setIsCreating(false);
+                          setIsCreating(false)
                         }}
                       >
                         {isCreating ? (
@@ -277,11 +277,11 @@ export function Combobox({
                     )}
                     {shouldFilter ? (
                       <Empty className="flex min-h-12 items-center justify-center text-sm text-gray-500">
-                        {emptyState ? emptyState : "No matches"}
+                        {emptyState ? emptyState : 'No matches'}
                       </Empty>
                     ) : sortedOptions.length === 0 ? (
                       <div className="flex min-h-12 items-center justify-center text-sm text-gray-500">
-                        {emptyState ? emptyState : "No matches"}
+                        {emptyState ? emptyState : 'No matches'}
                       </div>
                     ) : null}
                   </>
@@ -302,22 +302,22 @@ export function Combobox({
       <Button
         variant="secondary"
         {...buttonProps}
-        className={cn(buttonProps?.className, "flex gap-2")}
+        className={cn(buttonProps?.className, 'flex gap-2')}
         textWrapperClassName={cn(
           buttonProps?.textWrapperClassName,
-          "w-full flex items-center justify-start",
+          'w-full flex items-center justify-start'
         )}
         text={
           <>
             <div className="min-w-0 grow truncate text-left">
               {children ||
-                selected.map((option) => option.label).join(", ") ||
+                selected.map((option) => option.label).join(', ') ||
                 placeholder}
             </div>
             {caret && (
               <ChevronDown
                 className={
-                  "ml-1 size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180"
+                  'ml-1 size-4 shrink-0 text-gray-400 transition-transform duration-75 group-data-[state=open]:rotate-180'
                 }
               />
             )}
@@ -334,13 +334,13 @@ export function Combobox({
         }
       />
     </Popover>
-  );
+  )
 }
 
 const Scroll = ({ children }: PropsWithChildren) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null)
 
-  const { scrollProgress, updateScrollProgress } = useScrollProgress(ref);
+  const { scrollProgress, updateScrollProgress } = useScrollProgress(ref)
 
   return (
     <>
@@ -357,8 +357,8 @@ const Scroll = ({ children }: PropsWithChildren) => {
         style={{ opacity: 1 - scrollProgress ** 2 }}
       />
     </>
-  );
-};
+  )
+}
 
 function Option({
   option,
@@ -368,19 +368,19 @@ function Option({
   right,
   className,
 }: {
-  option: ComboboxOption;
-  onSelect: () => void;
-  multiple: boolean;
-  selected: boolean;
-  right?: ReactNode;
-  className?: string;
+  option: ComboboxOption
+  onSelect: () => void
+  multiple: boolean
+  selected: boolean
+  right?: ReactNode
+  className?: string
 }) {
   return (
     <Command.Item
       className={cn(
-        "flex cursor-pointer items-center gap-3 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm",
-        "data-[selected=true]:bg-gray-100",
-        className,
+        'flex cursor-pointer items-center gap-3 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm',
+        'data-[selected=true]:bg-gray-100',
+        className
       )}
       onSelect={onSelect}
       value={option.label + option?.value}
@@ -411,21 +411,21 @@ function Option({
         <Check2 className="size-4 shrink-0 text-gray-600" />
       )}
     </Command.Item>
-  );
+  )
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const isReactNode = (element: any): element is ReactNode =>
-  isValidElement(element);
+  isValidElement(element)
 
 // Custom Empty component because our current cmdk version has an issue with first render (https://github.com/pacocoursey/cmdk/issues/149)
 const Empty = forwardRef<HTMLDivElement, HTMLProps<HTMLDivElement>>(
   (props, forwardedRef) => {
-    const render = useCommandState((state) => state.filtered.count === 0);
+    const render = useCommandState((state) => state.filtered.count === 0)
 
-    if (!render) return null;
+    if (!render) return null
     return (
       <div ref={forwardedRef} cmdk-empty="" role="presentation" {...props} />
-    );
-  },
-);
+    )
+  }
+)

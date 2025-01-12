@@ -1,6 +1,3 @@
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DomainProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useMediaQuery } from "@dub/ui";
 import {
   Dispatch,
@@ -9,6 +6,11 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { DomainProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 
 function DeleteDomainModal({
@@ -40,7 +42,9 @@ function DeleteDomainModal({
             their anaytics, permanently.
           </p>
           {Boolean(props.registeredDomain) && (
-            <p>The domain will also be provisioned back to Dub.</p>
+            <p>
+              The domain will also be provisioned back to {platform.company}.
+            </p>
           )}
           <p>
             <strong className="font-semibold text-gray-700">

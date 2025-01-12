@@ -1,7 +1,8 @@
+import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
+
 import z from "@/lib/zod";
 import { DiscountSchema } from "./discount";
 import { LinkSchema } from "./links";
-import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
 
 export const getCustomersQuerySchema = z.object({
   email: z
@@ -49,7 +50,7 @@ export const updateCustomerBodySchema = createCustomerBodySchema.partial();
 
 // customer object schema
 export const CustomerSchema = z.object({
-  id: z.string().describe("The unique identifier of the customer in Dub."),
+  id: z.string().describe("The unique identifier of the customer in Vector."),
   externalId: z
     .string()
     .describe("Unique identifier for the customer in the client's app."),

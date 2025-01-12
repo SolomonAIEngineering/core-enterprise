@@ -1,12 +1,14 @@
 "use client";
 
+import { Button, Cube, InfoTooltip, TooltipContent } from "@dub/ui";
+
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
 import OAuthAppCard from "@/ui/oauth-apps/oauth-app-card";
 import OAuthAppPlaceholder from "@/ui/oauth-apps/oauth-app-placeholder";
 import EmptyState from "@/ui/shared/empty-state";
-import { Button, Cube, InfoTooltip, TooltipContent } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { fetcher } from "@dub/utils";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
@@ -35,8 +37,8 @@ export default function OAuthAppsPageClient() {
           <InfoTooltip
             content={
               <TooltipContent
-                title="Learn how to use OAuth applications to build integrations with Dub."
-                href="https://dub.co/docs/integrations/quickstart"
+                title={`Learn how to use OAuth applications to build integrations with ${platform.company}.`}
+                href={`${platform.webUrl}/docs/integrations/quickstart`}
                 target="_blank"
                 cta="Learn more"
               />

@@ -1,8 +1,9 @@
-import { Wordmark } from "@dub/ui";
+import ExitButton from "./exit-button";
 import Link from "next/link";
 import { PlanSelector } from "../../onboarding/(steps)/plan/plan-selector";
 import { StepPage } from "../../onboarding/(steps)/step-page";
-import ExitButton from "./exit-button";
+import { Wordmark } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 
 export default function UpgradePage({ params }: { params: { slug: string } }) {
   return (
@@ -18,15 +19,6 @@ export default function UpgradePage({ params }: { params: { slug: string } }) {
           className="max-w-2xl"
         >
           <PlanSelector />
-          <div className="mt-8 flex flex-col gap-3">
-            <a
-              href="https://dub.co/enterprise"
-              target="_blank"
-              className="w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-700"
-            >
-              Looking for enterprise?
-            </a>
-          </div>
         </StepPage>
       </div>
     </div>

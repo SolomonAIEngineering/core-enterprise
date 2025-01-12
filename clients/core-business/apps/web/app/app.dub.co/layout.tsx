@@ -1,7 +1,8 @@
 "use client";
 
-import { ModalProvider } from "@/ui/modals/modal-provider";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+
+import { ModalProvider } from "@/ui/modals/modal-provider";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 

@@ -1,16 +1,16 @@
-"use client";
+'use client'
 
-import * as SwitchPrimitive from "@radix-ui/react-switch";
+import * as SwitchPrimitive from '@radix-ui/react-switch'
 
 import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
   useMemo,
-} from "react";
+} from 'react'
 
-import { cn } from "@dub/utils";
-import { Tooltip } from "./tooltip";
+import { cn } from '@dub/utils'
+import { Tooltip } from './tooltip'
 
 export function Switch({
   fn,
@@ -24,20 +24,20 @@ export function Switch({
   disabledTooltip,
   className,
 }: {
-  fn?: Dispatch<SetStateAction<boolean>> | ((checked: boolean) => void);
-  id?: string;
-  trackDimensions?: string;
-  thumbDimensions?: string;
-  thumbTranslate?: string;
-  checked?: boolean;
-  loading?: boolean;
-  disabled?: boolean;
-  disabledTooltip?: string | ReactNode;
-  className?: string;
+  fn?: Dispatch<SetStateAction<boolean>> | ((checked: boolean) => void)
+  id?: string
+  trackDimensions?: string
+  thumbDimensions?: string
+  thumbTranslate?: string
+  checked?: boolean
+  loading?: boolean
+  disabled?: boolean
+  disabledTooltip?: string | ReactNode
+  className?: string
 }) {
   const switchDisabled = useMemo(() => {
-    return disabledTooltip ? true : disabled || loading;
-  }, [disabledTooltip, disabled, loading]);
+    return disabledTooltip ? true : disabled || loading
+  }, [disabledTooltip, disabled, loading])
 
   const switchRoot = (
     <SwitchPrimitive.Root
@@ -47,32 +47,32 @@ export function Switch({
       {...(fn && { onCheckedChange: fn })}
       disabled={switchDisabled}
       className={cn(
-        "radix-state-checked:bg-blue-500 radix-state-unchecked:bg-gray-200 relative inline-flex h-4 w-8 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out",
-        "focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75",
-        "data-[disabled]:cursor-not-allowed",
+        'radix-state-checked:bg-blue-500 radix-state-unchecked:bg-gray-200 relative inline-flex h-4 w-8 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out',
+        'focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75',
+        'data-[disabled]:cursor-not-allowed',
         trackDimensions,
-        className,
+        className
       )}
     >
       <SwitchPrimitive.Thumb
         className={cn(
           `radix-state-checked:${thumbTranslate}`,
-          "radix-state-unchecked:translate-x-0",
-          "pointer-events-none h-3 w-3 translate-x-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out",
+          'radix-state-unchecked:translate-x-0',
+          'pointer-events-none h-3 w-3 translate-x-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out',
           thumbDimensions,
-          thumbTranslate,
+          thumbTranslate
         )}
       />
     </SwitchPrimitive.Root>
-  );
+  )
 
   if (disabledTooltip) {
     return (
       <Tooltip content={disabledTooltip}>
         <div>{switchRoot}</div>
       </Tooltip>
-    );
+    )
   }
 
-  return switchRoot;
+  return switchRoot
 }

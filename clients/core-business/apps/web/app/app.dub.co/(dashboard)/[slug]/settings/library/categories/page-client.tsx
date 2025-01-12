@@ -14,6 +14,7 @@ import { TRANSACTION_CATEGORIES_MAX_PAGE_SIZE } from "@/lib/zod/schemas/transact
 import { useAddEditTransactionCategoryModal } from "@/ui/modals/add-edit-transaction-category-modal";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { SearchBoxPersisted } from "@/ui/shared/search-box";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Tag } from "@dub/ui/icons";
 import { TransactionCategoryCard } from "./transaction-category-card";
 import { TransactionCategoryCardPlaceholder } from "./transaction-category-card-placeholder";
@@ -83,7 +84,7 @@ export default function WorkspaceTransactionCategoriesClient() {
               </>
             }
             addButton={<AddTransactionCategoryButton />}
-            learnMoreHref="https://dub.co/help/article/how-to-use-categories"
+            learnMoreHref={`${platform.webUrl}/help/article/how-to-use-categories`}
           />
         ) : (
           <>

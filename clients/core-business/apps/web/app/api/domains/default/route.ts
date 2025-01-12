@@ -63,8 +63,7 @@ export const PATCH = withWorkspace(
     if (workspace.plan === "free" && defaultDomains.includes("dub.link")) {
       throw new DubApiError({
         code: "forbidden",
-        message:
-          "You can only use dub.link on a Pro plan and above. Upgrade to Pro to use this domain.",
+        message: "Upgrade to Pro to use this domain.",
       });
     }
 

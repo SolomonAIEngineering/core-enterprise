@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { useState } from "react";
-import { Button } from "./button";
-import { Sheet } from "./sheet";
+import { useState } from 'react'
+import { Button } from './button'
+import { Sheet } from './sheet'
 
 const meta: Meta<typeof Sheet> = {
-  title: "Components/Sheet",
+  title: 'Components/Sheet',
   component: Sheet,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A sheet component that slides in from the side with customizable content.",
+          'A sheet component that slides in from the side with customizable content.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Sheet>;
+export default meta
+type Story = StoryObj<typeof Sheet>
 
 export const Default: Story = {
   render: () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
     return (
       <>
         <Button
@@ -45,13 +45,13 @@ export const Default: Story = {
           </div>
         </Sheet>
       </>
-    );
+    )
   },
-};
+}
 
 export const WithCustomContent: Story = {
   render: () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Rich Content Sheet</Button>
@@ -77,13 +77,13 @@ export const WithCustomContent: Story = {
           </div>
         </Sheet>
       </>
-    );
+    )
   },
-};
+}
 
 export const WithForm: Story = {
   render: () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Form Sheet</Button>
@@ -129,14 +129,14 @@ export const WithForm: Story = {
           </div>
         </Sheet>
       </>
-    );
+    )
   },
-};
+}
 
 export const Nested: Story = {
   render: () => {
-    const [parentOpen, setParentOpen] = useState(false);
-    const [childOpen, setChildOpen] = useState(false);
+    const [parentOpen, setParentOpen] = useState(false)
+    const [childOpen, setChildOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setParentOpen(true)}>Open Parent Sheet</Button>
@@ -164,13 +164,13 @@ export const Nested: Story = {
           </div>
         </Sheet>
       </>
-    );
+    )
   },
-};
+}
 
 export const WithCustomStyles: Story = {
   render: () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
     return (
       <>
         <Button onClick={() => setOpen(true)}>Styled Sheet</Button>
@@ -178,7 +178,7 @@ export const WithCustomStyles: Story = {
           open={open}
           onOpenChange={setOpen}
           contentProps={{
-            className: "bg-gradient-to-br from-purple-50 to-blue-50",
+            className: 'bg-gradient-to-br from-purple-50 to-blue-50',
           }}
         >
           <div className="p-6">
@@ -198,6 +198,6 @@ export const WithCustomStyles: Story = {
           </div>
         </Sheet>
       </>
-    );
+    )
   },
-};
+}

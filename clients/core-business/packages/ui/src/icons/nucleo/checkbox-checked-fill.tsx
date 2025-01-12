@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function CheckboxCheckedFill(props: SVGProps<SVGSVGElement>) {
   return (
@@ -16,5 +16,5 @@ export function CheckboxCheckedFill(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

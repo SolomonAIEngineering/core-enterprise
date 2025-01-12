@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,12 +11,14 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function DomainClaimed({
   email = "panic@thedis.co",
-  domain = "dub.link",
-  workspaceSlug = "dub",
+  domain = `${platform.webUrl}`,
+  workspaceSlug = platform.company.toLowerCase(),
 }: {
   email: string;
   domain: string;
@@ -32,9 +33,9 @@ export default function DomainClaimed({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -44,9 +45,9 @@ export default function DomainClaimed({
             <Text className="text-sm leading-6 text-black">
               Congratulations! You have successfully claimed your free{" "}
               <code className="text-purple-600">{domain}</code> domain for your
-              Dub workspace{" "}
+              {platform.company} workspace{" "}
               <Link
-                href={`https://app.dub.co/${workspaceSlug}`}
+                href={`${platform.platformUrl}/${workspaceSlug}`}
                 className="font-medium text-blue-600 no-underline"
               >
                 {workspaceSlug}↗
@@ -56,7 +57,7 @@ export default function DomainClaimed({
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
+                href={`${platform.platformUrl}/${workspaceSlug}/settings/domains`}
               >
                 Manage your domain
               </Link>

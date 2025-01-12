@@ -1,11 +1,13 @@
+import { BlurImage, Logo } from "@dub/ui";
+import { CircleWarning, CubeSettings } from "@dub/ui/icons";
+import { HOME_DOMAIN, constructMetadata } from "@dub/utils";
+
 import { vaidateAuthorizeRequest } from "@/lib/api/oauth/actions";
 import { getSession } from "@/lib/auth";
 import z from "@/lib/zod";
 import { authorizeRequestSchema } from "@/lib/zod/schemas/oauth";
 import EmptyState from "@/ui/shared/empty-state";
-import { BlurImage, Logo } from "@dub/ui";
-import { CircleWarning, CubeSettings } from "@dub/ui/icons";
-import { HOME_DOMAIN, constructMetadata } from "@dub/utils";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { ArrowLeftRight } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -15,7 +17,7 @@ import { ScopesRequested } from "./scopes-requested";
 export const runtime = "nodejs";
 
 export const metadata = constructMetadata({
-  title: "Authorize API access | Dub",
+  title: `Authorize API access | ${platform.company}`,
   noIndex: true,
 });
 
@@ -69,7 +71,7 @@ export default async function Authorize({
 
         <p className="text-md">
           <span className="font-bold">{integration.name}</span> is requesting
-          API access to a workspace on Dub.
+          API access to a workspace on {platform.company}.
         </p>
         <span className="text-xs text-gray-500">
           Built by{" "}
@@ -86,7 +88,7 @@ export default async function Authorize({
         {!integration.verified && (
           <div className="flex items-center gap-2 rounded-md bg-yellow-50 p-2 text-sm text-yellow-700">
             <CircleWarning className="size-4" />
-            <span>Dub hasn't verified this app</span>
+            <span>{platform.company} hasn't verified this app</span>
           </div>
         )}
       </div>

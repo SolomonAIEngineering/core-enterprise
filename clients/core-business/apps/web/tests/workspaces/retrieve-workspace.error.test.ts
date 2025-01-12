@@ -1,5 +1,7 @@
-import { Project } from "@dub/prisma/client";
 import { expect, test } from "vitest";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { Project } from "@dub/prisma/client";
 import { IntegrationHarness } from "../utils/integration";
 
 test("retrieve a workspace by invalid slug or id", async (ctx) => {
@@ -15,7 +17,7 @@ test("retrieve a workspace by invalid slug or id", async (ctx) => {
     error: {
       code: "not_found",
       message: "Workspace not found.",
-      doc_url: "https://dub.co/docs/api-reference/errors#not-found",
+      doc_url: `${platform.webUrl}/docs/api-reference/errors#not-found`,
     },
   });
 });

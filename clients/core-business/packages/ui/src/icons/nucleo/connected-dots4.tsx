@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function ConnectedDots4(props: SVGProps<SVGSVGElement>) {
   return (
@@ -96,5 +96,5 @@ export function ConnectedDots4(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

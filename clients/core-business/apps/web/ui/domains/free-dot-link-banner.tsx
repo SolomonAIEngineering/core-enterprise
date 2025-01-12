@@ -1,5 +1,7 @@
-import useWorkspace from "@/lib/swr/use-workspace";
 import { Grid, useLocalStorage } from "@dub/ui";
+
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { LinkBroken } from "@dub/ui/icons";
 import { useRegisterDomainModal } from "../modals/register-domain-modal";
 import { X } from "../shared/icons";
@@ -33,7 +35,7 @@ export function FreeDotLinkBanner() {
               Claim a free <span className="font-semibold">.link</span> domain,
               free for 1 year.{" "}
               <a
-                href="https://dub.co/help/article/free-dot-link-domain"
+                href={`${platform.webUrl}/help/article/free-dot-link-domain`}
                 target="_blank"
                 className="text-gray-700 underline transition-colors hover:text-black"
               >

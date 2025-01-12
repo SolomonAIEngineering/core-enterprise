@@ -1,5 +1,6 @@
 import { limiter } from "@/lib/cron/limiter";
 import { stripe } from "@/lib/stripe";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { formatDate } from "@dub/utils";
 import { sendEmail } from "emails";
@@ -59,7 +60,7 @@ export async function chargeSucceeded(event: Stripe.Event) {
       currency: "usd",
       destination: payout.partner.stripeConnectId!,
       transfer_group: invoice.id,
-      description: `Dub Partners payout (${payout.program.name})`,
+      description: `${platform.company} Partners payout (${payout.program.name})`,
     });
 
     console.log("Transfer created", transfer);
@@ -93,7 +94,7 @@ export async function chargeSucceeded(event: Stripe.Event) {
           sendEmail({
             subject: "You've been paid!",
             email: user.email!,
-            from: "Dub Partners <system@dub.co>",
+            from: platform.email.from.system,
             react: PartnerPayoutSent({
               email: user.email!,
               program: payout.program,

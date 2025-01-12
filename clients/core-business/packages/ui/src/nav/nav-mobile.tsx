@@ -1,52 +1,52 @@
-"use client";
+'use client'
 
-import { APP_DOMAIN, cn, createHref, fetcher } from "@dub/utils";
-import { ChevronDown, Menu, X } from "lucide-react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { type ElementType, useEffect, useState } from "react";
-import useSWR from "swr";
-import { AnimatedSizeContainer } from "../animated-size-container";
-import { navItems, type NavTheme } from "./nav";
-
+import { APP_DOMAIN, cn, createHref, fetcher } from '@dub/utils'
+import { ChevronDown, Menu, X } from 'lucide-react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { type ElementType, useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { AnimatedSizeContainer } from '../animated-size-container'
+import { navItems, type NavTheme } from './nav'
+import { BusinessConfig as platform } from '@dub/platform-config'
 export function NavMobile({
-  theme = "light",
+  theme = 'light',
   staticDomain,
 }: {
-  theme?: NavTheme;
-  staticDomain?: string;
+  theme?: NavTheme
+  staticDomain?: string
 }) {
-  let { domain = "dub.co" } = useParams() as { domain: string };
+  let { domain = platform.domain } = useParams() as { domain: string }
   if (staticDomain) {
-    domain = staticDomain;
+    domain = staticDomain
   }
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   // prevent body scroll when modal is open
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto'
     }
-  }, [open]);
+  }, [open])
 
   const { data: session } = useSWR(
-    domain.endsWith("dub.co") && "/api/auth/session",
+    domain.endsWith(platform.domain) && '/api/auth/session',
     fetcher,
     {
       dedupingInterval: 60000,
-    },
-  );
+    }
+  )
 
   return (
-    <div className={cn(theme === "dark" && "dark")}>
+    <div className={cn(theme === 'dark' && 'dark')}>
       {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "fixed right-3 top-3 z-40 rounded-full p-2 transition-colors duration-200 hover:bg-gray-200 focus:outline-none active:bg-gray-300 lg:hidden dark:hover:bg-white/20 dark:active:bg-white/30",
-          open && "hover:bg-gray-100 active:bg-gray-200",
+          'fixed right-3 top-3 z-40 rounded-full p-2 transition-colors duration-200 hover:bg-gray-200 focus:outline-none active:bg-gray-300 lg:hidden dark:hover:bg-white/20 dark:active:bg-white/30',
+          open && 'hover:bg-gray-100 active:bg-gray-200'
         )}
       >
         {open ? (
@@ -57,8 +57,8 @@ export function NavMobile({
       </button>
       <nav
         className={cn(
-          "fixed inset-0 z-20 hidden w-full bg-white px-5 py-16 lg:hidden dark:bg-black dark:text-white/70",
-          open && "block",
+          'fixed inset-0 z-20 hidden w-full bg-white px-5 py-16 lg:hidden dark:bg-black dark:text-white/70',
+          open && 'block'
         )}
       >
         <ul className="grid divide-y divide-gray-200 dark:divide-white/[0.15]">
@@ -105,7 +105,7 @@ export function NavMobile({
         </ul>
       </nav>
     </div>
-  );
+  )
 }
 
 const MobileNavItem = ({
@@ -114,19 +114,19 @@ const MobileNavItem = ({
   childItems,
   setOpen,
 }: {
-  name: string;
-  href?: string;
+  name: string
+  href?: string
   childItems?: {
-    title: string;
-    description: string;
-    href: string;
-    icon: ElementType;
-    iconClassName?: string;
-  }[];
-  setOpen: (open: boolean) => void;
+    title: string
+    description: string
+    href: string
+    icon: ElementType
+    iconClassName?: string
+  }[]
+  setOpen: (open: boolean) => void
 }) => {
-  const { domain = "dub.co" } = useParams() as { domain: string };
-  const [expanded, setExpanded] = useState(false);
+  const { domain = platform.domain } = useParams() as { domain: string }
+  const [expanded, setExpanded] = useState(false)
 
   if (childItems) {
     return (
@@ -140,8 +140,8 @@ const MobileNavItem = ({
             <p className="font-semibold">{name}</p>
             <ChevronDown
               className={cn(
-                "h-5 w-5 text-gray-500 transition-all dark:text-white/50",
-                expanded && "rotate-180",
+                'h-5 w-5 text-gray-500 transition-all dark:text-white/50',
+                expanded && 'rotate-180'
               )}
             />
           </button>
@@ -151,8 +151,8 @@ const MobileNavItem = ({
                 <Link
                   key={href}
                   href={createHref(href, domain, {
-                    utm_source: "Custom Domain",
-                    utm_medium: "Navbar",
+                    utm_source: 'Custom Domain',
+                    utm_medium: 'Navbar',
                     utm_campaign: domain,
                     utm_content: title,
                   })}
@@ -176,19 +176,19 @@ const MobileNavItem = ({
           )}
         </AnimatedSizeContainer>
       </li>
-    );
+    )
   }
 
   if (!href) {
-    return null;
+    return null
   }
 
   return (
     <li className="py-3">
       <Link
         href={createHref(href, domain, {
-          utm_source: "Custom Domain",
-          utm_medium: "Navbar",
+          utm_source: 'Custom Domain',
+          utm_medium: 'Navbar',
           utm_campaign: domain,
           utm_content: name,
         })}
@@ -198,5 +198,5 @@ const MobileNavItem = ({
         {name}
       </Link>
     </li>
-  );
-};
+  )
+}

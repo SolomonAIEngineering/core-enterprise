@@ -1,5 +1,3 @@
-import { Project } from "@dub/prisma/client";
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -13,11 +11,14 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { Project } from "@dub/prisma/client";
 import Footer from "./components/footer";
 
 export default function FailedPayment({
   user = { name: "Brendon Urie", email: "panic@thedis.co" },
-  workspace = { name: "Dub", slug: "dub" },
+  workspace = { name: platform.company, slug: platform.company.toLowerCase() },
   amountDue = 2400,
   attemptCount = 2,
 }: {
@@ -28,7 +29,7 @@ export default function FailedPayment({
 }) {
   const title = `${
     attemptCount == 2 ? "2nd notice: " : attemptCount == 3 ? "3rd notice: " : ""
-  }Your payment for Dub.co failed`;
+  }Your payment for ${platform.company} failed`;
 
   return (
     <Html>
@@ -39,15 +40,15 @@ export default function FailedPayment({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
               {attemptCount == 2 ? "2nd " : attemptCount == 3 ? "3rd  " : ""}
-              Failed Payment for Dub.co
+              Failed Payment for {platform.company}
             </Heading>
             <Text className="text-sm leading-6 text-black">
               Hey{user.name ? `, ${user.name}` : ""}!
@@ -55,21 +56,15 @@ export default function FailedPayment({
             <Text className="text-sm leading-6 text-black">
               Your payment of{" "}
               <code className="text-purple-600">${amountDue / 100}</code> for
-              your Dub workspace{" "}
+              your {platform.company} workspace{" "}
               <code className="text-purple-600">{workspace.name}</code> has
-              failed. Please{" "}
-              <Link
-                href="https://dub.co/help/article/how-to-change-billing-information"
-                className="font-medium text-blue-600 no-underline"
-              >
-                update your payment information
-              </Link>{" "}
-              using the link below:
+              failed. Please update your payment information using the link
+              below:
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`https://app.dub.co/${workspace.slug}/settings/billing`}
+                href={`${platform.platformUrl}/${workspace.slug}/settings/billing`}
               >
                 Update payment information
               </Link>

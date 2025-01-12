@@ -1,34 +1,34 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Check } from "./check";
+import { Check } from './check'
 
 const meta: Meta<typeof Check> = {
-  title: "Icons/Check",
+  title: 'Icons/Check',
   component: Check,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
-        component: "A check mark icon component.",
+        component: 'A check mark icon component.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Check>;
+export default meta
+type Story = StoryObj<typeof Check>
 
 export const Default: Story = {
   render: () => <Check />,
-};
+}
 
 export const CustomSize: Story = {
   render: () => <Check width={32} height={32} />,
-};
+}
 
 export const CustomColor: Story = {
   render: () => <Check className="text-blue-500" />,
-};
+}
 
 export const WithBackground: Story = {
   render: () => (
@@ -36,11 +36,11 @@ export const WithBackground: Story = {
       <Check className="text-green-600" />
     </div>
   ),
-};
+}
 
 export const Animated: Story = {
   render: () => <Check className="animate-bounce text-green-500" />,
-};
+}
 
 export const SizeVariants: Story = {
   render: () => (
@@ -51,7 +51,7 @@ export const SizeVariants: Story = {
       <Check width={32} height={32} className="text-gray-600" />
     </div>
   ),
-};
+}
 
 export const ColorVariants: Story = {
   render: () => (
@@ -63,7 +63,7 @@ export const ColorVariants: Story = {
       <Check className="text-purple-500" />
     </div>
   ),
-};
+}
 
 export const WithCircle: Story = {
   render: () => (
@@ -79,7 +79,7 @@ export const WithCircle: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const WithLabel: Story = {
   render: () => (
@@ -88,7 +88,7 @@ export const WithLabel: Story = {
       <span className="text-sm font-medium text-gray-700">Task completed</span>
     </div>
   ),
-};
+}
 
 export const InButton: Story = {
   render: () => (
@@ -109,4 +109,4 @@ export const InButton: Story = {
       </button>
     </div>
   ),
-};
+}

@@ -2,8 +2,8 @@ import { DubApiError } from "@/lib/api/errors";
 import { withWorkspace } from "@/lib/auth";
 import jackson from "@/lib/jackson";
 import z from "@/lib/zod";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { NextResponse } from "next/server";
-
 const createDirectorySchema = z.object({
   provider: z.enum(["okta-scim-v2", "azure-scim-v2", "google"]).optional(),
   currentDirectoryId: z.string().min(1).optional(),
@@ -21,7 +21,7 @@ export const GET = withWorkspace(
     const { data, error } =
       await directorySyncController.directories.getByTenantAndProduct(
         workspace.id,
-        "Dub",
+        platform.company,
       );
     if (error) {
       throw new DubApiError({
@@ -49,9 +49,9 @@ export const POST = withWorkspace(
 
     const [data, _] = await Promise.all([
       directorySyncController.directories.create({
-        name: "Dub SCIM Directory",
+        name: `${platform.company} SCIM Directory`,
         tenant: workspace.id,
-        product: "Dub",
+        product: platform.company,
         type: provider,
       }),
       currentDirectoryId &&

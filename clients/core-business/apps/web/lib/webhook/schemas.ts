@@ -31,7 +31,7 @@ export const saleWebhookEventSchema = z.object({
   sale: saleSchema,
 });
 
-// Schema of the payload sent to the webhook endpoint by Dub
+// Schema of the payload sent to the webhook endpoint by Vector
 export const webhookPayloadSchema = z.object({
   id: z.string().describe("Unique identifier for the event."),
   event: z

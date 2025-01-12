@@ -1,14 +1,15 @@
 import { webhookPayloadSchema } from "@/lib/webhook/schemas";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import crypto from "crypto";
 import { leadCreated } from "./lead-created";
 import { saleCreated } from "./sale-created";
 
-// POST /api/dub/webhook - receive webhooks for Dub
+// POST /api/dub/webhook - receive webhooks for Vector
 export const POST = async (req: Request) => {
   const body = await req.json();
   const { event, data } = webhookPayloadSchema.parse(body);
 
-  const webhookSignature = req.headers.get("Dub-Signature");
+  const webhookSignature = req.headers.get(`${platform.company}-Signature`);
 
   if (!webhookSignature) {
     return new Response("No signature provided", { status: 401 });

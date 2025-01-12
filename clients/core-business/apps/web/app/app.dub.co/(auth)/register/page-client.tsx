@@ -4,8 +4,10 @@ import {
   RegisterProvider,
   useRegisterContext,
 } from "@/ui/auth/register/context";
+
 import { SignUpForm } from "@/ui/auth/register/signup-form";
 import { VerifyEmailForm } from "@/ui/auth/register/verify-email-form";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { truncate } from "@dub/utils";
 import Link from "next/link";
 
@@ -22,7 +24,9 @@ function SignUp() {
     <>
       <div className="w-full max-w-md overflow-hidden border-y border-gray-200 sm:rounded-2xl sm:border sm:shadow-sm">
         <div className="border-b border-gray-200 bg-white pb-6 pt-8 text-center">
-          <h3 className="text-lg font-semibold">Get started with Dub</h3>
+          <h3 className="text-lg font-semibold">
+            Get started with {platform.company}
+          </h3>
         </div>
         <div className="bg-gray-50 px-4 py-8 sm:px-16">
           <SignUpForm />

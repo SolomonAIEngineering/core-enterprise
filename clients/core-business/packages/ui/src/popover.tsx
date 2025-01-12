@@ -1,32 +1,32 @@
-"use client";
+'use client'
 
-import * as PopoverPrimitive from "@radix-ui/react-popover";
+import * as PopoverPrimitive from '@radix-ui/react-popover'
 
-import type { PropsWithChildren, ReactNode, WheelEventHandler } from "react";
+import type { PropsWithChildren, ReactNode, WheelEventHandler } from 'react'
 
-import { cn } from "@dub/utils";
-import { Drawer } from "vaul";
-import { useMediaQuery } from "./hooks";
+import { cn } from '@dub/utils'
+import { Drawer } from 'vaul'
+import { useMediaQuery } from './hooks'
 
 export type PopoverProps = PropsWithChildren<{
-  content: ReactNode | string;
-  align?: "center" | "start" | "end";
-  side?: "bottom" | "top" | "left" | "right";
-  openPopover: boolean;
-  setOpenPopover: (open: boolean) => void;
-  mobileOnly?: boolean;
-  popoverContentClassName?: string;
-  collisionBoundary?: Element | Element[];
-  sticky?: "partial" | "always";
-  onEscapeKeyDown?: (event: KeyboardEvent) => void;
-  onWheel?: WheelEventHandler;
-}>;
+  content: ReactNode | string
+  align?: 'center' | 'start' | 'end'
+  side?: 'bottom' | 'top' | 'left' | 'right'
+  openPopover: boolean
+  setOpenPopover: (open: boolean) => void
+  mobileOnly?: boolean
+  popoverContentClassName?: string
+  collisionBoundary?: Element | Element[]
+  sticky?: 'partial' | 'always'
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onWheel?: WheelEventHandler
+}>
 
 export function Popover({
   children,
   content,
-  align = "center",
-  side = "bottom",
+  align = 'center',
+  side = 'bottom',
   openPopover,
   setOpenPopover,
   mobileOnly,
@@ -36,7 +36,7 @@ export function Popover({
   onEscapeKeyDown,
   onWheel,
 }: PopoverProps) {
-  const { isMobile } = useMediaQuery();
+  const { isMobile } = useMediaQuery()
 
   if (mobileOnly || isMobile) {
     return (
@@ -53,9 +53,9 @@ export function Popover({
               // Prevent dismissal when clicking inside a toast
               if (
                 e.target instanceof Element &&
-                e.target.closest("[data-sonner-toast]")
+                e.target.closest('[data-sonner-toast]')
               ) {
-                e.preventDefault();
+                e.preventDefault()
               }
             }}
           >
@@ -69,7 +69,7 @@ export function Popover({
           <Drawer.Overlay />
         </Drawer.Portal>
       </Drawer.Root>
-    );
+    )
   }
 
   return (
@@ -83,8 +83,8 @@ export function Popover({
           align={align}
           side={side}
           className={cn(
-            "animate-slide-up-fade z-50 items-center rounded-lg border border-gray-200 bg-white drop-shadow-lg sm:block",
-            popoverContentClassName,
+            'animate-slide-up-fade z-50 items-center rounded-lg border border-gray-200 bg-white drop-shadow-lg sm:block',
+            popoverContentClassName
           )}
           sticky={sticky}
           collisionBoundary={collisionBoundary}
@@ -95,5 +95,5 @@ export function Popover({
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
-  );
+  )
 }

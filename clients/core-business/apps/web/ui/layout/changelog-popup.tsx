@@ -1,6 +1,8 @@
 "use client";
 
 import { BlurImage, Popup, PopupContext } from "@dub/ui";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";
@@ -8,7 +10,7 @@ import { useContext } from "react";
 
 const CHANGELOG_URL = "https://dub.link/builder";
 const CHANGELOG_IMAGE_URL = "https://assets.dub.co/blog/new-link-builder.jpg";
-const CHANGELOG_TITLE = "Introducing the new Dub Link Builder";
+const CHANGELOG_TITLE = `Introducing the new ${platform.company} Link Builder`;
 const CHANGELOG_DESCRIPTION =
   "Today, we're launching our new Link Builder to help you manage your links better.";
 const CHANGELOG_ID = "hideChangelogPopup10032024";

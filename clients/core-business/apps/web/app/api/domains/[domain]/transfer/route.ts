@@ -1,12 +1,14 @@
+import {
+  DomainSchema,
+  transferDomainBodySchema,
+} from "@/lib/zod/schemas/domains";
+
 import { getAnalytics } from "@/lib/analytics/get-analytics";
 import { getDomainOrThrow } from "@/lib/api/domains/get-domain-or-throw";
 import { DubApiError } from "@/lib/api/errors";
 import { withWorkspace } from "@/lib/auth";
 import { qstash } from "@/lib/cron";
-import {
-  DomainSchema,
-  transferDomainBodySchema,
-} from "@/lib/zod/schemas/domains";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { APP_DOMAIN_WITH_NGROK } from "@dub/utils";
 import { NextResponse } from "next/server";
@@ -23,7 +25,7 @@ export const POST = withWorkspace(
     if (registeredDomain) {
       throw new DubApiError({
         code: "forbidden",
-        message: "You cannot transfer a Dub-provisioned domain.",
+        message: `You cannot transfer a ${platform.company}-provisioned domain.`,
       });
     }
 

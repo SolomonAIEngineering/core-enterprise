@@ -1,7 +1,5 @@
 "use client";
 
-import { TokenProps } from "@/lib/types";
-import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
 import {
   Alert,
   AlertDescription,
@@ -13,6 +11,11 @@ import {
 } from "@dub/ui";
 import { fetcher, timeAgo } from "@dub/utils";
 import { FolderOpen, Info, MoreVertical, Trash } from "lucide-react";
+
+import { TokenProps } from "@/lib/types";
+import LayoutLoader from "@/ui/layout/layout-loader";
+import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { useState } from "react";
 import useSWR from "swr";
 
@@ -21,6 +24,8 @@ export default function TokensPageClient() {
     "/api/user/tokens",
     fetcher,
   );
+
+  if (isLoading) return <LayoutLoader />;
 
   return (
     <>
@@ -32,7 +37,7 @@ export default function TokensPageClient() {
         <AlertDescription className="text-gray-500">
           We recommend creating a new{" "}
           <a
-            href="https://dub.co/docs/api-reference/tokens"
+            href={`${platform.webUrl}/docs/api-reference/tokens`}
             target="_blank"
             className="font-medium underline underline-offset-4 hover:text-black"
           >
@@ -41,7 +46,7 @@ export default function TokensPageClient() {
           for more granular control over your resources such as Links, Tags,
           Domains, Analytics, etc.{" "}
           <a
-            href="https://dub.co/blog/workspace-api-keys"
+            href={`${platform.webUrl}/blog/workspace-api-keys`}
             target="_blank"
             className="font-medium underline underline-offset-4 hover:text-black"
           >

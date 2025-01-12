@@ -1,4 +1,5 @@
 import { REFERRAL_SIGNUPS_MAX } from "@/lib/embed/constants";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { LeadCreatedEvent } from "dub/models/components";
 import NewReferralSignup from "emails/new-referral-signup";
@@ -56,7 +57,7 @@ export async function leadCreated(data: LeadCreatedEvent["data"]) {
         owner.email &&
         sendEmailViaResend({
           email: owner.email,
-          subject: "Someone signed up for Dub via your referral link!",
+          subject: `Someone signed up for ${platform.company} via your referral link!`,
           react: NewReferralSignup({
             email: owner.email,
             workspace,

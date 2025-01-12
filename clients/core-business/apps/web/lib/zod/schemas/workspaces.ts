@@ -1,9 +1,11 @@
+import { DEFAULT_REDIRECTS, validSlugRegex } from "@dub/utils";
+import { planSchema, roleSchema } from "./misc";
+
 import { isReservedKey } from "@/lib/edge-config";
 import z from "@/lib/zod";
-import { DEFAULT_REDIRECTS, validSlugRegex } from "@dub/utils";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import slugify from "@sindresorhus/slugify";
 import { DomainSchema } from "./domains";
-import { planSchema, roleSchema } from "./misc";
 
 export const workspaceIdSchema = z.object({
   workspaceId: z
@@ -42,13 +44,13 @@ export const WorkspaceSchema = z
       .string()
       .nullable()
       .describe(
-        "[BETA – Dub Conversions]: The Stripe Connect ID of the workspace.",
+        `${platform.domain} Conversions]: The Stripe Connect ID of the workspace.`,
       ),
     payoutMethodId: z
       .string()
       .nullable()
       .describe(
-        "[BETA – Dub Partners]: The ID of the payment method for partner payouts.",
+        `${platform.domain} Partners]: The ID of the payment method for partner payouts.`,
       ),
 
     usage: z.number().describe("The usage of the workspace."),
@@ -79,11 +81,13 @@ export const WorkspaceSchema = z
     dotLinkClaimed: z
       .boolean()
       .describe(
-        "Whether the workspace has claimed a free .link domain. (dub.link/free)",
+        `Whether the workspace has claimed a free ${platform.domain} domain. (${platform.domain}/free)`,
       ),
     partnersEnabled: z
       .boolean()
-      .describe("Whether the workspace has Dub Partners enabled."),
+      .describe(
+        `Whether the workspace has ${platform.domain} Partners enabled.`,
+      ),
 
     createdAt: z
       .date()

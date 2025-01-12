@@ -235,7 +235,7 @@ export async function processOrder({
 }: {
   event: unknown;
   workspaceId: string;
-  customerId?: string; // ID of the customer in Dub
+  customerId?: string; // ID of the customer in Vector
   clickId?: string; // ID of the click event from Shopify pixel
 }) {
   try {

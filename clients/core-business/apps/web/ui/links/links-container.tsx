@@ -1,7 +1,5 @@
 "use client";
 
-import useLinks from "@/lib/swr/use-links";
-import useLinksCount from "@/lib/swr/use-links-count";
 import { ExpandedLinkProps, UserProps } from "@/lib/types";
 import {
   CardList,
@@ -10,8 +8,6 @@ import {
   usePagination,
 } from "@dub/ui";
 import { CursorRays, Hyperlink, LoadingSpinner } from "@dub/ui/icons";
-import { cn } from "@dub/utils";
-import { useSearchParams } from "next/navigation";
 import {
   Dispatch,
   SetStateAction,
@@ -19,6 +15,12 @@ import {
   useContext,
   useState,
 } from "react";
+
+import useLinks from "@/lib/swr/use-links";
+import useLinksCount from "@/lib/swr/use-links-count";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { cn } from "@dub/utils";
+import { useSearchParams } from "next/navigation";
 import { AnimatedEmptyState } from "../shared/animated-empty-state";
 import ArchivedLinksHint from "./archived-links-hint";
 import { LinkCard } from "./link-card";
@@ -131,7 +133,7 @@ function LinksList({
               <CreateLinkButton />
             </div>
           }
-          learnMoreHref="https://dub.co/help/article/how-to-create-link"
+          learnMoreHref={`${platform.webUrl}/help/article/how-to-create-link`}
           learnMoreClassName="h-10"
         />
       )}

@@ -1,4 +1,4 @@
-import { DUB_WORDMARK, linkConstructor, pluralize, timeAgo } from "@dub/utils";
+import { linkConstructor, pluralize, timeAgo } from "@dub/utils";
 import {
   Body,
   Column,
@@ -15,6 +15,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function LinksImported({
@@ -73,9 +75,9 @@ export default function LinksImported({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -87,9 +89,9 @@ export default function LinksImported({
               <strong>
                 imported {Intl.NumberFormat("en-us").format(count)} links
               </strong>{" "}
-              from {provider} into your Dub.co workspace,{" "}
+              from {provider} into your {platform.company} workspace,{" "}
               <Link
-                href={`https://app.dub.co/${workspaceSlug}`}
+                href={`${platform.platformUrl}/${workspaceSlug}`}
                 className="font-medium text-blue-600 no-underline"
               >
                 {workspaceName}↗
@@ -132,22 +134,12 @@ export default function LinksImported({
               <Section className="my-8 text-center">
                 <Link
                   className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                  href={`https://app.dub.co/${workspaceSlug}`}
+                  href={`${platform.platformUrl}/${workspaceSlug}`}
                 >
                   View {Intl.NumberFormat("en-us").format(count - 5)} more links
                 </Link>
               </Section>
             )}
-            <Text className="text-sm leading-6 text-black">
-              If you haven't already{" "}
-              <Link
-                href="https://dub.co/help/article/how-to-add-custom-domain#step-2-configure-your-domain"
-                className="font-medium text-blue-600 no-underline"
-              >
-                configured your {pluralize("domain", domains.length)}
-              </Link>
-              , you will need to do it before you can start using your links.
-            </Text>
             <Footer email={email} />
           </Container>
         </Body>

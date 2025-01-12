@@ -1,9 +1,6 @@
-import { AnimatedSizeContainer, ClientOnly, Icon, NavWordmark } from "@dub/ui";
-import { cn } from "@dub/utils";
+import { AnimatedSizeContainer, ClientOnly, Icon } from "@dub/ui";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronLeft } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   PropsWithChildren,
   ReactNode,
@@ -11,6 +8,10 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { cn } from "@dub/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import UserDropdown from "./user-dropdown";
 
 export type NavItemCommon = {
@@ -60,8 +61,12 @@ export function SidebarNav<T extends Record<any, any>>({
 }) {
   return (
     <ClientOnly className="scrollbar-hide relative flex h-full w-full flex-col overflow-y-auto overflow-x-hidden">
-      <nav className="relative flex grow flex-col p-3 text-gray-500">
-        <div className="relative flex items-start justify-between gap-1 pb-3">
+      <nav className="relative flex grow flex-col p-3 text-slate-500">
+        <div className="relative flex items-start justify-start gap-3 pb-3">
+          <div className="hidden items-center gap-3 md:flex">
+            <UserDropdown />
+            <Suspense fallback={null}>{toolContent}</Suspense>
+          </div>
           {Object.entries(areas).map(([area, areaConfig]) => {
             const { title, backHref } = areaConfig(data);
 
@@ -79,21 +84,15 @@ export function SidebarNav<T extends Record<any, any>>({
                 aria-hidden={area !== currentArea ? true : undefined}
                 {...{ inert: area !== currentArea ? "" : undefined }}
               >
-                {title && backHref ? (
+                {title && backHref && (
                   <div className="py group -my-1 -ml-1 flex items-center gap-2 py-2 pr-1 text-sm font-medium text-neutral-900">
                     <ChevronLeft className="size-4 text-neutral-500 transition-transform duration-100 group-hover:-translate-x-0.5" />
                     {title}
                   </div>
-                ) : (
-                  <NavWordmark className="h-6" isInApp />
                 )}
               </Link>
             );
           })}
-          <div className="hidden items-center gap-3 md:flex">
-            <Suspense fallback={null}>{toolContent}</Suspense>
-            <UserDropdown />
-          </div>
         </div>
         <div className="relative w-full grow">
           {Object.entries(areas).map(([area, areaConfig]) => {

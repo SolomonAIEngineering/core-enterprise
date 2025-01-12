@@ -8,64 +8,67 @@ import UpdatePaymentProviders from "@/ui/financial-settings/update-payment-provi
 import UpdateReconciliation from "@/ui/financial-settings/update-reconciliation";
 import UpdateSync from "@/ui/financial-settings/update-sync";
 import UpdateTransactionSettings from "@/ui/financial-settings/update-transaction-settings";
+import LayoutLoader from "@/ui/layout/layout-loader";
 
 export default function FinancialSettingsPageClient() {
-  const { settings } = useFinancialSettings();
+  const { settings, loading } = useFinancialSettings();
 
-  if (!settings) return null;
+  if (loading) return <LayoutLoader />;
 
   // Parse JSON strings into arrays/objects
-  const supportedCurrencies = settings.supportedCurrencies
+  const supportedCurrencies = settings?.supportedCurrencies
     ? JSON.parse(settings.supportedCurrencies)
     : null;
-  const activePaymentProviders = settings.activePaymentProviders
+  const activePaymentProviders = settings?.activePaymentProviders
     ? JSON.parse(settings.activePaymentProviders)
     : null;
-  const providerConfigs = settings.providerConfigs
+  const providerConfigs = settings?.providerConfigs
     ? JSON.parse(settings.providerConfigs)
     : null;
 
   return (
     <div className="flex flex-col space-y-6">
       <UpdateCurrency
-        defaultCurrency={settings.defaultCurrency}
-        enableMultiCurrency={settings.enableMultiCurrency}
+        defaultCurrency={settings?.defaultCurrency || "USD"}
+        enableMultiCurrency={settings?.enableMultiCurrency || false}
         supportedCurrencies={supportedCurrencies}
       />
       <UpdateBankConnections
-        plaidEnabled={settings.plaidEnabled}
-        gocardlessEnabled={settings.gocardlessEnabled}
-        allowManualBankEntry={settings.allowManualBankEntry}
-        requireBankVerification={settings.requireBankVerification}
+        plaidEnabled={settings?.plaidEnabled || false}
+        gocardlessEnabled={settings?.gocardlessEnabled || false}
+        allowManualBankEntry={settings?.allowManualBankEntry || false}
+        requireBankVerification={settings?.requireBankVerification || false}
       />
       <UpdatePaymentProviders
-        stripeEnabled={settings.stripeEnabled}
-        stripeCardPaymentsCapability={settings.stripeCardPaymentsCapability}
-        stripeTransfersCapability={settings.stripeTransfersCapability}
+        stripeEnabled={settings?.stripeEnabled || false}
+        stripeCardPaymentsCapability={
+          settings?.stripeCardPaymentsCapability || null
+        }
+        stripeTransfersCapability={settings?.stripeTransfersCapability || null}
         activePaymentProviders={activePaymentProviders}
         providerConfigs={providerConfigs}
       />
       <UpdateTransactionSettings
-        autoCategorizeTxn={settings.autoCategorizeTxn}
-        minTxnAmount={settings.minTxnAmount}
-        maxTxnAmount={settings.maxTxnAmount}
+        autoCategorizeTxn={settings?.autoCategorizeTxn || false}
+        minTxnAmount={settings?.minTxnAmount || 0}
+        maxTxnAmount={settings?.maxTxnAmount || 0}
       />
       <UpdateNotifications
-        notifyLargeTransactions={settings.notifyLargeTransactions}
-        largeTransactionThreshold={settings.largeTransactionThreshold}
-        notifyFailedSync={settings.notifyFailedSync}
-        notifyLowBalance={settings.notifyLowBalance}
-        lowBalanceThreshold={settings.lowBalanceThreshold}
+        notifyLargeTransactions={settings?.notifyLargeTransactions || false}
+        largeTransactionThreshold={settings?.largeTransactionThreshold || 0}
+        notifyFailedSync={settings?.notifyFailedSync || false}
+        notifyLowBalance={settings?.notifyLowBalance || false}
+        lowBalanceThreshold={settings?.lowBalanceThreshold || 0}
       />
       <UpdateReconciliation
-        autoReconciliation={settings.autoReconciliation}
-        reconciliationWindow={settings.reconciliationWindow}
-        matchingStrategy={settings.matchingStrategy}
+        autoReconciliation={settings?.autoReconciliation || false}
+        reconciliationWindow={settings?.reconciliationWindow || 0}
+        matchingStrategy={settings?.matchingStrategy || "EXACT"}
       />
       <UpdateSync
-        syncFrequency={settings.syncFrequency}
-        lastSuccessfulSync={settings.lastSuccessfulSync}
-        syncStatus={settings.syncStatus}
+        syncFrequency={settings?.syncFrequency || "DAILY"}
+        lastSuccessfulSync={settings?.lastSuccessfulSync || null}
+        syncStatus={settings?.syncStatus || "SUCCESS"}
       />
     </div>
   );

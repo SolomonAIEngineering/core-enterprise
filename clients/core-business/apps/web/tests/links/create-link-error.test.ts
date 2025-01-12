@@ -1,5 +1,7 @@
-import { Link } from "@dub/prisma/client";
 import { expect, test } from "vitest";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { Link } from "@dub/prisma/client";
 import { IntegrationHarness } from "../utils/integration";
 import { E2E_LINK } from "../utils/resource";
 
@@ -18,7 +20,7 @@ const cases = [
         error: {
           code: "forbidden",
           message: "Domain does not belong to workspace.",
-          doc_url: "https://dub.co/docs/api-reference/errors#forbidden",
+          doc_url: `${platform.webUrl}/docs/api-reference/errors#forbidden`,
         },
       },
     },
@@ -35,8 +37,7 @@ const cases = [
         error: {
           code: "unprocessable_entity",
           message: "Invalid destination URL",
-          doc_url:
-            "https://dub.co/docs/api-reference/errors#unprocessable-entity",
+          doc_url: `${platform.webUrl}/docs/api-reference/errors#unprocessable-entity`,
         },
       },
     },
@@ -54,8 +55,7 @@ const cases = [
         error: {
           code: "unprocessable_entity",
           message: "Invalid tagIds detected: invalid",
-          doc_url:
-            "https://dub.co/docs/api-reference/errors#unprocessable-entity",
+          doc_url: `${platform.webUrl}/docs/api-reference/errors#unprocessable-entity`,
         },
       },
     },

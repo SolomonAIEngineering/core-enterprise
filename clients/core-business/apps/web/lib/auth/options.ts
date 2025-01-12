@@ -4,6 +4,7 @@ import { subscribe } from "@/lib/resend";
 import { isStored, storage } from "@/lib/storage";
 import { UserProps } from "@/lib/types";
 import { ratelimit } from "@/lib/upstash";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { waitUntil } from "@vercel/functions";
@@ -176,7 +177,7 @@ export const authOptions: NextAuthOptions = {
     // Sign in with email and password
     CredentialsProvider({
       id: "credentials",
-      name: "Dub.co",
+      name: platform.company,
       type: "credentials",
       credentials: {
         email: { type: "email" },

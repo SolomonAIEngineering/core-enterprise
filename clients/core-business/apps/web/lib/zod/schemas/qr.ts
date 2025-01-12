@@ -4,6 +4,7 @@ import {
   DEFAULT_MARGIN,
   QR_LEVELS,
 } from "@/lib/qr/constants";
+
 import z from "@/lib/zod";
 import { booleanQuerySchema } from "./misc";
 import { parseUrlSchema } from "./utils";
@@ -14,7 +15,7 @@ export const getQRCodeQuerySchema = z.object({
     .string()
     .optional()
     .describe(
-      "The logo to include in the QR code. Can only be used with a paid plan on Dub.co.",
+      "The logo to include in the QR code. Can only be used with a paid plan on Vector.",
     ),
   size: z.coerce
     .number()
@@ -48,7 +49,7 @@ export const getQRCodeQuerySchema = z.object({
     .optional()
     .default("false")
     .describe(
-      "Whether to hide the logo in the QR code. Can only be used with a paid plan on Dub.co.",
+      "Whether to hide the logo in the QR code. Can only be used with a paid plan on Vector.",
     ),
   margin: z.coerce
     .number()

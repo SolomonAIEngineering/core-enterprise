@@ -1,6 +1,7 @@
+import { Check2, CurrencyDollar, MoneyBills2, Users } from "@dub/ui/icons";
+
 import useProgramMetrics from "@/lib/swr/use-program-metrics";
 import { Icon } from "@dub/ui";
-import { Check2, CurrencyDollar, MoneyBills2, Users } from "@dub/ui/icons";
 import NumberFlow from "@number-flow/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -67,7 +68,7 @@ function Stat({
       href={`/${slug}/programs/${programId}/${tab}`}
       className="flex flex-row items-center gap-x-4 gap-y-5 p-3 transition-colors hover:bg-neutral-50 md:flex-col md:items-start lg:p-5"
     >
-      <div className="flex size-10 items-center justify-center rounded-md bg-neutral-100">
+      <div className="flex size-10 items-center justify-center rounded-md bg-neutral-50">
         <Icon className="size-4 text-neutral-900" />
       </div>
       <div className="w-full">

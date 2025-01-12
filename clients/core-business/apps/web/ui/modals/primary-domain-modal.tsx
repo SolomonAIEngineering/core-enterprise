@@ -1,5 +1,3 @@
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DomainProps } from "@/lib/types";
 import { Button, LinkLogo, Modal } from "@dub/ui";
 import {
   Dispatch,
@@ -8,6 +6,10 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import useWorkspace from "@/lib/swr/use-workspace";
+import { DomainProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 import { mutate } from "swr";
 
@@ -54,7 +56,7 @@ function PrimaryDomainModal({
           Setting this domain as primary will make it the default domain in the
           link creation modal, as well as in the API.{" "}
           <a
-            href="https://dub.co/help/article/how-to-set-primary-domain"
+            href={`${platform.webUrl}/help/article/how-to-set-primary-domain`}
             target="_blank"
             className="text-gray-500 underline underline-offset-4 hover:text-gray-800"
           >

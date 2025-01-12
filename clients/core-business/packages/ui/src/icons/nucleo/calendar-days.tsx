@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function CalendarDays(props: SVGProps<SVGSVGElement>) {
   return (
@@ -83,5 +83,5 @@ export function CalendarDays(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

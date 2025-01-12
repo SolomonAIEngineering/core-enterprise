@@ -1,5 +1,6 @@
 import { qstash } from "@/lib/cron";
 import { webhookPayloadSchema } from "@/lib/webhook/schemas";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Webhook } from "@dub/prisma/client";
 import { APP_DOMAIN_WITH_NGROK } from "@dub/utils";
 import { WebhookTrigger } from "../types";
@@ -7,7 +8,6 @@ import z from "../zod";
 import { createWebhookSignature } from "./signature";
 import { prepareWebhookPayload } from "./transform";
 import { EventDataProps } from "./types";
-
 // Send webhooks to multiple webhooks
 export const sendWebhooks = async ({
   webhooks,
@@ -46,7 +46,7 @@ export const publishWebhookEventToQStash = async ({
     url: webhook.url,
     body: payload,
     headers: {
-      "Dub-Signature": signature,
+      [`${platform.company}-Signature`]: signature,
       "Upstash-Hide-Headers": "true",
     },
     callback: callbackUrl,

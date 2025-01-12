@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function LoginLink({
@@ -24,15 +25,15 @@ export default function LoginLink({
   return (
     <Html>
       <Head />
-      <Preview>Your Dub.co Login Link</Preview>
+      <Preview>Your {platform.company} Login Link</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -40,7 +41,7 @@ export default function LoginLink({
               Your Login Link
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Welsome To Solomon AI.co!
+              Welcome to {platform.company}!
             </Text>
             <Text className="text-sm leading-6 text-black">
               Please click the magic link below to sign in to your account.

@@ -1,5 +1,9 @@
 "use client";
 
+import { Button, IconMenu, Popover, TooltipContent } from "@dub/ui";
+import { FolderSync, Lock, ShieldOff } from "lucide-react";
+import { useMemo, useState } from "react";
+
 import useSAML from "@/lib/swr/use-saml";
 import useSCIM from "@/lib/swr/use-scim";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -8,10 +12,8 @@ import { useRemoveSCIMModal } from "@/ui/modals/remove-scim-modal";
 import { useSAMLModal } from "@/ui/modals/saml-modal";
 import { useSCIMModal } from "@/ui/modals/scim-modal";
 import { ThreeDots } from "@/ui/shared/icons";
-import { Button, IconMenu, Popover, TooltipContent } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { SAML_PROVIDERS } from "@dub/utils";
-import { FolderSync, Lock, ShieldOff } from "lucide-react";
-import { useMemo, useState } from "react";
 
 export default function WorkspaceSecurityClient() {
   return (
@@ -139,7 +141,7 @@ const SAMLSection = () => {
                       <TooltipContent
                         title="SAML SSO is only available on Enterprise plans. Upgrade to get started."
                         cta="Contact sales"
-                        href="https://dub.co/enterprise"
+                        href={`${platform.webUrl}/enterprise`}
                         target="_blank"
                       />
                     ),
@@ -153,7 +155,7 @@ const SAMLSection = () => {
 
         <div className="flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-gray-50 px-3 py-5 sm:px-10">
           <a
-            href="https://dub.co/help/category/saml-sso"
+            href={`${platform.webUrl}/help/category/saml-sso`}
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
           >
@@ -295,7 +297,7 @@ const SCIMSection = () => {
                       <TooltipContent
                         title="SCIM Directory Sync is only available on Enterprise plans. Upgrade to get started."
                         cta="Contact sales"
-                        href="https://dub.co/enterprise"
+                        href={`${platform.webUrl}/enterprise`}
                         target="_blank"
                       />
                     ),
@@ -309,7 +311,7 @@ const SCIMSection = () => {
 
         <div className="flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-gray-50 px-3 py-5 sm:px-10">
           <a
-            href="https://dub.co/help/category/saml-sso"
+            href={`${platform.webUrl}/help/category/saml-sso`}
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
           >

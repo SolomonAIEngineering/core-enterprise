@@ -1,7 +1,9 @@
-import { DomainVerificationStatusProps } from "@/lib/types";
 import { CircleInfo, CopyButton, TabSelect } from "@dub/ui";
 import { cn, getSubdomain } from "@dub/utils";
 import { Fragment, useState } from "react";
+
+import { DomainVerificationStatusProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 
 export default function DomainConfiguration({
   data,
@@ -30,7 +32,7 @@ export default function DomainConfiguration({
               value: txtVerification.value,
             },
           ]}
-          warning="Warning: if you are using this domain for another site, setting this TXT record will transfer domain ownership away from that site and break it. Please exercise caution when setting this record; make sure that the domain that is shown in the TXT verification value is actually the <b><i>domain you want to use on Dub.co</i></b> – <b><i>not your production site</i></b>."
+          warning={`Warning: if you are using this domain for another site, setting this TXT record will transfer domain ownership away from that site and break it. Please exercise caution when setting this record; make sure that the domain that is shown in the TXT verification value is actually the <b><i>${platform.company} domain you want to use on ${platform.domain}</i></b> – <b><i>not your production site</i></b>."`}
         />
       </div>
     );

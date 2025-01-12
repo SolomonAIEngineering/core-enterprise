@@ -1,16 +1,18 @@
 "use client";
 
+import { Button, FileUpload, InfoTooltip, LoadingSpinner } from "@dub/ui";
+import { Paperclip, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { addEditIntegration } from "@/lib/actions/add-edit-integration";
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { NewOrExistingIntegration } from "@/lib/types";
-import { Button, FileUpload, InfoTooltip, LoadingSpinner } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import slugify from "@sindresorhus/slugify";
 import { Reorder } from "framer-motion";
-import { Paperclip, Trash2 } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
-import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 
@@ -173,7 +175,9 @@ export default function AddEditIntegrationForm({
             <h2 className="text-sm font-medium text-gray-900">
               Application slug
             </h2>
-            <InfoTooltip content="Unique slug for this application on Dub" />
+            <InfoTooltip
+              content={`Unique slug for this application on ${platform.company}`}
+            />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input

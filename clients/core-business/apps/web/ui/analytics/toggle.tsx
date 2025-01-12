@@ -1,19 +1,9 @@
-import { generateFilters } from "@/lib/ai/generate-filters";
 import {
   INTERVAL_DATA,
   INTERVAL_DISPLAYS,
   TRIGGER_DISPLAY,
   VALID_ANALYTICS_FILTERS,
 } from "@/lib/analytics/constants";
-import { validDateRangeForPlan } from "@/lib/analytics/utils";
-import useDomains from "@/lib/swr/use-domains";
-import useDomainsCount from "@/lib/swr/use-domains-count";
-import useTags from "@/lib/swr/use-tags";
-import useTagsCount from "@/lib/swr/use-tags-count";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { LinkProps } from "@/lib/types";
-import { DOMAINS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/domains";
-import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
 import {
   BlurImage,
   Button,
@@ -62,8 +52,6 @@ import {
   linkConstructor,
   nFormatter,
 } from "@dub/utils";
-import { readStreamableValue } from "ai/rsc";
-import posthog from "posthog-js";
 import {
   ComponentProps,
   useCallback,
@@ -71,6 +59,19 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { generateFilters } from "@/lib/ai/generate-filters";
+import { validDateRangeForPlan } from "@/lib/analytics/utils";
+import useDomains from "@/lib/swr/use-domains";
+import useDomainsCount from "@/lib/swr/use-domains-count";
+import useTags from "@/lib/swr/use-tags";
+import useTagsCount from "@/lib/swr/use-tags-count";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { LinkProps } from "@/lib/types";
+import { DOMAINS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/domains";
+import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
+import { readStreamableValue } from "ai/rsc";
+import posthog from "posthog-js";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import TagBadge from "../links/tag-badge";
@@ -757,7 +758,7 @@ export default function Toggle({
                 rel="noreferrer"
               >
                 <BlurImage
-                  alt={url || "Dub.co"}
+                  alt={url || "Vector.co"}
                   src={
                     url
                       ? `${GOOGLE_FAVICON_URL}${getApexDomain(url)}`

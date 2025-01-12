@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function DiamondTurnRight(props: SVGProps<SVGSVGElement>) {
   return (
@@ -42,5 +42,5 @@ export function DiamondTurnRight(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

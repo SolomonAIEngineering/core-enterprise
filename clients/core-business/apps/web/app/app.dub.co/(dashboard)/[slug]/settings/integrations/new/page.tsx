@@ -1,17 +1,17 @@
 import AddEditIntegrationForm from "@/ui/oauth-apps/add-edit-integration-form";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { MaxWidthWrapper } from "@dub/ui";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
 export default function NewIntegrationsPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  // this is only available for Dub workspace for now
+  // this is only available for vector workspace for now
   // we might open this up to other workspaces in the future
-  if (params.slug !== "dub") {
+  if (params.slug !== platform.company.toLocaleLowerCase()) {
     notFound();
   }
   return (

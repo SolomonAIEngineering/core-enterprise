@@ -1,8 +1,10 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { handleAndReturnErrorResponse } from "@/lib/api/errors";
 import { ratelimitOrThrow } from "@/lib/api/utils";
 import { getUrlQuerySchema } from "@/lib/zod/schemas/links";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { fetchWithTimeout } from "@dub/utils";
-import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
@@ -61,9 +63,9 @@ export async function GET(req: NextRequest) {
           provider: "short",
         });
       }
-      if (headers.poweredBy?.includes("Dub.co")) {
+      if (headers.poweredBy?.includes(platform.domain)) {
         return NextResponse.json({
-          provider: "dub",
+          provider: platform.company,
         });
       }
     }

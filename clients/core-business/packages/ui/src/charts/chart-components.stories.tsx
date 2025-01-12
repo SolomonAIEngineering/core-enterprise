@@ -1,45 +1,45 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Areas } from "./areas";
-import { Bars } from "./bars";
-import { TimeSeriesChart } from "./time-series-chart";
-import { XAxis } from "./x-axis";
-import { YAxis } from "./y-axis";
+import { Areas } from './areas'
+import { Bars } from './bars'
+import { TimeSeriesChart } from './time-series-chart'
+import { XAxis } from './x-axis'
+import { YAxis } from './y-axis'
 
 const meta: Meta = {
-  title: "Charts/Components",
+  title: 'Charts/Components',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-};
+}
 
-export default meta;
+export default meta
 
 // Sample data
 const generateData = (days: number) => {
   const data: Array<{
-    date: Date;
+    date: Date
     values: {
-      value: number;
-      secondValue: number;
-    };
-  }> = [];
-  const now = new Date();
+      value: number
+      secondValue: number
+    }
+  }> = []
+  const now = new Date()
   for (let i = 0; i < days; i++) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - (days - i - 1));
+    const date = new Date(now)
+    date.setDate(date.getDate() - (days - i - 1))
     data.push({
       date,
       values: {
         value: Math.floor(Math.random() * 1000),
         secondValue: Math.floor(Math.random() * 500),
       },
-    });
+    })
   }
-  return data;
-};
+  return data
+}
 
-const sampleData = generateData(30);
+const sampleData = generateData(30)
 
 export const SingleArea: StoryObj<typeof Areas> = {
   render: () => (
@@ -48,18 +48,18 @@ export const SingleArea: StoryObj<typeof Areas> = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
           },
         ]}
       >
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              lineClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              lineClassName: 'text-blue-700',
             },
           ]}
         />
@@ -68,7 +68,7 @@ export const SingleArea: StoryObj<typeof Areas> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const MultipleAreas: StoryObj<typeof Areas> = {
   render: () => (
@@ -77,28 +77,28 @@ export const MultipleAreas: StoryObj<typeof Areas> = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
           },
         ]}
       >
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              lineClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              lineClassName: 'text-blue-700',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-green-500/50",
-              lineClassName: "text-green-700",
+              id: 'secondValue',
+              gradientClassName: 'text-green-500/50',
+              lineClassName: 'text-green-700',
             },
           ]}
         />
@@ -107,7 +107,7 @@ export const MultipleAreas: StoryObj<typeof Areas> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const SingleBar: StoryObj<typeof Bars> = {
   render: () => (
@@ -117,18 +117,18 @@ export const SingleBar: StoryObj<typeof Bars> = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
           },
         ]}
       >
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
           ]}
         />
@@ -137,7 +137,7 @@ export const SingleBar: StoryObj<typeof Bars> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const MultipleBars: StoryObj<typeof Bars> = {
   render: () => (
@@ -147,28 +147,28 @@ export const MultipleBars: StoryObj<typeof Bars> = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
           },
         ]}
       >
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-green-500/50",
-              barClassName: "text-green-700",
+              id: 'secondValue',
+              gradientClassName: 'text-green-500/50',
+              barClassName: 'text-green-700',
             },
           ]}
         />
@@ -177,4 +177,4 @@ export const MultipleBars: StoryObj<typeof Bars> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}

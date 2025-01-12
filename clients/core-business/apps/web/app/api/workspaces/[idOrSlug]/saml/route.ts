@@ -1,6 +1,8 @@
-import { withWorkspace } from "@/lib/auth";
 import jackson, { samlAudience } from "@/lib/jackson";
+
+import { withWorkspace } from "@/lib/auth";
 import z from "@/lib/zod";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { APP_DOMAIN_WITH_NGROK } from "@dub/utils";
 import { NextResponse } from "next/server";
 
@@ -30,7 +32,7 @@ export const GET = withWorkspace(
 
     const connections = await apiController.getConnections({
       tenant: workspace.id,
-      product: "Dub",
+      product: platform.company,
     });
 
     const response = {
@@ -63,7 +65,7 @@ export const POST = withWorkspace(
       defaultRedirectUrl: `${process.env.NEXTAUTH_URL}/auth/saml`,
       redirectUrl: process.env.NEXTAUTH_URL as string,
       tenant: workspace.id,
-      product: "Dub",
+      product: platform.company,
     });
 
     return NextResponse.json(data);

@@ -1,7 +1,8 @@
+import { Calendar6, MoneyBills2 } from "@dub/ui/icons";
+import { INFINITY_NUMBER, cn, pluralize } from "@dub/utils";
+
 import { constructRewardAmount } from "@/lib/api/sales/construct-reward-amount";
 import { Program } from "@dub/prisma/client";
-import { Calendar6, MoneyBills2 } from "@dub/ui/icons";
-import { cn, INFINITY_NUMBER, pluralize } from "@dub/utils";
 
 export function DetailsGrid({
   program,
@@ -33,7 +34,7 @@ export function DetailsGrid({
                 )}`,
         },
       ].map(({ icon: Icon, title, value }) => (
-        <div className="rounded-xl bg-neutral-100 p-4">
+        <div className="rounded-xl bg-neutral-50 p-4">
           <Icon className="size-5 text-gray-500" />
           <div className="mt-6">
             <p className="font-mono text-xl text-neutral-900">{value}</p>

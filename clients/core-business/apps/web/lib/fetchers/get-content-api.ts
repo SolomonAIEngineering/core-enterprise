@@ -1,5 +1,6 @@
 import { HelpArticle } from "@/ui/layout/help";
 import { NewsArticle } from "@/ui/layout/sidebar/news";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cache } from "react";
 
 export const getContentAPI: () => Promise<{
@@ -8,7 +9,7 @@ export const getContentAPI: () => Promise<{
   latestNewsArticles: NewsArticle[];
 }> = cache(async () => {
   try {
-    return await fetch("https://dub.co/api/content", {
+    return await fetch(`${platform.webUrl}/api/content`, {
       next: {
         revalidate: 60 * 60 * 24, // cache for 24 hours
       },

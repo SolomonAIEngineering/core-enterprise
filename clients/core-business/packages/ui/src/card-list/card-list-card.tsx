@@ -1,5 +1,5 @@
 // biome-ignore lint/style/useImportType: <explanation>
-import { cn, isClickOnInteractiveChild } from "@dub/utils";
+import { cn, isClickOnInteractiveChild } from '@dub/utils'
 import {
   PropsWithChildren,
   createContext,
@@ -7,27 +7,27 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
+} from 'react'
 
-import { cva } from "class-variance-authority";
-import { CardListContext } from "./card-list";
+import { cva } from 'class-variance-authority'
+import { CardListContext } from './card-list'
 
-const cardListCardVariants = cva("w-full group/card border-gray-200 bg-white", {
+const cardListCardVariants = cva('w-full group/card border-gray-200 bg-white', {
   variants: {
     variant: {
       compact:
-        "first-of-type:rounded-t-xl last-of-type:rounded-b-xl first-of-type:border-t border-b border-x data-[hover-state-enabled=true]:hover:bg-gray-50 transition-colors",
+        'first-of-type:rounded-t-xl last-of-type:rounded-b-xl first-of-type:border-t border-b border-x data-[hover-state-enabled=true]:hover:bg-gray-50 transition-colors',
       loose:
-        "border rounded-xl transition-[filter] data-[hover-state-enabled=true]:hover:drop-shadow-card-hover",
+        'border rounded-xl transition-[filter] data-[hover-state-enabled=true]:hover:drop-shadow-card-hover',
     },
   },
-});
+})
 
-const cardListCardInnerClassName = "w-full py-2.5 px-4";
+const cardListCardInnerClassName = 'w-full py-2.5 px-4'
 
 export const CardContext = createContext<{
-  hovered: boolean;
-}>({ hovered: false });
+  hovered: boolean
+}>({ hovered: false })
 
 export function CardListCard({
   outerClassName,
@@ -36,28 +36,28 @@ export function CardListCard({
   onClick,
   hoverStateEnabled = true,
 }: PropsWithChildren<{
-  outerClassName?: string;
-  innerClassName?: string;
-  onClick?: () => void;
-  hoverStateEnabled?: boolean;
+  outerClassName?: string
+  innerClassName?: string
+  onClick?: () => void
+  hoverStateEnabled?: boolean
 }>) {
-  const { variant } = useContext(CardListContext);
+  const { variant } = useContext(CardListContext)
 
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLLIElement>(null)
 
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState(false)
 
   // Detect when the card loses hover without an onPointerLeave (e.g. from a modal covering the element)
   useEffect(() => {
-    if (!hovered || !ref.current) return;
+    if (!hovered || !ref.current) return
 
     // Check every second while the card is expected to still be hovered
     const interval = setInterval(() => {
-      if (ref.current?.matches(":hover") === false) setHovered(false);
-    }, 1000);
+      if (ref.current?.matches(':hover') === false) setHovered(false)
+    }, 1000)
 
-    return () => clearInterval(interval);
-  }, [hovered]);
+    return () => clearInterval(interval)
+  }, [hovered])
 
   return (
     <li
@@ -74,17 +74,17 @@ export function CardListCard({
           onClick
             ? (e) => {
                 const existingModalBackdrop =
-                  document.getElementById("modal-backdrop");
+                  document.getElementById('modal-backdrop')
 
                 // Don't trigger onClick if there's already an open modal
                 if (existingModalBackdrop) {
-                  return;
+                  return
                 }
 
                 // Don't trigger onClick if an interactive child is clicked
-                if (isClickOnInteractiveChild(e)) return;
+                if (isClickOnInteractiveChild(e)) return
 
-                onClick();
+                onClick()
               }
             : undefined
         }
@@ -94,5 +94,5 @@ export function CardListCard({
         </CardContext.Provider>
       </div>
     </li>
-  );
+  )
 }

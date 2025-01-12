@@ -1,7 +1,9 @@
+import { BoltFill, CursorRays, LinesY, MoneyBills2 } from "@dub/ui/icons";
+
 import { getProgram } from "@/lib/fetchers/get-program";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { Logo } from "@dub/ui";
-import { BoltFill, CursorRays, LinesY, MoneyBills2 } from "@dub/ui/icons";
 import { DICEBEAR_AVATAR_URL } from "@dub/utils";
 import { subDays } from "date-fns";
 import { Store } from "lucide-react";
@@ -33,8 +35,7 @@ const FEATURES = [
   {
     icon: CursorRays,
     title: "Track everything",
-    description:
-      "Dub gives you the power to track every click, lead, and conversion. Knowledge of non-knowledge is power.",
+    description: `${platform.company} gives you the power to track every click, lead, and conversion. Knowledge of non-knowledge is power.`,
   },
 ];
 
@@ -108,8 +109,10 @@ export default async function SuccessPage({
             {!hasPartnerProfile && (
               <p>
                 Complete your account setup on{" "}
-                <strong className="font-semibold">Dub Partners</strong> to
-                finish submitting your application.
+                <strong className="font-semibold">
+                  {platform.company} Partners
+                </strong>{" "}
+                to finish submitting your application.
               </p>
             )}
           </div>

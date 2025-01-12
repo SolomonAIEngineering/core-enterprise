@@ -1,7 +1,7 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Suspense } from "react";
 import { HelpButton } from "./help-button";
 import { OnboardingButton } from "./onboarding/onboarding-button";
-
 const toolbarItems = ["onboarding", "help"] as const;
 
 type ToolbarProps = {
@@ -20,7 +20,7 @@ export default function Toolbar(props: ToolbarProps) {
 
 async function ToolbarRSC({ show = ["onboarding", "help"] }: ToolbarProps) {
   const { popularHelpArticles, allHelpArticles } = await fetch(
-    "https://dub.co/api/content",
+    `${platform.webUrl}/api/content`,
     {
       next: {
         revalidate: 60 * 60 * 24, // cache for 24 hours

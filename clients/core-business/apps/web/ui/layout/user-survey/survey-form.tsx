@@ -8,13 +8,14 @@ import {
   RadioGroup,
   RadioGroupItem,
   Twitter,
-  useMediaQuery,
   Wordmark,
+  useMediaQuery,
 } from "@dub/ui";
+import { useContext, useState } from "react";
+
 import { Globe } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { ChevronRight } from "lucide-react";
-import { useContext, useState } from "react";
 import { UserSurveyContext } from ".";
 
 const options = [
@@ -66,7 +67,7 @@ export default function SurveyForm({
     <div className="grid gap-4">
       <Wordmark className="h-8" />
       <p className="text-sm font-medium text-gray-800">
-        Where did you hear about Dub?
+        Where did you hear about Vector?
       </p>
       <form
         onSubmit={(e) => {

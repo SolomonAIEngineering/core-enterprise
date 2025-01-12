@@ -1,8 +1,9 @@
+import { PropsWithChildren, ReactNode } from "react";
+
 import { MaxWidthWrapper } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { PropsWithChildren, ReactNode } from "react";
 import { HelpButtonRSC } from "../sidebar/help-button-rsc";
 import { ReferButton } from "../sidebar/refer-button";
 import UserDropdown from "../sidebar/user-dropdown";
@@ -26,10 +27,10 @@ export function PageContent({
   const hasDescription = description !== undefined;
 
   return (
-    <div className="bg-neutral-100 md:bg-white">
+    <div className="bg-neutral-50 md:bg-white">
       <MaxWidthWrapper
         className={cn(
-          "mt-3",
+          "mt-4",
           (hasTitle || hasDescription) && "md:mt-6 md:py-3",
         )}
       >
@@ -43,7 +44,7 @@ export function PageContent({
                     {titleBackButtonLink && (
                       <Link
                         href={titleBackButtonLink}
-                        className="rounded-lg p-1.5 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900"
+                        className="rounded-lg p-1.5 text-neutral-500 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
                       >
                         <ChevronLeft className="size-5" />
                       </Link>

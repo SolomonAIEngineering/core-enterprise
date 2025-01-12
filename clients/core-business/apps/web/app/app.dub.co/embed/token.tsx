@@ -1,5 +1,6 @@
 "use client";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { fetcher } from "@dub/utils";
 import { useEffect } from "react";
 import useSWR from "swr";
@@ -16,7 +17,7 @@ export const LinkToken = () => {
     if (error) {
       window.parent.postMessage(
         {
-          originator: "Dub",
+          originator: platform.company,
           event: "ERROR",
           data: error.info,
         },

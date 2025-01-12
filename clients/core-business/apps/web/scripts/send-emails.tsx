@@ -1,4 +1,6 @@
 import "dotenv-flow/config";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { sendEmail } from "emails";
 import FailedPayment from "emails/failed-payment";
 
@@ -9,21 +11,21 @@ const user = {
   email: "stevensteel97@gmail.com",
 };
 const workspace = {
-  name: "Dub",
-  slug: "dub",
+  name: platform.company,
+  slug: platform.company.toLowerCase().replace(/\s+/g, "-"),
 };
 
 async function main() {
   const res = await sendEmail({
     email: user.email as string,
-    from: "steven@dub.co",
+    from: platform.email.from.default,
     subject: `${
       attemptCount == 2
         ? "2nd notice: "
         : attemptCount == 3
           ? "3rd notice: "
           : ""
-    }Your payment for Dub.co failed`,
+    }Your payment for ${platform.company} failed`,
     react: (
       <FailedPayment
         attemptCount={attemptCount}

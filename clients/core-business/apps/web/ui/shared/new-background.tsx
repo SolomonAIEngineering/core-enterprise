@@ -1,49 +1,76 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 import { cn } from "@dub/utils";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
-export function NewBackground(props: { showAnimation?: boolean }) {
+export function NewBackground({ showAnimation }: { showAnimation?: boolean }) {
   const pathname = usePathname();
-  const [isGridLoaded, setIsGridLoaded] = useState(false);
-  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
-  const isLoaded = isGridLoaded && isBackgroundLoaded;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const shouldAnimate = showAnimation || pathname === "/onboarding/welcome";
 
-  const showAnimation =
-    props.showAnimation || pathname === "/onboarding/welcome";
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleLoadedData = () => {
+      setIsVideoLoaded(true);
+      video.play().catch((error) => {
+        // Retry playback
+        setTimeout(() => {
+          video?.play();
+        }, 1000);
+      });
+    };
+
+    video.addEventListener("loadeddata", handleLoadedData);
+
+    // If video is already loaded, play it immediately
+    if (video.readyState >= 3) {
+      handleLoadedData();
+    }
+
+    return () => {
+      video.removeEventListener("loadeddata", handleLoadedData);
+    };
+  }, []);
 
   return (
     <div
       className={cn(
-        "fixed inset-0 overflow-hidden bg-white transition-opacity duration-300",
-        showAnimation ? (isLoaded ? "opacity-100" : "opacity-0") : "opacity-60",
+        "fixed inset-0 z-0 overflow-hidden bg-white transition-all duration-700",
+        shouldAnimate
+          ? isVideoLoaded
+            ? "opacity-100"
+            : "opacity-0"
+          : "opacity-80",
       )}
     >
-      <BackgroundGradient className="opacity-15" />
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 opacity-50 transition-all sm:opacity-100">
-        <Image
-          src="https://assets.dub.co/misc/welcome-background-grid.svg"
-          onLoad={() => setIsGridLoaded(true)}
-          alt=""
-          width={1750}
-          height={1046}
-          className="absolute inset-0"
-        />
-        <Image
-          src="https://assets.dub.co/misc/welcome-background.svg"
-          onLoad={() => setIsBackgroundLoaded(true)}
-          alt=""
-          width={1750}
-          height={1046}
+      <BackgroundGradient className="opacity-20" />
+
+      <div className="absolute inset-0 h-full w-full">
+        <video
+          ref={videoRef}
           className={cn(
-            "relative min-w-[1000px] max-w-screen-2xl transition-opacity duration-300",
-            showAnimation ? "opacity-100" : "opacity-0",
+            "h-full w-full bg-inherit object-cover filter transition-all duration-1000",
+            shouldAnimate ? "opacity-50" : "opacity-0",
           )}
-        />
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source
+            src="https://cdn.dribbble.com/users/32512/screenshots/11231524/media/62f9b46bf8995958881682b2fe90d1b3.mp4"
+            type="video/mp4"
+          />
+        </video>
       </div>
-      <BackgroundGradient className="opacity-100 mix-blend-soft-light" />
+
+      <BackgroundGradient className="opacity-90 mix-blend-overlay" />
     </div>
   );
 }
@@ -53,17 +80,12 @@ function BackgroundGradient({ className }: { className?: string }) {
     <div
       className={cn(
         "absolute left-0 top-0 aspect-square w-full overflow-hidden sm:aspect-[2/1]",
-        "[mask-image:radial-gradient(70%_100%_at_50%_0%,_black_70%,_transparent)]",
+        "[mask-image:radial-gradient(70%_100%_at_50%_30%,_black_70%,_#0009)]",
         className,
       )}
     >
-      <div
-        className="absolute inset-0 saturate-150"
-        style={{
-          backgroundImage: `conic-gradient(from -45deg at 50% -10%, #3A8BFD 0deg, #FF0000 172.98deg, #855AFC 215.14deg, #FF7B00 257.32deg, #3A8BFD 360deg)`,
-        }}
-      />
-      <div className="absolute inset-0 backdrop-blur-[100px]" />
+      <div className="absolute inset-0 saturate-150" />
+      <div className="absolute inset-0 backdrop-blur-[2px]" />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import {
   WEBHOOK_SECRET_PREFIX,
   WEBHOOK_TRIGGERS,
 } from "@/lib/webhook/constants";
+
 import { z } from "zod";
 
 export const webhookSchema = z.object({
@@ -30,7 +31,7 @@ export const webhookCallbackSchema = z.object({
   createdAt: z.number(),
   sourceMessageId: z.string(),
   body: z.string().optional().default(""), // Response from the original webhook URL
-  sourceBody: z.string(), // Original request payload from Dub
+  sourceBody: z.string(), // Original request payload from Vector
 });
 
 // Webhook event schema for the webhook logs

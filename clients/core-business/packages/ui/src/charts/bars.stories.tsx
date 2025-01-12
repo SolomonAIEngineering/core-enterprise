@@ -1,84 +1,84 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Bars } from "./bars";
-import { TimeSeriesChart } from "./time-series-chart";
-import { XAxis } from "./x-axis";
-import { YAxis } from "./y-axis";
+import { Bars } from './bars'
+import { TimeSeriesChart } from './time-series-chart'
+import { XAxis } from './x-axis'
+import { YAxis } from './y-axis'
 
 const meta: Meta<typeof Bars> = {
-  title: "Charts/Bars",
+  title: 'Charts/Bars',
   component: Bars,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   decorators: [
     (Story) => (
-      <div style={{ margin: "2em", background: "white", padding: "1em" }}>
+      <div style={{ margin: '2em', background: 'white', padding: '1em' }}>
         <Story />
       </div>
     ),
   ],
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Bars>;
+export default meta
+type Story = StoryObj<typeof Bars>
 
 // Sample data
 const generateData = (days: number) => {
   const data: Array<{
-    date: Date;
+    date: Date
     values: {
-      value: number;
-      secondValue: number;
-    };
-  }> = [];
-  const now = new Date();
+      value: number
+      secondValue: number
+    }
+  }> = []
+  const now = new Date()
   for (let i = 0; i < days; i++) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - (days - i - 1));
+    const date = new Date(now)
+    date.setDate(date.getDate() - (days - i - 1))
     data.push({
       date,
       values: {
         value: Math.floor(Math.random() * 1000) + 100,
         secondValue: Math.floor(Math.random() * 500) + 50,
       },
-    });
+    })
   }
-  return data;
-};
+  return data
+}
 
-const sampleData = generateData(30);
+const sampleData = generateData(30)
 
 // Generate weekly data with positive and negative values
 const generateWeeklyData = (weeks: number) => {
   const data: Array<{
-    date: Date;
+    date: Date
     values: {
-      value: number;
-      change: number;
-    };
-  }> = [];
-  const now = new Date();
+      value: number
+      change: number
+    }
+  }> = []
+  const now = new Date()
   for (let i = 0; i < weeks; i++) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - (weeks - i - 1) * 7);
+    const date = new Date(now)
+    date.setDate(date.getDate() - (weeks - i - 1) * 7)
     data.push({
       date,
       values: {
         value: Math.floor(Math.random() * 2000) - 1000, // -1000 to 1000
         change: Math.floor(Math.random() * 200) - 100, // -100 to 100
       },
-    });
+    })
   }
-  return data;
-};
+  return data
+}
 
-const weeklyData = generateWeeklyData(12);
+const weeklyData = generateWeeklyData(12)
 
 export const Default: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -86,9 +86,9 @@ export const Default: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
         ]}
@@ -99,12 +99,12 @@ export const Default: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const WithCustomStyles: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -112,9 +112,9 @@ export const WithCustomStyles: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
         ]}
@@ -122,9 +122,9 @@ export const WithCustomStyles: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
           ]}
         />
@@ -133,12 +133,12 @@ export const WithCustomStyles: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const MultiSeries: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -146,15 +146,15 @@ export const MultiSeries: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
             isActive: true,
           },
         ]}
@@ -162,14 +162,14 @@ export const MultiSeries: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-green-500/50",
-              barClassName: "text-green-700",
+              id: 'secondValue',
+              gradientClassName: 'text-green-500/50',
+              barClassName: 'text-green-700',
             },
           ]}
         />
@@ -178,12 +178,12 @@ export const MultiSeries: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const CustomRadius: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -191,9 +191,9 @@ export const CustomRadius: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-purple-500",
+            colorClassName: 'text-purple-500',
             isActive: true,
           },
         ]}
@@ -201,10 +201,10 @@ export const CustomRadius: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-purple-500/50",
-              barClassName: "text-purple-700",
-              barFill: "url(#value-background)",
+              id: 'value',
+              gradientClassName: 'text-purple-500/50',
+              barClassName: 'text-purple-700',
+              barFill: 'url(#value-background)',
             },
           ]}
         />
@@ -213,7 +213,7 @@ export const CustomRadius: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Demonstrates a bar chart with negative values, useful for showing profit/loss
@@ -222,7 +222,7 @@ export const CustomRadius: Story = {
 export const NegativeValues: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -230,9 +230,9 @@ export const NegativeValues: Story = {
         data={weeklyData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
         ]}
@@ -240,9 +240,9 @@ export const NegativeValues: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
           ]}
         />
@@ -251,7 +251,7 @@ export const NegativeValues: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Shows bars with conditional coloring based on value.
@@ -260,7 +260,7 @@ export const NegativeValues: Story = {
 export const ConditionalColoring: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -268,9 +268,9 @@ export const ConditionalColoring: Story = {
         data={weeklyData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
             isActive: true,
           },
         ]}
@@ -281,7 +281,7 @@ export const ConditionalColoring: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Demonstrates a dense bar chart with many data points and custom bar width
@@ -289,7 +289,7 @@ export const ConditionalColoring: Story = {
 export const DenseBarChart: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -297,9 +297,9 @@ export const DenseBarChart: Story = {
         data={generateData(60)}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-indigo-500",
+            colorClassName: 'text-indigo-500',
             isActive: true,
           },
         ]}
@@ -310,7 +310,7 @@ export const DenseBarChart: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Shows a bar chart with custom hover effects and tooltips
@@ -318,7 +318,7 @@ export const DenseBarChart: Story = {
 export const CustomHoverEffects: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -326,9 +326,9 @@ export const CustomHoverEffects: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-violet-500",
+            colorClassName: 'text-violet-500',
             isActive: true,
           },
         ]}
@@ -336,10 +336,10 @@ export const CustomHoverEffects: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-violet-500/50 hover:text-violet-600/50",
+              id: 'value',
+              gradientClassName: 'text-violet-500/50 hover:text-violet-600/50',
               barClassName:
-                "text-violet-700 transition-colors duration-200 hover:text-violet-800",
+                'text-violet-700 transition-colors duration-200 hover:text-violet-800',
             },
           ]}
         />
@@ -348,7 +348,7 @@ export const CustomHoverEffects: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Demonstrates a stacked bar chart with multiple series
@@ -356,7 +356,7 @@ export const CustomHoverEffects: Story = {
 export const StackedBars: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -364,15 +364,15 @@ export const StackedBars: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
             isActive: true,
           },
         ]}
@@ -380,14 +380,14 @@ export const StackedBars: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-green-500/50",
-              barClassName: "text-green-700",
+              id: 'secondValue',
+              gradientClassName: 'text-green-500/50',
+              barClassName: 'text-green-700',
             },
           ]}
         />
@@ -396,7 +396,7 @@ export const StackedBars: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Shows a bar chart with custom bar spacing
@@ -404,7 +404,7 @@ export const StackedBars: Story = {
 export const CustomSpacing: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -413,9 +413,9 @@ export const CustomSpacing: Story = {
         padding={{ top: 0.2, bottom: 0.2 }}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-amber-500",
+            colorClassName: 'text-amber-500',
             isActive: true,
           },
         ]}
@@ -426,7 +426,7 @@ export const CustomSpacing: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Demonstrates a bar chart with custom patterns
@@ -434,7 +434,7 @@ export const CustomSpacing: Story = {
 export const PatternedBars: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -442,9 +442,9 @@ export const PatternedBars: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-teal-500",
+            colorClassName: 'text-teal-500',
             isActive: true,
           },
         ]}
@@ -457,9 +457,9 @@ export const PatternedBars: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              barFill: "url(#dots)",
-              barClassName: "text-teal-700",
+              id: 'value',
+              barFill: 'url(#dots)',
+              barClassName: 'text-teal-700',
             },
           ]}
         />
@@ -468,7 +468,7 @@ export const PatternedBars: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Shows a bar chart with rounded corners
@@ -476,7 +476,7 @@ export const PatternedBars: Story = {
 export const RoundedBars: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -484,9 +484,9 @@ export const RoundedBars: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-pink-500",
+            colorClassName: 'text-pink-500',
             isActive: true,
           },
         ]}
@@ -494,9 +494,9 @@ export const RoundedBars: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-pink-500/50",
-              barClassName: "text-pink-700",
+              id: 'value',
+              gradientClassName: 'text-pink-500/50',
+              barClassName: 'text-pink-700',
             },
           ]}
         />
@@ -505,7 +505,7 @@ export const RoundedBars: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Demonstrates a bar chart with custom animations
@@ -513,7 +513,7 @@ export const RoundedBars: Story = {
 export const CustomAnimations: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -521,9 +521,9 @@ export const CustomAnimations: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-cyan-500",
+            colorClassName: 'text-cyan-500',
             isActive: true,
           },
         ]}
@@ -531,9 +531,9 @@ export const CustomAnimations: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-cyan-500/50",
-              barClassName: "text-cyan-700",
+              id: 'value',
+              gradientClassName: 'text-cyan-500/50',
+              barClassName: 'text-cyan-700',
             },
           ]}
         />
@@ -542,7 +542,7 @@ export const CustomAnimations: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Shows a minimal bar chart without grid lines or axes
@@ -550,7 +550,7 @@ export const CustomAnimations: Story = {
 export const MinimalStyle: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
@@ -558,9 +558,9 @@ export const MinimalStyle: Story = {
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-gray-500",
+            colorClassName: 'text-gray-500',
             isActive: true,
           },
         ]}
@@ -568,13 +568,13 @@ export const MinimalStyle: Story = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-gray-500/50",
-              barClassName: "text-gray-700",
+              id: 'value',
+              gradientClassName: 'text-gray-500/50',
+              barClassName: 'text-gray-700',
             },
           ]}
         />
       </TimeSeriesChart>
     </div>
   ),
-};
+}

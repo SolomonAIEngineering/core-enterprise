@@ -1,11 +1,11 @@
 "use server";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { sendEmail } from "emails";
 import PartnerInvite from "emails/partner-invite";
 import z from "../../zod";
 import { authActionClient } from "../safe-action";
-
 export const resendProgramInviteAction = authActionClient
   .schema(
     z.object({
@@ -41,7 +41,7 @@ export const resendProgramInviteAction = authActionClient
 
     await Promise.all([
       sendEmail({
-        subject: `${program.name} invited you to join Dub Partners`,
+        subject: `${program.name} invited you to join ${platform.company} Partners`,
         email,
         react: PartnerInvite({
           email,

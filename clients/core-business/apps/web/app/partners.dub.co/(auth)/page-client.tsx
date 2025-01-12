@@ -1,7 +1,9 @@
 "use client";
 
-import { buttonVariants } from "@dub/ui";
 import { LinkedIn, Twitter } from "@dub/ui/icons";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { buttonVariants } from "@dub/ui";
 import { cn } from "@dub/utils";
 import Link from "next/link";
 
@@ -17,7 +19,7 @@ export function PartnersPageClient() {
         </p>
         <div className="my-8 h-px w-full bg-neutral-300" />
         <h2 className="text-sm font-medium text-neutral-800">
-          Subscribe to Dub news
+          Subscribe to {platform.company} news
         </h2>
         <p className="mt-0.5 text-sm text-neutral-500">
           Stay up to date with everything important.

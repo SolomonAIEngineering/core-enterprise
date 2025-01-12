@@ -1,5 +1,5 @@
 {
-  "name": "core-business-monorepo",
+  "name": "core-business",
   "private": true,
   "scripts": {
     "build": "turbo build",

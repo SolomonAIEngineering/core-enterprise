@@ -1,7 +1,5 @@
 "use client";
 
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
 import {
   AnimatedSizeContainer,
   Button,
@@ -9,8 +7,6 @@ import {
   Modal,
   useRouterStuff,
 } from "@dub/ui";
-import { TableIcon } from "@dub/ui/icons";
-import { ArrowRight } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
   Dispatch,
@@ -28,6 +24,12 @@ import {
   UseFormWatch,
   useForm,
 } from "react-hook-form";
+
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { TableIcon } from "@dub/ui/icons";
+import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { FieldMapping } from "./field-mapping";
@@ -161,9 +163,9 @@ function ImportCsvModal({
       <div className="relative">
         {page === "confirm-import" && (
           <div className="absolute inset-x-0 -top-6 mx-4 grid grid-cols-[1fr_min-content_1fr] items-center gap-x-4 gap-y-2 rounded-md border border-gray-200 bg-white p-2 text-center text-sm font-medium uppercase text-gray-600 sm:mx-12">
-            <p>CSV data column</p>
+            <p>{platform.company} data field</p>
             <ArrowRight className="size-4 text-gray-500" />
-            <p>Dub data field</p>
+            <p>CSV data column</p>
           </div>
         )}
 

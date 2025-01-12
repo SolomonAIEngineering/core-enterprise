@@ -1,9 +1,11 @@
+import { Footer, Logo, Nav, NavMobile } from "@dub/ui";
+import { APP_DOMAIN, constructMetadata } from "@dub/utils";
+
 import { getDashboard } from "@/lib/fetchers/get-dashboard";
 import { PlanProps } from "@/lib/types";
 import Analytics from "@/ui/analytics";
 import { NewBackground } from "@/ui/shared/new-background";
-import { Footer, Logo, Nav, NavMobile } from "@dub/ui";
-import { APP_DOMAIN, constructMetadata } from "@dub/utils";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -67,8 +69,8 @@ export default async function dashboardPage({
 
   return (
     <div className="flex min-h-screen flex-col justify-between bg-gray-50/80">
-      <NavMobile staticDomain="app.dub.co" />
-      <Nav staticDomain="app.dub.co" />
+      <NavMobile staticDomain={platform.platformUrl.replace("https://", "")} />
+      <Nav staticDomain={platform.platformUrl.replace("https://", "")} />
       <Suspense fallback={<div className="h-screen w-full bg-gray-50" />}>
         <Analytics
           dashboardProps={{
@@ -80,7 +82,7 @@ export default async function dashboardPage({
           }}
         />
       </Suspense>
-      <Footer staticDomain="app.dub.co" />
+      <Footer staticDomain={platform.platformUrl.replace("https://", "")} />
     </div>
   );
 }

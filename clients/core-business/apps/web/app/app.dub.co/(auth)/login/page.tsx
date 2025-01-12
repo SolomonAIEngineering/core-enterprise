@@ -1,6 +1,8 @@
+import { APP_DOMAIN, constructMetadata } from "@dub/utils";
+
 import LoginForm from "@/ui/auth/login/login-form";
 import { AuthLayout } from "@/ui/layout/auth-layout";
-import { APP_DOMAIN, constructMetadata } from "@dub/utils";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Link from "next/link";
 
 export const metadata = constructMetadata({
@@ -13,7 +15,9 @@ export default function LoginPage() {
     <AuthLayout>
       <div className="w-full max-w-md overflow-hidden border-y border-gray-200 sm:rounded-2xl sm:border sm:shadow-sm">
         <div className="border-b border-gray-200 bg-white pb-6 pt-8 text-center">
-          <h3 className="text-lg font-semibold">Sign in to your Dub account</h3>
+          <h3 className="text-lg font-semibold">
+            Sign in to your {platform.company} account
+          </h3>
         </div>
         <div className="bg-gray-50 px-4 py-8 sm:px-16">
           <LoginForm />

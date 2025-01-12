@@ -1,10 +1,4 @@
-import { isValidDomain } from "@/lib/api/domains";
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DomainProps } from "@/lib/types";
-import { createDomainBodySchema } from "@/lib/zod/schemas/domains";
 import { AlertCircleFill, CheckCircleFill, Lock } from "@/ui/shared/icons";
-import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
 import {
   AnimatedSizeContainer,
   Badge,
@@ -17,8 +11,6 @@ import {
   Switch,
   useMediaQuery,
 } from "@dub/ui";
-import { cn } from "@dub/utils";
-import { motion } from "framer-motion";
 import {
   Binoculars,
   Crown,
@@ -26,9 +18,19 @@ import {
   QrCode,
   TextCursorInput,
 } from "lucide-react";
-import posthog from "posthog-js";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+
+import { isValidDomain } from "@/lib/api/domains";
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { DomainProps } from "@/lib/types";
+import { createDomainBodySchema } from "@/lib/zod/schemas/domains";
+import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { cn } from "@dub/utils";
+import { motion } from "framer-motion";
+import posthog from "posthog-js";
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
 import { z } from "zod";
@@ -211,7 +213,7 @@ export function AddEditDomainForm({
                 <SimpleTooltipContent
                   title="Not sure which domain to use?"
                   cta="Check out our guide"
-                  href="https://dub.co/help/article/choosing-a-custom-domain"
+                  href={`${platform.webUrl}/help/article/choosing-a-custom-domain`}
                 />
               }
             />
@@ -232,7 +234,7 @@ export function AddEditDomainForm({
           )}
         </div>
         {props && lockDomain ? (
-          <div className="mt-2 cursor-not-allowed rounded-md border border-neutral-300 bg-neutral-100 px-3 py-2 text-sm text-neutral-500 shadow-sm">
+          <div className="mt-2 cursor-not-allowed rounded-md border border-neutral-300 bg-neutral-50 px-3 py-2 text-sm text-neutral-500 shadow-sm">
             {domain}
           </div>
         ) : (
@@ -367,7 +369,7 @@ export function AddEditDomainForm({
                                   }}
                                   customPreview={
                                     <QRCode
-                                      url="https://dub.co"
+                                      url={`${platform.webUrl}`}
                                       fgColor="#000"
                                       logo={field.value || ""}
                                       scale={0.6}

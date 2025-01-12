@@ -1,13 +1,13 @@
-import { cn, nFormatter } from "@dub/utils";
-import { Fragment, useMemo, useState } from "react";
+import { cn, nFormatter } from '@dub/utils'
+import { Fragment, useMemo, useState } from 'react'
 
-import { curveBasis } from "@visx/curve";
-import { ParentSize } from "@visx/responsive";
-import { scaleLinear } from "@visx/scale";
-import { Area } from "@visx/shape";
-import { Text } from "@visx/text";
-import { motion } from "framer-motion";
-import { useMediaQuery } from "../hooks";
+import { curveBasis } from '@visx/curve'
+import { ParentSize } from '@visx/responsive'
+import { scaleLinear } from '@visx/scale'
+import { Area } from '@visx/shape'
+import { Text } from '@visx/text'
+import { motion } from 'framer-motion'
+import { useMediaQuery } from '../hooks'
 
 const layers = [
   {
@@ -22,22 +22,22 @@ const layers = [
     opacity: 0.15,
     padding: 16,
   },
-];
+]
 
-const maxLayerPadding = 16;
-const chartPadding = 40;
+const maxLayerPadding = 16
+const chartPadding = 40
 
 type FunnelChartProps = {
   steps: {
-    id: string;
-    label: string;
-    value: number;
-    additionalValue?: number;
-    colorClassName: string;
-  }[];
-  persistentPercentages?: boolean;
-  defaultTooltipStepId?: string;
-};
+    id: string
+    label: string
+    value: number
+    additionalValue?: number
+    colorClassName: string
+  }[]
+  persistentPercentages?: boolean
+  defaultTooltipStepId?: string
+}
 
 export function FunnelChart(props: FunnelChartProps) {
   return (
@@ -50,7 +50,7 @@ export function FunnelChart(props: FunnelChartProps) {
         }
       </ParentSize>
     </div>
-  );
+  )
 }
 
 function FunnelChartInner({
@@ -60,15 +60,15 @@ function FunnelChartInner({
   persistentPercentages = true,
   defaultTooltipStepId,
 }: {
-  width: number;
-  height: number;
+  width: number
+  height: number
 } & FunnelChartProps) {
-  const { isMobile } = useMediaQuery();
+  const { isMobile } = useMediaQuery()
 
   const [tooltip, setTooltip] = useState<string | null>(
-    defaultTooltipStepId ?? null,
-  );
-  const tooltipStep = steps.find(({ id }) => id === tooltip);
+    defaultTooltipStepId ?? null
+  )
+  const tooltipStep = steps.find(({ id }) => id === tooltip)
 
   const data = useMemo(() => {
     return Object.fromEntries(
@@ -76,24 +76,24 @@ function FunnelChartInner({
         id,
         interpolate(
           value,
-          steps[idx + 1]?.value ?? steps[steps.length - 1].value,
+          steps[idx + 1]?.value ?? steps[steps.length - 1].value
         ),
-      ]),
-    );
-  }, [steps]);
+      ])
+    )
+  }, [steps])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const zeroData = useMemo(() => interpolate(0, 0), [steps]);
+  const zeroData = useMemo(() => interpolate(0, 0), [steps])
 
   const maxValue = useMemo(
     () => Math.max(...steps.map((step) => step.value)),
-    [steps],
-  );
+    [steps]
+  )
 
   const xScale = scaleLinear({
     domain: [0, steps.length],
     range: [0, width],
-  });
+  })
 
   const yScale = scaleLinear({
     domain: [maxValue, -maxValue],
@@ -101,7 +101,7 @@ function FunnelChartInner({
       height - maxLayerPadding - chartPadding,
       maxLayerPadding + chartPadding,
     ],
-  });
+  })
 
   return (
     <div className="relative">
@@ -145,12 +145,12 @@ function FunnelChartInner({
                 {({ path }) => {
                   return (
                     <motion.path
-                      initial={{ d: path(zeroData) || "", opacity: 0 }}
-                      animate={{ d: path(data[id]) || "", opacity }}
-                      className={cn(colorClassName, "pointer-events-none")}
+                      initial={{ d: path(zeroData) || '', opacity: 0 }}
+                      animate={{ d: path(data[id]) || '', opacity }}
+                      className={cn(colorClassName, 'pointer-events-none')}
                       fill="currentColor"
                     />
-                  );
+                  )
                 }}
               </Area>
             ))}
@@ -176,10 +176,10 @@ function FunnelChartInner({
         <div
           key={tooltipStep.id}
           className={cn(
-            "pointer-events-none absolute flex items-center justify-center px-1 pb-4",
+            'pointer-events-none absolute flex items-center justify-center px-1 pb-4',
             persistentPercentages
-              ? "animate-slide-up-fade top-16 sm:top-12"
-              : "animate-fade-in top-1/2 -translate-y-1/2",
+              ? 'animate-slide-up-fade top-16 sm:top-12'
+              : 'animate-fade-in top-1/2 -translate-y-1/2'
           )}
           style={{
             left: xScale(steps.findIndex(({ id }) => id === tooltipStep.id)),
@@ -188,7 +188,7 @@ function FunnelChartInner({
         >
           <div
             className={cn(
-              "rounded-lg border border-gray-200 bg-white text-base shadow-sm",
+              'rounded-lg border border-gray-200 bg-white text-base shadow-sm'
             )}
           >
             <p className="border-b border-gray-200 px-3 py-2 text-sm text-gray-900 sm:px-4 sm:py-3">
@@ -199,7 +199,7 @@ function FunnelChartInner({
                 <div
                   className={cn(
                     tooltipStep.colorClassName,
-                    "h-2 w-2 shrink-0 rounded-sm bg-current opacity-50 shadow-[inset_0_0_0_1px_#0003]",
+                    'h-2 w-2 shrink-0 rounded-sm bg-current opacity-50 shadow-[inset_0_0_0_1px_#0003]'
                   )}
                 />
                 <p className="whitespace-nowrap capitalize text-gray-600">
@@ -210,7 +210,7 @@ function FunnelChartInner({
                 {nFormatter(tooltipStep.value, { full: true })}
                 {tooltipStep.additionalValue !== undefined && (
                   <span className="text-gray-500">
-                    {" "}
+                    {' '}
                     (${nFormatter(tooltipStep.additionalValue / 100)})
                   </span>
                 )}
@@ -220,14 +220,12 @@ function FunnelChartInner({
         </div>
       )}
     </div>
-  );
+  )
 }
 
 const formatPercentage = (value: number) => {
-  return value > 0 && value < 0.01
-    ? "< 0.01"
-    : nFormatter(value, { digits: 2 });
-};
+  return value > 0 && value < 0.01 ? '< 0.01' : nFormatter(value, { digits: 2 })
+}
 
 const interpolate = (from: number, to: number) => [
   { x: 0, y: from },
@@ -235,4 +233,4 @@ const interpolate = (from: number, to: number) => [
   { x: 0.5, y: (from + to) / 2 },
   { x: 0.7, y: to },
   { x: 1, y: to },
-];
+]

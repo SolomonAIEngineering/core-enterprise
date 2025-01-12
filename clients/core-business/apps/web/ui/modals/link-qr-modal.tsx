@@ -1,8 +1,4 @@
 import { getQRAsCanvas, getQRAsSVGDataUri, getQRData } from "@/lib/qr";
-import useDomain from "@/lib/swr/use-domain";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { QRLinkProps } from "@/lib/types";
-import { QRCode } from "@/ui/shared/qr-code";
 import {
   Button,
   ButtonTooltip,
@@ -20,7 +16,7 @@ import {
   useMediaQuery,
 } from "@dub/ui";
 import { Check, Check2, Copy, Download, Hyperlink, Photo } from "@dub/ui/icons";
-import { API_DOMAIN, cn, DUB_QR_LOGO, linkConstructor } from "@dub/utils";
+import { API_DOMAIN, DUB_QR_LOGO, cn, linkConstructor } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Dispatch,
@@ -33,6 +29,12 @@ import {
   useState,
 } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
+
+import useDomain from "@/lib/swr/use-domain";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { QRLinkProps } from "@/lib/types";
+import { QRCode } from "@/ui/shared/qr-code";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -171,7 +173,7 @@ function LinkQRModalInner({
                 <SimpleTooltipContent
                   title="Customize your QR code to fit your brand."
                   cta="Learn more."
-                  href="https://dub.co/help/article/custom-qr-codes"
+                  href={`${platform.webUrl}/help/article/custom-qr-codes`}
                 />
               }
             />
@@ -244,7 +246,7 @@ function LinkQRModalInner({
               <SimpleTooltipContent
                 title="Display your logo in the center of the QR code."
                 cta="Learn more."
-                href="https://dub.co/help/article/custom-qr-codes"
+                href={`${platform.webUrl}/help/article/custom-qr-codes`}
               />
             }
           />
@@ -260,7 +262,7 @@ function LinkQRModalInner({
               <TooltipContent
                 title="You need to be on the Pro plan and above to customize your QR Code logo."
                 cta="Upgrade to Pro"
-                href={slug ? `/${slug}/upgrade` : "https://dub.co/pricing"}
+                href={slug ? `/${slug}/upgrade` : `${platform.webUrl}/pricing`}
               />
             ) : undefined
           }

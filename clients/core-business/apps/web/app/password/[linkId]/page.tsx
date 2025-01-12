@@ -1,9 +1,11 @@
-import { NewBackground } from "@/ui/shared/new-background";
-import { prismaEdge } from "@dub/prisma/edge";
 import { BlurImage, Logo } from "@dub/ui";
 import { constructMetadata, isDubDomain } from "@dub/utils";
-import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+
+import { NewBackground } from "@/ui/shared/new-background";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { prismaEdge } from "@dub/prisma/edge";
+import { cookies } from "next/headers";
 import PasswordForm from "./form";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +43,7 @@ export async function generateMetadata({
   return constructMetadata({
     title:
       isDubDomain(link.domain) || link.project?.plan === "free"
-        ? `${title} - Dub.co`
+        ? `${title} - ${platform.company}`
         : title,
     description,
     image,
@@ -106,7 +108,7 @@ export default async function PasswordProtectedLinkPage({
               className="h-10 w-10 rounded-full"
             />
           ) : (
-            <a href="https://dub.co" target="_blank" rel="noreferrer">
+            <a href={`${platform.webUrl}`} target="_blank" rel="noreferrer">
               <Logo />
             </a>
           )}

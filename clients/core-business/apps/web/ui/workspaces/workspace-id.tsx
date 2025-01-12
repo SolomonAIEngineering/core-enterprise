@@ -1,6 +1,7 @@
 "use client";
 
 import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { CopyButton } from "@dub/ui";
 
 export default function WorkspaceId() {
@@ -13,7 +14,7 @@ export default function WorkspaceId() {
           <div className="flex flex-col space-y-3">
             <h2 className="text-xl font-medium">Workspace ID</h2>
             <p className="text-sm text-gray-500">
-              Unique ID of your workspace on Dub.
+              Unique ID of your workspace on {platform.company}.
             </p>
           </div>
           {id ? (
@@ -29,11 +30,11 @@ export default function WorkspaceId() {
           <p className="text-sm text-gray-500">
             Used to identify your workspace when interacting with the{" "}
             <a
-              href="https://dub.co/api"
+              href={`${platform.webUrl}/api`}
               target="_blank"
               className="underline underline-offset-2 transition-colors hover:text-gray-700"
             >
-              Dub API
+              {platform.company} API
             </a>
             .
           </p>

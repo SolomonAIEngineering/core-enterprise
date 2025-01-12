@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { usePlausible } from "next-plausible";
 import { useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
@@ -83,8 +84,8 @@ function WelcomeModal({
                 )}
               >
                 {plan
-                  ? `Dub ${plan.name} looks good on you!`
-                  : "Welcome to Solomon AI!"}
+                  ? `${platform.company} ${plan.name} looks good on you!`
+                  : `Welcome to ${platform.company}!`}
               </h1>
               <p
                 className={cn(

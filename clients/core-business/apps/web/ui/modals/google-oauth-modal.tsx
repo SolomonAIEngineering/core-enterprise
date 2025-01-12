@@ -1,6 +1,4 @@
 import { Button, Google, Logo, Modal } from "@dub/ui";
-import Cookies from "js-cookie";
-import { signIn } from "next-auth/react";
 import {
   Dispatch,
   SetStateAction,
@@ -8,6 +6,10 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import Cookies from "js-cookie";
+import { signIn } from "next-auth/react";
 
 function GoogleOauthModal({
   showGoogleOauthModal,
@@ -31,7 +33,7 @@ function GoogleOauthModal({
           account with Google.{" "}
           <a
             className="underline underline-offset-4 transition-colors hover:text-black"
-            href="https://dub.co/changelog/sign-in-with-google"
+            href={`${platform.webUrl}/changelog/sign-in-with-google`}
             target="_blank"
             rel="noopener noreferrer"
           >

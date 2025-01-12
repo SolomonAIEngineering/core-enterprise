@@ -1,13 +1,9 @@
 "use client";
 
-import usePartnerProfile from "@/lib/swr/use-partner-profile";
-import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
 import { PartnerProps, ProgramProps } from "@/lib/types";
 import { BlurImage, Popover, useScrollProgress } from "@dub/ui";
 import { Check2, Gear } from "@dub/ui/icons";
-import { cn, DICEBEAR_AVATAR_URL } from "@dub/utils";
-import { ChevronsUpDown } from "lucide-react";
-import Link from "next/link";
+import { DICEBEAR_AVATAR_URL, cn } from "@dub/utils";
 import { useParams, usePathname } from "next/navigation";
 import {
   PropsWithChildren,
@@ -17,23 +13,17 @@ import {
   useState,
 } from "react";
 
+import usePartnerProfile from "@/lib/swr/use-partner-profile";
+import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
+import { ChevronsUpDown } from "lucide-react";
+import Link from "next/link";
+
 const LINKS = [
   {
     name: "Settings",
     icon: Gear,
     href: "/settings",
   },
-  // {
-  //   name: "Help center",
-  //   icon: HelpCircle,
-  //   href: "https://dub.co/help",
-  //   target: "_blank",
-  // },
-  // {
-  //   name: "Switch to Business Hub",
-  //   icon: Connections3,
-  //   href: APP_DOMAIN,
-  // },
 ];
 
 export function PartnerProgramDropdown() {

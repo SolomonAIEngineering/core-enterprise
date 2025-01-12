@@ -4,18 +4,20 @@ import {
   removeDomainFromVercel,
   validateDomain,
 } from "@/lib/api/domains";
+import {
+  DomainSchema,
+  updateDomainBodySchema,
+} from "@/lib/zod/schemas/domains";
+import { R2_URL, combineWords, nanoid } from "@dub/utils";
+
 import { getDomainOrThrow } from "@/lib/api/domains/get-domain-or-throw";
 import { queueDomainUpdate } from "@/lib/api/domains/queue";
 import { DubApiError } from "@/lib/api/errors";
 import { parseRequestBody } from "@/lib/api/utils";
 import { withWorkspace } from "@/lib/auth";
 import { storage } from "@/lib/storage";
-import {
-  DomainSchema,
-  updateDomainBodySchema,
-} from "@/lib/zod/schemas/domains";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
-import { combineWords, nanoid, R2_URL } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
 import { NextResponse } from "next/server";
 
@@ -82,7 +84,7 @@ export const PATCH = withWorkspace(
       if (registeredDomain) {
         throw new DubApiError({
           code: "forbidden",
-          message: "You cannot update a Dub-provisioned domain.",
+          message: `You cannot update a ${platform.company}-provisioned domain.`,
         });
       }
       const validDomain = await validateDomain(newDomain);
@@ -168,7 +170,7 @@ export const DELETE = withWorkspace(
     if (registeredDomain) {
       throw new DubApiError({
         code: "forbidden",
-        message: "You cannot delete a Dub-provisioned domain.",
+        message: `You cannot delete a ${platform.company}-provisioned domain.`,
       });
     }
 

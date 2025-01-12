@@ -1,4 +1,5 @@
 import { currencyFormatter, nFormatter } from "../functions";
+
 import { INFINITY_NUMBER } from "./misc";
 
 export type PlanFeature = {

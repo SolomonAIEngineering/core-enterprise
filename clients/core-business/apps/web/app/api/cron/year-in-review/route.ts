@@ -1,10 +1,10 @@
 import { handleAndReturnErrorResponse } from "@/lib/api/errors";
 import { qstash } from "@/lib/cron";
 import { resend } from "@/lib/resend";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { APP_DOMAIN_WITH_NGROK } from "@dub/utils";
 import DubWrapped from "emails/dub-wrapped";
-
 export const dynamic = "force-dynamic";
 
 const BATCH_SIZE = 100;
@@ -68,11 +68,11 @@ export async function POST() {
             return {
               workspaceId: workspace.id,
               email: {
-                from: "Steven from Dub.co <steven@ship.dub.co>",
+                from: platform.email.from,
                 to: user.email,
-                reply_to: "support@dub.co",
-                subject: "Dub Year in Review 🎊",
-                text: "Thank you for your support and here's to another year of your activity on Dub! Here's a look back at your activity in 2024.",
+                reply_to: platform.email.replyTo,
+                subject: `${platform.company} Year in Review 🎊`,
+                text: `Thank you for your support and here's to another year of your activity on ${platform.company}! Here's a look back at your activity in 2024.`,
                 react: DubWrapped({
                   email: user.email,
                   workspace: {

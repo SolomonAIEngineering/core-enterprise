@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function InputPassword(props: SVGProps<SVGSVGElement>) {
   return (
@@ -43,5 +43,5 @@ export function InputPassword(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

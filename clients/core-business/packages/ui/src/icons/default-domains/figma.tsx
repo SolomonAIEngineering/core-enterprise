@@ -1,9 +1,9 @@
-import { cn } from "@dub/utils";
+import { cn } from '@dub/utils'
 
 export function Figma({ className }: { className?: string }) {
   return (
     <svg
-      className={cn("h-full w-full", className)}
+      className={cn('h-full w-full', className)}
       viewBox="0 0 222 222"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -54,5 +54,5 @@ export function Figma({ className }: { className?: string }) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

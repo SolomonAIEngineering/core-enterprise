@@ -1,10 +1,5 @@
 "use client";
 
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useDefaultDomains from "@/lib/swr/use-default-domains";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DomainCardTitleColumn } from "@/ui/domains/domain-card-title-column";
-import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
 import { Logo, Switch, TooltipContent } from "@dub/ui";
 import {
   Amazon,
@@ -15,9 +10,16 @@ import {
   GoogleEnhanced,
   Spotify,
 } from "@dub/ui/icons";
+import { useEffect, useState } from "react";
+
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useDefaultDomains from "@/lib/swr/use-default-domains";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { DomainCardTitleColumn } from "@/ui/domains/domain-card-title-column";
+import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { DUB_DOMAINS } from "@dub/utils";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 function DubDomainsIcon(domain: string) {
@@ -65,9 +67,10 @@ export function DefaultDomains() {
           Default Domains
         </h2>
         <p className="mt-3 text-sm text-gray-500">
-          Leverage default branded domains from Dub for specific links.{" "}
+          Leverage default branded domains from {platform.company} for specific
+          links.{" "}
           <Link
-            href="https://dub.co/help/article/default-dub-domains"
+            href={`${platform.webUrl}/help/article/default-dub-domains`}
             target="_blank"
             className="underline transition-colors hover:text-gray-800"
           >

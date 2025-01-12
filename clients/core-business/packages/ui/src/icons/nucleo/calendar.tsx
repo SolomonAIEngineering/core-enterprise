@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function CalendarIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -58,5 +58,5 @@ export function CalendarIcon(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

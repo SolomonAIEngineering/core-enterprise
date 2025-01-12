@@ -1,4 +1,3 @@
-import z from "@/lib/zod";
 import {
   COUNTRY_CODES,
   DUB_FOUNDING_DATE,
@@ -6,12 +5,14 @@ import {
   validDomainRegex,
 } from "@dub/utils";
 import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
-import { TagSchema } from "./tags";
 import {
   parseDateSchema,
   parseUrlSchema,
   parseUrlSchemaAllowEmpty,
 } from "./utils";
+
+import z from "@/lib/zod";
+import { TagSchema } from "./tags";
 
 export const getUrlQuerySchema = z.object({
   url: parseUrlSchema,
@@ -586,7 +587,7 @@ export const getLinkInfoQuerySchema = domainKeySchema.partial().merge(
 
 export const getLinksQuerySchemaExtended = getLinksQuerySchema.merge(
   z.object({
-    // Only Dub UI uses the following query parameters
+    // Only Vector UI uses the following query parameters
     includeUser: booleanQuerySchema.default("false"),
     includeWebhooks: booleanQuerySchema.default("false"),
     includeDashboard: booleanQuerySchema.default("false"),

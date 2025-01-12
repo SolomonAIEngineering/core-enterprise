@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function ReferredVia(props: SVGProps<SVGSVGElement>) {
   return (
@@ -36,5 +36,5 @@ export function ReferredVia(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

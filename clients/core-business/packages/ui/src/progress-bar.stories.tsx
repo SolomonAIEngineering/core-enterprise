@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { ProgressBar } from "./progress-bar";
+import { ProgressBar } from './progress-bar'
 
 const meta: Meta<typeof ProgressBar> = {
-  title: "Components/ProgressBar",
+  title: 'Components/ProgressBar',
   component: ProgressBar,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A progress bar component with smooth animations and customizable styles.",
+          'A progress bar component with smooth animations and customizable styles.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof ProgressBar>;
+export default meta
+type Story = StoryObj<typeof ProgressBar>
 
 export const Default: Story = {
   render: () => (
@@ -25,7 +25,7 @@ export const Default: Story = {
       <ProgressBar value={50} />
     </div>
   ),
-};
+}
 
 export const WithCustomValue: Story = {
   render: () => (
@@ -33,7 +33,7 @@ export const WithCustomValue: Story = {
       <ProgressBar value={75} max={100} />
     </div>
   ),
-};
+}
 
 export const Completed: Story = {
   render: () => (
@@ -41,7 +41,7 @@ export const Completed: Story = {
       <ProgressBar value={100} max={100} />
     </div>
   ),
-};
+}
 
 export const Exceeded: Story = {
   render: () => (
@@ -49,7 +49,7 @@ export const Exceeded: Story = {
       <ProgressBar value={120} max={100} />
     </div>
   ),
-};
+}
 
 export const WithCustomStyles: Story = {
   render: () => (
@@ -60,7 +60,7 @@ export const WithCustomStyles: Story = {
       />
     </div>
   ),
-};
+}
 
 export const WithGradient: Story = {
   render: () => (
@@ -71,7 +71,7 @@ export const WithGradient: Story = {
       />
     </div>
   ),
-};
+}
 
 export const Thin: Story = {
   render: () => (
@@ -79,7 +79,7 @@ export const Thin: Story = {
       <ProgressBar value={40} className="h-1" />
     </div>
   ),
-};
+}
 
 export const Thick: Story = {
   render: () => (
@@ -87,7 +87,7 @@ export const Thick: Story = {
       <ProgressBar value={60} className="h-4" />
     </div>
   ),
-};
+}
 
 export const WithRoundedEnds: Story = {
   render: () => (
@@ -98,7 +98,7 @@ export const WithRoundedEnds: Story = {
       />
     </div>
   ),
-};
+}
 
 export const WithCustomWidth: Story = {
   render: () => (
@@ -106,4 +106,4 @@ export const WithCustomWidth: Story = {
       <ProgressBar value={85} className="h-3" />
     </div>
   ),
-};
+}

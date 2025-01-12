@@ -1,21 +1,21 @@
-import { cn, truncate } from "@dub/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
-import { type ReactNode, isValidElement } from "react";
-import { AnimatedSizeContainer } from "../animated-size-container";
-import { useKeyboardShortcut } from "../hooks";
-import type { Filter, FilterOption } from "./types";
+import { cn, truncate } from '@dub/utils'
+import { AnimatePresence, motion } from 'framer-motion'
+import { X } from 'lucide-react'
+import { type ReactNode, isValidElement } from 'react'
+import { AnimatedSizeContainer } from '../animated-size-container'
+import { useKeyboardShortcut } from '../hooks'
+import type { Filter, FilterOption } from './types'
 
 type FilterListProps = {
-  filters: Filter[];
+  filters: Filter[]
   activeFilters?: {
-    key: Filter["key"];
-    value: FilterOption["value"];
-  }[];
-  onRemove: (key: string, value: FilterOption["value"]) => void;
-  onRemoveAll: () => void;
-  className?: string;
-};
+    key: Filter['key']
+    value: FilterOption['value']
+  }[]
+  onRemove: (key: string, value: FilterOption['value']) => void
+  onRemoveAll: () => void
+  className?: string
+}
 
 export function FilterList({
   filters,
@@ -24,23 +24,23 @@ export function FilterList({
   onRemoveAll,
   className,
 }: FilterListProps) {
-  useKeyboardShortcut("Escape", onRemoveAll, { priority: 1 });
+  useKeyboardShortcut('Escape', onRemoveAll, { priority: 1 })
   return (
     <AnimatedSizeContainer
       height
       className="w-full"
-      transition={{ type: "tween", duration: 0.3 }}
+      transition={{ type: 'tween', duration: 0.3 }}
     >
       <div
         className={cn(
-          "flex w-full flex-wrap items-start gap-4 sm:flex-nowrap",
-          className,
+          'flex w-full flex-wrap items-start gap-4 sm:flex-nowrap',
+          className
         )}
       >
         <div className="flex grow flex-wrap gap-x-4 gap-y-2">
           <AnimatePresence>
             {activeFilters?.map(({ key, value: filterValue }) => {
-              if (key === "loader") {
+              if (key === 'loader') {
                 return (
                   <motion.div
                     key={`loader-${filterValue}`}
@@ -48,15 +48,15 @@ export function FilterList({
                     animate={{ opacity: 1, y: 0 }}
                     className="h-9 w-48 animate-pulse rounded-md border border-gray-200 bg-white"
                   />
-                );
+                )
               }
 
-              const filter = filters.find((f) => f.key === key);
+              const filter = filters.find((f) => f.key === key)
               if (!filter) {
                 console.error(
-                  "Filter.List received an activeFilter without a corresponding filter",
-                );
-                return null;
+                  'Filter.List received an activeFilter without a corresponding filter'
+                )
+                return null
               }
 
               return (
@@ -65,10 +65,10 @@ export function FilterList({
                   : [filterValue]
               ).map((value) => {
                 const option = filter.options?.find((o) =>
-                  typeof o.value === "string" && typeof value === "string"
+                  typeof o.value === 'string' && typeof value === 'string'
                     ? o.value.toLowerCase() === value.toLowerCase()
-                    : o.value === value,
-                );
+                    : o.value === value
+                )
 
                 const OptionIcon =
                   option?.icon ??
@@ -76,12 +76,12 @@ export function FilterList({
                     key: filter.key,
                     option,
                   }) ??
-                  filter.icon;
+                  filter.icon
 
                 const optionLabel =
                   option?.label ??
                   filter.getOptionLabel?.(value, { key: filter.key, option }) ??
-                  value;
+                  value
 
                 return (
                   <motion.div
@@ -132,8 +132,8 @@ export function FilterList({
                       <X className="h-3.5 w-3.5" />
                     </button>
                   </motion.div>
-                );
-              });
+                )
+              })
             })}
           </AnimatePresence>
         </div>
@@ -151,9 +151,9 @@ export function FilterList({
         )}
       </div>
     </AnimatedSizeContainer>
-  );
+  )
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const isReactNode = (element: any): element is ReactNode =>
-  isValidElement(element);
+  isValidElement(element)

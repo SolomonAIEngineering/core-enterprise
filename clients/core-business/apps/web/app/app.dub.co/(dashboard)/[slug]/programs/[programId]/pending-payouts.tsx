@@ -1,14 +1,15 @@
+import {
+  COUNTRIES,
+  DICEBEAR_AVATAR_URL,
+  cn,
+  currencyFormatter,
+  fetcher,
+} from "@dub/utils";
+
 import useWorkspace from "@/lib/swr/use-workspace";
 import { PayoutResponse } from "@/lib/types";
 import { usePayoutDetailsSheet } from "@/ui/partners/payout-details-sheet";
 import { buttonVariants } from "@dub/ui";
-import {
-  cn,
-  COUNTRIES,
-  currencyFormatter,
-  DICEBEAR_AVATAR_URL,
-  fetcher,
-} from "@dub/utils";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
@@ -98,7 +99,7 @@ function PayoutRow({ payout }: { payout: PayoutResponse }) {
       <button
         key={payout.id}
         type="button"
-        className="flex h-12 items-center justify-between rounded-md p-2 text-left transition-colors duration-75 hover:bg-neutral-50 active:bg-neutral-100"
+        className="flex h-12 items-center justify-between rounded-md p-2 text-left transition-colors duration-75 hover:bg-neutral-50 active:bg-neutral-50"
         onClick={() => setShowPayoutDetailsSheet(true)}
       >
         <div className="flex items-center gap-2 text-xs">

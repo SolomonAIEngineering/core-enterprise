@@ -1,6 +1,8 @@
-import { X } from "@/ui/shared/icons";
 import { Button, Sheet, TabSelect, useRouterStuff } from "@dub/ui";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { X } from "@/ui/shared/icons";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { codeToHtml } from "shiki";
 
 interface EmbedDocsSheetProps {
@@ -57,13 +59,13 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
           <p className="mt-10 text-sm text-neutral-500">
             View detailed{" "}
             <a
-              href="https://dub.co/docs/sdks/client-side/embed"
+              href={`${platform.webUrl}/docs/sdks/client-side/embed`}
               target="_blank"
               className="underline transition-colors duration-75 hover:text-neutral-600"
             >
               installation guides
             </a>{" "}
-            to add Dub Embed to your website.
+            to add {platform.company} Embed to your website.
           </p>
         </div>
       </div>

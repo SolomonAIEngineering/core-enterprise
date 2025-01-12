@@ -1,12 +1,13 @@
-import usePartnerAnalytics from "@/lib/swr/use-partner-analytics";
 import { ProgramEnrollmentProps, ProgramProps } from "@/lib/types";
 import { BlurImage, MiniAreaChart, StatusBadge } from "@dub/ui";
 import {
+  DICEBEAR_AVATAR_URL,
   cn,
   currencyFormatter,
-  DICEBEAR_AVATAR_URL,
   formatDate,
 } from "@dub/utils";
+
+import usePartnerAnalytics from "@/lib/swr/use-partner-analytics";
 import { addDays } from "date-fns";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -138,7 +139,7 @@ export function ProgramCardSkeleton() {
           <div className="h-3.5 w-20 animate-pulse rounded-md bg-neutral-200" />
         </div>
       </div>
-      <div className="mt-6 grid h-[90px] animate-pulse rounded-md bg-neutral-100" />
+      <div className="mt-6 grid h-[90px] animate-pulse rounded-md bg-neutral-50" />
     </div>
   );
 }

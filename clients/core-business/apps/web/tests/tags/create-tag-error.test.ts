@@ -1,5 +1,7 @@
-import { Tag } from "@dub/prisma/client";
 import { expect, test } from "vitest";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { Tag } from "@dub/prisma/client";
 import { IntegrationHarness } from "../utils/integration";
 
 const cases = [
@@ -16,8 +18,7 @@ const cases = [
           code: "unprocessable_entity",
           message:
             "invalid_enum_value: color: Invalid color. Must be one of: red, yellow, green, blue, purple, pink, brown",
-          doc_url:
-            "https://dub.co/docs/api-reference/errors#unprocessable-entity",
+          doc_url: `${platform.webUrl}/docs/api-reference/errors#unprocessable-entity`,
         },
       },
     },
@@ -33,8 +34,7 @@ const cases = [
         error: {
           code: "unprocessable_entity",
           message: "custom: name: Name is required.",
-          doc_url:
-            "https://dub.co/docs/api-reference/errors#unprocessable-entity",
+          doc_url: `${platform.webUrl}/docs/api-reference/errors#unprocessable-entity`,
         },
       },
     },
@@ -81,7 +81,7 @@ test("create tag with existing name", async (ctx) => {
     error: {
       code: "conflict",
       message: "A tag with that name already exists.",
-      doc_url: "https://dub.co/docs/api-reference/errors#conflict",
+      doc_url: `${platform.webUrl}/docs/api-reference/errors#conflict`,
     },
   });
 });

@@ -1,17 +1,17 @@
-import "../src/styles/globals.css";
+import '../src/styles/globals.css'
 
-import type { Preview } from "@storybook/react";
+import type { Preview } from '@storybook/react'
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
       },
     },
-    layout: "centered",
+    layout: 'centered',
   },
   decorators: [
     (Story) => (
@@ -22,16 +22,16 @@ const preview: Preview = {
   ],
   globalTypes: {
     theme: {
-      name: "Theme",
-      description: "Global theme for components",
-      defaultValue: "light",
+      name: 'Theme',
+      description: 'Global theme for components',
+      defaultValue: 'light',
       toolbar: {
-        icon: "circlehollow",
-        items: ["light", "dark"],
+        icon: 'circlehollow',
+        items: ['light', 'dark'],
         showName: true,
       },
     },
   },
-};
+}
 
-export default preview;
+export default preview
