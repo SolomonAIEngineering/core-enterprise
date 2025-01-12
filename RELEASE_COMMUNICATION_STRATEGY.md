@@ -4,7 +4,7 @@
 
 The purpose of this document is to outline a comprehensive strategy for managing technical releases, documentation, and user communications at Solomon AI. As we continue to grow and refine our platform, each release will bring new features, improvements, and optimizations. Ensuring that these updates are clearly documented, visually communicated, and effectively distributed across social channels is essential for maintaining user satisfaction, engagement, and technical transparency.
 
-This strategy includes detailed guidelines for both minor and major releases, covering everything from technical documentation and visual assets to targeted customer communication and social media outreach. By aligning our release processes with a clear communication framework, we aim to deliver an exceptional user experience, bolster community engagement, and support Solomon AI’s positioning as a leader in AI-driven financial solutions.
+This strategy includes detailed guidelines for both minor and major releases, covering everything from technical documentation and visual assets to targeted customer communication and social media outreach. By aligning our release processes with a clear communication framework, we aim to deliver an exceptional user experience, bolster community engagement, and support Solomon AI’s positioning as a leader in AI-driven financial solutions and insights.
 
 ## Table of Contents
 
