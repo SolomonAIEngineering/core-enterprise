@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
+
 import { useRouterStuff } from "@dub/ui";
 import { fetcher } from "@dub/utils";
-import { useEffect, useState } from "react";
 import useSWR from "swr";
-import z from "../zod";
+import type z from "../zod";
 import { getLinksCountQuerySchema } from "../zod/schemas/links";
 import useWorkspace from "./use-workspace";
 
 const partialQuerySchema = getLinksCountQuerySchema.partial();
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export default function useLinksCount<T = any>(
   opts: z.infer<typeof partialQuerySchema> & { ignoreParams?: boolean } = {},
 ) {
@@ -21,25 +23,60 @@ export default function useLinksCount<T = any>(
     }
   }, []);
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const { data, error } = useSWR<any>(
     workspaceId
       ? `/api/links/count${
           opts.ignoreParams
             ? `?workspaceId=${workspaceId}`
             : getQueryString(
-                {
+                Object.entries({
                   workspaceId,
-                  ...opts,
-                },
+                  domain: opts.domain,
+                  tagId: opts.tagId,
+                  tagIds: opts.tagIds?.join(","),
+                  tagNames: opts.tagNames?.join(","),
+                  search: opts.search,
+                  userId: opts.userId,
+                  showArchived: opts.showArchived,
+                  withTags: opts.withTags,
+                  groupBy: opts.groupBy,
+                }).reduce(
+                  (acc, [key, value]) => {
+                    if (value !== undefined) {
+                      acc[key] = value;
+                    }
+                    return acc;
+                  },
+                  {} as Record<string, string | number | boolean>,
+                ),
                 {
                   ignore: ["import", "upgrade", "newLink"],
                 },
               )
         }`
       : admin
-        ? `/api/admin/links/count${getQueryString({
-            ...opts,
-          })}`
+        ? `/api/admin/links/count${getQueryString(
+            Object.entries({
+              domain: opts.domain,
+              tagId: opts.tagId,
+              tagIds: opts.tagIds?.join(","),
+              tagNames: opts.tagNames?.join(","),
+              search: opts.search,
+              userId: opts.userId,
+              showArchived: opts.showArchived,
+              withTags: opts.withTags,
+              groupBy: opts.groupBy,
+            }).reduce(
+              (acc, [key, value]) => {
+                if (value !== undefined) {
+                  acc[key] = value;
+                }
+                return acc;
+              },
+              {} as Record<string, string | number | boolean>,
+            ),
+          )}`
         : null,
     fetcher,
     {

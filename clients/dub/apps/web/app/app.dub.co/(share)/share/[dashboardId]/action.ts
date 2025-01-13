@@ -3,6 +3,7 @@
 import { prismaEdge } from "@dub/prisma/edge";
 import { cookies } from "next/headers";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export async function verifyPassword(_prevState: any, data: FormData) {
   const dashboardId = data.get("dashboardId") as string;
   const password = data.get("password") as string;

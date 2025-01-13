@@ -1,7 +1,8 @@
-import { ExpandedWorkspaceProps } from "@/lib/types";
 import { PRO_PLAN, fetcher, getNextPlan } from "@dub/utils";
 import { useParams, useSearchParams } from "next/navigation";
 import useSWR, { SWRConfiguration } from "swr";
+
+import { ExpandedWorkspaceProps } from "@/lib/types";
 
 export default function useWorkspace({
   swrOpts,
@@ -40,5 +41,6 @@ export default function useWorkspace({
     error,
     mutate,
     loading: slug && !workspace && !error ? true : false,
+    id: workspace?.id as string,
   };
 }

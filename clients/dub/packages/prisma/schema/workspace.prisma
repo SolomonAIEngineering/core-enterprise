@@ -38,7 +38,7 @@ model Project {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   usageLastChecked DateTime @default(now())
-
+  transactionCategoriesLimit Int @default(50)
   users                 ProjectUsers[]
   invites               ProjectInvite[]
   sentEmails            SentEmail[]
@@ -58,6 +58,19 @@ model Project {
   dashboards            Dashboard[]
   utmTemplates          UtmTemplate[]
   yearInReviews         YearInReview[]
+  bankConnections       BankConnection[]
+  apps                  App[]
+  Inbox Inbox[]
+  BankAccount BankAccount[]
+  Transaction Transaction[]
+  TransactionAttachment TransactionAttachment[]
+  TransactionCategory TransactionCategory[]
+  TransactionEnrichment TransactionEnrichment[]
+  Document Document[]
+  CustomerTag CustomerTag[]
+  ContractTemplate ContractTemplate[]
+  Report Report[]
+  InvoiceTemplate InvoiceTemplate[]
 
   @@index(usageLastChecked(sort: Asc))
 }

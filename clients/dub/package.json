@@ -16,7 +16,9 @@
     "publish-ui": "turbo build --filter='@dub/ui' && cd packages/ui && npm publish && cd ../../",
     "publish-utils": "turbo build --filter='@dub/utils' && cd packages/utils && npm publish && cd ../../",
     "script": "echo 'Run this script in apps/web'",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "start:dev": "pnpm check-docker && cd apps/web && docker-compose up -d && cd ../.. && pnpm check-services && pnpm install && pnpm -r --filter \"./packages/**\" build && cd apps/web && pnpm run prisma:generate && pnpm run prisma:push && cd ../.. && pnpm dev",
+    "precommit": "pnpm format && pnpm i && pnpm build"
   },
   "devDependencies": {
     "@dub/tailwind-config": "workspace:*",

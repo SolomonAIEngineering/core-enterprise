@@ -1,12 +1,37 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export function useRouterStuff() {
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import type { ReadonlyURLSearchParams } from "next/navigation";
+
+interface RouterStuff {
+  pathname: string;
+  router: AppRouterInstance;
+  searchParams: ReadonlyURLSearchParams;
+  searchParamsObj: Record<string, string>;
+  queryParams: (options: {
+    set?: Record<string, string | string[]>;
+    del?: string | string[];
+    replace?: boolean;
+    scroll?: boolean;
+    getNewPath?: boolean;
+    arrayDelimiter?: string;
+  }) => string | undefined;
+  getQueryString: (
+    kv?: Record<string, string | number | boolean>,
+    opts?: {
+      ignore?: string[];
+    },
+  ) => string;
+}
+
+export function useRouterStuff(): RouterStuff {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchParamsObj = Object.fromEntries(searchParams);
 
   const getQueryString = (
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     kv?: Record<string, any>,
     opts?: {
       ignore?: string[];
@@ -14,10 +39,14 @@ export function useRouterStuff() {
   ) => {
     const newParams = new URLSearchParams(searchParams);
     if (kv) {
-      Object.entries(kv).forEach(([k, v]) => newParams.set(k, v));
+      for (const [k, v] of Object.entries(kv)) {
+        newParams.set(k, v);
+      }
     }
     if (opts?.ignore) {
-      opts.ignore.forEach((k) => newParams.delete(k));
+      for (const k of opts.ignore) {
+        newParams.delete(k);
+      }
     }
     const queryString = newParams.toString();
     return queryString.length > 0 ? `?${queryString}` : "";
@@ -40,13 +69,15 @@ export function useRouterStuff() {
   }) => {
     const newParams = new URLSearchParams(searchParams);
     if (set) {
-      Object.entries(set).forEach(([k, v]) =>
-        newParams.set(k, Array.isArray(v) ? v.join(arrayDelimiter) : v),
-      );
+      for (const [k, v] of Object.entries(set)) {
+        newParams.set(k, Array.isArray(v) ? v.join(arrayDelimiter) : v);
+      }
     }
     if (del) {
       if (Array.isArray(del)) {
-        del.forEach((k) => newParams.delete(k));
+        for (const k of del) {
+          newParams.delete(k);
+        }
       } else {
         newParams.delete(del);
       }

@@ -60,7 +60,8 @@ function BackgroundGradient({ className }: { className?: string }) {
       <div
         className="absolute inset-0 saturate-150"
         style={{
-          backgroundImage: `conic-gradient(from -45deg at 50% -10%, #3A8BFD 0deg, #FF0000 172.98deg, #855AFC 215.14deg, #FF7B00 257.32deg, #3A8BFD 360deg)`,
+          backgroundImage:
+            "conic-gradient(from -45deg at 50% -10%, #3A8BFD 0deg, #FF0000 172.98deg, #855AFC 215.14deg, #FF7B00 257.32deg, #3A8BFD 360deg)",
         }}
       />
       <div className="absolute inset-0 backdrop-blur-[100px]" />

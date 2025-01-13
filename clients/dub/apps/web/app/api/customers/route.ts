@@ -1,13 +1,14 @@
+import {
+  CustomerSchema,
+  createCustomerBodySchema,
+  getCustomersQuerySchema,
+} from "@/lib/zod/schemas/customers";
+
 import { transformCustomer } from "@/lib/api/customers/transform-customer";
 import { DubApiError } from "@/lib/api/errors";
 import { parseRequestBody } from "@/lib/api/utils";
 import { withWorkspace } from "@/lib/auth";
 import { generateRandomName } from "@/lib/names";
-import {
-  createCustomerBodySchema,
-  CustomerSchema,
-  getCustomersQuerySchema,
-} from "@/lib/zod/schemas/customers";
 import { prisma } from "@dub/prisma";
 import { NextResponse } from "next/server";
 

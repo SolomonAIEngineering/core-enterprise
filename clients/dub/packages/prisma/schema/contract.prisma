@@ -1,0 +1,478 @@
+
+model Contract {
+  id                    String    @id @default(cuid())
+  customerId            String
+  contractNumber        String    @unique
+  title                 String
+  description           String?   @db.Text
+
+  // Classification
+  type                  String    // Service, License, NDA, etc.
+  category              String?   // Framework, Standard, Project-specific
+  department            String?   // Legal, Sales, Procurement, etc.
+  businessUnit          String?   // Division or unit responsible
+  priority              String?   // High, Medium, Low
+
+  // Status and Tracking
+  status               String    // Draft, Under Review, Active, Expired, Terminated, etc.
+  stage                String?   // Negotiation, Approval, Signed, etc.
+  version              Int       @default(1)
+  isTemplate           Boolean   @default(false)
+  parentContractId     String?   // For contract versions/amendments
+
+  // Dates
+  startDate            DateTime
+  endDate              DateTime?
+  signedDate           DateTime?
+  effectiveDate        DateTime?
+  terminationDate      DateTime?
+  nextReviewDate       DateTime?
+  renewalDate          DateTime?
+  lastAmendmentDate    DateTime?
+
+  // Financial Details
+  value                Decimal?  @db.Decimal(15, 2)
+  currency             String?   @default("USD")
+  billingFrequency     String?   // Monthly, Quarterly, Annually
+  billingTerms         String?   @db.Text
+  paymentTerms         String?   // NET30, NET60, etc.
+  autoRenewal          Boolean   @default(false)
+  renewalTerms         String?   @db.Text
+  terminationFee       Decimal?  @db.Decimal(15, 2)
+  earlyTerminationTerms String?  @db.Text
+
+  // Legal & Compliance
+  terms                String?   @db.Text
+  conditions           String?   @db.Text
+  governingLaw         String?   // Jurisdiction
+  disputeResolution    String?   @db.Text
+  confidentialityLevel String?   // Public, Confidential, Strictly Confidential
+  complianceStatus     String?   // Compliant, Non-Compliant, Under Review
+  riskLevel            String?   // Low, Medium, High
+  riskAssessment       Json?     // Detailed risk analysis
+
+  // Parties Involved
+  contractOwner        String?   // Internal owner
+  counterpartyId       String?   // Other party's ID
+  counterpartyName     String?   // Other party's name
+  counterpartyContact   String?   @db.Text    // Contact details
+  witnesses             String?   @db.Text    // Array of witness details
+  signatories           String?   @db.Text    // Array of authorized signatories
+  stakeholders          String?   @db.Text    // Array of stakeholders
+
+  // Performance & Obligations
+  deliverables          String?   @db.Text    // Array of deliverables
+  milestones            String?   @db.Text    // Array of key milestones
+  slaTerms              String?   @db.Text    // Service Level Agreement details
+  performanceMetrics    String?   @db.Text    // KPIs and metrics
+  obligations           String?   @db.Text    // Key obligations
+  penalties             String?   @db.Text    // Penalty clauses
+
+  // Insurance & Liability
+  insuranceRequirements  String?   @db.Text   // Required insurance coverage
+  liabilityTerms       String?   @db.Text
+  indemnificationTerms String?   @db.Text
+  limitationOfLiability Decimal? @db.Decimal(15, 2)
+
+  // IP & Assets
+  intellectualProperty  String?   @db.Text    // IP terms and ownership
+  licensedAssets        String?   @db.Text    // Licensed assets/properties
+  restrictions          String?   @db.Text    // Usage restrictions
+
+  // Change Management
+  amendments           Json?     // Array of amendments
+  changeHistory        Json?     // Change log
+  approvalHistory      Json?     // Approval tracking
+
+  // Document Management
+  documentUrl          String?   // Main contract document
+  supportingDocs       String?   @db.Text    // Supporting documents
+  attachments          Json?     // Additional attachments
+  signatures           Json?     // Digital signatures
+
+  // Security & Access
+  accessLevel          String?   // Public, Private, Restricted
+  accessControlList    String?   @db.Text    // Who can access/edit
+  encryptionLevel      String?   // None, Standard, High
+
+  // Notifications & Reminders
+  notificationSettings Json?     // Alert preferences
+  reminderSettings     Json?     // Reminder configurations
+  alertContacts        Json?     // Who to notify
+
+  // Custom Fields
+  customFields         Json?     // Flexible custom attributes
+  metadata             Json?     // Additional metadata
+  notes                Json?     // Internal notes
+
+  // External References
+  externalReferences   Json?     // Related external documents
+  relatedContracts     Json?     // Related contract references
+
+  // Audit Information
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  createdBy           String?   // User who created
+  updatedBy           String?   // User who last updated
+  reviewedBy          String?   // User who last reviewed
+  approvedBy          String?   // User who approved
+  archivedAt          DateTime?
+  archivedBy          String?
+
+  // Relations
+  customer            Customer  @relation(fields: [customerId], references: [id])
+  parentContract      Contract? @relation("ContractVersions", fields: [parentContractId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childContracts      Contract[] @relation("ContractVersions")
+  contractEvents      ContractEvent[]
+  contractApprovals   ContractApproval[]
+  contractDocuments   ContractDocument[]
+  contractVersions    ContractVersion[]
+
+  @@index([customerId])
+  @@index([contractNumber])
+  @@index([status])
+  @@index([type])
+  @@index([category])
+  @@index([startDate])
+  @@index([endDate])
+  @@index([value])
+  @@index([counterpartyId])
+  @@index([parentContractId])
+}
+
+model ContractEvent {
+  id          String   @id @default(cuid())
+  contractId  String
+  type        String   // Renewal, Amendment, Review, etc.
+  description String   @db.Text
+  status      String
+  dueDate     DateTime?
+  completedAt DateTime?
+
+  contract    Contract @relation(fields: [contractId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+
+  @@index([contractId])
+  @@index([type])
+  @@index([dueDate])
+}
+
+model ContractApproval {
+  id          String   @id @default(cuid())
+  contractId  String
+  stage       String   // Draft, Legal, Financial, Executive, etc.
+  status      String   // Pending, Approved, Rejected
+  approverRole String
+  approverId  String?
+  comments    String?  @db.Text
+
+  contract    Contract @relation(fields: [contractId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([contractId])
+  @@index([status])
+}
+
+
+model ContractDocument {
+ id                    String    @id @default(cuid())
+  contractId            String
+
+  // Document Classification
+  type                  String    // Main, Amendment, Supporting, etc.
+  category              String?   // Legal, Financial, Technical, etc.
+  classification        String?   // Public, Confidential, Restricted
+  importance            String?   // Critical, High, Medium, Low
+  status               String     // Draft, Review, Approved, Archived
+
+  // Document Details
+  title                String
+  description          String?    @db.Text
+  version              Int       @default(1)
+  language             String?
+  pageCount            Int?
+  wordCount            Int?
+
+  // File Information
+  fileUrl              String
+  fileType             String?    // PDF, DOCX, etc.
+  fileSize             Int?       // in bytes
+  fileHash             String?    // For integrity verification
+  originalFilename     String?
+  mimeType             String?
+  encoding             String?
+  compression          String?    // None, ZIP, etc.
+
+  // Storage Details
+  storageProvider      String?    // S3, GCS, Azure, etc.
+  storagePath          String?
+  backupUrl            String?
+  cdnUrl               String?
+
+  // Access Control
+  accessLevel          String?    // Public, Private, Restricted
+  accessPermissions    Json?      // Detailed access rights
+  encryptionStatus     Boolean    @default(false)
+  encryptionType       String?    // AES-256, etc.
+  password             String?    // For password-protected docs
+
+  // Metadata
+  tags                 Json?
+  keywords             Json?
+  metadata             Json?      // Additional metadata
+  customFields         Json?      // Custom attributes
+
+  // Digital Signatures
+  signatures           Json?      // Digital signature info
+  certificateInfo      Json?      // Digital certificate details
+  signatureStatus      String?    // Not Required, Pending, Completed
+  signedBy             Json?      // Array of signers
+  signedAt             DateTime?
+
+  // Review & Approval
+  reviewStatus         String?    // Pending, In Review, Approved
+  reviewedBy           String?
+  reviewedAt           DateTime?
+  approvedBy           String?
+  approvedAt           DateTime?
+  rejectionReason      String?    @db.Text
+
+  // Versioning
+  versionNotes         String?    @db.Text
+  versionChanges       Json?      // Detailed change log
+  previousVersion      String?    // Reference to previous version
+  isLatestVersion      Boolean    @default(true)
+
+  // Compliance
+  retentionPeriod      Int?       // Retention period in days
+  retentionExpiryDate  DateTime?
+  complianceStatus     String?    // Compliant, Non-Compliant
+  complianceNotes      String?    @db.Text
+  legalHold            Boolean    @default(false)
+
+  // Processing
+  processingStatus     String?    // Queued, Processing, Completed
+  processingErrors     Json?      // Error details if any
+  textExtracted        Boolean    @default(false)
+  extractedText        String?    @db.Text
+  ocrStatus           String?     // Not Required, Pending, Completed
+
+  // Integration
+  externalId           String?    // ID in external system
+  externalSystem       String?    // Name of external system
+  externalUrl          String?    // URL in external system
+  synchronizationStatus String?   // Synced, Pending, Failed
+
+  // Usage Tracking
+  viewCount            Int        @default(0)
+  downloadCount        Int        @default(0)
+  lastViewedBy         String?
+  lastViewedAt         DateTime?
+  lastDownloadedBy     String?
+  lastDownloadedAt     DateTime?
+
+  // Validation
+  validateStatus       String?    // Valid, Invalid, Pending
+  validationErrors     Json?      // Validation error details
+  validatedBy          String?
+  validatedAt          DateTime?
+
+  // Relationships
+  contract             Contract   @relation(fields: [contractId], references: [id])
+  documentComments     DocumentComment[]
+  documentAnnotations  DocumentAnnotation[]
+
+  // Audit Trail
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  createdBy            String?
+  updatedBy            String?
+  archivedAt           DateTime?
+  archivedBy           String?
+  restoredAt           DateTime?
+  restoredBy           String?
+
+  @@index([contractId])
+  @@index([type])
+  @@index([category])
+  @@index([status])
+  @@index([version])
+  @@index([fileType])
+  @@index([classification])
+  @@index([createdAt])
+  @@index([externalId])
+}
+
+model DocumentComment {
+  id                String   @id @default(cuid())
+  documentId        String
+  content           String   @db.Text
+  type              String?  // General, Review, Technical
+  status            String?  // Active, Resolved, Archived
+  parentCommentId   String?
+
+  document          ContractDocument @relation(fields: [documentId], references: [id])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  createdBy         String?
+  updatedBy         String?
+
+  @@index([documentId])
+  @@index([parentCommentId])
+}
+
+model DocumentAnnotation {
+  id                String   @id @default(cuid())
+  documentId        String
+  type              String   // Highlight, Note, Drawing
+  content           String   @db.Text
+  pageNumber        Int?
+  coordinates       Json?    // Position on page
+  color             String?
+
+  document          ContractDocument @relation(fields: [documentId], references: [id])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  createdBy         String?
+
+  @@index([documentId])
+  @@index([type])
+}
+
+model ContractTemplate {
+  id                String    @id @default(cuid())
+  name              String
+  description       String?   @db.Text
+  category          String?   // Legal, Financial, Technical, etc.
+  type              String    // Service Agreement, NDA, Employment, etc.
+  version           Int       @default(1)
+  status            String    @default("active") // active, archived, draft
+  language          String?
+  industry          String?   // Specific industry this template is designed for
+
+  // Template Content
+  content           String    @db.Text  // Main template content
+  variables         Json?     // Dynamic fields/placeholders
+  sections          Json?     // Template sections/structure
+  defaultValues     Json?     // Default values for variables
+
+  // Formatting & Style
+  styling           Json?     // CSS/styling information
+  layout            Json?     // Layout configuration
+  pageSettings      Json?     // Page size, margins, etc.
+
+  // Usage & Metadata
+  useCount          Int       @default(0)
+  lastUsedAt        DateTime?
+  isPublic          Boolean   @default(false)
+  reviewRequired    Boolean   @default(false)
+  approvalRequired  Boolean   @default(false)
+
+  // File Information
+  fileUrl           String?   // URL to template file
+  previewUrl        String?   // URL to template preview
+  thumbnailUrl      String?   // URL to template thumbnail
+
+  // Access Control
+  accessLevel       String    @default("private") // private, team, public
+  permissions       Json?     // Detailed access permissions
+
+  // Validation
+  validationRules   Json?     // Rules for template validation
+  requiredFields    Json?     // Required fields specification
+
+  // Relationships
+  projectId         String
+  project           Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Audit
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  createdBy         String?
+  updatedBy         String?
+  archivedAt        DateTime?
+
+  @@index([projectId])
+  @@index([type])
+  @@index([category])
+  @@index([status])
+  @@index([language])
+  @@index([isPublic])
+}
+
+model ContractVersion {
+  id                String    @id @default(cuid())
+  contractId        String    // Reference to parent document
+  versionNumber     Int
+  changeType        String    // Major, Minor, Patch
+
+  // Version Content
+  content           String    @db.Text
+  contentDiff       Json?     // Differences from previous version
+
+  // Version Metadata
+  title             String?
+  description       String?   @db.Text
+  changelog         String?   @db.Text
+  tags              Json?
+
+  // File Information
+  fileUrl           String
+  fileType          String?   // PDF, DOCX, etc.
+  fileSize          Int?      // in bytes
+  fileHash          String?   // For integrity verification
+
+  // Version Status
+  status            String    // Draft, Review, Approved, Archived
+  isLatestVersion   Boolean   @default(false)
+  isMajorVersion    Boolean   @default(false)
+
+  // Review & Approval
+  reviewStatus      String?   // Pending, In Review, Approved
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  approvedBy        String?
+  approvedAt        DateTime?
+  rejectionReason   String?   @db.Text
+
+  // Signatures for this version
+  signatures        Json?     // Digital signature info
+  signatureStatus   String?   // Not Required, Pending, Completed
+  signedBy          Json?     // Array of signers
+  signedAt          DateTime?
+
+  // Compliance
+  complianceStatus  String?   // Compliant, Non-Compliant
+  complianceNotes   String?   @db.Text
+
+  // Usage Tracking
+  viewCount         Int       @default(0)
+  downloadCount     Int       @default(0)
+  lastViewedBy      String?
+  lastViewedAt      DateTime?
+
+  // Relationships
+  contract          Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  // Audit Trail
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  createdBy         String?
+  updatedBy         String?
+  archivedAt        DateTime?
+  archivedBy        String?
+
+  @@unique([contractId, versionNumber])
+  @@index([contractId])
+  @@index([status])
+  @@index([versionNumber])
+  @@index([createdAt])
+}
+

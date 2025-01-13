@@ -29,6 +29,16 @@ model User {
   defaultPartnerId String? // the user's default partner ID
   referralLinkId   String? // this user's referral link ID
 
+  // name formats
+  fullName      String?
+
+  // date formats
+  dateFormat         String?
+  locale             String?
+  timeFormat         Int?
+  timezone           String?
+  weekStartsOnMonday Boolean?
+
   // relational data
   accounts              Account[]
   sessions              Session[]
@@ -42,9 +52,128 @@ model User {
   integrations          Integration[] // Integrations user created in their workspace
   installedIntegrations InstalledIntegration[] // Integrations user installed in their workspace
   utmTemplates          UtmTemplate[]
+  apps                  App[]
+  bankAccounts          BankAccount[]
+
+  Transaction Transaction[]
+  Document Document[]
+
+  reportAccess  ReportAccess[]
+  reports Report[]
+  aiAssistantSettings AIAssistantSettings?
+  financialSettings FinancialSettings?
 
   @@index(source)
   @@index(defaultWorkspace)
+}
+
+enum MatchingStrategy {
+  EXACT
+  FUZZY
+  AMOUNT_ONLY
+}
+
+enum SyncFrequency {
+  REALTIME
+  DAILY
+  WEEKLY
+}
+
+enum Currency {
+  USD
+  GBP
+  EUR
+}
+
+model FinancialSettings {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Currency Settings
+  defaultCurrency       Currency   @default(USD)
+  enableMultiCurrency   Boolean  @default(false)
+  supportedCurrencies   String?  @db.Text  // JSON array of supported currencies
+
+  // Bank Connection Settings (Plaid)
+  plaidEnabled         Boolean  @default(false)
+
+  // GoCardless Settings
+  gocardlessEnabled    Boolean  @default(false)
+
+  // Generic Bank Settings
+  allowManualBankEntry Boolean  @default(true)
+  requireBankVerification Boolean @default(false)
+
+  // Stripe Connected Account Settings
+  stripeEnabled           Boolean  @default(false)
+
+  // Stripe Account Capabilities
+  stripeCardPaymentsCapability String?  // active, inactive, pending
+  stripeTransfersCapability    String?  // active, inactive, pending
+
+  // Additional Payment Provider Settings
+  activePaymentProviders String? @db.Text  // JSON array of active payment providers
+  providerConfigs       String? @db.Text  // JSON object storing configs for other providers
+
+  // Transaction Settings
+  autoCategorizeTxn    Boolean  @default(true)
+  minTxnAmount         Decimal? @db.Decimal(10, 2)
+  maxTxnAmount         Decimal? @db.Decimal(10, 2)
+
+  // Notification Settings
+  notifyLargeTransactions Boolean @default(true)
+  largeTransactionThreshold Decimal? @db.Decimal(10, 2)
+  notifyFailedSync     Boolean  @default(true)
+  notifyLowBalance     Boolean  @default(false)
+  lowBalanceThreshold  Decimal? @db.Decimal(10, 2)
+
+  // Reconciliation Settings
+  autoReconciliation   Boolean  @default(true)
+  reconciliationWindow Int      @default(3) // Days to look back for matching transactions
+  matchingStrategy     MatchingStrategy @default(EXACT)
+
+  // Sync Settings
+  syncFrequency       SyncFrequency @default(DAILY)
+  lastSuccessfulSync  DateTime?
+  syncStatus          String?  // SUCCESS, FAILED, IN_PROGRESS
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model AIAssistantSettings {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // History retention settings
+  historyRetentionDays  Int      @default(30) // Default to 30 days
+
+  // Q&A Settings
+  maxQuestionsPerDay    Int?     // Limit questions per day, null for unlimited
+  enableCitations       Boolean   @default(true)
+  enableFollowUp        Boolean   @default(true)
+  contextWindow         Int       @default(4) // Number of previous messages to include as context
+
+  // Response preferences
+  preferredResponseLength String  @default("balanced") // Options: concise, balanced, detailed
+  languageStyle          String?  // Preferred language style/tone
+
+  // Knowledge base settings
+  useCustomKnowledge    Boolean   @default(false)
+  customKnowledgeIds    String?   // JSON array of knowledge base IDs
+
+  // Conversation history tracking
+  conversationCount     Int       @default(0)
+  lastConversationAt    DateTime?
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
 }
 
 model Account {

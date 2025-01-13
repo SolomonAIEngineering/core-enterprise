@@ -1,9 +1,10 @@
 "use client";
 
-import { AlertCircleFill } from "@/ui/shared/icons";
 import { Button, useMediaQuery } from "@dub/ui";
-import { useParams } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
+
+import { AlertCircleFill } from "@/ui/shared/icons";
+import { useParams } from "next/navigation";
 import { verifyPassword } from "./action";
 
 const initialState = {
