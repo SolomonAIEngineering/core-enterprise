@@ -1,0 +1,39 @@
+name: Core Enterprise Platform Prisma Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'clients/dub/apps/packages/prisma/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install root dependencies
+        run: pnpm install
+        working-directory: clients/dub
+      - name: Generate Prisma Client
+        run: pnpm prisma:generate
+        working-directory: clients/dub/apps/web
+
+      - name: Push Database Changes
+        run: pnpm prisma:push
+        working-directory: clients/dub/apps/web
+        env:
+          DATABASE_URL: ${{ secrets.PLANETSCALE_DATABASE_URL }}
