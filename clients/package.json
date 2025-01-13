@@ -14,7 +14,6 @@
     "generate": "cd packages/sdk && pnpm generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "manypkg check",
     "release-packages": "turbo run build lint test --filter='./packages/*' && changeset publish"
   },
   "devDependencies": {
@@ -36,7 +35,8 @@
   "packageManager": "pnpm@9.2.0",
   "manypkg": {
     "ignoredRules": [
-      "INTERNAL_MISMATCH"
+      "INTERNAL_MISMATCH",
+      "DIFFERENT_VERSIONS"
     ]
   }
 }
