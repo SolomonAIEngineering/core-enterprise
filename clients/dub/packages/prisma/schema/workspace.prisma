@@ -24,6 +24,48 @@ enum OrganizationSize {
   FiveThousandPlus
 }
 
+enum ComplianceFramework {
+  SOC1
+  SOC2
+  ISO27001
+  GDPR
+  HIPAA
+  PCI_DSS
+  NIST
+  CUSTOM
+}
+
+enum DataResidency {
+  US
+  EU
+  UK
+  APAC
+  CUSTOM
+}
+
+enum EnterpriseRole {
+  SYSTEM_ADMIN
+  FINANCE_ADMIN
+  COMPLIANCE_OFFICER
+  ACCOUNT_MANAGER
+  TREASURY_MANAGER
+  CONTROLLER
+  AUDITOR
+  APPROVER
+  VIEWER
+  DEPARTMENT_HEAD
+  BUDGET_MANAGER
+  REPORTING_ANALYST
+}
+
+// Enhanced Organization Size
+enum EnterpriseSize {
+  SMALL_ENTERPRISE // 1000-5000
+  MID_ENTERPRISE   // 5001-10000
+  LARGE_ENTERPRISE // 10001-50000
+  GLOBAL_ENTERPRISE // 50000+
+}
+
 model Project {
   id         String  @id @default(cuid())
   name       String
@@ -126,6 +168,8 @@ model Project {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   usageLastChecked DateTime @default(now())
+
+
   users                 ProjectUsers[]
   invites               ProjectInvite[]
   sentEmails            SentEmail[]

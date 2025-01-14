@@ -65,6 +65,7 @@ model User {
 
   @@index(source)
   @@index(defaultWorkspace)
+  BankConnectionSettings BankConnectionSettings[]
 }
 
 enum MatchingStrategy {

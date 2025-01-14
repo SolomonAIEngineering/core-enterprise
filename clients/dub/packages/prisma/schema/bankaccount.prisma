@@ -63,6 +63,32 @@ enum AccountOwnershipType {
   trust
 }
 
+// New supporting enums
+enum AccountPurpose {
+  OPERATING
+  PAYROLL
+  SAVINGS
+  TAXES
+  PETTY_CASH
+  INVESTMENTS
+  EXPENSES
+  OTHER
+}
+
+enum ComplianceStatus {
+  COMPLIANT
+  PENDING_REVIEW
+  NON_COMPLIANT
+  EXEMPTED
+}
+
+enum RiskLevel {
+  LOW
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
 model BankAccount {
   id               String            @id @default(cuid())
   accountId        String
@@ -71,12 +97,15 @@ model BankAccount {
   routingNumber    String?           // Last 4 digits of routing number
   mask            String?            // Masked account number
 
-  // Basic Info
+  // Enhanced Basic Info
   name            String?
   officialName    String?            // Official name from bank
+  displayName     String?            // Custom display name for the account
+  description     String?            // Optional account description
   type            AccountType?
   subtype         AccountSubType?
   ownershipType   AccountOwnershipType?
+  purpose         AccountPurpose?    // Business purpose of the account
 
   // Balance Information
   balance         Float?
@@ -84,18 +113,34 @@ model BankAccount {
   availableBalance Float?            // Available balance (different from current balance)
   pendingBalance   Float?            // Pending transactions amount
   creditLimit     Float?             // For credit accounts
+  minBalance      Float?             // Minimum balance requirement
+  targetBalance   Float?             // Target balance for budgeting
+  overdraftLimit  Float?             // Overdraft limit if applicable
+  interestRate    Float?             // Current interest rate
 
   // Currency Information
   currency        String?
   baseCurrency    String?
   exchangeRate    Float?             // Current exchange rate to base currency
+  exchangeRateTimestamp DateTime?    // When exchange rate was last updated
 
   // Status & Settings
+  // Enhanced Status & Settings
   enabled         Boolean           @default(true)
   hidden          Boolean           @default(false)    // Allow hiding accounts from main view
   favorite        Boolean           @default(false)    // Allow marking accounts as favorites
   manual          Boolean?
   verified        Boolean           @default(false)
+  frozen          Boolean           @default(false)    // Account freeze status
+  closeDate       DateTime?         // Scheduled account closure date
+
+  // Spend Management Features
+  spendingLimit   Float?            // Account-specific spending limit
+  dailyLimit      Float?            // Daily transaction limit
+  monthlyLimit    Float?            // Monthly spending limit
+  tags Tag[] // Allowed merchant categories
+  requiresApproval Boolean          @default(false)    // Transactions require approval
+  approvalThreshold Float?          // Threshold for requiring approval
 
   // Error Handling
   status          ConnectionStatus? @default(connected)
@@ -103,9 +148,15 @@ model BankAccount {
   errorRetries    Int?
   lastSyncAt      DateTime?
   nextSyncAt      DateTime?
+  errorCount      Int              @default(0)
+  lastErrorAt     DateTime?
 
-  // Metadata
-  tags            String?             // comma separated list of tags
+  // Compliance & Risk
+  riskLevel       RiskLevel?       @default(NORMAL)
+  complianceStatus ComplianceStatus? @default(COMPLIANT)
+  lastReviewDate   DateTime?
+  nextReviewDate   DateTime?
+  reviewNotes      String?
 
   // Bank Connection
   bankConnectionId String?
@@ -174,8 +225,7 @@ model BankConnection {
   supportedProducts            String    // comma separated list of supported products
 
   // Metadata
-  metadata        Json?           // Provider-specific metadata
-  settings        Json?           // Connection-specific settings
+  settings        BankConnectionSettings?           // Connection-specific settings
 
   // Relationships
   expiresAt       DateTime?
@@ -191,4 +241,60 @@ model BankConnection {
   @@index([provider])
   @@index([status])
   @@index([lastAccessed])
+}
+
+model BankConnectionSettings {
+  id                String       @id @default(cuid())
+
+  // Connection-specific sync overrides
+  // These override the global settings in FinancialSettings when set
+  syncEnabled      Boolean       @default(true)
+  // Connection-specific sync overrides
+  syncStartTime         String?        // Time of day to start sync (HH:MM format)
+  syncDayOfWeek        Int?           @default(0) // 0-6 for weekly syncs
+  syncDayOfMonth       Int?           @default(1) // 1-31 for monthly syncs
+  syncFrequency        SyncFrequency  @default(DAILY)
+
+  // Connection-specific notification settings
+  webhooks Webhook[] // webhooks to trigger when transactions are synced
+
+  // Connection-specific timeouts and limits
+  connectionTimeout Int         @default(30)  // seconds
+  readTimeout      Int         @default(30)  // seconds
+  maxRequestsPerHour Int       @default(100)
+  maxConcurrentRequests Int    @default(5)
+
+  // Data scope settings
+  syncTransactions    Boolean        @default(true)
+  syncBalances       Boolean         @default(true)
+  syncStatements     Boolean         @default(true)
+  syncIdentity       Boolean         @default(false)
+  syncCategories     Boolean         @default(true)
+  syncMerchants      Boolean         @default(true)
+  syncAttachments    Boolean         @default(false)
+  historicalDays  Int          @default(90)  // Days of historical data to sync
+
+  // Authentication settings
+  refreshTokenEnabled Boolean  @default(true)
+  autoReconnectEnabled Boolean @default(true)
+  connectionStatus      ConnectionStatus @default(connected)
+
+  // Relationships
+  bankConnectionId String      @unique      // One-to-one relationship
+  bankConnection  BankConnection @relation(fields: [bankConnectionId], references: [id], onDelete: Cascade)
+
+  // Audit
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  createdBy       String
+  creator         User         @relation(fields: [createdBy], references: [id])
+
+  // Merchant enrichment settings
+  merchantEnrichmentEnabled Boolean @default(true)
+  merchantCategorizationEnabled    Boolean @default(true)    // Enable merchant category standardization
+  merchantLogoEnrichmentEnabled   Boolean @default(true)    // Add merchant logos when available
+  merchantNameCleaningEnabled     Boolean @default(true)    // Clean and standardize merchant names
+
+  @@index([bankConnectionId])
+  @@index([createdBy])
 }
