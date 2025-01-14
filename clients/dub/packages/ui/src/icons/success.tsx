@@ -14,5 +14,5 @@ export default function Success({ className }: { className?: string }) {
         clipRule="evenodd"
       />
     </svg>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function LinesY(props: SVGProps<SVGSVGElement>) {
   return (
@@ -56,5 +56,5 @@ export function LinesY(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

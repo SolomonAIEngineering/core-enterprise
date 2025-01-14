@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function GamingConsole(props: SVGProps<SVGSVGElement>) {
   return (
@@ -37,5 +37,5 @@ export function GamingConsole(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

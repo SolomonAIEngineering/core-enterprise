@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function CheckboxUnchecked(props: SVGProps<SVGSVGElement>) {
   return (
@@ -25,5 +25,5 @@ export function CheckboxUnchecked(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

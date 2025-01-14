@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Ruby(props: SVGProps<SVGSVGElement>) {
   return (
@@ -268,5 +268,5 @@ export function Ruby(props: SVGProps<SVGSVGElement>) {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

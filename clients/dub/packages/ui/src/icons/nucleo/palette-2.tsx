@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Palette2(props: SVGProps<SVGSVGElement>) {
   return (
@@ -36,5 +36,5 @@ export function Palette2(props: SVGProps<SVGSVGElement>) {
         <circle cx="5" cy="9" fill="currentColor" r="1" strokeWidth="1.5" />
       </g>
     </svg>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, useEffect, useState } from "react";
+import { AnimatePresence, motion } from 'framer-motion'
+import { ReactNode, useEffect, useState } from 'react'
 
 export const ClientOnly = ({
   children,
@@ -7,18 +7,18 @@ export const ClientOnly = ({
   fadeInDuration = 0.5,
   className,
 }: {
-  children: ReactNode;
-  fallback?: ReactNode;
-  fadeInDuration?: number;
-  className?: string;
+  children: ReactNode
+  fallback?: ReactNode
+  fadeInDuration?: number
+  className?: string
 }) => {
-  const [clientReady, setClientReady] = useState<boolean>(false);
+  const [clientReady, setClientReady] = useState<boolean>(false)
 
   useEffect(() => {
-    setClientReady(true);
-  }, []);
+    setClientReady(true)
+  }, [])
 
-  const Comp = fadeInDuration ? motion.div : "div";
+  const Comp = fadeInDuration ? motion.div : 'div'
 
   return (
     <AnimatePresence>
@@ -39,5 +39,5 @@ export const ClientOnly = ({
         fallback || null
       )}
     </AnimatePresence>
-  );
-};
+  )
+}

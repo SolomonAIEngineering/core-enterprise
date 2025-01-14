@@ -7,7 +7,7 @@ const config: Pick<Config, 'presets' | 'content' | 'theme' | 'plugins'> = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
     './.storybook/**/*.{js,ts,jsx,tsx}',
-    './stories/**/*.{js,ts,jsx,tsx}'
+    './stories/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -53,8 +53,8 @@ const config: Pick<Config, 'presets' | 'content' | 'theme' | 'plugins'> = {
           accent: 'hsl(var(--sidebar-accent))',
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))'
-        }
+          ring: 'hsl(var(--sidebar-ring))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -64,25 +64,25 @@ const config: Pick<Config, 'presets' | 'content' | 'theme' | 'plugins'> = {
       keyframes: {
         'accordion-down': {
           from: {
-            height: '0'
+            height: '0',
           },
           to: {
-            height: 'var(--radix-accordion-content-height)'
-          }
+            height: 'var(--radix-accordion-content-height)',
+          },
         },
         'accordion-up': {
           from: {
-            height: 'var(--radix-accordion-content-height)'
+            height: 'var(--radix-accordion-content-height)',
           },
           to: {
-            height: '0'
-          }
-        }
+            height: '0',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
-      }
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
     },
   },
   plugins: [],

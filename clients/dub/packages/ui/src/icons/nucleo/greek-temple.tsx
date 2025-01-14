@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function GreekTemple(props: SVGProps<SVGSVGElement>) {
   return (
@@ -76,5 +76,5 @@ export function GreekTemple(props: SVGProps<SVGSVGElement>) {
         <circle cx="9" cy="4.75" fill="currentColor" r="1" stroke="none" />
       </g>
     </svg>
-  );
+  )
 }

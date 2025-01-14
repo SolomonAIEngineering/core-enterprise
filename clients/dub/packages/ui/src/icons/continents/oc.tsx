@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Oceania(props: SVGProps<SVGSVGElement>) {
   return (
@@ -182,5 +182,5 @@ export function Oceania(props: SVGProps<SVGSVGElement>) {
         </linearGradient>
       </defs>
     </svg>
-  );
+  )
 }

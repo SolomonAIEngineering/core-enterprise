@@ -1,35 +1,35 @@
-import { cn, createHref } from "@dub/utils";
-import Link from "next/link";
-import { COMPARE_PAGES, CUSTOMER_STORIES } from "../../content";
-import { ConnectedDotsFill, CubeSettingsFill } from "../../icons";
-import { AnalyticsGraphic } from "./graphics/analytics-graphic";
-import { LinksGraphic } from "./graphics/links-graphic";
+import { cn, createHref } from '@dub/utils'
+import Link from 'next/link'
+import { COMPARE_PAGES, CUSTOMER_STORIES } from '../../content'
+import { ConnectedDotsFill, CubeSettingsFill } from '../../icons'
+import { AnalyticsGraphic } from './graphics/analytics-graphic'
+import { LinksGraphic } from './graphics/links-graphic'
 import {
   ContentLinkCard,
   LargeLinkCard,
   contentHeadingClassName,
-} from "./shared";
+} from './shared'
 
 const largeLinks = [
   {
-    title: "Dub API",
-    description: "Programmatic link creation at scale",
+    title: 'Dub API',
+    description: 'Programmatic link creation at scale',
     icon: CubeSettingsFill,
-    href: "/docs/api-reference/introduction",
+    href: '/docs/api-reference/introduction',
   },
   {
-    title: "Dub Integrations",
-    description: "Connect Dub with your favorite tools",
+    title: 'Dub Integrations',
+    description: 'Connect Dub with your favorite tools',
     icon: ConnectedDotsFill,
-    href: "/docs/integrations",
+    href: '/docs/integrations',
   },
-];
+]
 
 export function ProductContent({ domain }: { domain: string }) {
   return (
     <div className="grid w-[1020px] grid-cols-[repeat(2,minmax(0,1fr)),0.8fr] gap-4 p-5">
       <Link
-        href={createHref("/home", domain)}
+        href={createHref('/home', domain)}
         className="group relative flex flex-col rounded-xl border border-neutral-100 bg-neutral-50 dark:border-white/20 dark:bg-white/10"
       >
         <div className="p-5 pb-0">
@@ -47,7 +47,7 @@ export function ProductContent({ domain }: { domain: string }) {
       </Link>
       <div className="flex flex-col gap-4">
         <Link
-          href={createHref("/analytics", domain)}
+          href={createHref('/analytics', domain)}
           className="group relative flex flex-col overflow-hidden rounded-xl border border-neutral-100 bg-neutral-50 dark:border-white/20 dark:bg-white/10"
         >
           <AnalyticsGraphic className="absolute bottom-0 h-auto w-full translate-y-[15%] [mask-image:linear-gradient(90deg,transparent,black)]" />
@@ -74,15 +74,15 @@ export function ProductContent({ domain }: { domain: string }) {
         </div>
       </div>
       <div className="pl-2 pt-2">
-        <p className={cn(contentHeadingClassName, "mb-2")}>Customer Stories</p>
+        <p className={cn(contentHeadingClassName, 'mb-2')}>Customer Stories</p>
         <div className="grid grid-cols-1">
           {CUSTOMER_STORIES.map(
             ({ icon: Icon, iconClassName, title, description, href }) => (
               <ContentLinkCard
                 key={href}
                 href={createHref(href, domain, {
-                  utm_source: "Custom Domain",
-                  utm_medium: "Navbar",
+                  utm_source: 'Custom Domain',
+                  utm_medium: 'Navbar',
                   utm_campaign: domain,
                   utm_content: title,
                 })}
@@ -91,8 +91,8 @@ export function ProductContent({ domain }: { domain: string }) {
                   <div className="shrink-0 rounded-[10px] border border-gray-200 bg-white/50 p-2 dark:border-white/20 dark:bg-white/10">
                     <Icon
                       className={cn(
-                        "h-4 w-4 shrink-0 text-gray-600 transition-colors dark:text-white/60",
-                        iconClassName,
+                        'h-4 w-4 shrink-0 text-gray-600 transition-colors dark:text-white/60',
+                        iconClassName
                       )}
                     />
                   </div>
@@ -100,28 +100,28 @@ export function ProductContent({ domain }: { domain: string }) {
                 title={title}
                 description={description}
               />
-            ),
+            )
           )}
           <ContentLinkCard
-            href={createHref("/customers", domain, {
-              utm_source: "Custom Domain",
-              utm_medium: "Navbar",
+            href={createHref('/customers', domain, {
+              utm_source: 'Custom Domain',
+              utm_medium: 'Navbar',
               utm_campaign: domain,
-              utm_content: "Customer Stories",
+              utm_content: 'Customer Stories',
             })}
             title="View all stories"
             showArrow
           />
         </div>
 
-        <p className={cn(contentHeadingClassName, "mb-2 mt-5")}>Compare</p>
+        <p className={cn(contentHeadingClassName, 'mb-2 mt-5')}>Compare</p>
         <div className="flex flex-col">
           {COMPARE_PAGES.map(({ name, slug }) => (
             <ContentLinkCard
               key={slug}
               href={createHref(`/compare/${slug}`, domain, {
-                utm_source: "Custom Domain",
-                utm_medium: "Navbar",
+                utm_source: 'Custom Domain',
+                utm_medium: 'Navbar',
                 utm_campaign: domain,
                 utm_content: `Dub vs. ${name}`,
               })}
@@ -132,5 +132,5 @@ export function ProductContent({ domain }: { domain: string }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

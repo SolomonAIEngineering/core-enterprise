@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Watch(props: SVGProps<SVGSVGElement>) {
   return (
@@ -55,5 +55,5 @@ export function Watch(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

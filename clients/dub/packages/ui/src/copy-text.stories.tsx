@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { CopyText } from "./copy-text";
+import { CopyText } from './copy-text'
 
 const meta: Meta<typeof CopyText> = {
-  title: "Components/CopyText",
+  title: 'Components/CopyText',
   component: CopyText,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A text component that copies its content to clipboard when clicked.",
+          'A text component that copies its content to clipboard when clicked.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof CopyText>;
+export default meta
+type Story = StoryObj<typeof CopyText>
 
 export const Default: Story = {
   render: () => <CopyText value="Text to copy">Click to copy</CopyText>,
-};
+}
 
 export const WithCustomSuccessMessage: Story = {
   render: () => (
@@ -32,7 +32,7 @@ export const WithCustomSuccessMessage: Story = {
       Copy with custom message
     </CopyText>
   ),
-};
+}
 
 export const WithCustomStyling: Story = {
   render: () => (
@@ -40,7 +40,7 @@ export const WithCustomStyling: Story = {
       Custom styled copy text
     </CopyText>
   ),
-};
+}
 
 export const WithLongText: Story = {
   render: () => (
@@ -48,17 +48,17 @@ export const WithLongText: Story = {
       This is a very long text that will be copied...
     </CopyText>
   ),
-};
+}
 
 export const InParagraph: Story = {
   render: () => (
     <p className="max-w-md text-gray-600">
-      This is a paragraph with some{" "}
+      This is a paragraph with some{' '}
       <CopyText value="copyable text">copyable text</CopyText> that can be
       clicked to copy.
     </p>
   ),
-};
+}
 
 export const WithIcon: Story = {
   render: () => (
@@ -73,7 +73,7 @@ export const WithIcon: Story = {
       <CopyText value="Copy with icon">Copy text</CopyText>
     </div>
   ),
-};
+}
 
 export const AsCode: Story = {
   render: () => (
@@ -84,7 +84,7 @@ export const AsCode: Story = {
       npm install @package/name
     </CopyText>
   ),
-};
+}
 
 export const InList: Story = {
   render: () => (
@@ -100,7 +100,7 @@ export const InList: Story = {
       </li>
     </ul>
   ),
-};
+}
 
 export const WithTooltip: Story = {
   render: () => (
@@ -111,7 +111,7 @@ export const WithTooltip: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const InCard: Story = {
   render: () => (
@@ -139,4 +139,4 @@ export const InCard: Story = {
       </div>
     </div>
   ),
-};
+}

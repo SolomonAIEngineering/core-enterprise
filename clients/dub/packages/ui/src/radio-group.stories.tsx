@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { RadioGroup, RadioGroupItem } from "./radio-group";
+import type { Meta, StoryObj } from '@storybook/react'
+import { RadioGroup, RadioGroupItem } from './radio-group'
 
-import { useState } from "react";
-import { Label } from "./label";
+import { useState } from 'react'
+import { Label } from './label'
 
 const meta: Meta<typeof RadioGroup> = {
-  title: "Components/RadioGroup",
+  title: 'Components/RadioGroup',
   component: RadioGroup,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A radio group component for selecting a single option from a list.",
+          'A radio group component for selecting a single option from a list.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof RadioGroup>;
+export default meta
+type Story = StoryObj<typeof RadioGroup>
 
 export const Default: Story = {
   render: () => {
-    const [value, setValue] = useState("option1");
+    const [value, setValue] = useState('option1')
     return (
       <RadioGroup value={value} onValueChange={setValue}>
         <div className="flex items-center space-x-2">
@@ -39,13 +39,13 @@ export const Default: Story = {
           <Label htmlFor="option3">Option 3</Label>
         </div>
       </RadioGroup>
-    );
+    )
   },
-};
+}
 
 export const WithDescription: Story = {
   render: () => {
-    const [value, setValue] = useState("comfort");
+    const [value, setValue] = useState('comfort')
     return (
       <RadioGroup value={value} onValueChange={setValue}>
         <div className="flex items-start space-x-2">
@@ -69,13 +69,13 @@ export const WithDescription: Story = {
           </div>
         </div>
       </RadioGroup>
-    );
+    )
   },
-};
+}
 
 export const WithCustomStyles: Story = {
   render: () => {
-    const [value, setValue] = useState("red");
+    const [value, setValue] = useState('red')
     return (
       <RadioGroup
         value={value}
@@ -113,13 +113,13 @@ export const WithCustomStyles: Story = {
           </Label>
         </div>
       </RadioGroup>
-    );
+    )
   },
-};
+}
 
 export const Disabled: Story = {
   render: () => {
-    const [value, setValue] = useState("option1");
+    const [value, setValue] = useState('option1')
     return (
       <RadioGroup value={value} onValueChange={setValue}>
         <div className="flex items-center space-x-2">
@@ -133,45 +133,45 @@ export const Disabled: Story = {
           </Label>
         </div>
       </RadioGroup>
-    );
+    )
   },
-};
+}
 
 export const WithCard: Story = {
   render: () => {
-    const [value, setValue] = useState("card1");
+    const [value, setValue] = useState('card1')
     return (
       <RadioGroup
         value={value}
         onValueChange={setValue}
         className="grid grid-cols-2 gap-4"
       >
-        {["card1", "card2"].map((card) => (
+        {['card1', 'card2'].map((card) => (
           <div
             key={card}
-            className={`relative cursor-pointer rounded-lg border-2 p-4 ${value === card ? "border-blue-500 bg-blue-50" : "border-gray-200"} `}
+            className={`relative cursor-pointer rounded-lg border-2 p-4 ${value === card ? 'border-blue-500 bg-blue-50' : 'border-gray-200'} `}
           >
             <div className="flex items-start space-x-2">
               <RadioGroupItem value={card} id={card} className="mt-1" />
               <div>
                 <Label htmlFor={card}>
-                  Card {card === "card1" ? "One" : "Two"}
+                  Card {card === 'card1' ? 'One' : 'Two'}
                 </Label>
                 <p className="text-sm text-gray-500">
-                  Description for {card === "card1" ? "first" : "second"} card
+                  Description for {card === 'card1' ? 'first' : 'second'} card
                 </p>
               </div>
             </div>
           </div>
         ))}
       </RadioGroup>
-    );
+    )
   },
-};
+}
 
 export const WithImages: Story = {
   render: () => {
-    const [value, setValue] = useState("light");
+    const [value, setValue] = useState('light')
     return (
       <RadioGroup
         value={value}
@@ -179,7 +179,7 @@ export const WithImages: Story = {
         className="grid grid-cols-2 gap-4"
       >
         <div
-          className={`relative cursor-pointer rounded-lg border-2 p-4 ${value === "light" ? "border-blue-500" : "border-gray-200"} `}
+          className={`relative cursor-pointer rounded-lg border-2 p-4 ${value === 'light' ? 'border-blue-500' : 'border-gray-200'} `}
         >
           <div className="flex flex-col items-center space-y-2">
             <div className="h-24 w-full rounded-md border bg-white" />
@@ -190,7 +190,7 @@ export const WithImages: Story = {
           </div>
         </div>
         <div
-          className={`relative cursor-pointer rounded-lg border-2 p-4 ${value === "dark" ? "border-blue-500" : "border-gray-200"} `}
+          className={`relative cursor-pointer rounded-lg border-2 p-4 ${value === 'dark' ? 'border-blue-500' : 'border-gray-200'} `}
         >
           <div className="flex flex-col items-center space-y-2">
             <div className="h-24 w-full rounded-md border bg-gray-900" />
@@ -201,6 +201,6 @@ export const WithImages: Story = {
           </div>
         </div>
       </RadioGroup>
-    );
+    )
   },
-};
+}

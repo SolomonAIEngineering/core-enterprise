@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function GiftFill(props: SVGProps<SVGSVGElement>) {
   return (
@@ -24,5 +24,5 @@ export function GiftFill(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

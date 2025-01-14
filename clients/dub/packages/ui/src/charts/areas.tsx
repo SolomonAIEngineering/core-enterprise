@@ -1,37 +1,37 @@
-import { cn } from "@dub/utils";
-import { LinearGradient } from "@visx/gradient";
-import { Group } from "@visx/group";
-import { Area, AreaClosed, Circle } from "@visx/shape";
-import { AnimatePresence, motion } from "framer-motion";
-import { useMemo } from "react";
-import { useChartContext, useChartTooltipContext } from "./chart-context";
+import { cn } from '@dub/utils'
+import { LinearGradient } from '@visx/gradient'
+import { Group } from '@visx/group'
+import { Area, AreaClosed, Circle } from '@visx/shape'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useMemo } from 'react'
+import { useChartContext, useChartTooltipContext } from './chart-context'
 
 export function Areas({
   seriesStyles,
 }: {
   seriesStyles?: {
-    id: string;
-    gradientClassName?: string;
-    lineClassName?: string;
-    areaFill?: string;
-    lineStroke?: string;
-  }[];
+    id: string
+    gradientClassName?: string
+    lineClassName?: string
+    areaFill?: string
+    lineStroke?: string
+  }[]
 }) {
   const { data, series, margin, xScale, yScale, startDate, endDate } =
-    useChartContext();
+    useChartContext()
 
-  if (!("ticks" in xScale))
-    throw new Error("Areas require a time scale (type=area)");
+  if (!('ticks' in xScale))
+    throw new Error('Areas require a time scale (type=area)')
 
-  const { tooltipData } = useChartTooltipContext();
+  const { tooltipData } = useChartTooltipContext()
 
   // Data with all values set to zero to animate from
   const zeroedData = useMemo(() => {
     return data.map((d) => ({
       ...d,
       values: Object.fromEntries(Object.keys(d.values).map((key) => [key, 0])),
-    })) as typeof data;
-  }, [data]);
+    })) as typeof data
+  }, [data])
 
   return (
     <Group left={margin.left} top={margin.top}>
@@ -39,7 +39,7 @@ export function Areas({
         {series
           .filter(({ isActive }) => isActive)
           .map((s) => {
-            const seriesStyle = seriesStyles?.find(({ id }) => id === s.id);
+            const seriesStyle = seriesStyles?.find(({ id }) => id === s.id)
             return (
               // Prevent ugly x-scale animations when start/end dates change with unique key
               <motion.g
@@ -79,16 +79,16 @@ export function Areas({
                   {({ path }) => {
                     return (
                       <motion.path
-                        initial={{ d: path(zeroedData) || "", opacity: 0 }}
-                        animate={{ d: path(data) || "", opacity: 1 }}
+                        initial={{ d: path(zeroedData) || '', opacity: 0 }}
+                        animate={{ d: path(data) || '', opacity: 1 }}
                         className={cn(
-                          s.colorClassName ?? "text-blue-500",
-                          seriesStyle?.gradientClassName,
+                          s.colorClassName ?? 'text-blue-500',
+                          seriesStyle?.gradientClassName
                         )}
                         mask={`url(#${s.id}-mask)`}
-                        fill={seriesStyle?.areaFill ?? "currentColor"}
+                        fill={seriesStyle?.areaFill ?? 'currentColor'}
                       />
-                    );
+                    )
                   }}
                 </AreaClosed>
 
@@ -100,13 +100,13 @@ export function Areas({
                 >
                   {({ path }) => (
                     <motion.path
-                      initial={{ d: path(zeroedData) || "" }}
-                      animate={{ d: path(data) || "" }}
+                      initial={{ d: path(zeroedData) || '' }}
+                      animate={{ d: path(data) || '' }}
                       className={cn(
-                        s.colorClassName ?? "text-blue-700",
-                        seriesStyle?.lineClassName,
+                        s.colorClassName ?? 'text-blue-700',
+                        seriesStyle?.lineClassName
                       )}
-                      stroke={seriesStyle?.lineStroke ?? "currentColor"}
+                      stroke={seriesStyle?.lineStroke ?? 'currentColor'}
                       strokeOpacity={0.8}
                       strokeWidth={2}
                       fill="transparent"
@@ -121,16 +121,16 @@ export function Areas({
                     cy={yScale(s.valueAccessor(data.at(-1)!))}
                     r={4}
                     className={cn(
-                      s.colorClassName ?? "text-blue-700",
-                      seriesStyle?.lineClassName,
+                      s.colorClassName ?? 'text-blue-700',
+                      seriesStyle?.lineClassName
                     )}
                     fill="currentColor"
                   />
                 )}
               </motion.g>
-            );
+            )
           })}
       </AnimatePresence>
     </Group>
-  );
+  )
 }
