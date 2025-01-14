@@ -42,6 +42,7 @@ const emailConfig: EmailConfig = {
     billing: "Vector Billing <billing@getvector.app>",
     notifications: "Vector Notifications <notifications@getvector.app>",
     system: "Vector <system@getvector.app>",
+    feedback: "Vector Feedback <feedback@getvector.app>",
   },
   replyTo: "support@getvector.app",
   templates: {

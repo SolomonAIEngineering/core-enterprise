@@ -429,6 +429,8 @@ type EmailConfig = {
     notifications: string;
     /** System sender address */
     system: string;
+    /** Feedback sender address */
+    feedback: string;
   };
   /** Default reply-to address */
   replyTo: string;
