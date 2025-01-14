@@ -40,7 +40,7 @@ export const sendInviteReferralEmail = authActionClient
         react: ReferralInvite({
           email,
           appName: platform.company,
-          url: `https://refer.dub.co/${workspace.slug}`,
+          url: `https://refer.${platform.domain}/${workspace.slug}`,
           workspaceUser: ctx.user.name || null,
           workspaceUserEmail: ctx.user.email || null,
         }),

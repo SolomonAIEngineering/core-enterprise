@@ -1,5 +1,6 @@
-import { parse } from "@/lib/middleware/utils";
 import { NextRequest, NextResponse } from "next/server";
+
+import { parse } from "@/lib/middleware/utils";
 import EmbedMiddleware from "./embed";
 import NewLinkMiddleware from "./new-link";
 import { appRedirect } from "./utils/app-redirect";

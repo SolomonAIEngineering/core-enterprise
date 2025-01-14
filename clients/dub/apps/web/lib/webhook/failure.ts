@@ -1,10 +1,10 @@
-import { WEBHOOK_FAILURE_NOTIFY_THRESHOLD } from "./constants";
-import type { Webhook } from "@dub/prisma/client";
-import WebhookDisabled from "emails/webhook-disabled";
 import { prisma } from "@dub/prisma";
+import type { Webhook } from "@dub/prisma/client";
 import { sendEmail } from "emails";
-import { toggleWebhooksForWorkspace } from "./update-webhook";
+import WebhookDisabled from "emails/webhook-disabled";
 import { webhookCache } from "./cache";
+import { WEBHOOK_FAILURE_NOTIFY_THRESHOLD } from "./constants";
+import { toggleWebhooksForWorkspace } from "./update-webhook";
 
 export const handleWebhookFailure = async (webhookId: string) => {
   const webhook = await prisma.webhook.update({

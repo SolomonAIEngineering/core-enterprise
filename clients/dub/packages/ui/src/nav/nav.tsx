@@ -1,20 +1,23 @@
 'use client'
 
-import { APP_DOMAIN, cn, createHref, fetcher } from '@dub/utils'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { LayoutGroup } from 'framer-motion'
-import Cookies from 'js-cookie'
-import Link from 'next/link'
-import { useParams, usePathname } from 'next/navigation'
-import { PropsWithChildren, createContext, useId } from 'react'
-import useSWR from 'swr'
-import { buttonVariants } from '../button'
+
+import { APP_DOMAIN, cn, createHref, fetcher } from '@dub/utils'
 import { FEATURES_LIST, RESOURCES } from '../content'
-import { useScroll } from '../hooks'
+import { PropsWithChildren, createContext, useId } from 'react'
+import { useParams, usePathname } from 'next/navigation'
+
+import Cookies from 'js-cookie'
+import { LayoutGroup } from 'framer-motion'
+import Link from 'next/link'
 import { MaxWidthWrapper } from '../max-width-wrapper'
 import { NavWordmark } from '../nav-wordmark'
 import { ProductContent } from './content/product-content'
 import { ResourcesContent } from './content/resources-content'
+import { buttonVariants } from '../button'
+import { BusinessConfig as platform } from '@dub/platform-config'
+import useSWR from 'swr'
+import { useScroll } from '../hooks'
 
 export type NavTheme = 'light' | 'dark'
 
@@ -202,7 +205,7 @@ export function Nav({
                     <Link
                       href={
                         hasDubCookie
-                          ? 'https://app.dub.co/login'
+                          ? `${platform.platformUrl}/login`
                           : 'https://d.to/login'
                       }
                       className={cn(
@@ -216,7 +219,7 @@ export function Nav({
                     <Link
                       href={
                         hasDubCookie
-                          ? 'https://app.dub.co/register'
+                          ? `${platform.platformUrl}/register`
                           : 'https://d.to/register'
                       }
                       className={cn(

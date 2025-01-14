@@ -13,7 +13,7 @@ export const getUrlFromString = (str: string) => {
     if (str.includes(".") && !str.includes(" ")) {
       return new URL(`https://${str}`).toString();
     }
-  } catch (_) {}
+  } catch (_) { }
   return str;
 };
 
@@ -23,7 +23,7 @@ export const getUrlFromStringIfValid = (str: string) => {
     if (str.includes(".") && !str.includes(" ")) {
       return new URL(`https://${str}`).toString();
     }
-  } catch (_) {}
+  } catch (_) { }
   return null;
 };
 

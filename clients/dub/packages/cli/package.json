@@ -40,6 +40,7 @@
     "start": "node dist/index.js "
   },
   "dependencies": {
+    "@dub/platform-config": "workspace:*",
     "@badgateway/oauth2-client": "^2.4.2",
     "chalk": "^5.3.0",
     "commander": "^11.1.0",

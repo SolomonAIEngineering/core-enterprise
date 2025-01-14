@@ -67,8 +67,8 @@ export default async function dashboardPage({
 
   return (
     <div className="flex min-h-screen flex-col justify-between bg-gray-50/80">
-      <NavMobile staticDomain="app.dub.co" />
-      <Nav staticDomain="app.dub.co" />
+      <NavMobile staticDomain={platform.platformHost} />
+      <Nav staticDomain={platform.platformHost} />
       <Suspense fallback={<div className="h-screen w-full bg-gray-50" />}>
         <Analytics
           dashboardProps={{
@@ -80,7 +80,7 @@ export default async function dashboardPage({
           }}
         />
       </Suspense>
-      <Footer staticDomain="app.oppulence.co" />
+      <Footer staticDomain={platform.platformHost} />
     </div>
   );
 }

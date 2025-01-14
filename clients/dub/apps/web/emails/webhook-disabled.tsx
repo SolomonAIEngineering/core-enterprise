@@ -12,10 +12,10 @@ import {
   Text,
 } from "@react-email/components";
 
-import { DUB_WORDMARK } from "@dub/utils";
-import Footer from "./components/footer";
 import { WEBHOOK_FAILURE_NOTIFY_THRESHOLD } from "@/lib/webhook/constants";
 import { BusinessConfig as platform } from "@dub/platform-config";
+import { DUB_WORDMARK } from "@dub/utils";
+import Footer from "./components/footer";
 
 export default function WebhookDisabled({
   email = "panic@thedis.co",

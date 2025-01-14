@@ -1,9 +1,7 @@
-import type { ExtensionContextValue } from "@stripe/ui-extension-sdk/context";
 import {
-  createHttpClient,
   STRIPE_API_KEY,
+  createHttpClient,
 } from "@stripe/ui-extension-sdk/http_client";
-import { createOAuthState } from "@stripe/ui-extension-sdk/oauth";
 import {
   Banner,
   Button,
@@ -12,10 +10,6 @@ import {
   Spinner,
 } from "@stripe/ui-extension-sdk/ui";
 import { useEffect, useRef, useState } from "react";
-import Stripe from "stripe";
-import { useWorkspace } from "../hooks/use-workspace";
-import appIcon from "../icon.svg";
-import { updateWorkspace } from "../utils/dub";
 import {
   getOAuthUrl,
   getToken,
@@ -23,6 +17,14 @@ import {
   getValidToken,
 } from "../utils/oauth";
 import { deleteSecret, setSecret } from "../utils/secrets";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import type { ExtensionContextValue } from "@stripe/ui-extension-sdk/context";
+import { createOAuthState } from "@stripe/ui-extension-sdk/oauth";
+import Stripe from "stripe";
+import { useWorkspace } from "../hooks/use-workspace";
+import appIcon from "../icon.svg";
+import { updateWorkspace } from "../utils/dub";
 import { Workspace } from "../utils/types";
 
 // TODO:
@@ -189,7 +191,11 @@ const AppSettings = ({ userContext, oauthContext }: ExtensionContextValue) => {
       footerContent={
         <>
           Don&apos;t have an Dub account?{" "}
-          <Link href="https://app.dub.co/register" target="_blank" external>
+          <Link
+            href={`${platform.platformUrl}/register`}
+            target="_blank"
+            external
+          >
             Sign up
           </Link>
         </>

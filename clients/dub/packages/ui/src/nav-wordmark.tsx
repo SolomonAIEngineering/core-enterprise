@@ -6,6 +6,8 @@ import { BoxSelect, Home, LayoutGrid, Type } from 'lucide-react'
 import { Button, type ButtonProps } from './button'
 import { type MouseEvent, useCallback, useContext, useState } from 'react'
 
+import { BusinessConfig as platform } from '@dub/platform-config'
+
 import { Logo } from './logo'
 import { NavContext } from './nav'
 import { Wordmark } from './wordmark'
@@ -121,7 +123,7 @@ export function NavWordmark({
               <ContextMenuButton
                 text="Dashboard"
                 variant="outline"
-                onClick={() => window.open('https://app.dub.co', '_blank')}
+                onClick={() => window.open(platform.platformUrl, '_blank')}
                 icon={<LayoutGrid strokeWidth={2} className="h-4 w-4" />}
               />
             )}

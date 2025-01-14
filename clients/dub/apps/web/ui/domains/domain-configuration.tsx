@@ -1,7 +1,8 @@
-import { DomainVerificationStatusProps } from "@/lib/types";
 import { CircleInfo, CopyButton, TabSelect } from "@dub/ui";
 import { cn, getSubdomain } from "@dub/utils";
 import { Fragment, useState } from "react";
+
+import { DomainVerificationStatusProps } from "@/lib/types";
 
 export default function DomainConfiguration({
   data,

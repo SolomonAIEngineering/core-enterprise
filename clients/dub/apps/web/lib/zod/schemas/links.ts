@@ -1,5 +1,3 @@
-import { ErrorCode } from "@/lib/api/errors";
-import z from "@/lib/zod";
 import {
   COUNTRY_CODES,
   DUB_FOUNDING_DATE,
@@ -7,12 +5,15 @@ import {
   validDomainRegex,
 } from "@dub/utils";
 import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
-import { TagSchema } from "./tags";
 import {
   parseDateSchema,
   parseUrlSchema,
   parseUrlSchemaAllowEmpty,
 } from "./utils";
+
+import { ErrorCode } from "@/lib/api/errors";
+import z from "@/lib/zod";
+import { TagSchema } from "./tags";
 
 export const getUrlQuerySchema = z.object({
   url: parseUrlSchema,
@@ -453,19 +454,19 @@ export const LinkSchema = z
       .string()
       .nullable()
       .describe(
-        "The title of the short link generated via `api.dub.co/metatags`. Will be used for Custom Social Media Cards if `proxy` is true.",
+        "The title of the short link generated via `api.vector.app/metatags`. Will be used for Custom Social Media Cards if `proxy` is true.",
       ),
     description: z
       .string()
       .nullable()
       .describe(
-        "The description of the short link generated via `api.dub.co/metatags`. Will be used for Custom Social Media Cards if `proxy` is true.",
+        "The description of the short link generated via `api.vector.app/metatags`. Will be used for Custom Social Media Cards if `proxy` is true.",
       ),
     image: z
       .string()
       .nullable()
       .describe(
-        "The image of the short link generated via `api.dub.co/metatags`. Will be used for Custom Social Media Cards if `proxy` is true.",
+        "The image of the short link generated via `api.vector.app/metatags`. Will be used for Custom Social Media Cards if `proxy` is true.",
       ),
     video: z
       .string()
@@ -532,7 +533,7 @@ export const LinkSchema = z
       .string()
       .url()
       .describe(
-        "The full URL of the QR code for the short link (e.g. `https://api.dub.co/qr?url=https://dub.sh/try`).",
+        "The full URL of the QR code for the short link (e.g. `https://api.vector.app/qr?url=https://dub.sh/try`).",
       ),
     utm_source: z
       .string()

@@ -1,6 +1,7 @@
 "use client";
 
 import { BlurImage, Popup, PopupContext } from "@dub/ui";
+
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";

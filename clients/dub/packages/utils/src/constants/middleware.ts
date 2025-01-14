@@ -1,16 +1,16 @@
 import { BusinessConfig as platform } from "@dub/platform-config";
 export const DEFAULT_REDIRECTS = {
   home: platform.webUrl,
-  dub: "https://dub.co",
-  signin: "https://app.dub.co/login",
-  login: "https://app.dub.co/login",
-  register: "https://app.dub.co/register",
-  signup: "https://app.dub.co/register",
-  app: "https://app.dub.co",
-  dashboard: "https://app.dub.co",
-  links: "https://app.dub.co/links",
-  settings: "https://app.dub.co/settings",
-  welcome: "https://app.dub.co/onboarding/welcome",
+  dub: platform.webUrl,
+  signin: `${platform.platformUrl}/login`,
+  login: `${platform.platformUrl}/login`,
+  register: `${platform.platformUrl}/register`,
+  signup: `${platform.platformUrl}/register`,
+  app: `${platform.platformUrl}`,
+  dashboard: `${platform.platformUrl}`,
+  links: `${platform.platformUrl}/links`,
+  settings: `${platform.platformUrl}/settings`,
+  welcome: `${platform.platformUrl}/onboarding/welcome`,
   discord: "https://twitter.com/dubdotco", // placeholder for now
 };
 
