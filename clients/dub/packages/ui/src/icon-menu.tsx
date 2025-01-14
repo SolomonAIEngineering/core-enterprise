@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react'
 
 interface MenuIconProps {
-  icon: ReactNode;
-  text: string;
+  icon: ReactNode
+  text: string
 }
 
 export function IconMenu({ icon, text }: MenuIconProps) {
@@ -11,5 +11,5 @@ export function IconMenu({ icon, text }: MenuIconProps) {
       {icon}
       <p className="truncate text-sm">{text}</p>
     </div>
-  );
+  )
 }

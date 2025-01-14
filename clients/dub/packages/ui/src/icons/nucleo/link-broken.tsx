@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function LinkBroken(props: SVGProps<SVGSVGElement>) {
   return (
@@ -72,5 +72,5 @@ export function LinkBroken(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

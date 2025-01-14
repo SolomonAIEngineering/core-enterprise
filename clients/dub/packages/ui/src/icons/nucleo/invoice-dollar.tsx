@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function InvoiceDollar({
   strokeWidth = 1.5,
@@ -53,5 +53,5 @@ export function InvoiceDollar({
         />
       </g>
     </svg>
-  );
+  )
 }

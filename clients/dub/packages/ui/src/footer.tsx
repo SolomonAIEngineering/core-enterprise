@@ -1,38 +1,38 @@
-"use client";
+'use client'
 
-import { ALL_TOOLS, cn, createHref, fetcher } from "@dub/utils";
-import Image from "next/image";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
-import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from "./content";
-import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from "./icons";
-import { MaxWidthWrapper } from "./max-width-wrapper";
-import { NavWordmark } from "./nav-wordmark";
+import { ALL_TOOLS, cn, createHref, fetcher } from '@dub/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from './content'
+import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from './icons'
+import { MaxWidthWrapper } from './max-width-wrapper'
+import { NavWordmark } from './nav-wordmark'
 
 const socials = [
   {
-    name: "Twitter",
+    name: 'Twitter',
     icon: Twitter,
-    href: "https://twitter.com/dubdotco",
+    href: 'https://twitter.com/dubdotco',
   },
   {
-    name: "LinkedIn",
+    name: 'LinkedIn',
     icon: LinkedIn,
-    href: "https://www.linkedin.com/company/dubinc",
+    href: 'https://www.linkedin.com/company/dubinc',
   },
   {
-    name: "GitHub",
+    name: 'GitHub',
     icon: Github,
-    href: "https://github.com/dubinc/dub",
+    href: 'https://github.com/dubinc/dub',
   },
   {
-    name: "YouTube",
+    name: 'YouTube',
     icon: YouTube,
-    href: "https://www.youtube.com/@dubdotco",
+    href: 'https://www.youtube.com/@dubdotco',
   },
-];
+]
 
 const navigation = {
   features: FEATURES_LIST.map(({ title, href }) => ({
@@ -40,14 +40,14 @@ const navigation = {
     href,
   })),
   product: [
-    { name: "Blog", href: "/blog" },
-    { name: "Changelog", href: "/changelog" },
-    { name: "Customers", href: "/customers" },
-    { name: "Enterprise", href: "/enterprise" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "Docs", href: "/docs/introduction" },
-    { name: "Help Center", href: "/help" },
-    { name: "Brand", href: "/brand" },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Changelog', href: '/changelog' },
+    { name: 'Customers', href: '/customers' },
+    { name: 'Enterprise', href: '/enterprise' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Docs', href: '/docs/introduction' },
+    { name: 'Help Center', href: '/help' },
+    { name: 'Brand', href: '/brand' },
   ],
   compare: COMPARE_PAGES.map(({ name, slug }) => ({
     name,
@@ -61,30 +61,30 @@ const navigation = {
     name,
     href: `/tools/${slug}`,
   })),
-};
+}
 
-const linkListHeaderClassName = "text-sm font-medium text-neutral-900";
-const linkListClassName = "flex flex-col mt-2.5 gap-2.5";
+const linkListHeaderClassName = 'text-sm font-medium text-neutral-900'
+const linkListClassName = 'flex flex-col mt-2.5 gap-2.5'
 const linkListItemClassName =
-  "text-sm text-neutral-500 hover:text-neutral-700 transition-colors duration-75";
+  'text-sm text-neutral-500 hover:text-neutral-700 transition-colors duration-75'
 
 export function Footer({
   staticDomain,
   className,
 }: {
-  staticDomain?: string;
-  className?: string;
+  staticDomain?: string
+  className?: string
 }) {
-  let { domain = "dub.co" } = useParams() as { domain: string };
+  let { domain = 'dub.co' } = useParams() as { domain: string }
   if (staticDomain) {
-    domain = staticDomain;
+    domain = staticDomain
   }
 
   return (
     <MaxWidthWrapper
       className={cn(
-        "relative z-10 overflow-hidden border border-b-0 border-neutral-200 bg-white/50 py-16 backdrop-blur-lg md:rounded-t-2xl",
-        className,
+        'relative z-10 overflow-hidden border border-b-0 border-neutral-200 bg-white/50 py-16 backdrop-blur-lg md:rounded-t-2xl',
+        className
       )}
     >
       <footer>
@@ -92,11 +92,11 @@ export function Footer({
           <div className="flex flex-col gap-6">
             <div className="grow">
               <Link
-                href={createHref("/", domain, {
-                  utm_source: "Custom Domain",
-                  utm_medium: "Footer",
+                href={createHref('/', domain, {
+                  utm_source: 'Custom Domain',
+                  utm_medium: 'Footer',
                   utm_campaign: domain,
-                  utm_content: "Logo",
+                  utm_content: 'Logo',
                 })}
                 className="block max-w-fit"
               >
@@ -130,8 +130,8 @@ export function Footer({
                     <li key={item.name}>
                       <Link
                         href={createHref(item.href, domain, {
-                          utm_source: "Custom Domain",
-                          utm_medium: "Footer",
+                          utm_source: 'Custom Domain',
+                          utm_medium: 'Footer',
                           utm_campaign: domain,
                           utm_content: item.name,
                         })}
@@ -150,8 +150,8 @@ export function Footer({
                     <li key={item.name}>
                       <Link
                         href={createHref(item.href, domain, {
-                          utm_source: "Custom Domain",
-                          utm_medium: "Footer",
+                          utm_source: 'Custom Domain',
+                          utm_medium: 'Footer',
                           utm_campaign: domain,
                           utm_content: item.name,
                         })}
@@ -173,8 +173,8 @@ export function Footer({
                       <li key={item.name}>
                         <Link
                           href={createHref(item.href, domain, {
-                            utm_source: "Custom Domain",
-                            utm_medium: "Footer",
+                            utm_source: 'Custom Domain',
+                            utm_medium: 'Footer',
                             utm_campaign: domain,
                             utm_content: item.name,
                           })}
@@ -193,8 +193,8 @@ export function Footer({
                       <li key={item.name}>
                         <Link
                           href={createHref(item.href, domain, {
-                            utm_source: "Custom Domain",
-                            utm_medium: "Footer",
+                            utm_source: 'Custom Domain',
+                            utm_medium: 'Footer',
                             utm_campaign: domain,
                             utm_content: item.name,
                           })}
@@ -211,7 +211,7 @@ export function Footer({
                         rel="noreferrer"
                         className={cn(
                           linkListItemClassName,
-                          "flex items-center gap-1",
+                          'flex items-center gap-1'
                         )}
                       >
                         Trust Center <ReferredVia className="size-3.5" />
@@ -228,8 +228,8 @@ export function Footer({
                     <li key={item.name}>
                       <Link
                         href={createHref(item.href, domain, {
-                          utm_source: "Custom Domain",
-                          utm_medium: "Footer",
+                          utm_source: 'Custom Domain',
+                          utm_medium: 'Footer',
                           utm_campaign: domain,
                           utm_content: item.name,
                         })}
@@ -249,11 +249,11 @@ export function Footer({
         <div className="mt-12 grid grid-cols-1 items-center gap-8 sm:grid-cols-3">
           <StatusBadge />
           <Link
-            href={createHref("/blog/soc2", domain, {
-              utm_source: "Custom Domain",
-              utm_medium: "Footer",
+            href={createHref('/blog/soc2', domain, {
+              utm_source: 'Custom Domain',
+              utm_medium: 'Footer',
               utm_campaign: domain,
-              utm_content: "SOC2",
+              utm_content: 'SOC2',
             })}
             className="flex sm:justify-center"
           >
@@ -271,39 +271,39 @@ export function Footer({
         </div>
       </footer>
     </MaxWidthWrapper>
-  );
+  )
 }
 
 function StatusBadge() {
   const { data } = useSWR<{
     ongoing_incidents: {
-      name: string;
+      name: string
       current_worst_impact:
-        | "degraded_performance"
-        | "partial_outage"
-        | "full_outage";
-    }[];
-  }>("https://status.dub.co/api/v1/summary", fetcher);
+        | 'degraded_performance'
+        | 'partial_outage'
+        | 'full_outage'
+    }[]
+  }>('https://status.dub.co/api/v1/summary', fetcher)
 
-  const [color, setColor] = useState("bg-neutral-200");
-  const [status, setStatus] = useState("Loading status...");
+  const [color, setColor] = useState('bg-neutral-200')
+  const [status, setStatus] = useState('Loading status...')
 
   useEffect(() => {
-    if (!data) return;
-    const { ongoing_incidents } = data;
+    if (!data) return
+    const { ongoing_incidents } = data
     if (ongoing_incidents.length > 0) {
-      const { current_worst_impact, name } = ongoing_incidents[0];
+      const { current_worst_impact, name } = ongoing_incidents[0]
       const color =
-        current_worst_impact === "degraded_performance"
-          ? "bg-yellow-500"
-          : "bg-red-500";
-      setStatus(name);
-      setColor(color);
+        current_worst_impact === 'degraded_performance'
+          ? 'bg-yellow-500'
+          : 'bg-red-500'
+      setStatus(name)
+      setColor(color)
     } else {
-      setStatus("All systems operational");
-      setColor("bg-green-500");
+      setStatus('All systems operational')
+      setColor('bg-green-500')
     }
-  }, [data]);
+  }, [data])
 
   return (
     <Link
@@ -314,15 +314,15 @@ function StatusBadge() {
       <div className="relative size-2">
         <div
           className={cn(
-            "absolute inset-0 m-auto size-2 animate-ping items-center justify-center rounded-full group-hover:animate-none",
+            'absolute inset-0 m-auto size-2 animate-ping items-center justify-center rounded-full group-hover:animate-none',
             color,
-            status === "Loading status..." && "animate-none",
+            status === 'Loading status...' && 'animate-none'
           )}
         />
         <div
           className={cn(
-            "absolute inset-0 z-10 m-auto size-2 rounded-full",
-            color,
+            'absolute inset-0 z-10 m-auto size-2 rounded-full',
+            color
           )}
         />
       </div>
@@ -330,5 +330,5 @@ function StatusBadge() {
         {status}
       </p>
     </Link>
-  );
+  )
 }

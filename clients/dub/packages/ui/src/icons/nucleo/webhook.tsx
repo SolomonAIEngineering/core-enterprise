@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Webhook(props: SVGProps<SVGSVGElement>) {
   return (
@@ -51,5 +51,5 @@ export function Webhook(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

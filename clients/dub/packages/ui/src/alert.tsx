@@ -1,22 +1,22 @@
-import { cn } from "@dub/utils";
-import { cva, type VariantProps } from "class-variance-authority";
-import * as React from "react";
+import { cn } from '@dub/utils'
+import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from 'react'
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border px-4 py-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7",
+  'relative w-full rounded-lg border px-4 py-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
+        default: 'bg-background text-foreground',
         destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive border-red-500 dark:border-red-500",
+          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive border-red-500 dark:border-red-500',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
-  },
-);
+  }
+)
 
 const Alert = React.forwardRef<
   HTMLDivElement,
@@ -28,9 +28,9 @@ const Alert = React.forwardRef<
     className={cn(alertVariants({ variant }), className)}
     {...props}
   />
-));
+))
 
-Alert.displayName = "Alert";
+Alert.displayName = 'Alert'
 
 const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
@@ -39,14 +39,14 @@ const AlertTitle = React.forwardRef<
   <h5
     ref={ref}
     className={cn(
-      "text-md mb-2 font-medium leading-none tracking-tight",
-      className,
+      'text-md mb-2 font-medium leading-none tracking-tight',
+      className
     )}
     {...props}
   />
-));
+))
 
-AlertTitle.displayName = "AlertTitle";
+AlertTitle.displayName = 'AlertTitle'
 
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -54,11 +54,11 @@ const AlertDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    className={cn('text-sm [&_p]:leading-relaxed', className)}
     {...props}
   />
-));
+))
 
-AlertDescription.displayName = "AlertDescription";
+AlertDescription.displayName = 'AlertDescription'
 
-export { Alert, AlertDescription, AlertTitle };
+export { Alert, AlertDescription, AlertTitle }

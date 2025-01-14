@@ -13,18 +13,18 @@
  * - Axis customization
  */
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Areas } from "./areas";
-import { TimeSeriesChart } from "./time-series-chart";
-import { XAxis } from "./x-axis";
-import { YAxis } from "./y-axis";
+import { Areas } from './areas'
+import { TimeSeriesChart } from './time-series-chart'
+import { XAxis } from './x-axis'
+import { YAxis } from './y-axis'
 
 const meta: Meta<typeof Areas> = {
-  title: "Charts/Areas",
+  title: 'Charts/Areas',
   component: Areas,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component: `
@@ -108,18 +108,18 @@ See the stories below for various implementation examples:
   },
   decorators: [
     (Story) => (
-      <div style={{ margin: "2em", background: "white", padding: "1em" }}>
+      <div style={{ margin: '2em', background: 'white', padding: '1em' }}>
         <Story />
       </div>
     ),
   ],
   argTypes: {
     seriesStyles: {
-      description: "Style configurations for each series",
-      control: "object",
+      description: 'Style configurations for each series',
+      control: 'object',
       table: {
         type: {
-          summary: "array",
+          summary: 'array',
           detail: `Array<{
   id: string;
   gradientClassName?: string;
@@ -131,10 +131,10 @@ See the stories below for various implementation examples:
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Areas>;
+export default meta
+type Story = StoryObj<typeof Areas>
 
 /**
  * Generates sample time series data for the area charts.
@@ -144,28 +144,28 @@ type Story = StoryObj<typeof Areas>;
  */
 const generateData = (days: number) => {
   const data: Array<{
-    date: Date;
+    date: Date
     values: {
-      value: number;
-      secondValue: number;
-    };
-  }> = [];
-  const now = new Date();
+      value: number
+      secondValue: number
+    }
+  }> = []
+  const now = new Date()
   for (let i = 0; i < days; i++) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - (days - i - 1));
+    const date = new Date(now)
+    date.setDate(date.getDate() - (days - i - 1))
     data.push({
       date,
       values: {
         value: Math.floor(Math.random() * 1000) + 100,
         secondValue: Math.floor(Math.random() * 500) + 50,
       },
-    });
+    })
   }
-  return data;
-};
+  return data
+}
 
-const sampleData = generateData(30);
+const sampleData = generateData(30)
 
 /**
  * Default Area Chart
@@ -176,16 +176,16 @@ const sampleData = generateData(30);
 export const Default: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
         ]}
@@ -196,7 +196,7 @@ export const Default: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Custom Styled Area Chart
@@ -211,16 +211,16 @@ export const Default: Story = {
 export const WithCustomStyles: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
         ]}
@@ -228,9 +228,9 @@ export const WithCustomStyles: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              lineClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              lineClassName: 'text-blue-700',
             },
           ]}
         />
@@ -239,7 +239,7 @@ export const WithCustomStyles: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Multi-Series Area Chart
@@ -256,22 +256,22 @@ export const WithCustomStyles: Story = {
 export const MultiSeries: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
             isActive: true,
           },
         ]}
@@ -279,14 +279,14 @@ export const MultiSeries: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              lineClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              lineClassName: 'text-blue-700',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-green-500/50",
-              lineClassName: "text-green-700",
+              id: 'secondValue',
+              gradientClassName: 'text-green-500/50',
+              lineClassName: 'text-green-700',
             },
           ]}
         />
@@ -295,7 +295,7 @@ export const MultiSeries: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Stacked Area Chart
@@ -304,22 +304,22 @@ export const MultiSeries: Story = {
 export const StackedAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue,
-            colorClassName: "text-green-500",
+            colorClassName: 'text-green-500',
             isActive: true,
           },
         ]}
@@ -327,14 +327,14 @@ export const StackedAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              lineClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              lineClassName: 'text-blue-700',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-green-500/50",
-              lineClassName: "text-green-700",
+              id: 'secondValue',
+              gradientClassName: 'text-green-500/50',
+              lineClassName: 'text-green-700',
             },
           ]}
         />
@@ -343,7 +343,7 @@ export const StackedAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Stepped Area Chart
@@ -352,16 +352,16 @@ export const StackedAreas: Story = {
 export const SteppedAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-purple-500",
+            colorClassName: 'text-purple-500',
             isActive: true,
           },
         ]}
@@ -369,9 +369,9 @@ export const SteppedAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-purple-500/50",
-              lineClassName: "text-purple-700",
+              id: 'value',
+              gradientClassName: 'text-purple-500/50',
+              lineClassName: 'text-purple-700',
             },
           ]}
         />
@@ -380,7 +380,7 @@ export const SteppedAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Pattern Fill Areas
@@ -389,16 +389,16 @@ export const SteppedAreas: Story = {
 export const PatternedAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-indigo-500",
+            colorClassName: 'text-indigo-500',
             isActive: true,
           },
         ]}
@@ -411,9 +411,9 @@ export const PatternedAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              areaFill: "url(#dots)",
-              lineClassName: "text-indigo-700",
+              id: 'value',
+              areaFill: 'url(#dots)',
+              lineClassName: 'text-indigo-700',
             },
           ]}
         />
@@ -422,7 +422,7 @@ export const PatternedAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Animated Area Chart
@@ -431,16 +431,16 @@ export const PatternedAreas: Story = {
 export const AnimatedAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-cyan-500",
+            colorClassName: 'text-cyan-500',
             isActive: true,
           },
         ]}
@@ -448,9 +448,9 @@ export const AnimatedAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-cyan-500/50 transition-all duration-300",
-              lineClassName: "text-cyan-700 transition-all duration-300",
+              id: 'value',
+              gradientClassName: 'text-cyan-500/50 transition-all duration-300',
+              lineClassName: 'text-cyan-700 transition-all duration-300',
             },
           ]}
         />
@@ -459,7 +459,7 @@ export const AnimatedAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Interactive Hover Effects
@@ -468,16 +468,16 @@ export const AnimatedAreas: Story = {
 export const InteractiveAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-amber-500",
+            colorClassName: 'text-amber-500',
             isActive: true,
           },
         ]}
@@ -485,9 +485,9 @@ export const InteractiveAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-amber-500/50 hover:text-amber-600/50",
-              lineClassName: "text-amber-700 hover:text-amber-800",
+              id: 'value',
+              gradientClassName: 'text-amber-500/50 hover:text-amber-600/50',
+              lineClassName: 'text-amber-700 hover:text-amber-800',
             },
           ]}
         />
@@ -496,7 +496,7 @@ export const InteractiveAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Minimal Style
@@ -505,16 +505,16 @@ export const InteractiveAreas: Story = {
 export const MinimalAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-gray-500",
+            colorClassName: 'text-gray-500',
             isActive: true,
           },
         ]}
@@ -522,9 +522,9 @@ export const MinimalAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-gray-500/30",
-              lineClassName: "text-gray-700",
+              id: 'value',
+              gradientClassName: 'text-gray-500/30',
+              lineClassName: 'text-gray-700',
             },
           ]}
         />
@@ -533,7 +533,7 @@ export const MinimalAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Dense Data Visualization
@@ -542,16 +542,16 @@ export const MinimalAreas: Story = {
 export const DenseAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={generateData(100)}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-rose-500",
+            colorClassName: 'text-rose-500',
             isActive: true,
           },
         ]}
@@ -559,9 +559,9 @@ export const DenseAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-rose-500/50",
-              lineClassName: "text-rose-700",
+              id: 'value',
+              gradientClassName: 'text-rose-500/50',
+              lineClassName: 'text-rose-700',
             },
           ]}
         />
@@ -570,7 +570,7 @@ export const DenseAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Gradient Variations
@@ -579,16 +579,16 @@ export const DenseAreas: Story = {
 export const GradientAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-emerald-500",
+            colorClassName: 'text-emerald-500',
             isActive: true,
           },
         ]}
@@ -606,9 +606,9 @@ export const GradientAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              areaFill: "url(#customGradient)",
-              lineClassName: "text-emerald-700",
+              id: 'value',
+              areaFill: 'url(#customGradient)',
+              lineClassName: 'text-emerald-700',
             },
           ]}
         />
@@ -617,7 +617,7 @@ export const GradientAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Comparison View
@@ -626,22 +626,22 @@ export const GradientAreas: Story = {
 export const ComparisonAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-200 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-blue-500",
+            colorClassName: 'text-blue-500',
             isActive: true,
           },
           {
-            id: "secondValue",
+            id: 'secondValue',
             valueAccessor: (d) => d.values.secondValue * 2,
-            colorClassName: "text-red-500",
+            colorClassName: 'text-red-500',
             isActive: true,
           },
         ]}
@@ -649,14 +649,14 @@ export const ComparisonAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/30",
-              lineClassName: "text-blue-700 stroke-2",
+              id: 'value',
+              gradientClassName: 'text-blue-500/30',
+              lineClassName: 'text-blue-700 stroke-2',
             },
             {
-              id: "secondValue",
-              gradientClassName: "text-red-500/30",
-              lineClassName: "text-red-700 stroke-2",
+              id: 'secondValue',
+              gradientClassName: 'text-red-500/30',
+              lineClassName: 'text-red-700 stroke-2',
             },
           ]}
         />
@@ -665,7 +665,7 @@ export const ComparisonAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Dark Theme
@@ -674,16 +674,16 @@ export const ComparisonAreas: Story = {
 export const DarkThemeAreas: Story = {
   render: () => (
     <div
-      style={{ width: "800px", height: "400px" }}
+      style={{ width: '800px', height: '400px' }}
       className="rounded-lg border border-gray-700 bg-gray-900 p-4"
     >
       <TimeSeriesChart
         data={sampleData}
         series={[
           {
-            id: "value",
+            id: 'value',
             valueAccessor: (d) => d.values.value,
-            colorClassName: "text-sky-400",
+            colorClassName: 'text-sky-400',
             isActive: true,
           },
         ]}
@@ -691,9 +691,9 @@ export const DarkThemeAreas: Story = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-sky-400/30",
-              lineClassName: "text-sky-300",
+              id: 'value',
+              gradientClassName: 'text-sky-400/30',
+              lineClassName: 'text-sky-300',
             },
           ]}
         />
@@ -702,7 +702,7 @@ export const DarkThemeAreas: Story = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 /**
  * Component Props Documentation

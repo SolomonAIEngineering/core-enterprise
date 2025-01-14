@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 import {
   Carousel,
   CarouselContent,
@@ -6,24 +6,24 @@ import {
   CarouselNavBar,
   CarouselNext,
   CarouselPrevious,
-} from "./carousel";
+} from './carousel'
 
 const meta: Meta<typeof Carousel> = {
-  title: "Components/Carousel",
+  title: 'Components/Carousel',
   component: Carousel,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A carousel component for cycling through elements like a slideshow.",
+          'A carousel component for cycling through elements like a slideshow.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Carousel>;
+export default meta
+type Story = StoryObj<typeof Carousel>
 
 export const Default: Story = {
   render: () => (
@@ -45,7 +45,7 @@ export const Default: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const WithNavBar: Story = {
   render: () => (
@@ -68,7 +68,7 @@ export const WithNavBar: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const Autoplay: Story = {
   render: () => (
@@ -91,7 +91,7 @@ export const Autoplay: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const CustomAutoplayDelay: Story = {
   render: () => (
@@ -114,7 +114,7 @@ export const CustomAutoplayDelay: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const FloatingNavBar: Story = {
   render: () => (
@@ -135,7 +135,7 @@ export const FloatingNavBar: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const VerticalOrientation: Story = {
   render: () => (
@@ -157,7 +157,7 @@ export const VerticalOrientation: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const WithImages: Story = {
   render: () => (
@@ -184,7 +184,7 @@ export const WithImages: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const WithCards: Story = {
   render: () => (
@@ -209,7 +209,7 @@ export const WithCards: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const MultipleItems: Story = {
   render: () => (
@@ -234,7 +234,7 @@ export const MultipleItems: Story = {
       </Carousel>
     </div>
   ),
-};
+}
 
 export const ResponsiveItems: Story = {
   render: () => (
@@ -262,4 +262,4 @@ export const ResponsiveItems: Story = {
       </Carousel>
     </div>
   ),
-};
+}

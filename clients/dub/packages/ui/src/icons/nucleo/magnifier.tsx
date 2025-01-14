@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Magnifier(props: SVGProps<SVGSVGElement>) {
   return (
@@ -33,5 +33,5 @@ export function Magnifier(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

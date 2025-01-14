@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function DatabaseKey(props: SVGProps<SVGSVGElement>) {
   return (
@@ -82,5 +82,5 @@ export function DatabaseKey(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

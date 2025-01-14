@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Gem(props: SVGProps<SVGSVGElement>) {
   return (
@@ -47,5 +47,5 @@ export function Gem(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

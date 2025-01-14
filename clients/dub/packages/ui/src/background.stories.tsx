@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Background } from "./background";
+import { Background } from './background'
 
 const meta: Meta<typeof Background> = {
-  title: "Components/Background",
+  title: 'Components/Background',
   component: Background,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
     docs: {
       description: {
-        component: "A background component with gradient and grid effects.",
+        component: 'A background component with gradient and grid effects.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Background>;
+export default meta
+type Story = StoryObj<typeof Background>
 
 export const Default: Story = {
   render: () => <Background />,
-};
+}
 
 export const WithContent: Story = {
   render: () => (
@@ -34,7 +34,7 @@ export const WithContent: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const DarkMode: Story = {
   render: () => (
@@ -42,7 +42,7 @@ export const DarkMode: Story = {
       <Background />
     </div>
   ),
-};
+}
 
 export const WithHeader: Story = {
   render: () => (
@@ -60,7 +60,7 @@ export const WithHeader: Story = {
       </main>
     </div>
   ),
-};
+}
 
 export const WithCards: Story = {
   render: () => (
@@ -81,7 +81,7 @@ export const WithCards: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const WithSidebar: Story = {
   render: () => (
@@ -110,7 +110,7 @@ export const WithSidebar: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const WithFooter: Story = {
   render: () => (
@@ -130,7 +130,7 @@ export const WithFooter: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const WithHero: Story = {
   render: () => (
@@ -150,7 +150,7 @@ export const WithHero: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const WithForm: Story = {
   render: () => (
@@ -201,7 +201,7 @@ export const WithForm: Story = {
       </div>
     </div>
   ),
-};
+}
 
 export const WithGrid: Story = {
   render: () => (
@@ -223,4 +223,4 @@ export const WithGrid: Story = {
       </div>
     </div>
   ),
-};
+}

@@ -1,34 +1,34 @@
-import { cn } from "@dub/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { PropsWithChildren, createContext } from "react";
+import { cn } from '@dub/utils'
+import { VariantProps, cva } from 'class-variance-authority'
+import { PropsWithChildren, createContext } from 'react'
 
 const cardListVariants = cva(
-  "group/card-list w-full flex flex-col transition-[gap,opacity] min-w-0",
+  'group/card-list w-full flex flex-col transition-[gap,opacity] min-w-0',
   {
     variants: {
       variant: {
-        compact: "gap-0",
-        loose: "gap-4",
+        compact: 'gap-0',
+        loose: 'gap-4',
       },
       loading: {
-        true: "opacity-50",
+        true: 'opacity-50',
       },
     },
-  },
-);
+  }
+)
 
 type CardListProps = PropsWithChildren<{
-  loading?: boolean;
-  className?: string;
+  loading?: boolean
+  className?: string
 }> &
-  VariantProps<typeof cardListVariants>;
+  VariantProps<typeof cardListVariants>
 
-export const CardListContext = createContext<Pick<CardListProps, "variant">>({
-  variant: "loose",
-});
+export const CardListContext = createContext<Pick<CardListProps, 'variant'>>({
+  variant: 'loose',
+})
 
 export function CardList({
-  variant = "loose",
+  variant = 'loose',
   loading = false,
   className,
   children,
@@ -42,5 +42,5 @@ export function CardList({
         {children}
       </CardListContext.Provider>
     </ul>
-  );
+  )
 }
