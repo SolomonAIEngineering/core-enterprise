@@ -1,6 +1,8 @@
-import { X } from "@/ui/shared/icons";
 import { Button, Sheet, TabSelect, useRouterStuff } from "@dub/ui";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { X } from "@/ui/shared/icons";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { codeToHtml } from "shiki";
 
 interface EmbedDocsSheetProps {
@@ -60,10 +62,11 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
               href="https://dub.co/docs/sdks/client-side/embed"
               target="_blank"
               className="underline transition-colors duration-75 hover:text-neutral-600"
+              rel="noreferrer"
             >
               installation guides
             </a>{" "}
-            to add Dub Embed to your website.
+            to add {platform.company} Embed to your website.
           </p>
         </div>
       </div>
@@ -96,7 +99,7 @@ const App = () => {
     createToken();
   }, []);
 
-  return <DubEmbed 
+  return <DubEmbed
     token={token}
   />`;
 

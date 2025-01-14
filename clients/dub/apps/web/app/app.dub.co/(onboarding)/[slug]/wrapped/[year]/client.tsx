@@ -115,7 +115,7 @@ export default function WrappedPageClient() {
         />
         <div className="flex flex-col gap-2">
           <h3 className="font-display font-semibold text-black">
-            Dub {year} Year in Review 🎊
+            {platform.company} {year} Year in Review 🎊
           </h3>
           <p className="text-sm text-neutral-500 group-hover:underline">
             A full recap of some of the top features we shipped this year – and

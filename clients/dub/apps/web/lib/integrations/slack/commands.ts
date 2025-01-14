@@ -82,7 +82,7 @@ export const handleSlashCommand = async (req: Request) => {
     };
   }
 
-  // Find Dub user matching the Slack user profile
+  // Find user matching the Slack user profile
   const credentials = installation.credentials as SlackCredential;
   const slackUser = await findSlackUser({
     userId: data.user_id,
@@ -145,7 +145,7 @@ export const handleSlashCommand = async (req: Request) => {
   };
 };
 
-// Find Dub user for the given Slack user
+// Find user matching the Slack user profile
 // TODO: Cache the profile for better performance
 const findSlackUser = async ({
   userId,

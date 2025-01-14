@@ -1,5 +1,6 @@
-import z from "@/lib/zod";
 import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
+
+import z from "@/lib/zod";
 import { parseUrlSchemaAllowEmpty } from "./utils";
 
 export const DomainSchema = z.object({
@@ -73,7 +74,7 @@ export const getDomainsQuerySchema = z
 
 export const getDomainsQuerySchemaExtended = getDomainsQuerySchema.merge(
   z.object({
-    // only Dub UI uses the following query parameters
+    // only UI uses the following query parameters
     includeLink: booleanQuerySchema.default("false"),
   }),
 );

@@ -22,7 +22,7 @@ export const links = new Command()
 
       const links = await dub.links.list({
         search,
-        pageSize: limit ? parseInt(limit) : 10,
+        pageSize: limit ? Number.parseInt(limit) : 10,
       });
 
       spinner.stop();

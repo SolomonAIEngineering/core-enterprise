@@ -568,7 +568,7 @@ type SiteConfig = {
   statusPageUrl: string;
   /** API URL */
   apiUrl: string;
-  /** Project slug for Dub */
+  /** Project slug */
   dubProjectSlug: string;
   /** MFA issuer name */
   mfaIssuer: string;

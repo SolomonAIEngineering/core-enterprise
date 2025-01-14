@@ -1,7 +1,8 @@
 'use client'
 
-import { LucideIcon } from 'lucide-react'
 import { ComponentType, SVGProps } from 'react'
+
+import { LucideIcon } from 'lucide-react'
 
 // custom icons
 export { default as Copy } from './copy'
@@ -41,7 +42,7 @@ export * from './typescript'
 // continent icons
 export * from './continents'
 
-// dub default domains logos
+// default domains logos
 export * from './default-domains/amazon'
 export * from './default-domains/chatgpt'
 export * from './default-domains/figma'

@@ -1,6 +1,7 @@
+import { DUB_WORKSPACE_ID, isDubDomain } from "@dub/utils";
+
 import { WorkspaceWithUsers } from "@/lib/types";
 import { prisma } from "@dub/prisma";
-import { DUB_WORKSPACE_ID, isDubDomain } from "@dub/utils";
 import { DubApiError } from "../errors";
 
 export const getDomainOrThrow = async ({
@@ -10,7 +11,7 @@ export const getDomainOrThrow = async ({
 }: {
   workspace: WorkspaceWithUsers;
   domain: string;
-  dubDomainChecks?: boolean; // if we also need to make sure the user can actually make changes to dub default domains
+  dubDomainChecks?: boolean; // if we also need to make sure the user can actually make changes to default domains
 }) => {
   const domainRecord = await prisma.domain.findUnique({
     where: { slug: domain },
@@ -27,8 +28,8 @@ export const getDomainOrThrow = async ({
   }
 
   /* if domain is defined:
-      - it's a dub domain:
-        - if dubDomainChecks is true, check if the user is part of the dub workspace
+      - it's a domain:
+        - if dubDomainChecks is true, check if the user is part of the workspace
         - if dubDomainChecks is false, do nothing
       - it's a custom domain:
         - check if the domain belongs to the workspace

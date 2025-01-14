@@ -156,7 +156,7 @@ const AppSettings = ({ userContext, oauthContext }: ExtensionContextValue) => {
   if (workspace) {
     return (
       <Banner
-        title="Dub workspace"
+        title={`${platform.company} workspace`}
         description={`Connected to ${workspace.name}`}
         actions={
           <Button
@@ -183,14 +183,14 @@ const AppSettings = ({ userContext, oauthContext }: ExtensionContextValue) => {
 
   return (
     <SignInView
-      description="Connect your Dub workspace with Stripe to start tracking the conversions."
+      description={`Connect your ${platform.company} workspace with Stripe to start tracking the conversions.`}
       primaryAction={{
         label: connecting ? "Connecting please wait..." : "Connect workspace",
         href: connecting ? "#" : getOAuthUrl({ state: oauthState, challenge }),
       }}
       footerContent={
         <>
-          Don&apos;t have an Dub account?{" "}
+          Don&apos;t have an {platform.company} account?{" "}
           <Link
             href={`${platform.platformUrl}/register`}
             target="_blank"

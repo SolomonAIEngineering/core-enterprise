@@ -15,6 +15,7 @@ import {
   Ruby,
   Typescript,
 } from './icons'
+
 import { Elxo } from './icons/elxo'
 
 export const FEATURES_LIST = [

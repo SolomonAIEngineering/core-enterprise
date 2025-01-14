@@ -117,8 +117,7 @@ export default function DubWrapped({
   const shippedItems = [
     {
       title: "Free .LINK domains on all paid plans",
-      description:
-        "We partnered with Nova Registry to offer a <b>1-year free .link custom domain</b> to all paying Dub customers. By using a custom domain, you get <b>30% higher click-through rates</b> and better brand recognition.",
+      description: `We partnered with Nova Registry to offer a <b>1-year free .link custom domain</b> to all paying ${platform.company} customers. By using a custom domain, you get <b>30% higher click-through rates</b> and better brand recognition.`,
       image: "https://assets.dub.co/blog/free-dot-link.jpg",
       cta: {
         text: "Read the announcement",
@@ -136,9 +135,8 @@ export default function DubWrapped({
       },
     },
     {
-      title: "Dub API General Availability",
-      description:
-        "Our Dub API went GA, allowing you to build your powerful integrations with Dub. We also launched <b>native SDKs in 5 different languages</b>: TypeScript, Python, Ruby, PHP, and Go.",
+      title: `${platform.company} API General Availability`,
+      description: `Our ${platform.company} API went GA, allowing you to build your powerful integrations with ${platform.company}. We also launched <b>native SDKs in 5 different languages</b>: TypeScript, Python, Ruby, PHP, and Go.`,
       image: "https://assets.dub.co/blog/dub-api.jpg",
       cta: {
         text: "Read the announcement",
@@ -343,7 +341,10 @@ const StatTable = ({
         const [domain, ...pathParts] = item.split("/");
         const path = pathParts.join("/") || "_root";
         return (
-          <div key={`${index}-${item}-${Math.random()}`} className="text-sm">
+          <div
+            key={`${index} - ${item} - ${Math.random()}`}
+            className="text-sm"
+          >
             <Row>
               {title === "Top Countries" && (
                 <Column width={24}>

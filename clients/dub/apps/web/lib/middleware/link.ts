@@ -39,7 +39,7 @@ export default async function LinkMiddleware(
   }
 
   // encode the key to ascii
-  // links on Dub are case insensitive by default
+  // links on are case insensitive by default
   let key = punyEncode(originalKey.toLowerCase());
 
   const inspectMode = key.endsWith("+");
@@ -113,7 +113,7 @@ export default async function LinkMiddleware(
     projectId: workspaceId,
   } = link;
 
-  // by default, we only index default dub domain links (e.g. dub.sh)
+  // by default, we only index default domain links (e.g. dub.sh)
   // everything else is not indexed by default, unless the user has explicitly set it to be indexed
   const shouldIndex = isDubDomain(domain) || doIndex === true;
 

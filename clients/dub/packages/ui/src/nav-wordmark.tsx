@@ -25,7 +25,7 @@ const wordmarkSvg = `<svg width="46" height="24" viewBox="0 0 46 24" fill="none"
 </svg>`
 
 /**
- * The Dub logo with a custom context menu for copying/navigation,
+ * The logo with a custom context menu for copying/navigation,
  * for use in the top site nav
  */
 export function NavWordmark({
@@ -103,11 +103,11 @@ export function NavWordmark({
             <ContextMenuButton
               text="Brand Guidelines"
               variant="outline"
-              onClick={() => window.open('https://dub.co/brand', '_blank')}
+              onClick={() => window.open(`${platform.webUrl}/brand`, '_blank')}
               icon={<BoxSelect strokeWidth={2} className="h-4 w-4" />}
             />
             {/* If it's in the app or it's a domain placeholder page (not dub.co homepage), show the home button */}
-            {isInApp || domain != 'dub.co' ? (
+            {isInApp || domain !== 'dub.co' ? (
               <ContextMenuButton
                 text="Home Page"
                 variant="outline"

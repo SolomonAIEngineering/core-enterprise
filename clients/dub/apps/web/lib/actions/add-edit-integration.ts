@@ -1,10 +1,11 @@
 "use server";
 
+import { DUB_WORKSPACE_ID, R2_URL, nanoid } from "@dub/utils";
+import { isStored, storage } from "../storage";
+
 import { prisma } from "@dub/prisma";
-import { DUB_WORKSPACE_ID, nanoid, R2_URL } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
 import { deleteScreenshots } from "../integrations/utils";
-import { isStored, storage } from "../storage";
 import z from "../zod";
 import { createIntegrationSchema } from "../zod/schemas/integration";
 import { authActionClient } from "./safe-action";
@@ -21,7 +22,7 @@ export const addEditIntegration = authActionClient
   .action(async ({ parsedInput }) => {
     const { id, workspaceId, ...integration } = parsedInput;
 
-    // this is only available for Dub workspace for now
+    // this is only available for workspace for now
     // we might open this up to other workspaces in the future
     if (workspaceId !== DUB_WORKSPACE_ID) {
       throw new Error("Not authorized");

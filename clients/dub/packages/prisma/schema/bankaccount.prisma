@@ -10,6 +10,10 @@ enum ConnectionStatus {
   disconnected
   connected
   unknown
+  error
+  pending_verification
+  requires_attention
+  expired
 }
 
 enum BankProvider {
@@ -17,54 +21,174 @@ enum BankProvider {
   plaid
   teller
   stripe
+  manual
+  nordigen
+  truelayer
+}
+
+enum AccountSubType {
+  // Depository subtypes
+  checking
+  savings
+  money_market
+  certificate_of_deposit
+  treasury
+
+  // Credit subtypes
+  credit_card
+  line_of_credit
+  business_credit
+  personal_loan
+
+  // Investment subtypes
+  investment
+  brokerage
+  retirement
+  education_savings
+
+  // Loan subtypes
+  mortgage
+  auto_loan
+  student_loan
+  business_loan
+
+  // Other
+  other
+}
+
+enum AccountOwnershipType {
+  individual
+  joint
+  business
+  trust
 }
 
 model BankAccount {
-  id               String       @id @default(cuid())
+  id               String            @id @default(cuid())
   accountId        String
   accountReference String?
-  balance          Float?
-  bankConnectionId String?
-  baseBalance      Float?
-  baseCurrency     String?
-  createdAt        DateTime   @default(now())
-  createdBy        String
-  currency         String?
-  enabled          Boolean      @default(true)
-  errorDetails     String?
-  errorRetries     Int?
-  manual           Boolean?
-  name             String?
-  projectId        String
-  type             AccountType?
-  bankConnection   BankConnection? @relation(fields: [bankConnectionId], references: [id])
-  creator          User         @relation(fields: [createdBy], references: [id])
-  project          Project         @relation(fields: [projectId], references: [id])
-  transactions     Transaction[]
+  accountNumber    String?           // Last 4 digits of account number
+  routingNumber    String?           // Last 4 digits of routing number
+  mask            String?            // Masked account number
 
+  // Basic Info
+  name            String?
+  officialName    String?            // Official name from bank
+  type            AccountType?
+  subtype         AccountSubType?
+  ownershipType   AccountOwnershipType?
+
+  // Balance Information
+  balance         Float?
+  baseBalance     Float?             // Balance in base currency
+  availableBalance Float?            // Available balance (different from current balance)
+  pendingBalance   Float?            // Pending transactions amount
+  creditLimit     Float?             // For credit accounts
+
+  // Currency Information
+  currency        String?
+  baseCurrency    String?
+  exchangeRate    Float?             // Current exchange rate to base currency
+
+  // Status & Settings
+  enabled         Boolean           @default(true)
+  hidden          Boolean           @default(false)    // Allow hiding accounts from main view
+  favorite        Boolean           @default(false)    // Allow marking accounts as favorites
+  manual          Boolean?
+  verified        Boolean           @default(false)
+
+  // Error Handling
+  status          ConnectionStatus? @default(connected)
+  errorDetails    String?
+  errorRetries    Int?
+  lastSyncAt      DateTime?
+  nextSyncAt      DateTime?
+
+  // Metadata
+  tags            String?             // comma separated list of tags
+
+  // Bank Connection
+  bankConnectionId String?
+  bankConnection   BankConnection? @relation(fields: [bankConnectionId], references: [id])
+
+  // Relationships
+  projectId       String
+  project         Project          @relation(fields: [projectId], references: [id])
+  createdBy       String
+  creator         User             @relation(fields: [createdBy], references: [id])
+  transactions    Transaction[]
+
+  // Timestamps
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  lastActivityAt  DateTime?        // Last transaction or balance update
+
+  // Indexes
   @@index([bankConnectionId])
   @@index([createdBy])
   @@index([projectId])
+  @@index([type])
+  @@index([status])
+  @@index([lastSyncAt])
 }
 
 model BankConnection {
-  id            String            @id @default(cuid())
-  accessToken   String?
-  createdAt     DateTime
-  enrollmentId  String?
-  errorDetails  String?
-  errorRetries  Int?
-  expiresAt     DateTime?
-  institutionId String
-  lastAccessed  DateTime?
-  logoUrl       String?
-  name          String
-  provider      BankProvider?
-  referenceId   String?
-  status        ConnectionStatus?
-  projectId     String
-  bankAccounts  BankAccount[]
-  project       Project              @relation(fields: [projectId], references: [id])
+  id              String            @id @default(cuid())
+  accessToken     String?
+  refreshToken    String?           // For OAuth connections
+  tokenExpiresAt  DateTime?         // Token expiration tracking
+
+  // Institution Information
+  institutionId   String
+  institutionName String?
+  name            String            // Display name
+  logoUrl         String?
+  primaryColor    String?           // Institution brand color
+
+  // Connection Details
+  provider        BankProvider?
+  status          ConnectionStatus? @default(connected)
+  enrollmentId    String?
+  referenceId     String?          // External reference ID
+
+  // OAuth Specific
+  consentId       String?          // For OAuth consent tracking
+  consentExpiresAt DateTime?       // When user consent expires
+
+  // Connection Management
+  lastAccessed    DateTime?
+  lastSuccessfulUpdate DateTime?
+  nextUpdateAttempt   DateTime?
+  updateFrequency     String?      // daily, weekly, monthly
+
+  // Error Handling
+  errorDetails    String?
+  errorRetries    Int?
+  errorCount      Int              @default(0)
+  lastErrorAt     DateTime?
+
+  // Connection Capabilities
+  supportsAccountIdentification Boolean @default(false)
+  supportsTransactionSync      Boolean @default(false)
+  supportsBalanceRefresh       Boolean @default(false)
+  supportedProducts            String    // comma separated list of supported products
+
+  // Metadata
+  metadata        Json?           // Provider-specific metadata
+  settings        Json?           // Connection-specific settings
+
+  // Relationships
+  expiresAt       DateTime?
+  projectId       String
+  project         Project         @relation(fields: [projectId], references: [id])
+  bankAccounts    BankAccount[]
+
+  // Timestamps
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
   @@index([projectId])
+  @@index([provider])
+  @@index([status])
+  @@index([lastAccessed])
 }

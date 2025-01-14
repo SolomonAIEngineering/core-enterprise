@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       "clickId",
     );
 
-    // clickId is empty, order is not from a Dub link
+    // clickId is empty, order is not from a link
     if (clickId === "") {
       await redis.del(`shopify:checkout:${checkoutToken}`);
 

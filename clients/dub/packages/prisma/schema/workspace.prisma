@@ -49,6 +49,7 @@ model Project {
   // project reason
   reason String?
 
+  // Existing Usage Limits
   usage        Int @default(0)
   usageLimit   Int @default(1000)
   linksUsage   Int @default(0)
@@ -60,6 +61,58 @@ model Project {
   usersLimit   Int @default(1)
   aiUsage      Int @default(0)
   aiLimit      Int @default(10)
+  transactionCategoriesLimit Int @default(50)
+
+  // Banking & Financial Limits
+  bankConnectionsUsage Int @default(0)
+  bankConnectionsLimit Int @default(3)  // Number of bank connections allowed
+  bankAccountsUsage    Int @default(0)
+  bankAccountsLimit    Int @default(5)  // Number of bank accounts allowed
+
+  // Document Management Limits
+  documentsUsage      Int @default(0)
+  documentsLimit      Int @default(100)  // Number of documents allowed
+  documentStorageUsage Int @default(0)  // in MB
+  documentStorageLimit Int @default(1000)  // Storage limit in MB
+
+  // Contract Management
+  contractTemplatesUsage Int @default(0)
+  contractTemplatesLimit Int @default(10)  // Number of contract templates allowed
+  activeContractsUsage  Int @default(0)
+  activeContractsLimit  Int @default(25)  // Number of active contracts allowed
+
+  // Invoice Management
+  invoiceTemplatesUsage Int @default(0)
+  invoiceTemplatesLimit Int @default(5)  // Number of invoice templates allowed
+  monthlyInvoicesUsage  Int @default(0)
+  monthlyInvoicesLimit  Int @default(100)  // Monthly invoice generation limit
+
+  // Customer Management
+  customersUsage     Int @default(0)
+  customersLimit     Int @default(100)  // Number of customers allowed
+  customerTagsUsage  Int @default(0)
+  customerTagsLimit  Int @default(20)  // Number of customer tags allowed
+
+  // Report Management
+  reportsUsage      Int @default(0)
+  reportsLimit      Int @default(10)  // Number of custom reports allowed
+  reportStorageUsage Int @default(0)  // in MB
+  reportStorageLimit Int @default(500)  // Report storage limit in MB
+
+  // API & Integration Limits
+  apiRequestsUsage   Int @default(0)
+  apiRequestsLimit   Int @default(10000)  // Monthly API requests limit
+  webhooksUsage      Int @default(0)
+  webhooksLimit      Int @default(5)  // Number of active webhooks allowed
+  integrationsUsage  Int @default(0)
+  integrationsLimit  Int @default(3)  // Number of third-party integrations allowed
+
+  // Security & Access Control
+  apiTokensUsage     Int @default(0)
+  apiTokensLimit     Int @default(5)  // Number of API tokens allowed
+  teamMembersUsage   Int @default(0)
+  teamMembersLimit   Int @default(3)  // Number of team members allowed
+  auditLogRetention  Int @default(30)  // Days to retain audit logs
 
   referralLinkId  String? @unique
   referredSignups Int     @default(0)
@@ -73,7 +126,6 @@ model Project {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   usageLastChecked DateTime @default(now())
-  transactionCategoriesLimit Int @default(50)
   users                 ProjectUsers[]
   invites               ProjectInvite[]
   sentEmails            SentEmail[]
