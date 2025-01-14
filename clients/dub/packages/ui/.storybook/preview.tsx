@@ -1,6 +1,7 @@
 import '../src/styles/globals.css'
 
 import type { Preview } from '@storybook/react'
+import React from 'react'
 
 const preview: Preview = {
   parameters: {
@@ -13,6 +14,13 @@ const preview: Preview = {
     },
     layout: 'centered',
   },
+  decorators: [
+    (Story) => (
+      <div className="min-h-screen antialiased">
+        <Story />
+      </div>
+    ),
+  ],
   globalTypes: {
     theme: {
       name: 'Theme',

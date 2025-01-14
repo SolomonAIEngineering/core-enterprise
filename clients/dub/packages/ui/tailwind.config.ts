@@ -4,7 +4,11 @@ import sharedConfig from '@dub/tailwind-config/tailwind.config.ts'
 
 const config: Pick<Config, 'presets' | 'content' | 'theme' | 'plugins'> = {
   presets: [sharedConfig],
-  content: ['./src/**/*.{js,ts,jsx,tsx}', './.storybook/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './.storybook/**/*.{js,ts,jsx,tsx}',
+    './stories/**/*.{js,ts,jsx,tsx}'
+  ],
   theme: {
     extend: {
       colors: {
