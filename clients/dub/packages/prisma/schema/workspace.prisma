@@ -1,3 +1,29 @@
+enum AdminRole {
+  SoftwareEngineer
+  ProductManager
+  CustomerSuccess
+  Marketing
+  Sales
+  Support
+  Founder
+  CTO
+  CEO
+  CFO
+  COO
+  CMO
+  Other
+}
+
+enum OrganizationSize {
+  OneToFive
+  SixToTwentyFive
+  TwentySixToOneHundred
+  OneHundredOneToFiveHundred
+  FiveHundredToOneThousand
+  OneThousandToFiveThousand
+  FiveThousandPlus
+}
+
 model Project {
   id         String  @id @default(cuid())
   name       String
@@ -13,6 +39,15 @@ model Project {
   payoutMethodId    String? // for Stripe Connect payouts
   shopifyStoreId    String?   @unique // for Shopify Integration
   invoicePrefix     String?   @unique // The prefix for the customer used to generate unique invoice numbers
+
+  // admin role
+  adminRole         AdminRole?
+
+  // organization size
+  organizationSize OrganizationSize?
+
+  // project reason
+  reason String?
 
   usage        Int @default(0)
   usageLimit   Int @default(1000)

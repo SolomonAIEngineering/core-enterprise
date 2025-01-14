@@ -1,9 +1,11 @@
+import { DEFAULT_REDIRECTS, validSlugRegex } from "@dub/utils";
+import { planSchema, roleSchema } from "./misc";
+
 import { isReservedKey } from "@/lib/edge-config";
 import z from "@/lib/zod";
-import { DEFAULT_REDIRECTS, validSlugRegex } from "@dub/utils";
+import { AdminRole, OrganizationSize } from "@prisma/client";
 import slugify from "@sindresorhus/slugify";
 import { DomainSchema } from "./domains";
-import { planSchema, roleSchema } from "./misc";
 
 export const workspaceIdSchema = z.object({
   workspaceId: z
@@ -68,6 +70,18 @@ export const WorkspaceSchema = z
     usersLimit: z.number().describe("The users limit of the workspace."),
     aiUsage: z.number().describe("The AI usage of the workspace."),
     aiLimit: z.number().describe("The AI limit of the workspace."),
+    adminRole: z
+      .nativeEnum(AdminRole)
+      .optional()
+      .describe("The admin role of the workspace."),
+    organizationSize: z
+      .nativeEnum(OrganizationSize)
+      .optional()
+      .describe("The organization size of the workspace."),
+    reason: z
+      .string()
+      .optional()
+      .describe("The reason for creating the workspace."),
 
     conversionEnabled: z
       .boolean()
@@ -125,6 +139,9 @@ export const createWorkspaceSchema = z.object({
       message: "Cannot use reserved slugs",
     }),
   logo: z.string().optional(),
+  adminRole: z.nativeEnum(AdminRole).optional(),
+  organizationSize: z.nativeEnum(OrganizationSize).optional(),
+  reason: z.string().optional(),
 });
 
 export const updateWorkspaceSchema = createWorkspaceSchema.partial();
