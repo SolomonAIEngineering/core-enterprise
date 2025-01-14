@@ -37,7 +37,7 @@ model Webhook {
   // Security and rate limiting
   status               WebhookStatus     @default(PENDING_VERIFICATION)
   verificationToken    String?           // For initial endpoint verification
-  ipWhitelist         String            // Optional IP whitelist - stored as comma-separated string
+  ipWhitelist         String?            // Optional IP whitelist - stored as comma-separated string
   rateLimitPerMinute  Int               @default(60)
 
 
