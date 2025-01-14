@@ -1,12 +1,13 @@
 "use client";
 
+import { Button, Cube, InfoTooltip, TooltipContent } from "@dub/ui";
+
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
 import OAuthAppCard from "@/ui/oauth-apps/oauth-app-card";
 import OAuthAppPlaceholder from "@/ui/oauth-apps/oauth-app-placeholder";
 import EmptyState from "@/ui/shared/empty-state";
-import { Button, Cube, InfoTooltip, TooltipContent } from "@dub/ui";
 import { fetcher } from "@dub/utils";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
@@ -69,7 +70,7 @@ export default function OAuthAppsPageClient() {
         ) : (
           <div className="grid grid-cols-1 gap-3">
             {Array.from({ length: 3 }).map((_, idx) => (
-              <OAuthAppPlaceholder />
+              <OAuthAppPlaceholder key={`${idx}-${Math.random()}`} />
             ))}
           </div>
         )}

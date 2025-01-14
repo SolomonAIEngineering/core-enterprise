@@ -1,6 +1,6 @@
+import StripeConnectButton from "@/ui/partners/stripe-connect-button";
 import { ConnectedDots4 } from "@dub/ui/icons";
 import Link from "next/link";
-import StripeConnectButton from "@/ui/partners/stripe-connect-button";
 export default function OnboardingVerification() {
   return (
     <div className="mx-auto my-10 flex w-full max-w-sm flex-col items-center md:mt-14">

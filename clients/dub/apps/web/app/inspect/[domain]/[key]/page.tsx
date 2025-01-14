@@ -1,4 +1,3 @@
-import { getLinkViaEdge } from "@/lib/planetscale";
 import {
   Background,
   Footer,
@@ -12,6 +11,8 @@ import {
   constructMetadata,
   getApexDomain,
 } from "@dub/utils";
+
+import { getLinkViaEdge } from "@/lib/planetscale";
 import { unescape } from "html-escaper";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -69,8 +70,8 @@ export default async function InspectPage({
             Link Inspector
           </h1>
           <h2 className="text-lg text-gray-600 sm:text-xl">
-            Inspect a short link on Dub to make sure it's safe to click on. If
-            you think this link is malicious, please report it.
+            Inspect a short link on Dub to make sure it&apos;s safe to click on.
+            If you think this link is malicious, please report it.
           </h2>
 
           <LinkInspectorCard domain={domain} _key={key} url={data.url} />

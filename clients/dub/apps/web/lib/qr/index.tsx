@@ -1,11 +1,4 @@
-/**
- * @license qrcode.react
- * Copyright (c) Paul O'Shannessy
- * SPDX-License-Identifier: ISC
- */
-import { DUB_QR_LOGO } from "@dub/utils/src/constants";
 import { useEffect, useRef, useState } from "react";
-import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_FGCOLOR,
@@ -21,6 +14,15 @@ import {
   generatePath,
   getImageSettings,
 } from "./utils";
+
+/**
+ * @license qrcode.react
+ * Copyright (c) Paul O'Shannessy
+ * SPDX-License-Identifier: ISC
+ */
+import { DUB_QR_LOGO } from "@dub/utils/src/constants";
+import qrcodegen from "./codegen";
+
 export * from "./types";
 export * from "./utils";
 
@@ -43,8 +45,7 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
   // We're just using this state to trigger rerenders when images load. We
   // Don't actually read the value anywhere. A smarter use of useEffect would
   // depend on this value.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isImgLoaded, setIsImageLoaded] = useState(false);
+  const [_, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     // Always update the canvas. It's cheap enough and we want to be correct

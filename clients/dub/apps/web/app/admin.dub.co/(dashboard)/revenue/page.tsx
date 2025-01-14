@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 import LayoutLoader from "@/ui/layout/layout-loader";
 import { Suspense } from "react";
 import RevenueClient from "./client";
