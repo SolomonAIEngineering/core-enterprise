@@ -1,4 +1,4 @@
-import { Grid, Wordmark } from "@dub/ui";
+import { Grid, Logo } from "@dub/ui";
 
 export default function PartnerAuthLayout({
   children,
@@ -13,7 +13,7 @@ export default function PartnerAuthLayout({
       </div>
       <div className="relative z-10 mt-10 flex w-full flex-col items-center justify-center px-3 text-center md:px-8">
         <div className="animate-slide-up-fade relative flex w-auto flex-col items-center [--offset:10px] [animation-duration:1.3s] [animation-fill-mode:both]">
-          <Wordmark className="relative h-10" />
+          <Logo className="relative h-10 w-10" />
           <span className="text-sm font-medium text-neutral-700">Partner</span>
         </div>
         {children}
@@ -28,6 +28,7 @@ export default function PartnerAuthLayout({
               href="https://dub.co/legal/privacy"
               target="_blank"
               className="hover:text-gray-800"
+              rel="noreferrer"
             >
               Privacy Policy
             </a>
@@ -35,6 +36,7 @@ export default function PartnerAuthLayout({
               href="https://dub.co/legal/terms"
               target="_blank"
               className="hover:text-gray-800"
+              rel="noreferrer"
             >
               Terms of Service
             </a>
@@ -42,6 +44,7 @@ export default function PartnerAuthLayout({
               href="https://app.dub.co"
               target="_blank"
               className="hover:text-gray-800"
+              rel="noreferrer"
             >
               app.dub.co
             </a>

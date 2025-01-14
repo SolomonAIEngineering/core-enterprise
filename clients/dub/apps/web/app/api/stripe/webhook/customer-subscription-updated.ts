@@ -1,6 +1,7 @@
+import { getPlanFromPriceId, log } from "@dub/utils";
+
 import { webhookCache } from "@/lib/webhook/cache";
 import { prisma } from "@dub/prisma";
-import { getPlanFromPriceId, log } from "@dub/utils";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendCancellationFeedback } from "./utils";
@@ -86,7 +87,7 @@ export async function customerSubscriptionUpdated(event: Stripe.Event) {
           projectId: workspace.id,
         },
         data: {
-          rateLimit: plan.limits.api,
+          rateLimit: plan.limits.apis,
         },
       }),
     ]);

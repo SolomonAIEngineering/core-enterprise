@@ -1,6 +1,7 @@
+import "dotenv-flow/config";
+
 import { prisma } from "@dub/prisma";
 import { getCurrentPlan } from "@dub/utils";
-import "dotenv-flow/config";
 
 async function main() {
   const tokens = await prisma.restrictedToken.findMany({
@@ -23,7 +24,7 @@ async function main() {
         id: token.id,
       },
       data: {
-        rateLimit: plan.limits.api,
+        rateLimit: plan.limits.apis,
       },
     });
   }

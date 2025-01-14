@@ -1,5 +1,5 @@
 import { BusinessConfig as platform } from "@dub/platform-config";
-import { Wordmark } from "@dub/ui";
+import { Logo } from "@dub/ui";
 import { NextButton } from "../next-button";
 import TrackSignup from "./track-signup";
 
@@ -23,7 +23,7 @@ export default function Welcome() {
       <main className="relative mx-auto flex min-h-screen max-w-sm flex-col items-center justify-center px-3 text-center">
         <div className="animate-slide-up-fade relative flex w-auto items-center justify-center px-6 py-2 [--offset:20px] [animation-duration:1.3s] [animation-fill-mode:both]">
           <div className="absolute inset-0 opacity-10">{pulseAnimations}</div>
-          <Wordmark className="relative h-16" />
+          <Logo className="relative h-10 w-10" />
         </div>
 
         <h1 className="animate-slide-up-fade mt-10 text-2xl font-medium [--offset:10px] [animation-delay:250ms] [animation-duration:1s] [animation-fill-mode:both]">

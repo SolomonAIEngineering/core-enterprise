@@ -9,7 +9,13 @@ import { CircleDotted, ExpandingArrow } from "@dub/ui/icons";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { forwardRef, HTMLAttributes, Ref, useMemo, useState } from "react";
+import {
+  forwardRef,
+  type HTMLAttributes,
+  type Ref,
+  useMemo,
+  useState,
+} from "react";
 
 export function OnboardingButton() {
   const { isMobile } = useMediaQuery();

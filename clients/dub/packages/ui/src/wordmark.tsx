@@ -1,5 +1,5 @@
-import { cn } from '@dub/utils'
 import type React from 'react'
+import { cn } from '@dub/utils'
 
 interface WordmarkProps {
   width?: number

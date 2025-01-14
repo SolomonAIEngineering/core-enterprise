@@ -67,9 +67,9 @@ export async function invoicePaymentFailed(event: Stripe.Event) {
         email: user.email as string,
         from: "steven@dub.co",
         subject: `${
-          attemptCount == 2
+          attemptCount === 2
             ? "2nd notice: "
-            : attemptCount == 3
+            : attemptCount === 3
               ? "3rd notice: "
               : ""
         }Your payment for Dub.co failed`,

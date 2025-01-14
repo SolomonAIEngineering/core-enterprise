@@ -1,4 +1,5 @@
-import { Wordmark } from "@dub/ui";
+import { Logo } from "@dub/ui";
+
 import Link from "next/link";
 import { PlanSelector } from "../../onboarding/(steps)/plan/plan-selector";
 import { StepPage } from "../../onboarding/(steps)/step-page";
@@ -9,7 +10,7 @@ export default function UpgradePage({ params }: { params: { slug: string } }) {
     <div className="relative flex flex-col items-center">
       <ExitButton />
       <Link href={`/${params.slug}`}>
-        <Wordmark className="mt-6 h-8" />
+        <Logo className="mt-6 h-8 w-8" />
       </Link>
       <div className="mt-8 flex w-full flex-col items-center px-3 pb-16 md:mt-20 lg:px-8">
         <StepPage
@@ -18,15 +19,6 @@ export default function UpgradePage({ params }: { params: { slug: string } }) {
           className="max-w-2xl"
         >
           <PlanSelector />
-          <div className="mt-8 flex flex-col gap-3">
-            <a
-              href="https://dub.co/enterprise"
-              target="_blank"
-              className="w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-700"
-            >
-              Looking for enterprise?
-            </a>
-          </div>
         </StepPage>
       </div>
     </div>

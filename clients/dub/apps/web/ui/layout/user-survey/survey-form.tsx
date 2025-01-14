@@ -4,17 +4,18 @@ import {
   Google,
   Label,
   LinkedIn,
+  Logo,
   ProductHunt,
   RadioGroup,
   RadioGroupItem,
   Twitter,
   useMediaQuery,
-  Wordmark,
 } from "@dub/ui";
+import { useContext, useState } from "react";
+
 import { Globe } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { ChevronRight } from "lucide-react";
-import { useContext, useState } from "react";
 import { UserSurveyContext } from ".";
 
 const options = [
@@ -64,7 +65,7 @@ export default function SurveyForm({
 
   return (
     <div className="grid gap-4">
-      <Wordmark className="h-8" />
+      <Logo className="h-10 w-10" />
       <p className="text-sm font-medium text-gray-800">
         Where did you hear about Dub?
       </p>
@@ -136,7 +137,6 @@ export default function SurveyForm({
                   type="text"
                   required
                   maxLength={32}
-                  autoFocus={!isMobile}
                   autoComplete="off"
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Reddit, Indie Hackers, etc."

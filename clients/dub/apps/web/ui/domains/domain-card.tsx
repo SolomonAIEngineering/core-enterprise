@@ -1,7 +1,4 @@
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useDomains from "@/lib/swr/use-domains";
-import useWorkspace from "@/lib/swr/use-workspace";
-import {
+import type {
   DomainProps,
   DomainVerificationStatusProps,
   LinkProps,
@@ -11,6 +8,7 @@ import {
   Button,
   CircleCheck,
   Copy,
+  Logo,
   NumberTooltip,
   Popover,
   Refresh2,
@@ -19,7 +17,6 @@ import {
   useCopyToClipboard,
   useInViewport,
   useMediaQuery,
-  Wordmark,
 } from "@dub/ui";
 import {
   CursorRays,
@@ -29,12 +26,17 @@ import {
   Hyperlink,
   PenWriting,
 } from "@dub/ui/icons";
-import { cn, DEFAULT_LINK_PROPS, fetcher, nFormatter } from "@dub/utils";
-import { motion } from "framer-motion";
+import { DEFAULT_LINK_PROPS, cn, fetcher, nFormatter } from "@dub/utils";
 import { Archive, ChevronDown, FolderInput, QrCode } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useDomains from "@/lib/swr/use-domains";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import useSWRImmutable from "swr/immutable";
 import { useAddEditDomainModal } from "../modals/add-edit-domain-modal";
@@ -103,14 +105,15 @@ export default function DomainCard({ props }: { props: DomainProps }) {
         {isDubProvisioned && (
           <div className="flex items-center justify-between gap-2 rounded-t-xl border-b border-gray-100 bg-gray-50 px-5 py-2 text-xs">
             <div className="flex items-center gap-1.5">
-              <Wordmark className="h-4" />
+              <Logo className="h-4 w-4" />
               <span className="font-medium text-gray-900">
-                Provisioned by Dub
+                Provisioned by {platform.company}
               </span>
             </div>
             <a
               href="https://dub.co/help/article/free-dot-link-domain"
               target="_blank"
+              rel="noreferrer"
               className="text-gray-500 underline transition-colors hover:text-gray-800"
             >
               Learn more

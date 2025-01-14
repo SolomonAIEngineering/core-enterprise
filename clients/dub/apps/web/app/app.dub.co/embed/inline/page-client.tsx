@@ -1,20 +1,21 @@
 "use client";
 
-import { DiscountProps } from "@/lib/types";
-import { ProgramCommissionDescription } from "@/ui/partners/program-commission-description";
-import { Link, PayoutStatus, Program } from "@dub/prisma/client";
+import type { Link, PayoutStatus, Program } from "@dub/prisma/client";
 import {
   Button,
   Check,
   Copy,
+  Logo,
   MoneyBill2,
   ToggleGroup,
   useCopyToClipboard,
-  Wordmark,
 } from "@dub/ui";
 import { cn, getPrettyUrl } from "@dub/utils";
+import { type CSSProperties, useState } from "react";
+
+import type { DiscountProps } from "@/lib/types";
+import { ProgramCommissionDescription } from "@/ui/partners/program-commission-description";
 import { AnimatePresence } from "framer-motion";
-import { CSSProperties, useState } from "react";
 import { LinkToken } from "../token";
 import { EmbedActivity } from "./activity";
 import { EmbedFAQ } from "./faq";
@@ -103,9 +104,10 @@ export function EmbedInlinePageClient({
             href="https://dub.partners"
             target="_blank"
             className="mt-4 flex items-center justify-center gap-1.5 text-neutral-500 transition-colors duration-75 hover:text-neutral-700 md:absolute md:bottom-3 md:right-3 md:mt-0 md:translate-x-0"
+            rel="noreferrer"
           >
             <p className="text-xs font-medium">Powered by</p>
-            <Wordmark className="h-3.5 text-neutral-900" />
+            <Logo className="h-8 w-8 text-neutral-900" />
           </a>
         </div>
         <div className="mt-4 grid gap-2 sm:h-32 sm:grid-cols-3">

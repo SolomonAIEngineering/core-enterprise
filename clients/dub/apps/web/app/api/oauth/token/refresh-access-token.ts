@@ -3,11 +3,11 @@ import { OAUTH_CONFIG } from "@/lib/api/oauth/constants";
 import { createToken } from "@/lib/api/oauth/utils";
 import { hashToken } from "@/lib/auth";
 import { generateRandomName } from "@/lib/names";
-import z from "@/lib/zod";
-import { refreshTokenSchema } from "@/lib/zod/schemas/oauth";
+import type z from "@/lib/zod";
+import type { refreshTokenSchema } from "@/lib/zod/schemas/oauth";
 import { prisma } from "@dub/prisma";
 import { getCurrentPlan } from "@dub/utils";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 // Get new access token using refresh token
 export const refreshAccessToken = async (
@@ -181,7 +181,7 @@ export const refreshAccessToken = async (
         scopes: accessToken.scopes,
         expires: accessTokenExpires,
         rateLimit: getCurrentPlan(authorizedApp.project.plan as string).limits
-          .api,
+          .apis,
         userId: authorizedApp.userId,
         projectId: authorizedApp.projectId,
         installationId: authorizedApp.id,

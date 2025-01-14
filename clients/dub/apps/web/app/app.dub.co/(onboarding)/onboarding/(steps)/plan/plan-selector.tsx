@@ -1,12 +1,13 @@
 "use client";
 
+import { Badge, ToggleGroup } from "@dub/ui";
+import { PRO_PLAN, SELF_SERVE_PAID_PLANS } from "@dub/utils";
+import { useEffect, useState } from "react";
+
 import useWorkspace from "@/lib/swr/use-workspace";
 import { PlanFeatures } from "@/ui/workspaces/plan-features";
 import { UpgradePlanButton } from "@/ui/workspaces/upgrade-plan-button";
-import { Badge, ToggleGroup } from "@dub/ui";
-import { PRO_PLAN, SELF_SERVE_PAID_PLANS } from "@dub/utils";
 import NumberFlow from "@number-flow/react";
-import { useEffect, useState } from "react";
 
 export function PlanSelector() {
   const [periodTab, setPeriodTab] = useState<"monthly" | "yearly">("yearly");
@@ -57,6 +58,7 @@ function PlanCard({
 
   const { plan } = useWorkspace();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (plan?.startsWith("business")) {
       const idx = plans.findIndex((p) => p.name.toLowerCase() === plan);
@@ -74,6 +76,7 @@ function PlanCard({
       </div>
       <div className="mt-2 text-3xl font-medium text-gray-900">
         <NumberFlow
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
           value={selectedPlan.price[period]!}
           className="tabular-nums"
           format={{
