@@ -2,7 +2,7 @@ import { nanoid } from "@dub/utils";
 import { ipAddress } from "@vercel/functions";
 import { getToken } from "next-auth/jwt";
 import { headers } from "next/headers";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { ratelimit } from "../upstash";
 import { DubApiError } from "./errors";
 
@@ -70,6 +70,7 @@ const prefixes = [
   "pga_",
   "dub_embed_",
   "inv_",
+  "cat_",
 ] as const;
 
 export const createId = ({

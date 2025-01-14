@@ -4,6 +4,7 @@ import usePrograms from "@/lib/swr/use-programs";
 import { useRouterStuff } from "@dub/ui";
 import {
   Books2,
+  Calendar6,
   CircleInfo,
   ConnectedDots,
   ConnectedDots4,
@@ -16,17 +17,18 @@ import {
   ShieldCheck,
   Users6,
   Webhook,
+  WindowSettings,
 } from "@dub/ui/icons";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useParams, usePathname } from "next/navigation";
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import UserSurveyButton from "../user-survey";
 import { CursorRays } from "./icons/cursor-rays";
 import { Gear } from "./icons/gear";
 import { Hyperlink } from "./icons/hyperlink";
 import { LinesY } from "./icons/lines-y";
-import { SidebarNav, SidebarNavAreas } from "./sidebar-nav";
+import { SidebarNav, type SidebarNavAreas } from "./sidebar-nav";
 import { Usage } from "./usage";
 import { WorkspaceDropdown } from "./workspace-dropdown";
 
@@ -214,6 +216,22 @@ const NAV_AREAS: SidebarNavAreas<{
             icon: ShieldCheck,
             href: "/account/settings/security",
           },
+          {
+            name: "Date and Locale",
+            icon: Calendar6,
+            href: "/account/settings/date-and-locale",
+          },
+          {
+            name: "Assistant Settings",
+            icon: CubeSettings,
+            href: "/account/settings/assistant-settings",
+          },
+          {
+            name: "Financial Settings",
+            icon: WindowSettings,
+            href: "/account/settings/financial-settings",
+          },
+          // biome-ignore lint/complexity/useLiteralKeys: <explanation>
           ...(session?.user?.["referralLinkId"]
             ? [
                 {
@@ -261,6 +279,7 @@ export function AppSidebarNav({
         }),
         programs,
         session: session || undefined,
+        // biome-ignore lint/complexity/noUselessTernary: <explanation>
         showNews: pathname.startsWith(`/${slug}/programs/`) ? false : true,
       }}
       toolContent={toolContent}

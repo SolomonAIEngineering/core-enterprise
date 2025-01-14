@@ -5,7 +5,7 @@ import { NewsRSC } from "@/ui/layout/sidebar/news-rsc";
 import { ReferButton } from "@/ui/layout/sidebar/refer-button";
 import Toolbar from "@/ui/layout/toolbar/toolbar";
 import { constructMetadata } from "@dub/utils";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export const dynamic = "force-static";
 export const metadata = constructMetadata();
@@ -13,7 +13,7 @@ export const metadata = constructMetadata();
 export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <div className="min-h-screen w-full bg-white">
+      <div className="fixed inset-0 bg-neutral-50">
         <MainNav
           sidebar={AppSidebarNav}
           toolContent={

@@ -1,6 +1,3 @@
-import z from "@/lib/zod";
-import { metaTagsSchema } from "@/lib/zod/schemas/metatags";
-import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
 import {
   Link,
   PayoutStatus,
@@ -12,22 +9,15 @@ import {
   Webhook,
   YearInReview,
 } from "@dub/prisma/client";
-import { WEBHOOK_TRIGGER_DESCRIPTIONS } from "./webhook/constants";
-import { clickEventResponseSchema } from "./zod/schemas/clicks";
 import {
+  CustomerSchema,
   customerActivityResponseSchema,
   customerActivitySchema,
-  CustomerSchema,
 } from "./zod/schemas/customers";
-import { dashboardSchema } from "./zod/schemas/dashboard";
-import { DiscountSchema } from "./zod/schemas/discount";
-import { integrationSchema } from "./zod/schemas/integration";
-import { InvoiceSchema } from "./zod/schemas/invoices";
 import {
   leadEventResponseSchema,
   trackLeadResponseSchema,
 } from "./zod/schemas/leads";
-import { createLinkBodySchema } from "./zod/schemas/links";
 import { createOAuthAppSchema, oAuthAppSchema } from "./zod/schemas/oauth";
 import {
   EnrolledPartnerSchema,
@@ -51,13 +41,26 @@ import {
   saleEventResponseSchema,
   trackSaleResponseSchema,
 } from "./zod/schemas/sales";
-import { tokenSchema } from "./zod/schemas/token";
-import { usageResponse } from "./zod/schemas/usage";
 import {
+  WebhookSchema,
   createWebhookSchema,
   webhookEventSchemaTB,
-  WebhookSchema,
 } from "./zod/schemas/webhooks";
+
+import z from "@/lib/zod";
+import { metaTagsSchema } from "@/lib/zod/schemas/metatags";
+import { DirectorySyncProviders } from "@boxyhq/saml-jackson";
+import { WEBHOOK_TRIGGER_DESCRIPTIONS } from "./webhook/constants";
+import type { AIAssistantSettingsSchema } from "./zod/schemas/ai-settings";
+import { clickEventResponseSchema } from "./zod/schemas/clicks";
+import { dashboardSchema } from "./zod/schemas/dashboard";
+import { DiscountSchema } from "./zod/schemas/discount";
+import { FinancialSettingsSchema } from "./zod/schemas/financial-settings";
+import { integrationSchema } from "./zod/schemas/integration";
+import { InvoiceSchema } from "./zod/schemas/invoices";
+import { createLinkBodySchema } from "./zod/schemas/links";
+import { tokenSchema } from "./zod/schemas/token";
+import { usageResponse } from "./zod/schemas/usage";
 
 export type LinkProps = Link;
 
@@ -159,6 +162,13 @@ export interface UserProps {
   isMachine: boolean;
   hasPassword: boolean;
   provider: string | null;
+
+  // date formats
+  dateFormat?: string;
+  locale?: string;
+  timeFormat?: string;
+  timezone?: string;
+  weekStartsOnMonday?: boolean;
 }
 
 export interface WorkspaceUserProps extends UserProps {
@@ -386,3 +396,7 @@ export type ClickEvent = z.infer<typeof clickEventResponseSchema>;
 export type SaleEvent = z.infer<typeof saleEventResponseSchema>;
 
 export type LeadEvent = z.infer<typeof leadEventResponseSchema>;
+
+export type AIAssistantSettings = z.infer<typeof AIAssistantSettingsSchema>;
+
+export type FinancialSettings = z.infer<typeof FinancialSettingsSchema>;

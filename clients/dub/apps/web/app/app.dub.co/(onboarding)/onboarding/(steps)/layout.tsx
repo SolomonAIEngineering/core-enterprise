@@ -1,10 +1,12 @@
+import { NewBackground } from "@/ui/shared/new-background";
 import { Wordmark } from "@dub/ui";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <>
-      <div className="relative flex flex-col items-center">
+    <div className="relative isolate min-h-screen">
+      <NewBackground showAnimation />
+      <div className="relative z-10 flex flex-col items-center">
         {/* <div className="absolute right-0 top-0">
           <ExitButton />
         </div> */}
@@ -13,6 +15,6 @@ export default function Layout({ children }: PropsWithChildren) {
           {children}
         </div>
       </div>
-    </>
+    </div>
   );
 }
