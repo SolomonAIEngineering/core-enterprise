@@ -42,7 +42,7 @@ export const resendProgramInviteAction = authActionClient
 
     await Promise.all([
       sendEmail({
-        subject: `${program.name} invited you to join Dub Partners`,
+        subject: `${program.name} invited you to join ${platform.company} Partners`,
         email,
         react: PartnerInvite({
           email,

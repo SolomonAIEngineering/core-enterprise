@@ -1,6 +1,7 @@
 import { createId } from "@/lib/api/utils";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
-import { Payout } from "@dub/prisma/client";
+import type { Payout } from "@dub/prisma/client";
 
 // Calculate the commission earned for the partner for the given program
 export const createSalesPayout = async ({
@@ -92,7 +93,9 @@ export const createSalesPayout = async ({
               increment: quantity,
             },
             periodEnd,
-            description: existingPayout.description ?? "Dub Partners payout",
+            description:
+              existingPayout.description ??
+              `${platform.company} Partners payout`,
           },
         });
 
@@ -110,7 +113,7 @@ export const createSalesPayout = async ({
             periodStart,
             periodEnd,
             quantity,
-            description: description ?? "Dub Partners payout",
+            description: description ?? `${platform.company} Partners payout`,
           },
         });
 

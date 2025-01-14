@@ -1,19 +1,21 @@
 "use client";
 
-import useWorkspace from "@/lib/swr/use-workspace";
-import { InvoiceProps } from "@/lib/types";
-import { PayoutStatusBadges } from "@/ui/partners/payout-status-badges";
-import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import {
   Button,
-  buttonVariants,
   InvoiceDollar,
   Receipt2,
   StatusBadge,
   TabSelect,
+  buttonVariants,
   useRouterStuff,
 } from "@dub/ui";
 import { cn, currencyFormatter, fetcher } from "@dub/utils";
+
+import useWorkspace from "@/lib/swr/use-workspace";
+import { InvoiceProps } from "@/lib/types";
+import { PayoutStatusBadges } from "@/ui/partners/payout-status-badges";
+import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -44,7 +46,7 @@ export default function WorkspaceInvoicesClient() {
           <div>
             <h2 className="text-xl font-medium">Invoices</h2>
             <p className="text-balance text-sm leading-normal text-neutral-500">
-              A history of all your Dub invoices
+              A history of all your {platform.company} invoices
             </p>
           </div>
         </div>

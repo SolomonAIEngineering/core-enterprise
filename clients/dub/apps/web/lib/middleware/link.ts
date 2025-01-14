@@ -5,8 +5,6 @@ import {
   isSupportedDeeplinkProtocol,
   parse,
 } from "@/lib/middleware/utils";
-import { recordClick } from "@/lib/tinybird";
-import { formatRedisLink } from "@/lib/upstash";
 import {
   DUB_HEADERS,
   LEGAL_WORKSPACE_ID,
@@ -16,13 +14,16 @@ import {
   nanoid,
   punyEncode,
 } from "@dub/utils";
-import { cookies } from "next/headers";
 import {
   NextFetchEvent,
   NextRequest,
   NextResponse,
   userAgent,
 } from "next/server";
+
+import { recordClick } from "@/lib/tinybird";
+import { formatRedisLink } from "@/lib/upstash";
+import { cookies } from "next/headers";
 import { linkCache } from "../api/links/cache";
 import { getLinkViaEdge } from "../planetscale";
 import { getDomainViaEdge } from "../planetscale/get-domain-via-edge";

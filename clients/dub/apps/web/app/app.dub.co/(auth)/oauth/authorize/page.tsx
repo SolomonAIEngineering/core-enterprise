@@ -7,6 +7,7 @@ import { getSession } from "@/lib/auth";
 import z from "@/lib/zod";
 import { authorizeRequestSchema } from "@/lib/zod/schemas/oauth";
 import EmptyState from "@/ui/shared/empty-state";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { ArrowLeftRight } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -16,7 +17,7 @@ import { ScopesRequested } from "./scopes-requested";
 export const runtime = "nodejs";
 
 export const metadata = constructMetadata({
-  title: "Authorize API access | Dub",
+  title: `Authorize API access | ${platform.company}`,
   noIndex: true,
 });
 
@@ -87,7 +88,7 @@ export default async function Authorize({
         {!integration.verified && (
           <div className="flex items-center gap-2 rounded-md bg-yellow-50 p-2 text-sm text-yellow-700">
             <CircleWarning className="size-4" />
-            <span>Dub hasn&apos;t verified this app</span>
+            <span>{platform.company} hasn&apos;t verified this app</span>
           </div>
         )}
       </div>

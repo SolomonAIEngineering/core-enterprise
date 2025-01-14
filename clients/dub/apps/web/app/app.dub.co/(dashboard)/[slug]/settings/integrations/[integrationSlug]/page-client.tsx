@@ -1,18 +1,9 @@
 "use client";
 
-import { getIntegrationInstallUrl } from "@/lib/actions/get-integration-install-url";
-import { SegmentSettings } from "@/lib/integrations/segment/ui/settings";
-import { SlackSettings } from "@/lib/integrations/slack/ui/settings";
-import { ZapierSettings } from "@/lib/integrations/zapier/ui/settings";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { InstalledIntegrationInfoProps } from "@/lib/types";
-import { useUninstallIntegrationModal } from "@/ui/modals/uninstall-integration-modal";
-import { ThreeDots } from "@/ui/shared/icons";
 import {
   Avatar,
   BlurImage,
   Button,
-  buttonVariants,
   Carousel,
   CarouselContent,
   CarouselItem,
@@ -22,6 +13,7 @@ import {
   TokenAvatar,
   Tooltip,
   TooltipContent,
+  buttonVariants,
 } from "@dub/ui";
 import {
   CircleWarning,
@@ -31,15 +23,25 @@ import {
   ShieldCheck,
 } from "@dub/ui/icons";
 import {
-  cn,
-  formatDate,
-  getPrettyUrl,
   SEGMENT_INTEGRATION_ID,
   SLACK_INTEGRATION_ID,
   STRIPE_INTEGRATION_ID,
   ZAPIER_INTEGRATION_ID,
+  cn,
+  formatDate,
+  getPrettyUrl,
 } from "@dub/utils";
 import { BookOpenText, ChevronLeft, Trash } from "lucide-react";
+
+import { getIntegrationInstallUrl } from "@/lib/actions/get-integration-install-url";
+import { SegmentSettings } from "@/lib/integrations/segment/ui/settings";
+import { SlackSettings } from "@/lib/integrations/slack/ui/settings";
+import { ZapierSettings } from "@/lib/integrations/zapier/ui/settings";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { InstalledIntegrationInfoProps } from "@/lib/types";
+import { useUninstallIntegrationModal } from "@/ui/modals/uninstall-integration-modal";
+import { ThreeDots } from "@/ui/shared/icons";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { useAction } from "next-safe-action/hooks";
 import Link from "next/link";
 import { useState } from "react";
@@ -112,7 +114,7 @@ export default function IntegrationPageClient({
                 content={
                   integration.verified
                     ? "This is a verified integration."
-                    : "Dub hasn't verified this integration. Install it at your own risk."
+                    : `${platform.company} hasn't verified this integration. Install it at your own risk.`
                 }
               >
                 <div>
@@ -250,7 +252,7 @@ export default function IntegrationPageClient({
                   !conversionEnabled && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="To use this integration, you need to have Dub Conversions enabled for your workspace."
+                        title={`To use this integration, you need to have ${platform.company} Conversions enabled for your workspace.`}
                         cta="Learn more"
                         href="https://d.to/conversions"
                         target="_blank"

@@ -10,6 +10,7 @@ import {
 import { redirect, useParams } from "next/navigation";
 
 import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { COUNTRIES } from "@dub/utils/src/constants/countries";
 import NumberFlow from "@number-flow/react";
 import { motion } from "framer-motion";
@@ -106,7 +107,7 @@ export default function WrappedPageClient() {
       >
         <Image
           src="https://assets.dub.co/blog/2024.jpg"
-          alt="Dub logo with confetti"
+          alt={`${platform.company} logo with confetti`}
           width={1838}
           height={1172}
           className="w-1/3 rounded-md"

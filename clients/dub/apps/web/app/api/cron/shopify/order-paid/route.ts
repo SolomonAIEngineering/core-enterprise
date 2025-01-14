@@ -1,7 +1,9 @@
 import { DubApiError, handleAndReturnErrorResponse } from "@/lib/api/errors";
+
 import { verifyQstashSignature } from "@/lib/cron/verify-qstash";
 import { processOrder } from "@/lib/integrations/shopify/process-order";
 import { redis } from "@/lib/upstash";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { z } from "zod";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +43,7 @@ export async function POST(req: Request) {
       await redis.del(`shopify:checkout:${checkoutToken}`);
 
       return new Response(
-        `[Shopify] Order is not from a Dub link. Skipping...`,
+        `[Shopify] Order is not from a ${platform.company} link. Skipping...`,
       );
     }
 

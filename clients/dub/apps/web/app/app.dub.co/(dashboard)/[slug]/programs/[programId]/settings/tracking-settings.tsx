@@ -243,7 +243,7 @@ function TrackingSettingsForm({ program }: { program: ProgramProps }) {
               >
                 installation guides
               </a>{" "}
-              to add Dub Conversions to your website.
+              to add {platform.company} Conversions to your website.
             </p>
           </div>
         </SettingsRow>

@@ -22,7 +22,7 @@ export default async function NotFoundLinkPage() {
         This link does not exist. Please check the URL and try again.
       </p>
       <a
-        href="https://dub.co/home"
+        href={`${platform.webUrl}/home`}
         className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
       >
         Create Your Free Branded Link

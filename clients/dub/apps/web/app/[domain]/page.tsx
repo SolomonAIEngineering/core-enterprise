@@ -9,7 +9,7 @@ export function generateMetadata({ params }: { params: { domain: string } }) {
   } Custom Domain`;
   const description = `${params.domain.toUpperCase()} is a custom domain on ${
     platform.company
-  } - an open-source link management tool for modern marketing teams to create, share, and track short links.`;
+  } - ${platform.title}.`;
 
   return constructMetadata({
     title,
