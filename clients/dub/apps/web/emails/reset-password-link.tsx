@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function ResetPasswordLink({
@@ -30,9 +31,9 @@ export default function ResetPasswordLink({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -41,7 +42,7 @@ export default function ResetPasswordLink({
             </Heading>
             <Text className="text-sm leading-6 text-black">
               You are receiving this email because we received a password reset
-              request for your account at Dub.
+              request for your account at {platform.company}.
             </Text>
             <Text className="text-sm leading-6 text-black">
               Please click the button below to reset your password.

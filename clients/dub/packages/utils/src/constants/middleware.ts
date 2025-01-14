@@ -1,6 +1,6 @@
 import { BusinessConfig as platform } from "@dub/platform-config";
 export const DEFAULT_REDIRECTS = {
-  home: "https://dub.co",
+  home: platform.webUrl,
   dub: "https://dub.co",
   signin: "https://app.dub.co/login",
   login: "https://app.dub.co/login",

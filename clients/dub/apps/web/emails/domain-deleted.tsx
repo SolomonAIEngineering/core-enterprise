@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,12 +11,14 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function DomainDeleted({
   email = "panic@thedis.co",
-  domain = "dub.sh",
-  workspaceSlug = "dub",
+  domain = `${platform.webUrl}`,
+  workspaceSlug = platform.company.toLowerCase(),
 }: {
   email: string;
   domain: string;
@@ -32,9 +33,9 @@ export default function DomainDeleted({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -43,31 +44,31 @@ export default function DomainDeleted({
             </Heading>
             <Text className="text-sm leading-6 text-black">
               Your domain <code className="text-purple-600">{domain}</code> for
-              your Dub.co workspace{" "}
+              your {platform.company} workspace{" "}
               <Link
-                href={`https://app.dub.co/${workspaceSlug}`}
+                href={`${platform.platformUrl}/${workspaceSlug}`}
                 className="font-medium text-blue-600 no-underline"
               >
                 {workspaceSlug}↗
               </Link>{" "}
               has been invalid for 30 days. As a result, it has been deleted
-              from Dub.
+              from {platform.company}.
             </Text>
             <Text className="text-sm leading-6 text-black">
               If you would like to restore the domain, you can easily create it
-              again on Dub.co with the link below.
+              again on {platform.company} with the link below.
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
+                href={`${platform.platformUrl}/${workspaceSlug}/settings/domains`}
               >
                 Add a domain
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">
-              If you did not want to keep using this domain on Dub.co anyway,
-              you can simply ignore this email.
+              If you did not want to keep using this domain on{" "}
+              {platform.company} anyway, you can simply ignore this email.
             </Text>
             <Footer email={email} />
           </Container>

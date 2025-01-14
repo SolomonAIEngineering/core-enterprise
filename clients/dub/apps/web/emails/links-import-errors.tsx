@@ -1,4 +1,4 @@
-import { DUB_WORDMARK, linkConstructor, truncate } from "@dub/utils";
+import { linkConstructor, truncate } from "@dub/utils";
 import {
   Body,
   Column,
@@ -15,6 +15,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 const MAX_ERROR_LINKS = 20;
@@ -45,9 +47,9 @@ export function LinksImportErrors({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -57,9 +59,10 @@ export function LinksImportErrors({
             <Text className="text-sm leading-6 text-black">
               The following{" "}
               {Intl.NumberFormat("en-us").format(errorLinks.length)} links from{" "}
-              {provider} failed to import into your Dub.co workspace,{" "}
+              {provider} failed to import into your {platform.company}{" "}
+              workspace,{" "}
               <Link
-                href={`https://app.dub.co/${workspaceSlug}`}
+                href={`${platform.platformUrl}/${workspaceSlug}`}
                 className="font-medium text-blue-600 no-underline"
               >
                 {workspaceName}↗
@@ -78,7 +81,7 @@ export function LinksImportErrors({
               {errorLinks
                 .slice(0, MAX_ERROR_LINKS)
                 .map(({ domain, key, error }, index) => (
-                  <div key={index}>
+                  <div key={`${index}-${domain}-${key}-${Math.random()}`}>
                     <Row>
                       <Column align="left" className="text-sm font-medium">
                         {truncate(

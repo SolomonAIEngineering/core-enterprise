@@ -18,20 +18,20 @@ import {
   formatDateTime,
 } from "@dub/utils";
 
-import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
-import FilterButton from "@/ui/analytics/events/filter-button";
-import { MoneyBill2 } from "@dub/ui/icons";
-import { PartnerRowItem } from "@/ui/partners/partner-row-item";
-import type { SaleResponse } from "@/lib/types";
-import { SaleRowMenu } from "@/ui/partners/sale-row-menu";
-import { SaleStatusBadges } from "@/ui/partners/sale-status-badges";
-import SimpleDateRangePicker from "@/ui/shared/simple-date-range-picker";
-import { memo } from "react";
-import { useParams } from "next/navigation";
-import useSWR from "swr";
-import { useSaleFilters } from "./use-sale-filters";
 import useSalesCount from "@/lib/swr/use-sales-count";
 import useWorkspace from "@/lib/swr/use-workspace";
+import type { SaleResponse } from "@/lib/types";
+import FilterButton from "@/ui/analytics/events/filter-button";
+import { PartnerRowItem } from "@/ui/partners/partner-row-item";
+import { SaleRowMenu } from "@/ui/partners/sale-row-menu";
+import { SaleStatusBadges } from "@/ui/partners/sale-status-badges";
+import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import SimpleDateRangePicker from "@/ui/shared/simple-date-range-picker";
+import { MoneyBill2 } from "@dub/ui/icons";
+import { useParams } from "next/navigation";
+import { memo } from "react";
+import useSWR from "swr";
+import { useSaleFilters } from "./use-sale-filters";
 
 export function SaleTableBusiness({ limit }: { limit?: number }) {
   const filters = useSaleFilters();
@@ -159,9 +159,9 @@ const SaleTableBusinessInner = memo(
       cellRight: (cell) => {
         const meta = cell.column.columnDef.meta as
           | {
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-            filterParams?: any;
-          }
+              // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+              filterParams?: any;
+            }
           | undefined;
 
         return (

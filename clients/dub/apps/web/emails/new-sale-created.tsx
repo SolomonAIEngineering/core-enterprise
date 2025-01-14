@@ -1,4 +1,4 @@
-import { currencyFormatter, DUB_WORDMARK, getPrettyUrl } from "@dub/utils";
+import { currencyFormatter, getPrettyUrl } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,6 +12,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function NewSaleCreated({
@@ -23,7 +25,7 @@ export default function NewSaleCreated({
   program = {
     id: "prog_d8pl69xXCv4AoHNT281pHQdo",
     name: "Acme",
-    logo: DUB_WORDMARK,
+    logo: `${platform.assets.wordmark}`,
   },
   sale = {
     amount: 4900,
@@ -45,7 +47,7 @@ export default function NewSaleCreated({
     earnings: number;
   };
 }) {
-  const linkToSale = `https://partners.dub.co/${partner.id}/${program.id}/sales`;
+  const linkToSale = `${platform.partnersUrl}/${partner.id}/${program.id}/sales`;
 
   const earningsInDollars = currencyFormatter(sale.earnings / 100, {
     minimumFractionDigits: 2,

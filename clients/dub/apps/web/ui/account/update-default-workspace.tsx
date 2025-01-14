@@ -1,10 +1,11 @@
 "use client";
 
+import { Button, InputSelect, type InputSelectItemProps } from "@dub/ui";
+import { useEffect, useMemo, useState } from "react";
+
 import useWorkspaces from "@/lib/swr/use-workspaces";
-import { Button, InputSelect, InputSelectItemProps } from "@dub/ui";
 import { DICEBEAR_AVATAR_URL } from "@dub/utils";
 import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 export default function UpdateDefaultWorkspace() {
@@ -93,6 +94,7 @@ export default function UpdateDefaultWorkspace() {
           href="https://dub.co/help/article/how-to-change-default-workspace"
           target="_blank"
           className="text-sm text-gray-500 underline underline-offset-4 hover:text-gray-700"
+          rel="noreferrer"
         >
           Learn more about how default workspaces work
         </a>

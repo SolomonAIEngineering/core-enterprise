@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function WebhookAdded({
@@ -42,9 +43,9 @@ export default function WebhookAdded({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub.co"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -53,12 +54,12 @@ export default function WebhookAdded({
             </Heading>
             <Text className="text-sm leading-6 text-black">
               Webhook with the name <strong>{webhook.name}</strong> has been
-              added to your Dub.co workspace {workspace.name}.
+              added to your {platform.company} workspace {workspace.name}.
             </Text>
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`https://app.dub.co/${workspace.slug}/settings/webhooks`}
+                href={`${platform.platformUrl}/${workspace.slug}/settings/webhooks`}
               >
                 View Webhook
               </Link>
@@ -66,7 +67,7 @@ export default function WebhookAdded({
             <Text className="text-sm leading-6 text-black">
               If you did not create this webhook, you can{" "}
               <Link
-                href={`https://app.dub.co/${workspace.slug}/settings/webhooks`}
+                href={`${platform.platformUrl}/${workspace.slug}/settings/webhooks`}
                 className="text-black underline"
               >
                 <strong>delete this webhook</strong>

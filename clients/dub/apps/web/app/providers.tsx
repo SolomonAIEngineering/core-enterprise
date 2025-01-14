@@ -1,12 +1,13 @@
 "use client";
 
-import { PosthogPageview } from "@/ui/layout/posthog-pageview";
-import { Analytics as DubAnalytics } from "@dub/analytics/react";
 import {
   KeyboardShortcutProvider,
   TooltipProvider,
   useRemoveGAParams,
 } from "@dub/ui";
+
+import { PosthogPageview } from "@/ui/layout/posthog-pageview";
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
 import PlausibleProvider from "next-plausible";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";

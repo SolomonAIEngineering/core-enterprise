@@ -1,5 +1,3 @@
-import { WEBHOOK_FAILURE_NOTIFY_THRESHOLD } from "@/lib/webhook/constants";
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -13,7 +11,11 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { DUB_WORDMARK } from "@dub/utils";
 import Footer from "./components/footer";
+import { WEBHOOK_FAILURE_NOTIFY_THRESHOLD } from "@/lib/webhook/constants";
+import { BusinessConfig as platform } from "@dub/platform-config";
 
 export default function WebhookDisabled({
   email = "panic@thedis.co",
@@ -66,7 +68,7 @@ export default function WebhookDisabled({
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`https://app.dub.co/${workspace.slug}/settings/webhooks/${webhook.id}/edit`}
+                href={`${platform.platformUrl}/${workspace.slug}/settings/webhooks/${webhook.id}/edit`}
               >
                 Edit Webhook
               </Link>
