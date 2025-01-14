@@ -1,6 +1,6 @@
-import StripeConnectButton from "@/ui/partners/stripe-connect-button";
 import { ConnectedDots4 } from "@dub/ui/icons";
 import Link from "next/link";
+import StripeConnectButton from "@/ui/partners/stripe-connect-button";
 export default function OnboardingVerification() {
   return (
     <div className="mx-auto my-10 flex w-full max-w-sm flex-col items-center md:mt-14">
@@ -25,8 +25,8 @@ export default function OnboardingVerification() {
             <strong>Continue to Stripe</strong> to setup your payouts account.
             <br />
             <br />
-            You can complete this at a later date, but won't be able to collect
-            any payouts until it's completed.
+            You can complete this at a later date, but won&lsquo;t be able to
+            collect any payouts until it&lsquo;s completed.
           </div>
         </div>
         <div className="mt-6 grid gap-4">
@@ -35,7 +35,7 @@ export default function OnboardingVerification() {
             href="/programs"
             className="text-sm text-neutral-500 transition-colors enabled:hover:text-neutral-800"
           >
-            I'll complete this later
+            I&lsquo;ll complete this later
           </Link>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 export const DEFAULT_REDIRECTS = {
   home: "https://dub.co",
   dub: "https://dub.co",
@@ -14,7 +15,7 @@ export const DEFAULT_REDIRECTS = {
 };
 
 export const DUB_HEADERS = {
-  "x-powered-by": "Dub.co - Link management for modern marketing teams",
+  "x-powered-by": platform.title,
 };
 
 export const REDIRECTION_QUERY_PARAM = "redir_url";

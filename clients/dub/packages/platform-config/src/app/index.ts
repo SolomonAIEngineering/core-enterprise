@@ -15,6 +15,9 @@ const assetUrls = {
   qrLogo: "https://assets.dub.co/logo.png",
   wordmark: "https://assets.dub.co/wordmark.png",
   thumbnail: "https://assets.dub.co/thumbnail.jpg",
+  appleTouchIcon: "https://assets.dub.co/favicons/apple-touch-icon.png",
+  favicon32: "https://assets.dub.co/favicons/favicon-32x32.png",
+  favicon16: "https://assets.dub.co/favicons/favicon-16x16.png",
 };
 
 // Company address configuration

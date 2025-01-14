@@ -123,5 +123,103 @@ model NotificationPreference {
   linkUsageSummary           Boolean @default(true)
   domainConfigurationUpdates Boolean @default(true)
 
+  // Platform Usage Notifications
+  linkUsageWeeklyReport     Boolean @default(true)  // Weekly summary of link usage and performance
+  linkUsageLimitAlerts      Boolean @default(true)  // Notifications when approaching or exceeding usage limits
+  domainVerificationAlerts  Boolean @default(true)  // Domain verification status changes and issues
+  domainExpirationAlerts    Boolean @default(true)  // Domain expiration warnings and renewal reminders
+  sslCertificateAlerts      Boolean @default(true)  // SSL certificate issues and expiration warnings
+
+  // Transaction Notifications
+  newTransactionAlerts      Boolean @default(true)  // Notifications for new transactions posted to accounts
+  largeTransactionAlerts    Boolean @default(true)  // Alerts for transactions exceeding defined thresholds
+  recurringTransactionAlerts Boolean @default(true)  // Notifications about recurring transaction patterns
+  failedTransactionAlerts   Boolean @default(true)  // Alerts for failed or declined transactions
+  transactionDisputeUpdates Boolean @default(true)  // Updates on transaction dispute status and resolution
+
+  // Payment Notifications
+  upcomingPaymentReminders  Boolean @default(true)  // Reminders for upcoming scheduled payments
+  missedPaymentAlerts       Boolean @default(true)  // Alerts for missed or late payments
+  paymentConfirmations      Boolean @default(true)  // Confirmations of successful payments
+  paymentMethodAlerts       Boolean @default(true)  // Payment method expiration and update notifications
+  recurringPaymentUpdates   Boolean @default(true)  // Changes to recurring payment schedules
+
+  // Balance Notifications
+  lowBalanceAlerts         Boolean @default(true)  // Alerts when balance falls below threshold
+  negativeBalanceAlerts    Boolean @default(true)  // Notifications for negative balance events
+  overdraftWarnings        Boolean @default(true)  // Warnings about potential overdraft situations
+  significantBalanceChanges Boolean @default(true)  // Alerts for unusual or large balance changes
+  availableCreditUpdates   Boolean @default(true)  // Updates on available credit and limits
+
+  // Budget Notifications
+  budgetLimitAlerts        Boolean @default(true)  // Alerts when approaching budget limits
+  budgetOverrunNotifications Boolean @default(true)  // Notifications when exceeding budget
+  monthlyBudgetSummaries   Boolean @default(true)  // Monthly budget performance reports
+  categoryBudgetAlerts     Boolean @default(true)  // Category-specific budget notifications
+  budgetRecommendations    Boolean @default(true)  // AI-powered budget optimization suggestions
+
+  // Security Notifications
+  loginAttemptAlerts       Boolean @default(true)  // Notifications of login attempts
+  deviceAuthorizationAlerts Boolean @default(true)  // New device authorization requests
+  securitySettingChanges   Boolean @default(true)  // Changes to security settings and preferences
+  fraudAlerts              Boolean @default(true)  // Potential fraud or suspicious activity
+  twoFactorAuthEvents      Boolean @default(true)  // 2FA-related notifications and backup codes
+
+  // Bank Connection Notifications
+  connectionStatusChanges  Boolean @default(true)  // Bank connection status updates
+  syncFailureAlerts       Boolean @default(true)  // Failed synchronization notifications
+  reconnectionReminders   Boolean @default(true)  // Reminders to reconnect bank accounts
+  newAccountDiscovery     Boolean @default(true)  // Detection of new bank accounts
+  credentialUpdateReminders Boolean @default(true)  // Reminders to update bank credentials
+
+  // Document Notifications
+  newDocumentAlerts       Boolean @default(true)  // Notifications for new document uploads
+  documentSharingEvents   Boolean @default(true)  // Document sharing and access updates
+  signatureRequests       Boolean @default(true)  // Requests for document signatures
+  documentExpirationAlerts Boolean @default(true)  // Document expiration warnings
+  complianceDocumentAlerts Boolean @default(true)  // Required compliance document notifications
+
+  // Invoice Notifications
+  newInvoiceAlerts        Boolean @default(true)  // Notifications for new invoice creation
+  invoicePaymentReceipts  Boolean @default(true)  // Confirmations of invoice payments
+  overdueInvoiceReminders Boolean @default(true)  // Reminders for overdue invoices
+  invoiceDisputeAlerts    Boolean @default(true)  // Notifications about invoice disputes
+  recurringInvoiceUpdates Boolean @default(true)  // Updates to recurring invoice schedules
+
+  // Contract Notifications
+  contractDraftAlerts     Boolean @default(true)  // Notifications for new contract drafts
+  contractSignatureAlerts Boolean @default(true)  // Contract signature status updates
+  contractRenewalReminders Boolean @default(true)  // Contract renewal deadline reminders
+  contractAmendmentAlerts Boolean @default(true)  // Notifications of contract amendments
+  contractTemplateUpdates Boolean @default(true)  // Updates to contract templates
+
+  // Report Notifications
+  monthlyReportAvailability Boolean @default(true)  // Monthly financial report availability
+  customReportCompletion   Boolean @default(true)  // Custom report generation notifications
+  analyticsInsightAlerts   Boolean @default(true)  // AI-generated analytics insights
+  taxReportAvailability    Boolean @default(true)  // Tax-related report notifications
+  auditReportAlerts        Boolean @default(true)  // Audit report availability and findings
+
+  // Customer Notifications
+  newCustomerRegistrations Boolean @default(true)  // New customer registration alerts
+  customerProfileChanges   Boolean @default(true)  // Customer profile update notifications
+  customerPaymentUpdates   Boolean @default(true)  // Customer payment method changes
+  customerSupportTickets   Boolean @default(true)  // Customer support ticket updates
+  customerActivityAlerts   Boolean @default(true)  // Unusual customer activity notifications
+
+  // Category Management Notifications
+  newCategoryAlerts       Boolean @default(true)  // New category creation notifications
+  categoryRuleUpdates     Boolean @default(true)  // Changes to categorization rules
+  uncategorizedTransactions Boolean @default(true)  // Alerts for uncategorized transactions
+  categoryMergeNotifications Boolean @default(true)  // Category consolidation updates
+  autoCategorizeUpdates   Boolean @default(true)  // Auto-categorization system changes
+
+  // Tax Document Notifications
+  taxFormAvailability     Boolean @default(true)  // New tax form availability alerts
+  taxFilingDeadlines      Boolean @default(true)  // Tax filing deadline reminders
+  taxPaymentReminders     Boolean @default(true)  // Tax payment due date notifications
+  annualTaxSummaries      Boolean @default(true)  // Year-end tax summary availability
+  taxPreparationUpdates   Boolean @default(true)  // Tax preparation status updates
+
   projectUser ProjectUsers @relation(fields: [projectUserId], references: [id], onDelete: Cascade)
 }
