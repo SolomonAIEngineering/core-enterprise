@@ -1,5 +1,23 @@
 "use client";
 
+import {
+  AnimatedSizeContainer,
+  BlurImage,
+  Filter,
+  StatusBadge,
+  Table,
+  usePagination,
+  useRouterStuff,
+  useTable,
+} from "@dub/ui";
+import {
+  DICEBEAR_AVATAR_URL,
+  currencyFormatter,
+  fetcher,
+  formatDate,
+  formatDateTime,
+} from "@dub/utils";
+
 import useSalesCount from "@/lib/swr/use-sales-count";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { SaleResponse } from "@/lib/types";
@@ -9,23 +27,7 @@ import { SaleRowMenu } from "@/ui/partners/sale-row-menu";
 import { SaleStatusBadges } from "@/ui/partners/sale-status-badges";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import SimpleDateRangePicker from "@/ui/shared/simple-date-range-picker";
-import {
-  AnimatedSizeContainer,
-  Filter,
-  StatusBadge,
-  Table,
-  usePagination,
-  useRouterStuff,
-  useTable,
-} from "@dub/ui";
 import { MoneyBill2 } from "@dub/ui/icons";
-import {
-  currencyFormatter,
-  DICEBEAR_AVATAR_URL,
-  fetcher,
-  formatDate,
-  formatDateTime,
-} from "@dub/utils";
 import { useParams } from "next/navigation";
 import { memo } from "react";
 import useSWR from "swr";
@@ -87,7 +89,7 @@ const SaleTableBusinessInner = memo(
           cell: ({ row }) => {
             return (
               <div className="flex items-center gap-2">
-                <img
+                <BlurImage
                   src={
                     row.original.customer.avatar ||
                     `${DICEBEAR_AVATAR_URL}${row.original.customer.id}`
@@ -95,6 +97,8 @@ const SaleTableBusinessInner = memo(
                   alt={
                     row.original.customer.email ?? row.original.customer.name
                   }
+                  width={20}
+                  height={20}
                   className="size-5 rounded-full"
                 />
                 <div>
@@ -248,3 +252,5 @@ const SaleTableBusinessInner = memo(
     );
   },
 );
+
+SaleTableBusinessInner.displayName = "SaleTableBusinessInner";

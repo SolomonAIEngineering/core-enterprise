@@ -1,7 +1,8 @@
+import { BoltFill, CursorRays, LinesY, MoneyBills2 } from "@dub/ui/icons";
+
 import { getProgram } from "@/lib/fetchers/get-program";
 import { prisma } from "@dub/prisma";
 import { Logo } from "@dub/ui";
-import { BoltFill, CursorRays, LinesY, MoneyBills2 } from "@dub/ui/icons";
 import { DICEBEAR_AVATAR_URL } from "@dub/utils";
 import { subDays } from "date-fns";
 import { Store } from "lucide-react";
@@ -96,7 +97,7 @@ export default async function SuccessPage({
                 {application && (
                   <>
                     {" "}
-                    You'll receive an update at{" "}
+                    You&apos;ll receive an update at{" "}
                     <strong className="font-semibold">
                       {application.email}
                     </strong>

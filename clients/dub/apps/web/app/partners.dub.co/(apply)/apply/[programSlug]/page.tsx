@@ -61,8 +61,8 @@ export default async function ApplyPage({
             )}
           >
             Share {program.name} with your audience and for each subscription
-            generated through your referral, you'll earn a share of the revenue
-            on any plans they purchase.
+            generated through your referral, you&apos;ll earn a share of the
+            revenue on any plans they purchase.
           </p>
           {/* <p className="text-xs text-neutral-500">
               Read our{" "}

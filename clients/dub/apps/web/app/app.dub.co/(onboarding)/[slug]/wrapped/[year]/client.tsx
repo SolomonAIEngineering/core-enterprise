@@ -1,19 +1,20 @@
 "use client";
 
-import useWorkspace from "@/lib/swr/use-workspace";
 import { BlurImage, ExpandingArrow } from "@dub/ui";
 import {
-  cn,
   DICEBEAR_AVATAR_URL,
-  smartTruncate,
   STAGGER_CHILD_VARIANTS,
+  cn,
+  smartTruncate,
 } from "@dub/utils";
+import { redirect, useParams } from "next/navigation";
+
+import useWorkspace from "@/lib/swr/use-workspace";
 import { COUNTRIES } from "@dub/utils/src/constants/countries";
 import NumberFlow from "@number-flow/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, useParams } from "next/navigation";
 
 export default function WrappedPageClient() {
   const { slug, year } = useParams();
@@ -43,7 +44,7 @@ export default function WrappedPageClient() {
       </h1>
       <p className="animate-slide-up-fade text-balance text-center text-sm leading-6 text-black [animation-delay:300ms] [animation-duration:1s] [animation-fill-mode:both]">
         As we put a wrap on {year}, we wanted to say thank you for your support!
-        Here's a look back at your activity in {year}:
+        Here&apos;s a look back at your activity in {year}:
       </p>
 
       <div className="animate-slide-up-fade mb-4 mt-8 rounded-lg border border-neutral-200 bg-white p-2 shadow-md [animation-delay:450ms] [animation-duration:1s] [animation-fill-mode:both]">

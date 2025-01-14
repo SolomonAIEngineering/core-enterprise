@@ -18,7 +18,7 @@ export default function Plan() {
         >
           Looking for enterprise?
         </a>
-        <LaterButton next="finish">I'll pick a plan later</LaterButton>
+        <LaterButton next="finish">I&apos;ll pick a plan later</LaterButton>
       </div>
     </StepPage>
   );

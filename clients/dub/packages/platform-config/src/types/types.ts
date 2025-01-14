@@ -6,7 +6,7 @@
  */
 
 import type { FeatureFlags } from "../features/types";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 /**
  * Represents a navigation item used in the main navigation menu.
@@ -500,6 +500,12 @@ type Assets = {
   wordmark: string;
   /** Default thumbnail image URL */
   thumbnail: string;
+  /** Apple Touch Icon URL */
+  appleTouchIcon: string;
+  /** Favicon 32x32 URL */
+  favicon32: string;
+  /** Favicon 16x16 URL */
+  favicon16: string;
 };
 
 /**

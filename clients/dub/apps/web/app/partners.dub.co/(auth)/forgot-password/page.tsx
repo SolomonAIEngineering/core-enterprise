@@ -13,7 +13,7 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
       <p className="mt-4 text-center text-sm text-gray-500">
-        Don't have an account?&nbsp;
+        Don&apos;t have an account?&nbsp;
         <Link
           href="register"
           className="font-semibold text-gray-500 underline underline-offset-2 transition-colors hover:text-black"

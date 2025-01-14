@@ -1,28 +1,29 @@
-import { Metadata } from "next";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import type { Metadata } from "next";
 import { HOME_DOMAIN } from "../constants";
 
 export function constructMetadata({
   title,
-  description = "Dub.co is the open-source link management platform for modern marketing teams to create marketing campaigns, link sharing features, and referral programs.",
-  image = "https://assets.dub.co/thumbnail.jpg",
+  description = platform.description,
+  image = platform.assets.thumbnail,
   video,
   icons = [
     {
       rel: "apple-touch-icon",
       sizes: "32x32",
-      url: "https://assets.dub.co/favicons/apple-touch-icon.png",
+      url: platform.assets.appleTouchIcon,
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      url: "https://assets.dub.co/favicons/favicon-32x32.png",
+      url: platform.assets.favicon32,
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
-      url: "https://assets.dub.co/favicons/favicon-16x16.png",
+      url: platform.assets.favicon16,
     },
   ],
   canonicalUrl,
@@ -37,9 +38,7 @@ export function constructMetadata({
   noIndex?: boolean;
 } = {}): Metadata {
   return {
-    title: title
-      ? `${title} | Dub.co`
-      : "Dub.co - Link Management for Modern Marketing Teams",
+    title: title ? `${title} | ${platform.company}` : platform.title,
     description,
     openGraph: {
       title,
