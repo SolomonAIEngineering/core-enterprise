@@ -33,7 +33,7 @@ function GoogleOauthModal({
           Google.{" "}
           <a
             className="underline underline-offset-4 transition-colors hover:text-black"
-            href="https://dub.co/changelog/sign-in-with-google"
+            href={`${platform.webUrl}/changelog/sign-in-with-google`}
             target="_blank"
             rel="noopener noreferrer"
           >

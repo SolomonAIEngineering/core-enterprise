@@ -255,7 +255,7 @@ function ImportBitlyModal({
               }}
             />
             <a
-              href="https://dub.co/help/article/migrating-from-bitly"
+              href={`${platform.webUrl}/help/article/migrating-from-bitly`}
               target="_blank"
               className="text-center text-xs text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800"
               rel="noreferrer"

@@ -200,7 +200,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
                 <div className="grid gap-4 p-6 pb-10">
                   <BlurImage
                     src={program?.logo || "https://assets.dub.co/logo.png"}
-                    alt={program?.name || "Dub"}
+                    alt={program?.name || platform.company}
                     className="my-2 size-8 rounded-full"
                     width={48}
                     height={48}
@@ -225,7 +225,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
                     <strong className="font-medium text-gray-900">
                       From:{" "}
                     </strong>
-                    system@dub.co
+                    {platform.email.from.default}
                   </p>
                   <p className="text-sm text-gray-500">
                     <strong className="font-medium text-gray-900">

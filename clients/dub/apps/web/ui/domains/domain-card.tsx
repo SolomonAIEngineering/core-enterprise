@@ -111,7 +111,7 @@ export default function DomainCard({ props }: { props: DomainProps }) {
               </span>
             </div>
             <a
-              href="https://dub.co/help/article/free-dot-link-domain"
+              href={`${platform.webUrl}/help/article/free-dot-link-domain`}
               target="_blank"
               rel="noreferrer"
               className="text-gray-500 underline transition-colors hover:text-gray-800"
@@ -235,7 +235,7 @@ export default function DomainCard({ props }: { props: DomainProps }) {
                     Good news! Your DNS records are set up correctly, but it can
                     take some time for them to propagate globally.{" "}
                     <Link
-                      href="https://dub.co/help/article/how-to-add-custom-domain#how-long-do-i-have-to-wait-for-my-domain-to-work"
+                      href={`${platform.webUrl}/help/article/how-to-add-custom-domain#how-long-do-i-have-to-wait-for-my-domain-to-work`}
                       target="_blank"
                       className="underline transition-colors hover:text-green-800"
                     >

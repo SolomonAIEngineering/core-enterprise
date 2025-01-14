@@ -140,7 +140,7 @@ export default function DubWrapped({
       image: "https://assets.dub.co/blog/dub-api.jpg",
       cta: {
         text: "Read the announcement",
-        href: "https://dub.co/blog/announcing-dub-api",
+        href: `${platform.webUrl}/blog/announcing-dub-api`,
       },
     },
   ];

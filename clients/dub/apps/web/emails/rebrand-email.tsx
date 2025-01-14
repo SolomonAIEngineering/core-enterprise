@@ -114,7 +114,7 @@ export default function RebrandEmail({
             <Text className="ml-1 text-sm leading-6 text-black">
               ◆{" "}
               <Link
-                href="https://dub.co/help"
+                href={`${platform.webUrl}/help`}
                 className="font-bold text-blue-600 no-underline"
               >
                 {platform.company} Help Center
@@ -146,7 +146,7 @@ export default function RebrandEmail({
             <Text className="text-sm leading-6 text-black">
               Check out our{" "}
               <Link
-                href="https://dub.co/changelog"
+                href={`${platform.webUrl}/changelog`}
                 className="font-medium text-blue-600 no-underline"
               >
                 changelog

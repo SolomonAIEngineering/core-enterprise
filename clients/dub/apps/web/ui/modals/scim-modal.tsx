@@ -116,7 +116,7 @@ function SCIMModal({
                   <SimpleTooltipContent
                     title="Your directory provider is the IDP you use to manage your users."
                     cta={selectedProvider ? "Read the guide." : "Learn more."}
-                    href={`https://dub.co/help/${
+                    href={`${platform.webUrl}/help/${
                       currentProvider
                         ? `article/${currentProvider.saml}-scim`
                         : "category/saml-sso"
@@ -150,8 +150,9 @@ function SCIMModal({
             </select>
             {currentProvider && (
               <a
-                href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
+                href={`${platform.webUrl}/help/article/${currentProvider.saml}-scim`}
                 target="_blank"
+                rel="noreferrer"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
               >
                 Read the guide on {currentProvider.name} SCIM
@@ -172,7 +173,7 @@ function SCIMModal({
                       <SimpleTooltipContent
                         title="Your directory provider is the IDP you use to manage your users."
                         cta="Read the guide."
-                        href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
+                        href={`${platform.webUrl}/help/article/${currentProvider.saml}-scim`}
                       />
                     }
                   />
@@ -212,7 +213,7 @@ function SCIMModal({
                       <SimpleTooltipContent
                         title="Your directory provider is the IDP you use to manage your users."
                         cta="Read the guide."
-                        href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
+                        href={`${platform.webUrl}/help/article/${currentProvider.saml}-scim`}
                       />
                     }
                   />

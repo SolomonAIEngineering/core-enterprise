@@ -59,7 +59,7 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
           <p className="mt-10 text-sm text-neutral-500">
             View detailed{" "}
             <a
-              href="https://dub.co/docs/sdks/client-side/embed"
+              href={`${platform.webUrl}/docs/sdks/client-side/embed`}
               target="_blank"
               className="underline transition-colors duration-75 hover:text-neutral-600"
               rel="noreferrer"
@@ -137,6 +137,7 @@ function CodeSnippet({ code, lang }: { code: string; lang: string }) {
 
   return (
     <div
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{ __html: highlightedCode }}
       style={{ fontSize: "14px", marginTop: "10px", overflowX: "auto" }}
     />

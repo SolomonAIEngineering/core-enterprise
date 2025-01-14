@@ -38,7 +38,7 @@ import { SegmentSettings } from "@/lib/integrations/segment/ui/settings";
 import { SlackSettings } from "@/lib/integrations/slack/ui/settings";
 import { ZapierSettings } from "@/lib/integrations/zapier/ui/settings";
 import useWorkspace from "@/lib/swr/use-workspace";
-import { InstalledIntegrationInfoProps } from "@/lib/types";
+import type { InstalledIntegrationInfoProps } from "@/lib/types";
 import { useUninstallIntegrationModal } from "@/ui/modals/uninstall-integration-modal";
 import { ThreeDots } from "@/ui/shared/icons";
 import { BusinessConfig as platform } from "@dub/platform-config";
@@ -148,7 +148,7 @@ export default function IntegrationPageClient({
                       <TooltipContent
                         title="You cannot uninstall the Stripe integration from here. Please visit the Stripe dashboard to uninstall the app."
                         cta="Go to Stripe"
-                        href="https://dashboard.stripe.com/settings/apps/dub.co"
+                        href={`https://dashboard.stripe.com/settings/apps/${platform.company}`}
                         target="_blank"
                       />
                     ),

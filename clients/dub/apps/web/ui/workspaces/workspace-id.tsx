@@ -29,7 +29,7 @@ export default function WorkspaceId() {
           <p className="text-sm text-gray-500">
             Used to identify your workspace when interacting with the{" "}
             <a
-              href="https://dub.co/api"
+              href={`${platform.webUrl}/api`}
               target="_blank"
               className="underline underline-offset-2 transition-colors hover:text-gray-700"
               rel="noreferrer"

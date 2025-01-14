@@ -113,7 +113,7 @@ export function NavWordmark({
                 variant="outline"
                 onClick={() =>
                   window.open(
-                    `https://dub.co${isInApp ? '/home' : ''}`,
+                    `${platform.webUrl}${isInApp ? '/home' : ''}`,
                     '_blank'
                   )
                 }

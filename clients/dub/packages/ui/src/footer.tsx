@@ -206,7 +206,7 @@ export function Footer({
                     ))}
                     <li>
                       <a
-                        href="https://security.dub.co"
+                        href={platform.securityUrl}
                         target="_blank"
                         rel="noreferrer"
                         className={cn(
@@ -283,7 +283,7 @@ function StatusBadge() {
         | 'partial_outage'
         | 'full_outage'
     }[]
-  }>('https://status.dub.co/api/v1/summary', fetcher)
+  }>(`https://status.${platform.domain}/api/v1/summary`, fetcher)
 
   const [color, setColor] = useState('bg-neutral-200')
   const [status, setStatus] = useState('Loading status...')

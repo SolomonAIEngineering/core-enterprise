@@ -102,8 +102,9 @@ export default function WrappedPageClient() {
 
       <Link
         className="group flex flex-col gap-4 rounded-lg border border-neutral-200 bg-white p-4 sm:flex-row"
-        href="https://dub.co/blog/2024"
+        href={`${platform.webUrl}/blog/2024`}
         target="_blank"
+        rel="noreferrer"
       >
         <Image
           src="https://assets.dub.co/blog/2024.jpg"

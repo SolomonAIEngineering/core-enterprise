@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 import { useDebounce } from "use-debounce";
 import { MultiTagsIcon } from "./multi-tags-icon";
+
 function getTagOption(tag: TagProps) {
   return {
     value: tag.id,
@@ -77,7 +78,7 @@ export function TagSelect() {
     if (res.ok) {
       const newTag = await res.json();
       setValue("tags", [...tags, newTag], { shouldDirty: true });
-      toast.success(`Successfully created tag!`);
+      toast.success("Successfully created tag!");
       setIsOpen(false);
       await mutate(`/api/tags?workspaceId=${workspaceId}`);
       return true;
@@ -159,7 +160,7 @@ export function TagSelect() {
               <SimpleTooltipContent
                 title={`Tags are used to organize your links in your ${platform.company} dashboard.`}
                 cta="Learn more."
-                href="https://dub.co/help/article/how-to-use-tags"
+                href={`${platform.webUrl}/help/article/how-to-use-tags`}
               />
             }
           />
@@ -167,6 +168,7 @@ export function TagSelect() {
         <a
           href={`/${slug}/settings/library/tags`}
           target="_blank"
+          rel="noreferrer"
           className="text-sm text-gray-400 underline-offset-2 transition-all hover:text-gray-600 hover:underline"
         >
           Manage

@@ -237,9 +237,10 @@ function TrackingSettingsForm({ program }: { program: ProgramProps }) {
             <p className="mt-2 text-sm text-neutral-500">
               View our{" "}
               <a
-                href="https://dub.co/docs/sdks/client-side/introduction"
+                href={`${platform.webUrl}/docs/sdks/client-side/introduction`}
                 target="_blank"
                 className="underline transition-colors duration-75 hover:text-neutral-600"
+                rel="noreferrer"
               >
                 installation guides
               </a>{" "}

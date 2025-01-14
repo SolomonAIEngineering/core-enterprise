@@ -31,7 +31,7 @@ export default function RootProviders({ children }: { children: ReactNode }) {
   return (
     <PostHogProvider client={posthog}>
       <PlausibleProvider
-        domain="dub.co"
+        domain={platform.domain}
         revenue
         scriptProps={{
           src: "/_proxy/plausible/script.js",

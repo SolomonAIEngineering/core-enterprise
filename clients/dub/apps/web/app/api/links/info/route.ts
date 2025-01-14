@@ -3,6 +3,7 @@ import { transformLink } from "@/lib/api/links";
 import { getLinkOrThrow } from "@/lib/api/links/get-link-or-throw";
 import { withWorkspace } from "@/lib/auth";
 import { getLinkInfoQuerySchema } from "@/lib/zod/schemas/links";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { NextResponse } from "next/server";
 
@@ -17,7 +18,7 @@ export const GET = withWorkspace(
         code: "bad_request",
         message:
           "You must provide a domain and a key or a linkId or an externalId to retrieve a link.",
-        docUrl: "https://dub.co/docs/api-reference/endpoint/retrieve-a-link",
+        docUrl: `${platform.webUrl}/docs/api-reference/endpoint/retrieve-a-link`,
       });
     }
 

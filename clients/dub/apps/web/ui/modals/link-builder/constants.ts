@@ -1,4 +1,3 @@
-import { ExpandedLinkProps } from "@/lib/types";
 import {
   CircleHalfDottedClock,
   Crosshairs3,
@@ -7,6 +6,9 @@ import {
   SquareChart,
   WindowSearch,
 } from "@dub/ui/icons";
+
+import { ExpandedLinkProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { UseFormSetValue } from "react-hook-form";
 import { LinkFormData } from ".";
 import { getExpirationLabel } from "./expiration-modal";
@@ -20,7 +22,7 @@ export const TOGGLES = [
     label: "Link Cloaking",
     description:
       "Mask your destination URL so your users only see the short link in the browser address bar.",
-    learnMoreUrl: "https://dub.co/help/article/link-cloaking",
+    learnMoreUrl: `${platform.webUrl}/help/article/link-cloaking`,
     shortcutKey: "k",
     type: "boolean",
   },
@@ -30,7 +32,7 @@ export const TOGGLES = [
     label: "Conversion Tracking",
     description:
       "Track conversions on your short link to measure the effectiveness of your marketing campaigns.",
-    learnMoreUrl: "https://dub.co/help/article/conversion-tracking",
+    learnMoreUrl: `${platform.webUrl}/help/article/conversion-tracking`,
     shortcutKey: "c",
     conversionEnabled: true,
     type: "boolean",
@@ -41,7 +43,7 @@ export const TOGGLES = [
     label: "Search Engine Indexing",
     description:
       "Allow search engines to index your short link. Disabled by default.",
-    learnMoreUrl: "https://dub.co/help/article/how-noindex-works",
+    learnMoreUrl: `${platform.webUrl}/help/article/how-noindex-works`,
     shortcutKey: "s",
     type: "boolean",
   },
@@ -55,7 +57,7 @@ export const MOBILE_MORE_ITEMS = [
     badgeLabel: getPasswordLabel,
     description:
       "Protect your links with a password so only authorized users can access them.",
-    learnMoreUrl: "https://dub.co/help/article/password-protected-links",
+    learnMoreUrl: `${platform.webUrl}/help/article/password-protected-links`,
     shortcutKey: "l",
     enabled: (data: LinkFormData) => Boolean(data.password),
     remove: (setValue: UseFormSetValue<ExpandedLinkProps>) =>
@@ -69,7 +71,7 @@ export const MOBILE_MORE_ITEMS = [
     badgeLabel: getExpirationLabel,
     description:
       "Set an expiration date for your links – after which it won't be accessible.",
-    learnMoreUrl: "https://dub.co/help/article/link-expiration",
+    learnMoreUrl: `${platform.webUrl}/help/article/link-expiration`,
     shortcutKey: "e",
     enabled: (data: LinkFormData) => Boolean(data.expiresAt),
     remove: (setValue: UseFormSetValue<ExpandedLinkProps>) => {
@@ -85,7 +87,7 @@ export const MOBILE_MORE_ITEMS = [
     badgeLabel: getTargetingLabel,
     description:
       "Target your links to specific audiences based on their location, device, or browser.",
-    learnMoreUrl: "https://dub.co/help/article/geo-targeting",
+    learnMoreUrl: `${platform.webUrl}/help/article/geo-targeting`,
     shortcutKey: "x",
     enabled: (data: LinkFormData) =>
       Boolean(

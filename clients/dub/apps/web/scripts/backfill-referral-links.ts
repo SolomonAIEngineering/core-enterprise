@@ -33,7 +33,7 @@ async function main() {
     workspaces.map((workspace) => ({
       domain: `refer.${platform.domain}`,
       key: workspace.slug,
-      url: "https://dub.co",
+      url: `${platform.webUrl}`,
       externalId: `ws_${workspace.id}`, // attaching the workspace ID as the externalId for easy updates later on: https://d.to/externalId
       tagIds: ["cm000srqx0004o6ldehod07zc"], // tagging these links with the "Referral links" tag
       trackConversion: true, // enable conversion tracking for these links

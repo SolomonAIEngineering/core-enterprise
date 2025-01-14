@@ -1,8 +1,8 @@
-import { Logo } from "@dub/ui";
-
 import { getProgram } from "@/lib/fetchers/get-program";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { Prisma } from "@dub/prisma/client";
+import { Logo } from "@dub/ui";
 import { currencyFormatter } from "@dub/utils";
 import { constructMetadata } from "@dub/utils/src/functions";
 import { notFound } from "next/navigation";
@@ -73,7 +73,7 @@ export default async function ApplyLayout({
           </span>
           <span className="flex items-center gap-2">
             <a
-              href="https://dub.co/legal/terms"
+              href={`${platform.webUrl}/legal/terms`}
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
               rel="noreferrer"
@@ -82,7 +82,7 @@ export default async function ApplyLayout({
             </a>
             <span className="text-base text-neutral-200">&bull;</span>
             <a
-              href="https://dub.co/legal/privacy"
+              href={`${platform.webUrl}/legal/privacy`}
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
               rel="noreferrer"

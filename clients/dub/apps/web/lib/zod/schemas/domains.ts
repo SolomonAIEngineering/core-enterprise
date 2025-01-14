@@ -1,6 +1,7 @@
 import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
 
 import z from "@/lib/zod";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { parseUrlSchemaAllowEmpty } from "./utils";
 
 export const DomainSchema = z.object({
@@ -27,7 +28,7 @@ export const DomainSchema = z.object({
     .describe(
       "Provide context to your teammates in the link creation modal by showing them an example of a link to be shortened.",
     )
-    .openapi({ example: "https://dub.co/help/article/what-is-dub" }),
+    .openapi({ example: `${platform.webUrl}/help/article/what-is-dub` }),
   expiredUrl: z
     .string()
     .nullable()
@@ -123,7 +124,7 @@ export const createDomainBodySchema = z.object({
     .describe(
       "Provide context to your teammates in the link creation modal by showing them an example of a link to be shortened.",
     )
-    .openapi({ example: "https://dub.co/help/article/what-is-dub" }),
+    .openapi({ example: `${platform.webUrl}/help/article/what-is-dub` }),
   logo: z
     .string()
     .trim()

@@ -1,5 +1,5 @@
 import { GOOGLE_FAVICON_URL, cn } from '@dub/utils'
-import { SVGProps, useId } from 'react'
+import { type SVGProps, useId } from 'react'
 
 import { BusinessConfig as platform } from '@dub/platform-config'
 
