@@ -1,11 +1,11 @@
 import { markDomainAsDeleted } from "@/lib/api/domains";
 import { limiter } from "@/lib/cron/limiter";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { log } from "@dub/utils";
 import { sendEmail } from "emails";
 import DomainDeleted from "emails/domain-deleted";
 import InvalidDomain from "emails/invalid-domain";
-
 export const handleDomainUpdates = async ({
   domain,
   createdAt,
@@ -200,7 +200,7 @@ const sendDomainInvalidEmail = async ({
           subject: `Your domain ${domain} needs to be configured`,
           email,
           react: InvalidDomain({
-            appDomain: process.env.NEXT_PUBLIC_APP_DOMAIN as string,
+            appDomain: platform.domain as string,
             email,
             domain,
             workspaceSlug,

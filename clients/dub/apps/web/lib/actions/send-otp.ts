@@ -1,6 +1,8 @@
 "use server";
 
 import { ratelimit, redis } from "@/lib/upstash";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { get } from "@vercel/edge-config";
 import { sendEmail } from "emails";
@@ -84,7 +86,7 @@ export const sendOtpAction = actionClient
         },
       }),
       sendEmail({
-        subject: `${process.env.NEXT_PUBLIC_APP_NAME}: OTP to verify your account`,
+        subject: `${platform.company}: OTP to verify your account`,
         email,
         react: VerifyEmail({
           email,

@@ -1,3 +1,4 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { GlobeSearch } from "@dub/ui";
 import { constructMetadata } from "@dub/utils";
 
@@ -5,9 +6,8 @@ export const runtime = "edge";
 
 export const metadata = constructMetadata({
   title: "Link Not Found",
-  description:
-    "This link does not exist on Dub.co. Please check the URL and try again.",
-  image: "https://assets.dub.co/misc/notfoundlink.jpg",
+  description: `This link does not exist on ${platform.company}. Please check the URL and try again.`,
+  image: platform.assets.notFoundLink,
   noIndex: true,
 });
 

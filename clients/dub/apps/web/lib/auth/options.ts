@@ -1,27 +1,29 @@
+import { isStored, storage } from "@/lib/storage";
+import type { NextAuthOptions, User } from "next-auth";
+import {
+  exceededLoginAttemptsThreshold,
+  incrementLoginAttempts,
+} from "./lock-account";
+
 import { isBlacklistedEmail } from "@/lib/edge-config";
 import jackson from "@/lib/jackson";
 import { subscribe } from "@/lib/resend";
-import { isStored, storage } from "@/lib/storage";
-import { UserProps } from "@/lib/types";
+import type { UserProps } from "@/lib/types";
 import { ratelimit } from "@/lib/upstash";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { waitUntil } from "@vercel/functions";
 import { sendEmail } from "emails";
 import LoginLink from "emails/login-link";
 import WelcomeEmail from "emails/welcome-email";
-import { User, type NextAuthOptions } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt";
+import type { AdapterUser } from "next-auth/adapters";
+import type { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { completeProgramApplications } from "../partners/complete-program-applications";
-import {
-  exceededLoginAttemptsThreshold,
-  incrementLoginAttempts,
-} from "./lock-account";
 import { validatePassword } from "./password";
 import { trackLead } from "./track-lead";
 
@@ -34,10 +36,11 @@ export const authOptions: NextAuthOptions = {
         if (process.env.NODE_ENV === "development") {
           console.log(`Login link: ${url}`);
           return;
+          // biome-ignore lint/style/noUselessElse: <explanation>
         } else {
           sendEmail({
             email: identifier,
-            subject: `Your ${process.env.NEXT_PUBLIC_APP_NAME} Login Link`,
+            subject: `Your ${platform.company} Login Link`,
             react: LoginLink({ url, email: identifier }),
           });
         }
@@ -234,6 +237,7 @@ export const authOptions: NextAuthOptions = {
 
           if (exceededLoginAttempts) {
             throw new Error("exceeded-login-attempts");
+            // biome-ignore lint/style/noUselessElse: <explanation>
           } else {
             throw new Error("invalid-credentials");
           }
@@ -271,9 +275,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-        domain: VERCEL_DEPLOYMENT
-          ? `.${process.env.NEXT_PUBLIC_APP_DOMAIN}`
-          : undefined,
+        domain: VERCEL_DEPLOYMENT ? `.${platform.domain}` : undefined,
         secure: VERCEL_DEPLOYMENT,
       },
     },
@@ -331,6 +333,7 @@ export const authOptions: NextAuthOptions = {
         account?.provider === "saml" ||
         account?.provider === "saml-idp"
       ) {
+        // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
         let samlProfile;
 
         if (account?.provider === "saml-idp") {

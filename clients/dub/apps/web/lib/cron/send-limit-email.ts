@@ -1,8 +1,9 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { sendEmail } from "emails";
 import ClicksExceeded from "emails/clicks-exceeded";
 import LinksLimitAlert from "emails/links-limit";
-import { WorkspaceProps } from "../types";
+import type { WorkspaceProps } from "../types";
 import { limiter } from "./limiter";
 
 export const sendLimitEmail = async ({
@@ -27,8 +28,8 @@ export const sendLimitEmail = async ({
       limiter.schedule(() =>
         sendEmail({
           subject: type.endsWith("UsageLimitEmail")
-            ? `${process.env.NEXT_PUBLIC_APP_NAME} Alert: Clicks Limit Exceeded`
-            : `${process.env.NEXT_PUBLIC_APP_NAME} Alert: ${
+            ? `${platform.company} Alert: Clicks Limit Exceeded`
+            : `${platform.company} Alert: ${
                 workspace.name
               } has used ${percentage.toString()}% of its links limit for the month.`,
           email,

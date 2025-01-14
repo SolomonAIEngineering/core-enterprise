@@ -6,7 +6,7 @@ import { BusinessConfig as platform } from "@dub/platform-config";
 import Link from "next/link";
 
 export const metadata = constructMetadata({
-  title: `Sign in to ${process.env.NEXT_PUBLIC_APP_NAME}`,
+  title: `Sign in to ${platform.company}`,
   canonicalUrl: `${APP_DOMAIN}/login`,
 });
 

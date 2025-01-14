@@ -1,5 +1,6 @@
 "use server";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { sendEmail } from "emails";
 import PartnerInvite from "emails/partner-invite";
@@ -45,7 +46,7 @@ export const resendProgramInviteAction = authActionClient
         email,
         react: PartnerInvite({
           email,
-          appName: `${process.env.NEXT_PUBLIC_APP_NAME}`,
+          appName: platform.company,
           program: {
             name: program.name,
             logo: program.logo,

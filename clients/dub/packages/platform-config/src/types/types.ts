@@ -506,6 +506,12 @@ type Assets = {
   favicon32: string;
   /** Favicon 16x16 URL */
   favicon16: string;
+  /** Favicon Android 192x192 URL */
+  faviconAndroid192: string;
+  /** Favicon Android 512x512 URL */
+  faviconAndroid512: string;
+  /** Not found link image URL */
+  notFoundLink: string;
 };
 
 /**
@@ -528,6 +534,8 @@ type SiteConfig = {
   company: string;
   /** Platform name */
   name: string;
+  /** Short name */
+  shortName: string;
   /** Founder name */
   founder: string;
   /** Founder first name */

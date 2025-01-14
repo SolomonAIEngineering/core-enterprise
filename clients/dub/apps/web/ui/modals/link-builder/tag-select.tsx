@@ -1,9 +1,3 @@
-import useTags from "@/lib/swr/use-tags";
-import useTagsCount from "@/lib/swr/use-tags-count";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { TagProps } from "@/lib/types";
-import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
-import TagBadge from "@/ui/links/tag-badge";
 import {
   AnimatedSizeContainer,
   Combobox,
@@ -14,17 +8,24 @@ import {
   Tooltip,
   useKeyboardShortcut,
 } from "@dub/ui";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { LinkFormData, LinkModalContext } from ".";
+
+import useTags from "@/lib/swr/use-tags";
+import useTagsCount from "@/lib/swr/use-tags-count";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { TagProps } from "@/lib/types";
+import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
+import TagBadge from "@/ui/links/tag-badge";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import { useCompletion } from "ai/react";
 import posthog from "posthog-js";
-import { useContext, useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { useDebounce } from "use-debounce";
-import { LinkFormData, LinkModalContext } from ".";
 import { MultiTagsIcon } from "./multi-tags-icon";
-
 function getTagOption(tag: TagProps) {
   return {
     value: tag.id,
@@ -135,14 +136,14 @@ export function TagSelect() {
       availableTags.length > 0
     ) {
       complete(
-        `From the list of available tags below, suggest relevant tags for this link: 
-        
+        `From the list of available tags below, suggest relevant tags for this link:
+
         - URL: ${debouncedUrl}
         - Meta title: ${title}
-        - Meta description: ${description}. 
-        
+        - Meta description: ${description}.
+
         Only return the tag names in comma-separated format, and nothing else. If there are no relevant tags, return an empty string.
-        
+
         Available tags: ${availableTags.map(({ name }) => name).join(", ")}`,
       );
     }
@@ -156,7 +157,7 @@ export function TagSelect() {
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title={`Tags are used to organize your links in your ${process.env.NEXT_PUBLIC_APP_NAME} dashboard.`}
+                title={`Tags are used to organize your links in your ${platform.company} dashboard.`}
                 cta="Learn more."
                 href="https://dub.co/help/article/how-to-use-tags"
               />

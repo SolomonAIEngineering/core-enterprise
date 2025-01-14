@@ -1,5 +1,6 @@
-import { recordMetatags } from "@/lib/upstash";
 import { fetchWithTimeout, isValidUrl } from "@dub/utils";
+
+import { recordMetatags } from "@/lib/upstash";
 import { waitUntil } from "@vercel/functions";
 import he from "he";
 import { parse } from "node-html-parser";

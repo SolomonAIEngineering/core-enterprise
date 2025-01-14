@@ -12,6 +12,7 @@ import {
 import type { AdminRole, OrganizationSize } from "@prisma/client";
 
 import { AlertCircleFill } from "@/ui/shared/icons";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import slugify from "@sindresorhus/slugify";
 import { useSession } from "next-auth/react";
@@ -105,7 +106,7 @@ export function CreateWorkspaceForm({
             Workspace Name
           </p>
           <InfoTooltip
-            content={`This is the name of your workspace on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
+            content={`This is the name of your workspace on ${platform.company}.`}
           />
         </label>
         <div className="mt-2 flex rounded-md shadow-sm">
@@ -130,12 +131,12 @@ export function CreateWorkspaceForm({
             Workspace Slug
           </p>
           <InfoTooltip
-            content={`This is your workspace's unique slug on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
+            content={`This is your workspace's unique slug on ${platform.company}.`}
           />
         </label>
         <div className="relative mt-2 flex rounded-md shadow-sm">
           <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">
-            app.{process.env.NEXT_PUBLIC_APP_DOMAIN}
+            app.{platform.domain}
           </span>
           <input
             id="slug"

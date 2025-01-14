@@ -1,7 +1,5 @@
 "use client";
 
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
 import {
   AnimatedSizeContainer,
   Button,
@@ -9,8 +7,6 @@ import {
   Modal,
   useRouterStuff,
 } from "@dub/ui";
-import { TableIcon } from "@dub/ui/icons";
-import { ArrowRight } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
   Dispatch,
@@ -28,6 +24,12 @@ import {
   UseFormWatch,
   useForm,
 } from "react-hook-form";
+
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { TableIcon } from "@dub/ui/icons";
+import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { FieldMapping } from "./field-mapping";
@@ -153,8 +155,8 @@ function ImportCsvModal({
         </div>
         <h3 className="text-lg font-medium">Import Links From a CSV File</h3>
         <p className="text-balance text-center text-sm text-gray-500">
-          Easily import all your links into {process.env.NEXT_PUBLIC_APP_NAME}{" "}
-          with just a few clicks.
+          Easily import all your links into {platform.company} with just a few
+          clicks.
         </p>
       </div>
 

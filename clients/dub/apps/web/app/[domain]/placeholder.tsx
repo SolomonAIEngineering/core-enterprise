@@ -1,7 +1,9 @@
 "use client";
 
+import { STAGGER_CHILD_VARIANTS, createHref } from "@dub/utils";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { InlineSnippet } from "@dub/ui";
-import { createHref, STAGGER_CHILD_VARIANTS } from "@dub/utils";
 import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
@@ -52,7 +54,7 @@ export default function PlaceholderContent() {
           className="font-display text-4xl font-bold text-gray-800 transition-colors sm:text-5xl"
           variants={STAGGER_CHILD_VARIANTS}
         >
-          Welcome to {process.env.NEXT_PUBLIC_APP_NAME}
+          Welcome to {platform.company}
         </motion.h1>
         <motion.p
           className="max-w-xl text-gray-600 transition-colors sm:text-lg"
@@ -65,10 +67,10 @@ export default function PlaceholderContent() {
               utm_source: "Custom Domain",
               utm_medium: "Welcome Page",
               utm_campaign: domain,
-              utm_content: "Dub.co",
+              utm_content: platform.company,
             })}
           >
-            {process.env.NEXT_PUBLIC_APP_NAME}
+            {platform.company}
           </a>{" "}
           - the link management platform for modern marketing teams.
         </motion.p>

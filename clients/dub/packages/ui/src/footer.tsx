@@ -1,15 +1,17 @@
 'use client'
 
 import { ALL_TOOLS, cn, createHref, fetcher } from '@dub/utils'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import useSWR from 'swr'
 import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from './content'
 import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from './icons'
+import { useEffect, useState } from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
 import { MaxWidthWrapper } from './max-width-wrapper'
 import { NavWordmark } from './nav-wordmark'
+import { BusinessConfig as platform } from '@dub/platform-config'
+import { useParams } from 'next/navigation'
+import useSWR from 'swr'
 
 const socials = [
   {
@@ -100,9 +102,7 @@ export function Footer({
                 })}
                 className="block max-w-fit"
               >
-                <span className="sr-only">
-                  {process.env.NEXT_PUBLIC_APP_NAME} Logo
-                </span>
+                <span className="sr-only">{platform.company} Logo</span>
                 <NavWordmark className="h-8 text-gray-800" />
               </Link>
             </div>
