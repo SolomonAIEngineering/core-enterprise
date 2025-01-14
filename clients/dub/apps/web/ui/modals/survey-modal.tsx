@@ -4,12 +4,12 @@ import {
   Google,
   Label,
   LinkedIn,
+  Logo,
   Modal,
   ProductHunt,
   RadioGroup,
   RadioGroupItem,
   Twitter,
-  Wordmark,
   useMediaQuery,
 } from "@dub/ui";
 import { AnimatePresence, motion } from "framer-motion";
@@ -197,7 +197,7 @@ function SurveyModal({
         exit="exit"
         variants={FADE_IN_VARIANTS}
       >
-        <Wordmark className="h-8" />
+        <Logo className="h-10 w-10" />
         <h3 className="text-lg font-medium">Help Us Improve</h3>
         <p className="text-center text-sm text-gray-500">
           Where did you hear about Vector?

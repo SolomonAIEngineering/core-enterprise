@@ -199,7 +199,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
               <div className="mt-2 overflow-hidden rounded-md border border-neutral-200">
                 <div className="grid gap-4 p-6 pb-10">
                   <BlurImage
-                    src={program?.logo || "https://assets.dub.co/logo.png"}
+                    src={program?.logo || platform.assets.logo}
                     alt={program?.name || platform.company}
                     className="my-2 size-8 rounded-full"
                     width={48}
