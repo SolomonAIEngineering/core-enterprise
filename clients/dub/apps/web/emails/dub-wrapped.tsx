@@ -1,5 +1,4 @@
-import { COUNTRIES, DUB_WORDMARK, smartTruncate } from "@dub/utils";
-import { nFormatter } from "@dub/utils/src/functions";
+import { COUNTRIES, smartTruncate } from "@dub/utils";
 import {
   Body,
   Column,
@@ -16,14 +15,17 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { nFormatter } from "@dub/utils/src/functions";
 import Footer from "./components/footer";
 
 export default function DubWrapped({
   email = "panic@thedis.co",
   workspace = {
-    name: "Dub",
-    slug: "dub",
-    logo: "https://assets.dub.co/logo.png",
+    name: platform.company,
+    slug: platform.company.toLowerCase(),
+    logo: platform.assets.logo,
   },
   stats = {
     "Total Links": 1429,
@@ -31,23 +33,23 @@ export default function DubWrapped({
   },
   topLinks = [
     {
-      item: "dub.sh/link",
+      item: `${platform.company}.link/link`,
       count: 13923,
     },
     {
-      item: "dub.sh/link",
+      item: `${platform.company}.link/link`,
       count: 2225,
     },
     {
-      item: "dub.sh/link",
+      item: `${platform.company}.link/link`,
       count: 423,
     },
     {
-      item: "dub.sh/link",
+      item: `${platform.company}.link/link`,
       count: 325,
     },
     {
-      item: "dub.sh/link",
+      item: `${platform.company}.link/link`,
       count: 233,
     },
   ],
@@ -115,8 +117,7 @@ export default function DubWrapped({
   const shippedItems = [
     {
       title: "Free .LINK domains on all paid plans",
-      description:
-        "We partnered with Nova Registry to offer a <b>1-year free .link custom domain</b> to all paying Dub customers. By using a custom domain, you get <b>30% higher click-through rates</b> and better brand recognition.",
+      description: `We partnered with Nova Registry to offer a <b>1-year free .link custom domain</b> to all paying ${platform.company} customers. By using a custom domain, you get <b>30% higher click-through rates</b> and better brand recognition.`,
       image: "https://assets.dub.co/blog/free-dot-link.jpg",
       cta: {
         text: "Read the announcement",
@@ -134,13 +135,12 @@ export default function DubWrapped({
       },
     },
     {
-      title: "Dub API General Availability",
-      description:
-        "Our Dub API went GA, allowing you to build your powerful integrations with Dub. We also launched <b>native SDKs in 5 different languages</b>: TypeScript, Python, Ruby, PHP, and Go.",
+      title: `${platform.company} API General Availability`,
+      description: `Our ${platform.company} API went GA, allowing you to build your powerful integrations with ${platform.company}. We also launched <b>native SDKs in 5 different languages</b>: TypeScript, Python, Ruby, PHP, and Go.`,
       image: "https://assets.dub.co/blog/dub-api.jpg",
       cta: {
         text: "Read the announcement",
-        href: "https://dub.co/blog/announcing-dub-api",
+        href: `${platform.webUrl}/blog/announcing-dub-api`,
       },
     },
   ];
@@ -150,17 +150,22 @@ export default function DubWrapped({
       <Head />
       <Preview>
         In 2024, you created {nFormatter(stats["Total Links"], { full: true })}{" "}
-        links on Dub and got {nFormatter(stats["Total Clicks"], { full: true })}{" "}
-        clicks.
+        links on {platform.company} and got{" "}
+        {nFormatter(stats["Total Clicks"], { full: true })} clicks.
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
-              <Img src={DUB_WORDMARK} height="32" alt="Dub" className="my-0" />
+              <Img
+                src={platform.assets.wordmark}
+                height="32"
+                alt={platform.company}
+                className="my-0"
+              />
             </Section>
             <Heading className="mx-0 mb-4 mt-8 p-0 text-xl font-semibold text-black">
-              Dub Year in Review 🎊
+              {platform.company} Year in Review 🎊
             </Heading>
             <Text className="text-sm leading-6 text-black">
               As we put a wrap on 2024, we wanted to say thank you for your
@@ -252,6 +257,7 @@ export default function DubWrapped({
                 </Text>
                 <Text
                   className="leading-6 text-gray-600"
+                  // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                   dangerouslySetInnerHTML={{ __html: item.description }}
                 />
                 <Link
@@ -291,7 +297,7 @@ export default function DubWrapped({
               className="max-w-[200px]"
             />
             <Text className="text-sm leading-6 text-black">
-              and the Dub team 🎄
+              and the {platform.company} team 🎄
             </Text>
 
             <Footer email={email} marketing />
@@ -335,7 +341,10 @@ const StatTable = ({
         const [domain, ...pathParts] = item.split("/");
         const path = pathParts.join("/") || "_root";
         return (
-          <div key={index} className="text-sm">
+          <div
+            key={`${index} - ${item} - ${Math.random()}`}
+            className="text-sm"
+          >
             <Row>
               {title === "Top Countries" && (
                 <Column width={24}>
@@ -350,7 +359,7 @@ const StatTable = ({
                 {title === "Top Links" ? (
                   <div className="py-2">
                     <Link
-                      href={`https://app.dub.co/${workspaceSlug}/analytics?domain=${domain}&key=${path}&interval=1y`}
+                      href={`${platform.platformUrl}/${workspaceSlug}/analytics?domain=${domain}&key=${path}&interval=1y`}
                       className="font-medium text-black underline underline-offset-2"
                     >
                       {smartTruncate(item, 33)} ↗

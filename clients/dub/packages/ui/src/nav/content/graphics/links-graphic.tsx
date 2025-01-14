@@ -1,5 +1,7 @@
-import { cn, GOOGLE_FAVICON_URL } from '@dub/utils'
-import { SVGProps, useId } from 'react'
+import { GOOGLE_FAVICON_URL, cn } from '@dub/utils'
+import { type SVGProps, useId } from 'react'
+
+import { BusinessConfig as platform } from '@dub/platform-config'
 
 export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
   const id = useId()
@@ -429,7 +431,7 @@ export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
           style={{ whiteSpace: 'pre' }}
         >
           <tspan x="110" y="179.773">
-            app.dub.co/register
+            {platform.platformHost}/register
           </tspan>
         </text>
         <path

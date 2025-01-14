@@ -1,10 +1,11 @@
-import useDomains from "@/lib/swr/use-domains";
 import { DUB_DOMAINS, SHORT_DOMAIN } from "@dub/utils";
+
+import useDomains from "@/lib/swr/use-domains";
 import { useMemo } from "react";
 
 /**
  * @param {string} [options.currentDomain] The current domain of a link being updated (useful when the link's current domain has been archived)
- * @param {boolean} [options.onboarding] Whether the user is on the onboarding page (we can assume the user doesn't have any custom domains yet, so just show the Dub default domains)
+ * @param {boolean} [options.onboarding] Whether the user is on the onboarding page (we can assume the user doesn't have any custom domains yet, so just show the default domains)
  * @returns {Array} An array of available domains for creating or updating a link.
  */
 export function useAvailableDomains(

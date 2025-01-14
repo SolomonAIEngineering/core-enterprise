@@ -1,11 +1,11 @@
 "use client";
 
 import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 export function YearInReviewCard() {
   const pathname = usePathname();
   const { slug, yearInReview } = useWorkspace();
@@ -22,7 +22,7 @@ export function YearInReviewCard() {
     >
       <div className="flex flex-col gap-1">
         <span className="line-clamp-1 font-medium text-neutral-900">
-          Dub 2024 Year in Review 🎊
+          {platform.company} 2024 Year in Review 🎊
         </span>
         <p className="line-clamp-2 h-10 leading-5 text-neutral-500">
           As we put a wrap on 2024, we want to say thank you for your support!

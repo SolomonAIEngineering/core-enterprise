@@ -4,14 +4,16 @@ import type {
   IOAuthController,
   JacksonOption,
 } from "@boxyhq/saml-jackson";
-import jackson from "@boxyhq/saml-jackson";
 
-export const samlAudience = "https://saml.dub.co";
+import jackson from "@boxyhq/saml-jackson";
+import { BusinessConfig as platform } from "@dub/platform-config";
+
+export const samlAudience = `https://saml.${platform.domain}`;
 
 const opts: JacksonOption = {
   externalUrl:
     process.env.NODE_ENV === "production"
-      ? "https://api.dub.co"
+      ? `https://api.${platform.domain}`
       : `${process.env.NEXTAUTH_URL}`,
   samlPath:
     process.env.NODE_ENV === "production"

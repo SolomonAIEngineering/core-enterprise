@@ -1,13 +1,15 @@
-import { cn, createHref } from '@dub/utils'
-import Link from 'next/link'
-import { RESOURCES, SDKS } from '../../content'
-import { Grid } from '../../grid'
-import { HexadecagonStar } from '../../icons'
 import {
   ContentLinkCard,
   LargeLinkCard,
   contentHeadingClassName,
 } from './shared'
+import { RESOURCES, SDKS } from '../../content'
+import { cn, createHref } from '@dub/utils'
+
+import { Grid } from '../../grid'
+import { HexadecagonStar } from '../../icons'
+import Link from 'next/link'
+import { BusinessConfig as platform } from '@dub/platform-config'
 
 export function ResourcesContent({ domain }: { domain: string }) {
   return (
@@ -75,7 +77,7 @@ export function ResourcesContent({ domain }: { domain: string }) {
             <div className="relative flex items-center justify-between px-5 py-4">
               <div>
                 <span className="text-sm font-medium leading-none text-white">
-                  Dub Brand
+                  {platform.company} Brand
                 </span>
                 <p className="mt-1 text-sm text-white/70">
                   Logos, wordmark, etc.

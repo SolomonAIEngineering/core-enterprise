@@ -1,4 +1,3 @@
-import { DUB_WORDMARK, getPlanDetails } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,6 +11,9 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { getPlanDetails } from "@dub/utils";
 import Footer from "./components/footer";
 
 export default function UpgradeEmail({
@@ -27,20 +29,22 @@ export default function UpgradeEmail({
   return (
     <Html>
       <Head />
-      <Preview>Thank you for upgrading to Dub.co {plan}!</Preview>
+      <Preview>
+        Thank you for upgrading to {platform.company} {plan}!
+      </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Thank you for upgrading to Dub.co {plan}!
+              Thank you for upgrading to {platform.company} {plan}!
             </Heading>
             <Section className="my-8">
               <Img
@@ -53,32 +57,32 @@ export default function UpgradeEmail({
               Hey{name && ` ${name}`}!
             </Text>
             <Text className="text-sm leading-6 text-black">
-              My name is Steven, and I'm the founder of Dub. I wanted to
-              personally reach out to thank you for upgrading to{" "}
+              🌟 My name is {platform.founderFirstName}, and I'm the founder of{" "}
+              {platform.company}. I'm personally reaching out to express our
+              sincere gratitude for your upgrade to{" "}
               <Link
                 href={planDetails.link}
                 className="font-medium text-blue-600 no-underline"
               >
-                Dub.co {plan}
+                {platform.company} {plan}
               </Link>
-              !
+              ! 🚀
             </Text>
             <Text className="text-sm leading-6 text-black">
-              As you might already know, we are fully{" "}
-              <Link
-                href="https://d.to/github"
-                className="font-medium text-blue-600 no-underline"
-              >
-                open-source
-              </Link>{" "}
-              business. Your support means the world to us and helps us continue
-              to build and improve Dub.co.
+              Your enhanced commitment to {platform.company} is incredibly
+              meaningful to our entire team. Your trust and support drive us to
+              continuously innovate and improve our platform. We're excited to
+              provide you with an elevated experience through these premium
+              features:
             </Text>
             <Text className="text-sm leading-6 text-black">
               On the {plan} plan, you now have access to:
             </Text>
             {planDetails.features.map((feature) => (
-              <Text className="ml-1 text-sm leading-4 text-black">
+              <Text
+                key={`${feature.text}-${Math.random()}`}
+                className="ml-1 text-sm leading-4 text-black"
+              >
                 ◆{" "}
                 {feature.footnote?.href ? (
                   <Link href={feature.footnote.href}>{feature.text}</Link>
@@ -92,7 +96,7 @@ export default function UpgradeEmail({
               happy to help!
             </Text>
             <Text className="text-sm font-light leading-6 text-gray-400">
-              Steven from Dub
+              {platform.founderFirstName} from {platform.company}
             </Text>
             <Footer email={email} marketing />
           </Container>

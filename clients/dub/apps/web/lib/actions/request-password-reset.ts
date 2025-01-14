@@ -1,11 +1,12 @@
 "use server";
 
 import { ratelimit } from "@/lib/upstash";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
-import { randomBytes } from "crypto";
 import { sendEmail } from "emails";
 import ResetPasswordLink from "emails/reset-password-link";
 import { flattenValidationErrors } from "next-safe-action";
+import { randomBytes } from "node:crypto";
 import { PASSWORD_RESET_TOKEN_EXPIRY } from "../auth/constants";
 import { requestPasswordResetSchema } from "../zod/schemas/auth";
 import { throwIfAuthenticated } from "./auth/throw-if-authenticated";
@@ -61,7 +62,7 @@ export const requestPasswordResetAction = actionClient
     ]);
 
     await sendEmail({
-      subject: `${process.env.NEXT_PUBLIC_APP_NAME}: Password reset instructions`,
+      subject: `${platform.company}: Password reset instructions`,
       email,
       react: ResetPasswordLink({
         email,

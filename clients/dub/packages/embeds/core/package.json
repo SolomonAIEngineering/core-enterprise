@@ -16,6 +16,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@dub/platform-config": "workspace:*",
     "@floating-ui/dom": "^1.6.12"
   },
   "devDependencies": {

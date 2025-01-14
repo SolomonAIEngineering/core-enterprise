@@ -1,10 +1,11 @@
+import { getShortLinkViaEdge, getWorkspaceViaEdge } from "@/lib/planetscale";
+import { DUB_QR_LOGO, getSearchParams, isDubDomain } from "@dub/utils";
+
 import { handleAndReturnErrorResponse } from "@/lib/api/errors";
 import { ratelimitOrThrow } from "@/lib/api/utils";
-import { getShortLinkViaEdge, getWorkspaceViaEdge } from "@/lib/planetscale";
 import { getDomainViaEdge } from "@/lib/planetscale/get-domain-via-edge";
 import { QRCodeSVG } from "@/lib/qr/utils";
 import { getQRCodeQuerySchema } from "@/lib/zod/schemas/qr";
-import { DUB_QR_LOGO, getSearchParams, isDubDomain } from "@dub/utils";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 
@@ -68,7 +69,7 @@ const getQRCodeLogo = async ({
 }) => {
   const shortLink = await getShortLinkViaEdge(url.split("?")[0]);
 
-  // Not a Dub link
+  // Not a link
   if (!shortLink) {
     return DUB_QR_LOGO;
   }
@@ -89,7 +90,7 @@ const getQRCodeLogo = async ({
     return logo;
   }
 
-  // if it's a Dub owned domain and no  workspace logo is set, use the Dub logo
+  // if it's a owned domain and no  workspace logo is set, use the logo
   if (isDubDomain(shortLink.domain) && !workspace?.logo) {
     return DUB_QR_LOGO;
   }
@@ -97,7 +98,7 @@ const getQRCodeLogo = async ({
   // if it's a custom domain, check if it has a logo
   const domain = await getDomainViaEdge(shortLink.domain);
 
-  // return domain logo if it has one, otherwise fallback to workspace logo, and finally fallback to Dub logo
+  // return domain logo if it has one, otherwise fallback to workspace logo, and finally fallback to logo
   return domain?.logo || workspace?.logo || DUB_QR_LOGO;
 };
 

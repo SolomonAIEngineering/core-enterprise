@@ -1,6 +1,9 @@
 "use client";
+
 import { Badge, Copy, Globe2, Tick, useCopyToClipboard } from "@dub/ui";
 import { capitalize, nFormatter } from "@dub/utils";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 
 export interface UserInfoProps {
@@ -26,11 +29,11 @@ export default function UserInfo({ data }: { data: UserInfoProps }) {
     <div className="grid gap-2">
       <LoginLinkCopyButton text={data.email} url={data.email} />
       <LoginLinkCopyButton
-        text="app.dub.co login link"
+        text={`${platform.platformHost} login link`}
         url={data.impersonateUrl.app}
       />
       <LoginLinkCopyButton
-        text="partners.dub.co login link"
+        text={`partners.${platform.domain} login link`}
         url={data.impersonateUrl.partners}
       />
       {Object.keys(data.defaultDomainLinks).length > 0 && (

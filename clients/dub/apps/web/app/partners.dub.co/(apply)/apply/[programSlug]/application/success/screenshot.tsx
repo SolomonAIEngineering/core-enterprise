@@ -2,6 +2,7 @@ import { DICEBEAR_AVATAR_URL, cn, truncate } from "@dub/utils";
 import { SVGProps, useId } from "react";
 
 import { ProgramProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 
 export function Screenshot({
   program,
@@ -391,7 +392,7 @@ export function Screenshot({
             style={{ whiteSpace: "pre" }}
           >
             <tspan x="403.5" y="371.091">
-              refer.dub.co/steven
+              refer.{platform.domain}/yoan
             </tspan>
           </text>
           <path

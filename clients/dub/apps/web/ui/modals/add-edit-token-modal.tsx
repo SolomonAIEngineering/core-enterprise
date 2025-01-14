@@ -1,11 +1,9 @@
-import { ResourceKey, RESOURCES } from "@/lib/api/rbac/resources";
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import { RESOURCES, ResourceKey } from "@/lib/api/rbac/resources";
 import {
-  getScopesByResourceForRole,
   Scope,
+  getScopesByResourceForRole,
   scopePresets,
 } from "@/lib/api/tokens/scopes";
-import useWorkspace from "@/lib/swr/use-workspace";
 import {
   AnimatedSizeContainer,
   Button,
@@ -18,7 +16,6 @@ import {
   SimpleTooltipContent,
   ToggleGroup,
 } from "@dub/ui";
-import { cn } from "@dub/utils";
 import {
   Dispatch,
   FormEvent,
@@ -28,6 +25,11 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { cn } from "@dub/utils";
 import { toast } from "sonner";
 import { mutate } from "swr";
 
@@ -199,7 +201,7 @@ function AddEditTokenModal({
                         <SimpleTooltipContent
                           title="This API key will be tied to your user account – if you are removed from the workspace, it will be deleted."
                           cta="Learn more"
-                          href="https://dub.co/docs/api-reference/tokens"
+                          href={`${platform.webUrl}/docs/api-reference/tokens`}
                         />
                       }
                     />
@@ -238,7 +240,7 @@ function AddEditTokenModal({
                               : "Only the workspace owner can create machine users."
                           }
                           cta="Learn more"
-                          href="https://dub.co/docs/api-reference/tokens#machine-users"
+                          href={`${platform.webUrl}/docs/api-reference/tokens#machine-users`}
                         />
                       }
                     />

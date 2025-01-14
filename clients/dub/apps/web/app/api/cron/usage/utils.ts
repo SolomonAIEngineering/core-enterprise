@@ -11,6 +11,7 @@ import { qstash } from "@/lib/cron";
 import { limiter } from "@/lib/cron/limiter";
 import { sendLimitEmail } from "@/lib/cron/send-limit-email";
 import type { WorkspaceProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { sendEmail } from "emails";
 import ClicksSummary from "emails/clicks-summary";
@@ -262,12 +263,12 @@ export const updateUsage = async () => {
           emails.map((email) => {
             limiter.schedule(() =>
               sendEmail({
-                subject: `Your 30-day ${process.env.NEXT_PUBLIC_APP_NAME} summary for ${workspace.name}`,
+                subject: `Your 30-day ${platform.company} summary for ${workspace.name}`,
                 email,
                 react: ClicksSummary({
                   email,
-                  appName: process.env.NEXT_PUBLIC_APP_NAME as string,
-                  appDomain: process.env.NEXT_PUBLIC_APP_DOMAIN as string,
+                  appName: platform.company as string,
+                  appDomain: platform.domain as string,
                   workspaceName: workspace.name,
                   workspaceSlug: workspace.slug,
                   totalClicks: workspace.usage,

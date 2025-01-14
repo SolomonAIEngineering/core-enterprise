@@ -1,4 +1,3 @@
-import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
 import {
   Button,
   ButtonTooltip,
@@ -20,6 +19,9 @@ import {
   useState,
 } from "react";
 import { useForm, useFormContext } from "react-hook-form";
+
+import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { LinkFormData } from ".";
 
 function PasswordModal({
@@ -99,7 +101,7 @@ function PasswordModalInner({
               <SimpleTooltipContent
                 title="Restrict access to your short links by encrypting it with a password."
                 cta="Learn more."
-                href="https://dub.co/help/article/password-protected-links"
+                href={`${platform.webUrl}/help/article/password-protected-links`}
               />
             }
           />

@@ -1,6 +1,8 @@
+import "dotenv-flow/config";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { DUB_WORKSPACE_ID } from "@dub/utils";
-import "dotenv-flow/config";
 
 async function main() {
   const integration = await prisma.integration.create({
@@ -9,7 +11,7 @@ async function main() {
       slug: "slack",
       description: "Create links from Slack messages easily with Dub.",
       developer: "Dub",
-      website: "https://dub.co",
+      website: `${platform.webUrl}`,
       verified: true,
       projectId: DUB_WORKSPACE_ID,
 

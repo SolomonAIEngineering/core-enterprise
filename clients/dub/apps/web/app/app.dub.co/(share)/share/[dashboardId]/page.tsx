@@ -4,6 +4,7 @@ import { APP_DOMAIN, constructMetadata } from "@dub/utils";
 import { getDashboard } from "@/lib/fetchers/get-dashboard";
 import type { PlanProps } from "@/lib/types";
 import Analytics from "@/ui/analytics";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -25,7 +26,7 @@ export async function generateMetadata({
   }
 
   return constructMetadata({
-    title: `Analytics for ${data.link.domain}/${data.link.key} – ${process.env.NEXT_PUBLIC_APP_NAME}`,
+    title: `Analytics for ${data.link.domain}/${data.link.key} – ${platform.company}`,
     image: `${APP_DOMAIN}/api/og/analytics?domain=${data.link.domain}&key=${data.link.key}`,
     noIndex: !data.doIndex,
   });
@@ -66,8 +67,8 @@ export default async function dashboardPage({
 
   return (
     <div className="flex min-h-screen flex-col justify-between bg-gray-50/80">
-      <NavMobile staticDomain="app.dub.co" />
-      <Nav staticDomain="app.dub.co" />
+      <NavMobile staticDomain={platform.platformHost} />
+      <Nav staticDomain={platform.platformHost} />
       <Suspense fallback={<div className="h-screen w-full bg-gray-50" />}>
         <Analytics
           dashboardProps={{
@@ -79,7 +80,7 @@ export default async function dashboardPage({
           }}
         />
       </Suspense>
-      <Footer staticDomain="app.oppulence.co" />
+      <Footer staticDomain={platform.platformHost} />
     </div>
   );
 }

@@ -1,8 +1,4 @@
-import useWorkspace from "@/lib/swr/use-workspace";
-import { Invite } from "@/lib/zod/schemas/invites";
 import { BlurImage, Logo, Modal } from "@dub/ui";
-import { LoadingSpinner } from "@dub/ui/icons";
-import { fetcher } from "@dub/utils";
 import {
   Dispatch,
   SetStateAction,
@@ -10,6 +6,12 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import useWorkspace from "@/lib/swr/use-workspace";
+import { Invite } from "@/lib/zod/schemas/invites";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { LoadingSpinner } from "@dub/ui/icons";
+import { fetcher } from "@dub/utils";
 import useSWR from "swr";
 import { InviteTeammatesForm } from "../workspaces/invite-teammates-form";
 
@@ -57,9 +59,10 @@ function InviteTeammateModal({
         <p className="text-center text-sm text-gray-500">
           Invite teammates with{" "}
           <a
-            href="https://dub.co/help/article/workspace-roles"
+            href={`${platform.webUrl}/help/article/workspace-roles`}
             target="_blank"
             className="underline hover:text-gray-900"
+            rel="noreferrer"
           >
             different roles and permissions
           </a>

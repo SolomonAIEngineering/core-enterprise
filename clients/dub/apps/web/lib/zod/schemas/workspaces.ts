@@ -1,9 +1,10 @@
 import { DEFAULT_REDIRECTS, validSlugRegex } from "@dub/utils";
+import { AdminRole, OrganizationSize } from "@prisma/client";
 import { planSchema, roleSchema } from "./misc";
 
 import { isReservedKey } from "@/lib/edge-config";
 import z from "@/lib/zod";
-import { AdminRole, OrganizationSize } from "@prisma/client";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import slugify from "@sindresorhus/slugify";
 import { DomainSchema } from "./domains";
 
@@ -48,7 +49,7 @@ export const WorkspaceSchema = z
       .string()
       .nullable()
       .describe(
-        "[BETA – Dub Partners]: The ID of the payment method for partner payouts.",
+        `[BETA – ${platform.company} Partners]: The ID of the payment method for partner payouts.`,
       ),
 
     usage: z.number().describe("The usage of the workspace."),
@@ -95,7 +96,9 @@ export const WorkspaceSchema = z
       ),
     partnersEnabled: z
       .boolean()
-      .describe("Whether the workspace has Dub Partners enabled."),
+      .describe(
+        `Whether the workspace has ${platform.company} Partners enabled.`,
+      ),
 
     createdAt: z
       .date()

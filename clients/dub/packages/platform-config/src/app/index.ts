@@ -18,6 +18,9 @@ const assetUrls = {
   appleTouchIcon: "https://assets.dub.co/favicons/apple-touch-icon.png",
   favicon32: "https://assets.dub.co/favicons/favicon-32x32.png",
   favicon16: "https://assets.dub.co/favicons/favicon-16x16.png",
+  faviconAndroid192: "https://assets.dub.co/favicons/android-chrome-192x192.png",
+  faviconAndroid512: "https://assets.dub.co/favicons/android-chrome-512x512.png",
+  notFoundLink: "https://assets.dub.co/misc/notfoundlink.jpg",
 };
 
 // Company address configuration
@@ -39,6 +42,7 @@ const emailConfig: EmailConfig = {
     billing: "Vector Billing <billing@getvector.app>",
     notifications: "Vector Notifications <notifications@getvector.app>",
     system: "Vector <system@getvector.app>",
+    feedback: "Vector Feedback <feedback@getvector.app>",
   },
   replyTo: "support@getvector.app",
   templates: {
@@ -193,6 +197,7 @@ export const BusinessConfig: SiteConfig = {
   platformHost: "app.getvector.app",
   company: "Vector",
   name: "Vector | Revenue Intelligence Platform",
+  shortName: "Vector",
   founder: "Yoan From Vector",
   founderFirstName: "Yoan",
   address: companyAddress,

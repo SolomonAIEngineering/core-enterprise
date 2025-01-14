@@ -1,25 +1,27 @@
-import { cn, createHref } from '@dub/utils'
-import Link from 'next/link'
 import { COMPARE_PAGES, CUSTOMER_STORIES } from '../../content'
 import { ConnectedDotsFill, CubeSettingsFill } from '../../icons'
-import { AnalyticsGraphic } from './graphics/analytics-graphic'
-import { LinksGraphic } from './graphics/links-graphic'
 import {
   ContentLinkCard,
   LargeLinkCard,
   contentHeadingClassName,
 } from './shared'
+import { cn, createHref } from '@dub/utils'
+
+import { AnalyticsGraphic } from './graphics/analytics-graphic'
+import Link from 'next/link'
+import { LinksGraphic } from './graphics/links-graphic'
+import { BusinessConfig as platform } from '@dub/platform-config'
 
 const largeLinks = [
   {
-    title: 'Dub API',
+    title: `${platform.company} API`,
     description: 'Programmatic link creation at scale',
     icon: CubeSettingsFill,
     href: '/docs/api-reference/introduction',
   },
   {
-    title: 'Dub Integrations',
-    description: 'Connect Dub with your favorite tools',
+    title: `${platform.company} Integrations`,
+    description: `Connect ${platform.company} with your favorite tools`,
     icon: ConnectedDotsFill,
     href: '/docs/integrations',
   },
@@ -34,7 +36,7 @@ export function ProductContent({ domain }: { domain: string }) {
       >
         <div className="p-5 pb-0">
           <span className="text-sm font-medium text-neutral-900 dark:text-white">
-            Dub Links
+            {platform.company} Links
           </span>
           <p className="mt-3 max-w-56 text-sm text-neutral-500 dark:text-white/60">
             Short links with superpowers for the modern marketer
@@ -54,7 +56,7 @@ export function ProductContent({ domain }: { domain: string }) {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,#36D78F,transparent)] opacity-[0.07] transition-opacity duration-150 group-hover:opacity-[0.2]" />
           <div className="h-56 p-5">
             <span className="text-sm font-medium text-neutral-900 dark:text-white">
-              Dub Analytics
+              {platform.company} Analytics
             </span>
             <p className="mt-3 max-w-48 text-sm text-neutral-500 dark:text-white/60">
               Powerful real-time analytics with conversion tracking
@@ -123,9 +125,9 @@ export function ProductContent({ domain }: { domain: string }) {
                 utm_source: 'Custom Domain',
                 utm_medium: 'Navbar',
                 utm_campaign: domain,
-                utm_content: `Dub vs. ${name}`,
+                utm_content: `${platform.company} vs. ${name}`,
               })}
-              title={`Dub vs. ${name}`}
+              title={`${platform.company} vs. ${name}`}
               showArrow
             />
           ))}

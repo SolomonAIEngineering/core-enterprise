@@ -9,8 +9,10 @@ import {
   useCopyToClipboard,
   useMediaQuery,
 } from "@dub/ui";
-import { cn, DUB_LOGO, TAB_ITEM_ANIMATION_SETTINGS } from "@dub/utils";
+import { DUB_LOGO, TAB_ITEM_ANIMATION_SETTINGS, cn } from "@dub/utils";
 import { Link, Program } from "@prisma/client";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { motion } from "framer-motion";
 
 const BUTTON_CLASSNAME = "h-9 rounded-lg bg-neutral-900 hover:bg-neutral-800";
@@ -80,7 +82,7 @@ export function EmbedQuickstart({
               : undefined
           }
           onClick={() =>
-            window.open("https://partners.dub.co/settings/payouts", "_blank")
+            window.open(`${platform.partnersUrl}/settings/payouts`, "_blank")
           }
           text="Connect payouts"
         />

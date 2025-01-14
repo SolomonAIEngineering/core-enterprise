@@ -429,6 +429,8 @@ type EmailConfig = {
     notifications: string;
     /** System sender address */
     system: string;
+    /** Feedback sender address */
+    feedback: string;
   };
   /** Default reply-to address */
   replyTo: string;
@@ -506,6 +508,12 @@ type Assets = {
   favicon32: string;
   /** Favicon 16x16 URL */
   favicon16: string;
+  /** Favicon Android 192x192 URL */
+  faviconAndroid192: string;
+  /** Favicon Android 512x512 URL */
+  faviconAndroid512: string;
+  /** Not found link image URL */
+  notFoundLink: string;
 };
 
 /**
@@ -528,6 +536,8 @@ type SiteConfig = {
   company: string;
   /** Platform name */
   name: string;
+  /** Short name */
+  shortName: string;
   /** Founder name */
   founder: string;
   /** Founder first name */
@@ -560,7 +570,7 @@ type SiteConfig = {
   statusPageUrl: string;
   /** API URL */
   apiUrl: string;
-  /** Project slug for Dub */
+  /** Project slug */
   dubProjectSlug: string;
   /** MFA issuer name */
   mfaIssuer: string;

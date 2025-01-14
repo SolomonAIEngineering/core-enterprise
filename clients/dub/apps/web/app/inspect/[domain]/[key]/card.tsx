@@ -1,5 +1,7 @@
 import { CopyButton, LinkLogo } from "@dub/ui";
 import { getApexDomain, linkConstructor } from "@dub/utils";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Flag } from "lucide-react";
 import Link from "next/link";
 
@@ -41,7 +43,7 @@ export default function LinkInspectorCard({
         </div>
       </div>
       <Link
-        href={`https://dub.co/legal/abuse?link=${linkConstructor({
+        href={`${platform.webUrl}/legal/abuse?link=${linkConstructor({
           domain,
           key,
         })}`}

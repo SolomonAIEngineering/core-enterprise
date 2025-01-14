@@ -1,10 +1,12 @@
 "use client";
 
+import { Badge, Button, CreditCard } from "@dub/ui";
+
 import usePaymentMethods from "@/lib/swr/use-payment-methods";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import ManageSubscriptionButton from "@/ui/workspaces/manage-subscription-button";
-import { Badge, Button, CreditCard } from "@dub/ui";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import { useState } from "react";
 import { Stripe } from "stripe";
@@ -133,7 +135,7 @@ const PaymentMethodCard = ({
             <p className="font-medium text-neutral-900">{title}</p>
             {type === "us_bank_account" && (
               <Badge variant="neutral">
-                Recommended for Dub Partners payouts
+                Recommended for {platform.company} Partners payouts
               </Badge>
             )}
           </div>

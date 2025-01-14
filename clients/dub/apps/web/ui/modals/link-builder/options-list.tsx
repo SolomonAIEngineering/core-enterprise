@@ -1,14 +1,16 @@
 import { AlertCircleFill, CheckCircleFill, X } from "@/ui/shared/icons";
 import { SimpleTooltipContent, Tooltip, useMediaQuery } from "@dub/ui";
-import { LoadingSpinner } from "@dub/ui/icons";
 import { fetcher, isValidUrl as isValidUrlFn } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useMemo } from "react";
+import { MOBILE_MORE_ITEMS, TOGGLES } from "./constants";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { LoadingSpinner } from "@dub/ui/icons";
 import { useFormContext } from "react-hook-form";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import { LinkFormData } from ".";
-import { MOBILE_MORE_ITEMS, TOGGLES } from "./constants";
 
 export function OptionsList() {
   const { isMobile } = useMediaQuery();
@@ -152,7 +154,7 @@ function LinkCloakingToggleBadge({
           <SimpleTooltipContent
             title="Your link is not cloakable – make sure you have the right security headers set on your target URL."
             cta="Learn more"
-            href="https://dub.co/help/article/link-cloaking#link-cloaking-with-security-headers"
+            href={`${platform.webUrl}/help/article/link-cloaking#link-cloaking-with-security-headers`}
           />
         )
       }

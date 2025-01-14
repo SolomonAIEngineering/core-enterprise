@@ -20,7 +20,7 @@ import {
 
 import useSalesCount from "@/lib/swr/use-sales-count";
 import useWorkspace from "@/lib/swr/use-workspace";
-import { SaleResponse } from "@/lib/types";
+import type { SaleResponse } from "@/lib/types";
 import FilterButton from "@/ui/analytics/events/filter-button";
 import { PartnerRowItem } from "@/ui/partners/partner-row-item";
 import { SaleRowMenu } from "@/ui/partners/sale-row-menu";
@@ -159,6 +159,7 @@ const SaleTableBusinessInner = memo(
       cellRight: (cell) => {
         const meta = cell.column.columnDef.meta as
           | {
+              // biome-ignore lint/suspicious/noExplicitAny: <explanation>
               filterParams?: any;
             }
           | undefined;

@@ -1,5 +1,6 @@
 "use server";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { sendEmail } from "emails";
 import ReferralInvite from "emails/referral-invite";
 import { z } from "zod";
@@ -7,7 +8,7 @@ import { ratelimit } from "../upstash";
 import { emailSchema } from "../zod/schemas/auth";
 import { authActionClient } from "./safe-action";
 
-// send invite referral email for Dub Referrals (soon to be deprecated?)
+// send invite referral email for Referrals (soon to be deprecated?)
 export const sendInviteReferralEmail = authActionClient
   .schema(
     z.object({
@@ -34,12 +35,12 @@ export const sendInviteReferralEmail = authActionClient
 
     try {
       return await sendEmail({
-        subject: `You've been invited to start using ${process.env.NEXT_PUBLIC_APP_NAME}`,
+        subject: `You've been invited to start using ${platform.company}`,
         email,
         react: ReferralInvite({
           email,
-          appName: process.env.NEXT_PUBLIC_APP_NAME as string,
-          url: `https://refer.dub.co/${workspace.slug}`,
+          appName: platform.company,
+          url: `https://refer.${platform.domain}/${workspace.slug}`,
           workspaceUser: ctx.user.name || null,
           workspaceUserEmail: ctx.user.email || null,
         }),

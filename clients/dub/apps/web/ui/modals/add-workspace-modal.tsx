@@ -7,6 +7,8 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 import { CreateWorkspaceForm } from "../workspaces/create-workspace-form";
 
@@ -41,9 +43,10 @@ function AddWorkspaceModalHelper({
         <Logo />
         <h3 className="text-lg font-medium">Create a new workspace</h3>
         <a
-          href="https://dub.co/help/article/what-is-a-workspace"
+          href={`${platform.webUrl}/help/article/what-is-a-workspace`}
           target="_blank"
           className="-translate-y-2 text-center text-xs text-gray-500 underline underline-offset-4 hover:text-gray-800"
+          rel="noreferrer"
         >
           What is a workspace?
         </a>

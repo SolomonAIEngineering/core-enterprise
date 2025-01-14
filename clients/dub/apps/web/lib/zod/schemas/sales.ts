@@ -1,5 +1,6 @@
-import z from "@/lib/zod";
 import { clickEventSchema, clickEventSchemaTB } from "./clicks";
+
+import z from "@/lib/zod";
 import { CustomerSchema } from "./customers";
 import { commonDeprecatedEventFields } from "./deprecated";
 import { linkEventSchema } from "./links";
@@ -118,7 +119,7 @@ export const saleEventSchemaTBEndpoint = z.object({
   ip: z.string().nullable(),
 });
 
-// response from dub api
+// response from api
 export const saleEventResponseSchema = z
   .object({
     event: z.literal("sale"),

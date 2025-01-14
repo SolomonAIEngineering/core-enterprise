@@ -1,5 +1,7 @@
 import { Grid, Logo } from "@dub/ui";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
+
 export default function PartnerAuthLayout({
   children,
 }: {
@@ -21,11 +23,11 @@ export default function PartnerAuthLayout({
       <div className="flex grow flex-col justify-end">
         <div className="relative flex w-full flex-col items-center justify-center gap-2 py-10 pb-6">
           <p className="text-xs text-gray-600">
-            © {new Date().getFullYear()} Dub Technologies, Inc.
+            © {new Date().getFullYear()} {platform.company}
           </p>
           <div className="flex gap-3 text-center text-xs text-gray-500 underline underline-offset-2">
             <a
-              href="https://dub.co/legal/privacy"
+              href={`${platform.webUrl}/legal/privacy`}
               target="_blank"
               className="hover:text-gray-800"
               rel="noreferrer"
@@ -33,7 +35,7 @@ export default function PartnerAuthLayout({
               Privacy Policy
             </a>
             <a
-              href="https://dub.co/legal/terms"
+              href={`${platform.webUrl}/legal/terms`}
               target="_blank"
               className="hover:text-gray-800"
               rel="noreferrer"
@@ -41,12 +43,12 @@ export default function PartnerAuthLayout({
               Terms of Service
             </a>
             <a
-              href="https://app.dub.co"
+              href={platform.platformUrl}
               target="_blank"
               className="hover:text-gray-800"
               rel="noreferrer"
             >
-              app.dub.co
+              {platform.platformHost}
             </a>
           </div>
         </div>

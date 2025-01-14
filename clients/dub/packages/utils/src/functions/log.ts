@@ -1,3 +1,4 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 const logTypeToEnv = {
   alerts: process.env.DUB_SLACK_HOOK_ALERTS,
   cron: process.env.DUB_SLACK_HOOK_CRON,
@@ -48,6 +49,6 @@ export const log = async ({
       }),
     });
   } catch (e) {
-    console.log(`Failed to log to Dub Slack. Error: ${e}`);
+    console.log(`Failed to log to ${platform.company} Slack. Error: ${e}`);
   }
 };
