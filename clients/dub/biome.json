@@ -29,7 +29,12 @@
 				"noForEach": "off"
 			},
       "style": {
-        "useImportType": "off"
+        "useImportType": "off",
+        "noUselessElse": "off",
+        "noUnusedTemplateLiteral": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off"
       },
       "correctness": {
         "useExhaustiveDependencies": "off"

@@ -1,7 +1,12 @@
 "use client";
 
-import { Switch, useOptimisticUpdate } from "@dub/ui";
-import { Globe, Receipt2, Users } from "@dub/ui/icons";
+import {
+  SimpleTooltipContent,
+  Switch,
+  Tooltip,
+  useOptimisticUpdate,
+} from "@dub/ui";
+import { Globe, Note, Receipt2, Users } from "@dub/ui/icons";
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@dub/ui/ui";
 import {
   BadgeCent,
@@ -11,6 +16,7 @@ import {
   BringToFront,
   Cable,
   Calendar,
+  ChartBar,
   ChartBarStacked,
   ChevronDown,
   CircleX,
@@ -33,6 +39,7 @@ import {
   ScanLine,
   Shield,
   ShoppingBag,
+  SlashIcon,
   Speech,
   Tag,
   WalletCards,
@@ -630,6 +637,7 @@ const notifications: {
 const categories = [
   {
     title: "Platform Usage",
+    icon: ChartBar,
     description:
       "Configure notifications for core platform features including link analytics, domain management, and usage metrics. Stay informed about domain verification status, SSL certificates, and usage limits. Get detailed insights into your link performance and receive timely alerts about domain-related issues.",
     types: [
@@ -644,6 +652,7 @@ const categories = [
   },
   {
     title: "Financial Activity",
+    icon: PieChart,
     description:
       "Get real-time updates on all financial transactions. Monitor large transactions, recurring payments, and receive instant alerts for failed or disputed transactions. Stay informed about payment processing status and any unusual transaction patterns that require attention.",
     types: [
@@ -661,6 +670,7 @@ const categories = [
   },
   {
     title: "Balance & Budget",
+    icon: Banknote,
     description:
       "Stay on top of your finances with comprehensive balance monitoring and budget tracking. Receive alerts for low balances, overdrafts, and get AI-powered budget recommendations. Track spending patterns and receive proactive notifications about potential budget overruns or unusual spending activities.",
     types: [
@@ -678,6 +688,7 @@ const categories = [
   },
   {
     title: "Security & Access",
+    icon: Shield,
     description:
       "Enhance your account security with comprehensive alerts for login attempts, device authorizations, and potential security threats. Get immediate notifications for any suspicious activity, unauthorized access attempts, or changes to security settings. Stay protected with real-time security monitoring and two-factor authentication updates.",
     types: [
@@ -690,6 +701,7 @@ const categories = [
   },
   {
     title: "Documents & Contracts",
+    icon: Note,
     description:
       "Never miss important document updates with our comprehensive document management notifications. Track contract statuses, signature requests, and document expiration dates. Stay compliant with automated document alerts and receive timely notifications about contract renewals, amendments, and template updates. Keep your document workflow organized and efficient.",
     types: [
@@ -707,6 +719,7 @@ const categories = [
   },
   {
     title: "Reports & Analytics",
+    icon: SlashIcon,
     description:
       "Access detailed insights with customized reports and analytics notifications. Get alerts when new reports are available, including monthly summaries, custom report completions, and AI-generated business insights. Stay informed about key metrics, trends, and performance indicators through comprehensive analytical updates.",
     types: [
@@ -719,6 +732,7 @@ const categories = [
   },
   {
     title: "Customer Management",
+    icon: Users,
     description:
       "Keep track of all customer interactions and activities in real-time. Monitor new registrations, profile changes, and support ticket updates. Receive notifications about customer payment updates, unusual activity patterns, and important customer service events. Stay connected with your customer base through comprehensive activity monitoring.",
     types: [
@@ -731,6 +745,7 @@ const categories = [
   },
   {
     title: "Categories & Organization",
+    icon: Tag,
     description:
       "Maintain organized transactions with our smart categorization system. Get alerts for uncategorized transactions, updates to categorization rules, and automated category suggestions. Stay informed about category merges, rule changes, and improvements to the auto-categorization system for better financial organization.",
     types: [
@@ -743,6 +758,7 @@ const categories = [
   },
   {
     title: "Tax Related",
+    icon: Receipt2,
     description:
       "Stay compliant with tax obligations through comprehensive tax-related notifications. Receive timely reminders for tax filing deadlines, payment due dates, and notifications when new tax forms are available. Get updates about tax preparation progress, annual summaries, and important tax document availability to ensure smooth tax management.",
     types: [
@@ -754,45 +770,6 @@ const categories = [
     ],
   },
 ];
-
-const categoryDetails = {
-  "Platform Usage": {
-    detailedDescription:
-      "Configure notifications for core platform features including link analytics, domain management, and usage metrics. Stay informed about domain verification status, SSL certificates, and usage limits. Get detailed insights into your link performance and receive timely alerts about domain-related issues.",
-  },
-  "Financial Activity": {
-    detailedDescription:
-      "Get real-time updates on all financial transactions. Monitor large transactions, recurring payments, and receive instant alerts for failed or disputed transactions. Stay informed about payment processing status and any unusual transaction patterns that require attention.",
-  },
-  "Balance & Budget": {
-    detailedDescription:
-      "Stay on top of your finances with comprehensive balance monitoring and budget tracking. Receive alerts for low balances, overdrafts, and get AI-powered budget recommendations. Track spending patterns and receive proactive notifications about potential budget overruns or unusual spending activities.",
-  },
-  "Security & Access": {
-    detailedDescription:
-      "Enhance your account security with comprehensive alerts for login attempts, device authorizations, and potential security threats. Get immediate notifications for any suspicious activity, unauthorized access attempts, or changes to security settings. Stay protected with real-time security monitoring and two-factor authentication updates.",
-  },
-  "Documents & Contracts": {
-    detailedDescription:
-      "Never miss important document updates with our comprehensive document management notifications. Track contract statuses, signature requests, and document expiration dates. Stay compliant with automated document alerts and receive timely notifications about contract renewals, amendments, and template updates. Keep your document workflow organized and efficient.",
-  },
-  "Reports & Analytics": {
-    detailedDescription:
-      "Access detailed insights with customized reports and analytics notifications. Get alerts when new reports are available, including monthly summaries, custom report completions, and AI-generated business insights. Stay informed about key metrics, trends, and performance indicators through comprehensive analytical updates.",
-  },
-  "Customer Management": {
-    detailedDescription:
-      "Keep track of all customer interactions and activities in real-time. Monitor new registrations, profile changes, and support ticket updates. Receive notifications about customer payment updates, unusual activity patterns, and important customer service events. Stay connected with your customer base through comprehensive activity monitoring.",
-  },
-  "Categories & Organization": {
-    detailedDescription:
-      "Maintain organized transactions with our smart categorization system. Get alerts for uncategorized transactions, updates to categorization rules, and automated category suggestions. Stay informed about category merges, rule changes, and improvements to the auto-categorization system for better financial organization.",
-  },
-  "Tax Related": {
-    detailedDescription:
-      "Stay compliant with tax obligations through comprehensive tax-related notifications. Receive timely reminders for tax filing deadlines, payment due dates, and notifications when new tax forms are available. Get updates about tax preparation progress, annual summaries, and important tax document availability to ensure smooth tax management.",
-  },
-};
 
 export default function NotificationsSettingsPageClient() {
   const { id: workspaceId } = useWorkspace();
@@ -907,7 +884,7 @@ export default function NotificationsSettingsPageClient() {
         </p>
       </div>
       <Tabs defaultValue={categories[0].title} className="flex w-full gap-8">
-        <Card className="w-fit p-[2%]">
+        <Card className="h-fit w-fit p-[2%]">
           <TabsList className="flex h-fit w-64 flex-col space-y-1 bg-transparent p-0">
             {categories.map((category) => (
               <TabsTrigger
@@ -915,13 +892,27 @@ export default function NotificationsSettingsPageClient() {
                 value={category.title}
                 className="w-full justify-start px-4 py-2 text-left font-medium"
               >
-                {category.title}
+                <div className="flex items-center gap-2">
+                  <div className="rounded-full border border-white bg-gradient-to-t from-gray-100 p-1 md:p-3">
+                    <category.icon className="h-4 w-4" />
+                  </div>
+                  {category.title}
+                  <Tooltip
+                    content={
+                      <SimpleTooltipContent
+                        title={category.description}
+                        cta="Learn more."
+                        href={""}
+                      />
+                    }
+                  />
+                </div>
               </TabsTrigger>
             ))}
           </TabsList>
         </Card>
 
-        <Card className="w-fit p-[2%]">
+        <Card className="w-fit border-0 p-[2%] shadow-none">
           <div className="flex-1">
             {categories.map((category) => (
               <TabsContent

@@ -1,8 +1,8 @@
 "use server";
 
-import FeedbackEmail from "emails/feedback-email";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { resend } from "@/lib/resend";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import FeedbackEmail from "emails/feedback-email";
 
 export async function submitFeedback(data: FormData) {
   const email = data.get("email") as string;
