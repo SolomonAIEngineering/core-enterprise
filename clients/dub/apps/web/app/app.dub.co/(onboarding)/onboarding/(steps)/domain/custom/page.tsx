@@ -1,6 +1,6 @@
-import { Form } from "./form";
 import { Globe } from "@dub/ui/icons";
 import { StepPage } from "../../step-page";
+import { Form } from "./form";
 
 export default function Custom() {
   return (
