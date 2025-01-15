@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'clients/dub/apps/packages/prisma/**'
+      - 'clients/dub/packages/prisma/**'
 
 jobs:
   deploy:
