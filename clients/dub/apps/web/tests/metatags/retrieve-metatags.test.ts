@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
-import { IntegrationHarness } from "../utils/integration";
 import { MetaTag } from "@/lib/types";
+import { IntegrationHarness } from "../utils/integration";
 
 test("GET /metatags", async (ctx) => {
   const h = new IntegrationHarness(ctx);

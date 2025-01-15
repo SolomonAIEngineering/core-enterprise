@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { parse } from "@/lib/middleware/utils";
 import EmbedMiddleware from "./embed";
 import NewLinkMiddleware from "./new-link";
-import WorkspacesMiddleware from "./workspaces";
 import { appRedirect } from "./utils/app-redirect";
 import { getDefaultWorkspace } from "./utils/get-default-workspace";
 import { getOnboardingStep } from "./utils/get-onboarding-step";
 import { getUserViaToken } from "./utils/get-user-via-token";
 import { isTopLevelSettingsRedirect } from "./utils/is-top-level-settings-redirect";
-import { parse } from "@/lib/middleware/utils";
+import WorkspacesMiddleware from "./workspaces";
 
 export default async function AppMiddleware(req: NextRequest) {
   const { path, fullPath } = parse(req);
