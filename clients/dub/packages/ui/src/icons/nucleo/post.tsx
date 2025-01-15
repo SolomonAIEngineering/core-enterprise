@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Post(props: SVGProps<SVGSVGElement>) {
   return (
@@ -48,5 +48,5 @@ export function Post(props: SVGProps<SVGSVGElement>) {
         <circle cx="6" cy="6" fill="currentColor" r="1" strokeWidth="1.5" />
       </g>
     </svg>
-  );
+  )
 }

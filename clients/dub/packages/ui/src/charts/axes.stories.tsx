@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { TimeSeriesChart } from "./time-series-chart";
-import { XAxis } from "./x-axis";
-import { YAxis } from "./y-axis";
+import { TimeSeriesChart } from './time-series-chart'
+import { XAxis } from './x-axis'
+import { YAxis } from './y-axis'
 
 const meta: Meta<typeof XAxis> = {
-  title: "Charts/Axes",
+  title: 'Charts/Axes',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-};
+}
 
-export default meta;
+export default meta
 
 // Sample data
 const sampleData = Array.from({ length: 30 }, (_, i) => ({
   date: new Date(2024, 0, i + 1),
   values: { value: Math.random() * 100 },
-}));
+}))
 
 const series = [
   {
-    id: "value",
+    id: 'value',
     valueAccessor: (d: { values: { value: number } }) => d.values.value,
   },
-];
+]
 
 export const XAxisExample: StoryObj<typeof XAxis> = {
   render: () => (
@@ -34,7 +34,7 @@ export const XAxisExample: StoryObj<typeof XAxis> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const YAxisExample: StoryObj<typeof YAxis> = {
   render: () => (
@@ -44,7 +44,7 @@ export const YAxisExample: StoryObj<typeof YAxis> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const BothAxes: StoryObj = {
   render: () => (
@@ -55,4 +55,4 @@ export const BothAxes: StoryObj = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}

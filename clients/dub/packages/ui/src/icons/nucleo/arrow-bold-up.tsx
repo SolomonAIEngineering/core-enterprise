@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function ArrowBoldUp(props: SVGProps<SVGSVGElement>) {
   return (
@@ -20,5 +20,5 @@ export function ArrowBoldUp(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

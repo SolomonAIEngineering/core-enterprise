@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { cn } from "@dub/utils";
-import { ReactNode } from "react";
-import { toast } from "sonner";
-import { useCopyToClipboard } from "./hooks";
+import { cn } from '@dub/utils'
+import { ReactNode } from 'react'
+import { toast } from 'sonner'
+import { useCopyToClipboard } from './hooks'
 
 export function CopyText({
   value,
@@ -11,29 +11,29 @@ export function CopyText({
   className,
   successMessage,
 }: {
-  value: string;
-  children: ReactNode;
-  className?: string;
-  successMessage?: string;
+  value: string
+  children: ReactNode
+  className?: string
+  successMessage?: string
 }) {
-  const [copied, copyToClipboard] = useCopyToClipboard();
+  const [copied, copyToClipboard] = useCopyToClipboard()
 
   return (
     <button
       onClick={(e) => {
-        e.stopPropagation();
+        e.stopPropagation()
         toast.promise(copyToClipboard(value), {
-          success: successMessage || "Copied to clipboard!",
-        });
+          success: successMessage || 'Copied to clipboard!',
+        })
       }}
       type="button"
       className={cn(
-        "cursor-copy text-sm text-gray-700 decoration-dotted hover:underline",
-        copied && "cursor-default",
-        className,
+        'cursor-copy text-sm text-gray-700 decoration-dotted hover:underline',
+        copied && 'cursor-default',
+        className
       )}
     >
       {children}
     </button>
-  );
+  )
 }

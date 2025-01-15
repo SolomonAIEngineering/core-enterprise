@@ -13,5 +13,5 @@ export function Unsplash({ className }: { className?: string }) {
         fillRule="nonzero"
       />
     </svg>
-  );
+  )
 }

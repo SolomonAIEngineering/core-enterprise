@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Book2Fill(props: SVGProps<SVGSVGElement>) {
   return (
@@ -16,5 +16,5 @@ export function Book2Fill(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

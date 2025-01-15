@@ -100,13 +100,14 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+      'rlig' 1,
+      'calt' 1;
   }
   .card {
-    @apply border-2 border-[hsl(var(--primary))] shadow-md;
+    @apply shadow-md border-2 border-[hsl(var(--primary))];
   }
 }
+
 @layer base {
   * {
     @apply border-border;

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Elxo(props: SVGProps<SVGSVGElement>) {
   return (
@@ -15,5 +15,5 @@ export function Elxo(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
       />
     </svg>
-  );
+  )
 }

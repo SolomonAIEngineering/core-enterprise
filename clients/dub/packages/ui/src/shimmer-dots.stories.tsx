@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { ShimmerDots } from "./shimmer-dots";
+import { ShimmerDots } from './shimmer-dots'
 
 const meta: Meta<typeof ShimmerDots> = {
-  title: "Components/ShimmerDots",
+  title: 'Components/ShimmerDots',
   component: ShimmerDots,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "A shimmer dots animation component using WebGL for smooth performance.",
+          'A shimmer dots animation component using WebGL for smooth performance.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof ShimmerDots>;
+export default meta
+type Story = StoryObj<typeof ShimmerDots>
 
 export const Default: Story = {
   render: () => (
@@ -25,7 +25,7 @@ export const Default: Story = {
       <ShimmerDots />
     </div>
   ),
-};
+}
 
 export const WithCustomSize: Story = {
   render: () => (
@@ -33,7 +33,7 @@ export const WithCustomSize: Story = {
       <ShimmerDots dotSize={2} cellSize={4} />
     </div>
   ),
-};
+}
 
 export const WithCustomSpeed: Story = {
   render: () => (
@@ -41,7 +41,7 @@ export const WithCustomSpeed: Story = {
       <ShimmerDots speed={10} />
     </div>
   ),
-};
+}
 
 export const WithDarkBackground: Story = {
   render: () => (
@@ -49,7 +49,7 @@ export const WithDarkBackground: Story = {
       <ShimmerDots className="opacity-20" />
     </div>
   ),
-};
+}
 
 export const WithGradientBackground: Story = {
   render: () => (
@@ -57,7 +57,7 @@ export const WithGradientBackground: Story = {
       <ShimmerDots className="opacity-30" />
     </div>
   ),
-};
+}
 
 export const SmallDots: Story = {
   render: () => (
@@ -65,7 +65,7 @@ export const SmallDots: Story = {
       <ShimmerDots dotSize={0.5} cellSize={2} />
     </div>
   ),
-};
+}
 
 export const LargeDots: Story = {
   render: () => (
@@ -73,7 +73,7 @@ export const LargeDots: Story = {
       <ShimmerDots dotSize={3} cellSize={6} />
     </div>
   ),
-};
+}
 
 export const SlowAnimation: Story = {
   render: () => (
@@ -81,7 +81,7 @@ export const SlowAnimation: Story = {
       <ShimmerDots speed={2} />
     </div>
   ),
-};
+}
 
 export const FastAnimation: Story = {
   render: () => (
@@ -89,7 +89,7 @@ export const FastAnimation: Story = {
       <ShimmerDots speed={15} />
     </div>
   ),
-};
+}
 
 export const WithCard: Story = {
   render: () => (
@@ -101,4 +101,4 @@ export const WithCard: Story = {
       <p className="mt-4 text-gray-600">Content loading...</p>
     </div>
   ),
-};
+}

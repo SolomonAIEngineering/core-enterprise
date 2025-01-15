@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function MatrixLines(props: SVGProps<SVGSVGElement>) {
   return (
@@ -33,5 +33,5 @@ export function MatrixLines(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

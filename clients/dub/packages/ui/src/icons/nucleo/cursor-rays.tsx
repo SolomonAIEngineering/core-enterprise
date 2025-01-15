@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function CursorRays(props: SVGProps<SVGSVGElement>) {
   return (
@@ -86,5 +86,5 @@ export function CursorRays(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

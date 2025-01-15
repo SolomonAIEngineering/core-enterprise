@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function Gear(props: SVGProps<SVGSVGElement>) {
   return (
@@ -30,5 +30,5 @@ export function Gear(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }

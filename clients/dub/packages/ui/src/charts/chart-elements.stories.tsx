@@ -1,33 +1,33 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Areas } from "./areas";
-import { Bars } from "./bars";
-import { TimeSeriesChart } from "./time-series-chart";
-import { XAxis } from "./x-axis";
-import { YAxis } from "./y-axis";
+import { Areas } from './areas'
+import { Bars } from './bars'
+import { TimeSeriesChart } from './time-series-chart'
+import { XAxis } from './x-axis'
+import { YAxis } from './y-axis'
 
 const meta: Meta = {
-  title: "Charts/Elements",
+  title: 'Charts/Elements',
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-};
+}
 
-export default meta;
+export default meta
 
 // Sample data
 const sampleData = Array.from({ length: 30 }, (_, i) => ({
   date: new Date(2024, 0, i + 1),
   values: { value: Math.random() * 100 },
-}));
+}))
 
 const series = [
   {
-    id: "value",
+    id: 'value',
     valueAccessor: (d: { values: { value: number } }) => d.values.value,
-    colorClassName: "text-blue-500",
+    colorClassName: 'text-blue-500',
   },
-];
+]
 
 export const AreasExample: StoryObj<typeof Areas> = {
   render: () => (
@@ -36,9 +36,9 @@ export const AreasExample: StoryObj<typeof Areas> = {
         <Areas
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              lineClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              lineClassName: 'text-blue-700',
             },
           ]}
         />
@@ -47,7 +47,7 @@ export const AreasExample: StoryObj<typeof Areas> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}
 
 export const BarsExample: StoryObj<typeof Bars> = {
   render: () => (
@@ -56,9 +56,9 @@ export const BarsExample: StoryObj<typeof Bars> = {
         <Bars
           seriesStyles={[
             {
-              id: "value",
-              gradientClassName: "text-blue-500/50",
-              barClassName: "text-blue-700",
+              id: 'value',
+              gradientClassName: 'text-blue-500/50',
+              barClassName: 'text-blue-700',
             },
           ]}
         />
@@ -67,4 +67,4 @@ export const BarsExample: StoryObj<typeof Bars> = {
       </TimeSeriesChart>
     </div>
   ),
-};
+}

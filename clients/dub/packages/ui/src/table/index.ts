@@ -1,2 +1,2 @@
-export * from "./table";
-export * from "./use-table-pagination";
+export * from './table'
+export * from './use-table-pagination'

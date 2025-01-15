@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { MaxWidthWrapper } from "./max-width-wrapper";
+import { MaxWidthWrapper } from './max-width-wrapper'
 
 const meta: Meta<typeof MaxWidthWrapper> = {
-  title: "Components/MaxWidthWrapper",
+  title: 'Components/MaxWidthWrapper',
   component: MaxWidthWrapper,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
     docs: {
       description: {
         component:
-          "A container component that enforces a maximum width and consistent padding.",
+          'A container component that enforces a maximum width and consistent padding.',
       },
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof MaxWidthWrapper>;
+export default meta
+type Story = StoryObj<typeof MaxWidthWrapper>
 
 export const Default: Story = {
   render: () => (
@@ -27,7 +27,7 @@ export const Default: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}
 
 export const WithCustomMaxWidth: Story = {
   render: () => (
@@ -37,7 +37,7 @@ export const WithCustomMaxWidth: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}
 
 export const WithCustomPadding: Story = {
   render: () => (
@@ -47,7 +47,7 @@ export const WithCustomPadding: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}
 
 export const WithBackground: Story = {
   render: () => (
@@ -59,7 +59,7 @@ export const WithBackground: Story = {
       </MaxWidthWrapper>
     </div>
   ),
-};
+}
 
 export const WithMultipleSections: Story = {
   render: () => (
@@ -81,7 +81,7 @@ export const WithMultipleSections: Story = {
       </MaxWidthWrapper>
     </div>
   ),
-};
+}
 
 export const WithGrid: Story = {
   render: () => (
@@ -98,7 +98,7 @@ export const WithGrid: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}
 
 export const WithNavigation: Story = {
   render: () => (
@@ -117,7 +117,7 @@ export const WithNavigation: Story = {
       </MaxWidthWrapper>
     </div>
   ),
-};
+}
 
 export const WithResponsivePadding: Story = {
   render: () => (
@@ -127,7 +127,7 @@ export const WithResponsivePadding: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}
 
 export const WithNestedWrappers: Story = {
   render: () => (
@@ -142,7 +142,7 @@ export const WithNestedWrappers: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}
 
 export const WithCustomStyles: Story = {
   render: () => (
@@ -152,4 +152,4 @@ export const WithCustomStyles: Story = {
       </div>
     </MaxWidthWrapper>
   ),
-};
+}

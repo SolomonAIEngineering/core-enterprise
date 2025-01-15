@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react'
 
 export function PercentageArrowDown(props: SVGProps<SVGSVGElement>) {
   return (
@@ -64,5 +64,5 @@ export function PercentageArrowDown(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  );
+  )
 }
