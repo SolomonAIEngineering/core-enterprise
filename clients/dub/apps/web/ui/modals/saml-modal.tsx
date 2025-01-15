@@ -1,6 +1,3 @@
-import useSAML from "@/lib/swr/use-saml";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { SAMLProviderProps } from "@/lib/types";
 import {
   Button,
   InfoTooltip,
@@ -8,7 +5,6 @@ import {
   SimpleTooltipContent,
   useMediaQuery,
 } from "@dub/ui";
-import { SAML_PROVIDERS } from "@dub/utils";
 import { Check, Lock, UploadCloud } from "lucide-react";
 import {
   Dispatch,
@@ -17,6 +13,12 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import useSAML from "@/lib/swr/use-saml";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { SAMLProviderProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { SAML_PROVIDERS } from "@dub/utils";
 import { toast } from "sonner";
 
 function SAMLModal({
@@ -51,8 +53,8 @@ function SAMLModal({
         </div>
         <h3 className="text-lg font-medium">Configure SAML</h3>
         <p className="text-center text-sm text-gray-500">
-          Select a provider to configure SAML for your{" "}
-          {process.env.NEXT_PUBLIC_APP_NAME} workspace.
+          Select a provider to configure SAML for your {platform.company}{" "}
+          workspace.
         </p>
       </div>
 
@@ -119,16 +121,18 @@ function SAMLModal({
             </select>
             {currentProvider ? (
               <a
-                href={`https://dub.co/help/article/${selectedProvider}-saml`}
+                href={`${platform.webUrl}/help/article/${selectedProvider}-saml`}
                 target="_blank"
+                rel="noreferrer"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
               >
                 Read the guide on {currentProvider.name} SSO
               </a>
             ) : (
               <a
-                href="https://dub.co/help/category/saml-sso"
+                href={`${platform.webUrl}/help/category/saml-sso`}
                 target="_blank"
+                rel="noreferrer"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
               >
                 Learn more about SAML SSO
@@ -148,7 +152,7 @@ function SAMLModal({
                       <SimpleTooltipContent
                         title={`Your ${currentProvider.samlModalCopy} is the URL to your SAML provider's metadata.`}
                         cta="Learn more."
-                        href={`https://dub.co/help/article/${selectedProvider}-saml`}
+                        href={`${platform.webUrl}/help/article/${selectedProvider}-saml`}
                       />
                     }
                   />
@@ -203,7 +207,7 @@ function SAMLModal({
                       <SimpleTooltipContent
                         title={`Your ${currentProvider.samlModalCopy} is the URL to your SAML provider's metadata.`}
                         cta="Learn more."
-                        href={`https://dub.co/help/article/${selectedProvider}-saml#step-4-copy-the-metadata-url`}
+                        href={`${platform.webUrl}/help/article/${selectedProvider}-saml#step-4-copy-the-metadata-url`}
                       />
                     }
                   />

@@ -5,6 +5,7 @@
   "private": true,
   "license": "~~proprietary~~",
   "dependencies": {
+    "@dub/platform-config": "workspace:*",
     "@stripe/ui-extension-sdk": "^8.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -1,11 +1,7 @@
-import { DubApiError } from "@/lib/api/errors";
-import { withSession } from "@/lib/auth";
-import { stripe } from "@/lib/stripe";
-import { prisma } from "@dub/prisma";
 import {
+  DUB_WORDMARK,
   capitalize,
   currencyFormatter,
-  DUB_WORDMARK,
   formatDate,
 } from "@dub/utils";
 import {
@@ -13,10 +9,16 @@ import {
   Image,
   Link,
   Page,
-  renderToBuffer,
   Text,
   View,
+  renderToBuffer,
 } from "@react-pdf/renderer";
+
+import { DubApiError } from "@/lib/api/errors";
+import { withSession } from "@/lib/auth";
+import { stripe } from "@/lib/stripe";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { prisma } from "@dub/prisma";
 import { createTw } from "react-pdf-tailwind";
 import Stripe from "stripe";
 
@@ -140,12 +142,12 @@ export const GET = withSession(async ({ session, params }) => {
     {
       title: "From",
       address: {
-        name: "Dub Technologies, Inc.",
-        line1: "2261 Market Street STE 5906",
-        city: "San Francisco",
-        state: "CA",
-        postalCode: "94114",
-        email: "support@dub.co",
+        name: `${platform.company}, Inc.`,
+        line1: `${platform.address.street}`,
+        city: platform.address.city,
+        state: platform.address.state,
+        postalCode: platform.address.zipCode,
+        email: platform.email.from.default,
       },
     },
     {
@@ -170,9 +172,11 @@ export const GET = withSession(async ({ session, params }) => {
           <Image src={DUB_WORDMARK} style={tw("w-20 h-10")} />
           <View style={tw("text-right w-1/2")}>
             <Text style={tw("text-sm font-medium text-neutral-800")}>
-              Dub Technologies Inc.
+              {platform.company} Inc.
             </Text>
-            <Text style={tw("text-sm text-neutral-500 ")}>support@dub.co</Text>
+            <Text style={tw("text-sm text-neutral-500 ")}>
+              {platform.email.from.default}
+            </Text>
           </View>
         </View>
 
@@ -336,12 +340,15 @@ export const GET = withSession(async ({ session, params }) => {
 
         <Text style={tw("text-sm text-neutral-600 mt-6")}>
           If you have any questions, visit our support site at{" "}
-          <Link href="https://dub.co/help" style={tw("text-neutral-900")}>
-            https://dub.co/help
+          <Link href={`${platform.webUrl}/help`} style={tw("text-neutral-900")}>
+            {platform.webUrl}/help
           </Link>{" "}
           or contact us at{" "}
-          <Link href="mailto:support@dub.co" style={tw("text-neutral-900")}>
-            support@dub.co
+          <Link
+            href={platform.email.from.default}
+            style={tw("text-neutral-900")}
+          >
+            {platform.email.from.default}
           </Link>
         </Text>
       </Page>

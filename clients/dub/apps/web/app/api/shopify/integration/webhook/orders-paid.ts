@@ -2,9 +2,9 @@ import { qstash } from "@/lib/cron";
 import { processOrder } from "@/lib/integrations/shopify/process-order";
 import { orderSchema } from "@/lib/integrations/shopify/schema";
 import { redis } from "@/lib/upstash";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { APP_DOMAIN_WITH_NGROK } from "@dub/utils";
-
 export async function ordersPaid({
   event,
   workspaceId,
@@ -43,11 +43,11 @@ export async function ordersPaid({
     "clickId",
   );
 
-  // clickId is empty, order is not from a Dub link
+  // clickId is empty, order is not from a link
   if (clickId === "") {
     await redis.del(`shopify:checkout:${checkoutToken}`);
 
-    return "[Shopify] Order is not from a Dub link. Skipping...";
+    return `[Shopify] Order is not from a ${platform.company} link. Skipping...`;
   }
 
   // clickId is found, process the order for the new customer
@@ -61,7 +61,7 @@ export async function ordersPaid({
     return "[Shopify] Order event processed successfully.";
   }
 
-  // clickId is not found, we need to wait for the pixel event to come in so that we can decide if the order is from a Dub link or not
+  // clickId is not found, we need to wait for the pixel event to come in so that we can decide if the order is from a link or not
   else {
     await redis.hset(`shopify:checkout:${checkoutToken}`, {
       order: event,

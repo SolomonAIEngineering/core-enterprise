@@ -1,4 +1,3 @@
-import { getLinkViaEdge } from "@/lib/planetscale";
 import {
   Background,
   Footer,
@@ -12,6 +11,9 @@ import {
   constructMetadata,
   getApexDomain,
 } from "@dub/utils";
+
+import { getLinkViaEdge } from "@/lib/planetscale";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { unescape } from "html-escaper";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -69,8 +71,9 @@ export default async function InspectPage({
             Link Inspector
           </h1>
           <h2 className="text-lg text-gray-600 sm:text-xl">
-            Inspect a short link on Dub to make sure it's safe to click on. If
-            you think this link is malicious, please report it.
+            Inspect a short link on {platform.company} to make sure it&apos;s
+            safe to click on. If you think this link is malicious, please report
+            it.
           </h2>
 
           <LinkInspectorCard domain={domain} _key={key} url={data.url} />
@@ -78,7 +81,7 @@ export default async function InspectPage({
             <LinkPreview defaultUrl={data.url} />
           </Suspense>
           <a
-            href="https://dub.co/tools/inspector"
+            href={`${platform.webUrl}/tools/inspector`}
             rel="noreferrer"
             target="_blank"
             className="mx-auto mt-2 flex items-center justify-center space-x-2 text-sm text-gray-500 transition-all hover:text-black"

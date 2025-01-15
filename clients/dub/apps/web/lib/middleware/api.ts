@@ -1,6 +1,7 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { parse } from "@/lib/middleware/utils";
 import { HOME_DOMAIN } from "@dub/utils";
-import { NextRequest, NextResponse } from "next/server";
 
 export default function ApiMiddleware(req: NextRequest) {
   const { path, fullPath } = parse(req);

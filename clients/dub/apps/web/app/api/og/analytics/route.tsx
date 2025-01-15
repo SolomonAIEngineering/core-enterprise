@@ -1,11 +1,13 @@
-import { getAnalytics } from "@/lib/analytics/get-analytics";
-import { getLinkViaEdge } from "@/lib/planetscale";
 import {
   GOOGLE_FAVICON_URL,
   getApexDomain,
   linkConstructor,
   nFormatter,
 } from "@dub/utils";
+
+import { getAnalytics } from "@/lib/analytics/get-analytics";
+import { getLinkViaEdge } from "@/lib/planetscale";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 
@@ -44,7 +46,7 @@ export async function GET(req: NextRequest) {
           <div tw="flex items-center">
             <img
               tw="rounded-full w-10 h-10"
-              src={`${GOOGLE_FAVICON_URL}${getApexDomain(link.url || "dub.co")}`}
+              src={`${GOOGLE_FAVICON_URL}${getApexDomain(link.url || platform.domain)}`}
               alt="favicon"
             />
             <h1 tw="text-4xl font-bold ml-4">

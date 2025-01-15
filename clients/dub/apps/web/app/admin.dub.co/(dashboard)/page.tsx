@@ -1,3 +1,4 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { constructMetadata } from "@dub/utils";
 import BanLink from "./components/ban-link";
 import ImpersonateUser from "./components/impersonate-user";
@@ -5,7 +6,7 @@ import ImpersonateWorkspace from "./components/impersonate-workspace";
 import RefreshDomain from "./components/refresh-domain";
 
 export const metadata = constructMetadata({
-  title: "Dub Admin",
+  title: `${platform.company} Admin`,
 });
 
 export default function AdminPage() {

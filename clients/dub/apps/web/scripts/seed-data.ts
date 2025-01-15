@@ -1,35 +1,37 @@
-import { nanoid } from "@dub/utils";
 import "dotenv-flow/config";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { nanoid } from "@dub/utils";
 
 const links = [
   {
     id: "clqo10sum0006js08vutzfxt3",
     shortLink: "d.to/try",
-    url: "https://app.dub.co/",
+    url: platform.platformUrl,
     domain: "d.to",
   },
   {
     id: "clvpdmrx40008i19yee46djta",
     shortLink: "d.to/brand",
-    url: "https://dub.co/brand",
+    url: `${platform.webUrl}/brand`,
     domain: "d.to",
   },
   {
     id: "clvl08a4r0001itsl3shc931x",
     shortLink: "d.to/gallery",
-    url: "https://dub.co/blog/product-discovery-platform",
+    url: `${platform.webUrl}/blog/product-discovery-platform`,
     domain: "d.to",
   },
   {
     id: "clu718gfe0001tfinipqgznrz",
     shortLink: "d.to/playbook",
-    url: "https://dub.co/blog/product-hunt",
+    url: `${platform.webUrl}/blog/product-hunt`,
     domain: "d.to",
   },
   {
     id: "clur35t670003ux28e0cgxjjc",
     shortLink: "d.to/datetime",
-    url: "https://dub.co/blog/smart-datetime-picker",
+    url: `${platform.webUrl}/blog/smart-datetime-picker`,
     domain: "d.to",
   },
 ];

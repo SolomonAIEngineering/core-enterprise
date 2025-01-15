@@ -1,5 +1,7 @@
-import { recordMetatags } from "@/lib/upstash";
 import { fetchWithTimeout, isValidUrl } from "@dub/utils";
+
+import { recordMetatags } from "@/lib/upstash";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { waitUntil } from "@vercel/functions";
 import he from "he";
 import { parse } from "node-html-parser";
@@ -7,7 +9,7 @@ import { parse } from "node-html-parser";
 export const getHtml = async (url: string) => {
   return await fetchWithTimeout(url, {
     headers: {
-      "User-Agent": "Dub.co Metatags API (https://api.dub.co/metatags)",
+      "User-Agent": `${platform.company} Metatags API (${platform.apiUrl}/metatags)`,
     },
   })
     .then((r) => r.text())

@@ -1,12 +1,13 @@
 import { resend } from "@/lib/resend";
-import { CreateEmailOptions } from "resend";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import type { CreateEmailOptions } from "resend";
 
 export const sendEmailViaResend = async ({
   email,
   subject,
   from,
   bcc,
-  replyTo = "support@dub.co",
+  replyToFromEmail,
   text,
   react,
   scheduledAt,
@@ -14,7 +15,7 @@ export const sendEmailViaResend = async ({
 }: Omit<CreateEmailOptions, "to" | "from"> & {
   email: string;
   from?: string;
-  replyTo?: string;
+  replyToFromEmail?: boolean;
   marketing?: boolean;
 }) => {
   if (!resend) {
@@ -29,17 +30,19 @@ export const sendEmailViaResend = async ({
     from:
       from ||
       (marketing
-        ? "Steven from Dub.co <steven@ship.dub.co>"
-        : "Dub.co <system@dub.co>"),
+        ? `${platform.email.from.default}`
+        : `${platform.email.from.system}`),
     bcc: bcc,
-    replyTo,
-    subject,
-    text,
-    react,
+    ...(!replyToFromEmail && {
+      replyTo: platform.email.replyTo,
+    }),
+    subject: subject,
+    text: text,
+    react: react,
     scheduledAt,
     ...(marketing && {
       headers: {
-        "List-Unsubscribe": "https://app.dub.co/account/settings",
+        "List-Unsubscribe": `${platform.platformUrl}/account/settings`,
       },
     }),
   });

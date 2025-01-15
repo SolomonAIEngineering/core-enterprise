@@ -1,12 +1,13 @@
-import { DubApiError } from "@/lib/api/errors";
 import { scopesToName, validateScopesForRole } from "@/lib/api/tokens/scopes";
-import { parseRequestBody } from "@/lib/api/utils";
 import { hashToken, withWorkspace } from "@/lib/auth";
-import { generateRandomName } from "@/lib/names";
 import { createTokenSchema, tokenSchema } from "@/lib/zod/schemas/token";
+import { getCurrentPlan, nanoid } from "@dub/utils";
+
+import { DubApiError } from "@/lib/api/errors";
+import { parseRequestBody } from "@/lib/api/utils";
+import { generateRandomName } from "@/lib/names";
 import { prisma } from "@dub/prisma";
 import { User } from "@dub/prisma/client";
-import { getCurrentPlan, nanoid } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
 import { sendEmail } from "emails";
 import APIKeyCreated from "emails/api-key-created";
@@ -119,7 +120,7 @@ export const POST = withWorkspace(
         partialKey,
         userId: isMachine ? machineUser?.id! : session.user.id,
         projectId: workspace.id,
-        rateLimit: getCurrentPlan(workspace.plan).limits.api,
+        rateLimit: getCurrentPlan(workspace.plan).limits.apis,
         scopes:
           scopes && scopes.length > 0 ? [...new Set(scopes)].join(" ") : null,
       },

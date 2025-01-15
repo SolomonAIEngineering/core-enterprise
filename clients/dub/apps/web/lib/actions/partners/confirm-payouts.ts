@@ -1,12 +1,14 @@
 "use server";
 
-import { getProgramOrThrow } from "@/lib/api/programs/get-program-or-throw";
-import { createId } from "@/lib/api/utils";
 import {
   DUB_PARTNERS_PAYOUT_FEE,
   MIN_PAYOUT_AMOUNT,
 } from "@/lib/partners/constants";
+
+import { getProgramOrThrow } from "@/lib/api/programs/get-program-or-throw";
+import { createId } from "@/lib/api/utils";
 import { stripe } from "@/lib/stripe";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import z from "zod";
 import { authActionClient } from "../safe-action";
@@ -104,8 +106,8 @@ export const confirmPayoutsAction = authActionClient
         confirmation_method: "automatic",
         confirm: true,
         transfer_group: invoice.id,
-        statement_descriptor: "Dub Partners",
-        description: `Dub Partners payout invoice (${invoice.id})`,
+        statement_descriptor: `${platform.company} Partners`,
+        description: `${platform.company} Partners payout invoice (${invoice.id})`,
       });
 
       await tx.payout.updateMany({

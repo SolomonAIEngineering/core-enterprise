@@ -1,5 +1,6 @@
-import { UserProps } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
+
+import { UserProps } from "@/lib/types";
 import { parse } from "./utils";
 import { getDefaultWorkspace } from "./utils/get-default-workspace";
 import { isTopLevelSettingsRedirect } from "./utils/is-top-level-settings-redirect";

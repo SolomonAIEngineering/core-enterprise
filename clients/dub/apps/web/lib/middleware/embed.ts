@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { EMBED_PUBLIC_TOKEN_COOKIE_NAME } from "../embed/constants";
 import { embedToken } from "../embed/embed-token";
 import { parse } from "./utils";

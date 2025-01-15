@@ -1,7 +1,18 @@
 "use client";
 
-import { AlertCircleFill } from "@/ui/shared/icons";
 import { Button, InfoTooltip, useMediaQuery } from "@dub/ui";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@dub/ui/ui";
+import type { AdminRole, OrganizationSize } from "@prisma/client";
+
+import { AlertCircleFill } from "@/ui/shared/icons";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import slugify from "@sindresorhus/slugify";
 import { useSession } from "next-auth/react";
@@ -14,6 +25,9 @@ import { mutate } from "swr";
 type FormData = {
   name: string;
   slug: string;
+  adminRole?: AdminRole;
+  organizationSize?: OrganizationSize;
+  reason?: string;
 };
 
 export function CreateWorkspaceForm({
@@ -37,6 +51,8 @@ export function CreateWorkspaceForm({
   } = useForm<FormData>();
 
   const slug = watch("slug");
+  const adminRole = watch("adminRole");
+  const organizationSize = watch("organizationSize");
 
   const { isMobile } = useMediaQuery();
 
@@ -90,7 +106,7 @@ export function CreateWorkspaceForm({
             Workspace Name
           </p>
           <InfoTooltip
-            content={`This is the name of your workspace on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
+            content={`This is the name of your workspace on ${platform.company}.`}
           />
         </label>
         <div className="mt-2 flex rounded-md shadow-sm">
@@ -115,12 +131,12 @@ export function CreateWorkspaceForm({
             Workspace Slug
           </p>
           <InfoTooltip
-            content={`This is your workspace's unique slug on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
+            content={`This is your workspace's unique slug on ${platform.company}.`}
           />
         </label>
         <div className="relative mt-2 flex rounded-md shadow-sm">
           <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">
-            app.{process.env.NEXT_PUBLIC_APP_DOMAIN}
+            app.{platform.domain}
           </span>
           <input
             id="slug"
@@ -167,6 +183,107 @@ export function CreateWorkspaceForm({
             {errors.slug.message}
           </p>
         )}
+      </div>
+
+      <div>
+        <label htmlFor="adminRole" className="flex items-center space-x-2">
+          <p className="block text-sm font-medium text-gray-700">Your Role</p>
+          <InfoTooltip content="What best describes your role in the organization?" />
+        </label>
+        <div className="mt-2">
+          <Select
+            value={adminRole}
+            onValueChange={(value) => setValue("adminRole", value as AdminRole)}
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Select your title" />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              <SelectGroup>
+                <SelectItem value="SoftwareEngineer">
+                  Software Engineer
+                </SelectItem>
+                <SelectItem value="ProductManager">Product Manager</SelectItem>
+                <SelectItem value="CustomerSuccess">
+                  Customer Success
+                </SelectItem>
+                <SelectItem value="Marketing">Marketing</SelectItem>
+                <SelectItem value="Sales">Sales</SelectItem>
+                <SelectItem value="Support">Support</SelectItem>
+                <SelectItem value="Founder">Founder</SelectItem>
+                <SelectItem value="CTO">CTO</SelectItem>
+                <SelectItem value="CEO">CEO</SelectItem>
+                <SelectItem value="CFO">CFO</SelectItem>
+                <SelectItem value="COO">COO</SelectItem>
+                <SelectItem value="CMO">CMO</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div>
+        <label
+          htmlFor="organizationSize"
+          className="flex items-center space-x-2"
+        >
+          <p className="block text-sm font-medium text-gray-700">
+            Organization Size
+          </p>
+          <InfoTooltip content="How many people work in your organization?" />
+        </label>
+        <div className="mt-2">
+          <Select
+            value={organizationSize}
+            onValueChange={(value) =>
+              setValue("organizationSize", value as OrganizationSize)
+            }
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Select organization size" />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              <SelectGroup>
+                <SelectItem value="OneToFive">1-5 employees</SelectItem>
+                <SelectItem value="SixToTwentyFive">6-25 employees</SelectItem>
+                <SelectItem value="TwentySixToOneHundred">
+                  26-100 employees
+                </SelectItem>
+                <SelectItem value="OneHundredOneToFiveHundred">
+                  101-500 employees
+                </SelectItem>
+                <SelectItem value="FiveHundredToOneThousand">
+                  501-1000 employees
+                </SelectItem>
+                <SelectItem value="OneThousandToFiveThousand">
+                  1001-5000 employees
+                </SelectItem>
+                <SelectItem value="FiveThousandPlus">
+                  5000+ employees
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="reason" className="flex items-center space-x-2">
+          <p className="block text-sm font-medium text-gray-700">
+            Why are you creating this workspace?
+          </p>
+          <InfoTooltip content="Help us understand how we can better serve your needs" />
+        </label>
+        <div className="mt-2">
+          <textarea
+            id="reason"
+            rows={3}
+            className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+            placeholder="Tell us about your use case..."
+            {...register("reason")}
+          />
+        </div>
       </div>
 
       <Button

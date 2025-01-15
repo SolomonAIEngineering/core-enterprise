@@ -1,11 +1,12 @@
 import { getProgram } from "@/lib/fetchers/get-program";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { Prisma } from "@dub/prisma/client";
-import { Wordmark } from "@dub/ui";
+import { Logo } from "@dub/ui";
 import { currencyFormatter } from "@dub/utils";
 import { constructMetadata } from "@dub/utils/src/functions";
 import { notFound } from "next/navigation";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export async function generateMetadata({
   params: { programSlug },
@@ -67,21 +68,24 @@ export default async function ApplyLayout({
         {/* Footer */}
         <footer className="mt-14 flex flex-col items-center gap-4 py-6 text-center text-xs text-neutral-500">
           <span className="flex items-center gap-1.5">
-            Powered by <Wordmark className="h-3.5" />
+            Powered by
+            <Logo className="h-10 w-10" />
           </span>
           <span className="flex items-center gap-2">
             <a
-              href="https://dub.co/legal/terms"
+              href={`${platform.webUrl}/legal/terms`}
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
+              rel="noreferrer"
             >
               Terms of Service
             </a>
             <span className="text-base text-neutral-200">&bull;</span>
             <a
-              href="https://dub.co/legal/privacy"
+              href={`${platform.webUrl}/legal/privacy`}
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
+              rel="noreferrer"
             >
               Privacy Policy
             </a>
@@ -92,7 +96,7 @@ export default async function ApplyLayout({
       {/* Background grid */}
       <div className="absolute inset-0 flex h-fit w-full items-center justify-center">
         <img
-          src="https://assets.dub.co/misc/program-apply-grid.svg"
+          src={`${platform.assetsUrl}/program-apply-grid.png`}
           alt=""
           width={1280}
           height={480}

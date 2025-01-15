@@ -1,6 +1,3 @@
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DomainProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useToastWithUndo } from "@dub/ui";
 import {
   Dispatch,
@@ -10,6 +7,11 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { DomainProps } from "@/lib/types";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 
 const sendArchiveRequest = ({
@@ -106,9 +108,10 @@ function ArchiveDomainModal({
             ? "By unarchiving this domain, it will show up in the link builder. "
             : "Archiving a domain will hide it from the link builder. "}
           <a
-            href="https://dub.co/help/article/archiving-domains"
+            href={`${platform.webUrl}/help/article/archiving-domains`}
             target="_blank"
             className="text-sm text-gray-500 underline"
+            rel="noreferrer"
           >
             Learn more
           </a>

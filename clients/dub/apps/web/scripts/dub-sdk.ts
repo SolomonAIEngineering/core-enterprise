@@ -1,5 +1,6 @@
-import { dub } from "@/lib/dub";
 import "dotenv-flow/config";
+
+import { dub } from "@/lib/dub";
 
 async function main() {
   const data = await dub.analytics.retrieve({

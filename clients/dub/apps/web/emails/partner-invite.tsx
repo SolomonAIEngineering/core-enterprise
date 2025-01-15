@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,14 +11,16 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function PartnerInvite({
   email = "panic@thedis.co",
-  appName = "Dub.co",
+  appName = platform.company,
   program = {
     name: "Acme",
-    logo: DUB_WORDMARK,
+    logo: `${platform.assets.wordmark}`,
   },
 }: {
   email: string;
@@ -38,25 +39,26 @@ export default function PartnerInvite({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="my-8">
               <Img
-                src={program.logo || "https://assets.dub.co/logo.png"}
+                src={program.logo || platform.assets.logo}
                 height="32"
                 alt={appName}
               />
             </Section>
 
             <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              {program.name} invited you to join Dub Partners
+              {program.name} invited you to join {platform.company} Partners
             </Heading>
 
             <Text className="text-sm leading-6 text-gray-600">
-              {program.name} uses Dub Partners to power their partnership
-              programs and wants to partner with great people like yourself!
+              {program.name} uses {platform.company} Partners to power their
+              partnership programs and wants to partner with great people like
+              yourself!
             </Text>
 
             <Section className="mb-12 mt-8">
               <Link
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
-                href="https://partners.dub.co"
+                href={`${platform.partnersUrl}`}
               >
                 Accept Invite
               </Link>

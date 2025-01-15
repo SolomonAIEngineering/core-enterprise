@@ -1,5 +1,6 @@
 import { SimpleTooltipContent, Tooltip } from "@dub/ui";
-import { cn, SELF_SERVE_PAID_PLANS, STAGGER_CHILD_VARIANTS } from "@dub/utils";
+import { SELF_SERVE_PAID_PLANS, STAGGER_CHILD_VARIANTS, cn } from "@dub/utils";
+
 import { motion } from "framer-motion";
 import { CheckCircleFill } from "../shared/icons";
 
@@ -41,11 +42,11 @@ export function PlanFeatures({
         .filter((f) => f.id !== "sales")
         .map(({ text, footnote }, i) => (
           <motion.div
-            key={i}
+            key={`${text}-${i}-${Math.random()}`}
             variants={STAGGER_CHILD_VARIANTS}
             className="flex items-center space-x-2 text-sm text-gray-500"
           >
-            <CheckCircleFill className="h-5 w-5 text-green-500" />
+            <CheckCircleFill className="text-primary h-5 w-5" />
 
             {footnote ? (
               <Tooltip

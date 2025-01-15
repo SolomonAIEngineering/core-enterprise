@@ -1,11 +1,12 @@
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { Button, Modal, useRouterStuff, useScrollProgress } from "@dub/ui";
 import { cn, getPlanDetails, PLANS, PRO_PLAN } from "@dub/utils";
 import { usePlausible } from "next-plausible";
 import { useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import {
-  Dispatch,
-  SetStateAction,
+  type Dispatch,
+  type SetStateAction,
   useCallback,
   useEffect,
   useMemo,
@@ -46,6 +47,8 @@ function WelcomeModal({
       }
     }
   };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handlePlanUpgrade();
   }, [searchParams, planId]);
@@ -82,8 +85,8 @@ function WelcomeModal({
                 )}
               >
                 {plan
-                  ? `Dub ${plan.name} looks good on you!`
-                  : "Welcome to Dub!"}
+                  ? `${platform.company} ${plan.name} looks good on you!`
+                  : `Welcome to ${platform.company}!`}
               </h1>
               <p
                 className={cn(
@@ -107,8 +110,8 @@ function WelcomeModal({
             {/* Bottom scroll fade */}
             <div
               className="pointer-events-none absolute bottom-0 left-0 hidden h-16 w-full bg-gradient-to-t from-white sm:block"
-              style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
-            ></div>
+              style={{ opacity: 1 - scrollProgress ** 2 }}
+            />
           </div>
           <Button
             type="button"

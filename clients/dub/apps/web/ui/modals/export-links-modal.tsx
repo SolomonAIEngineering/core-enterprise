@@ -1,5 +1,4 @@
 import { INTERVAL_DATA, INTERVAL_DISPLAYS } from "@/lib/analytics/constants";
-import useWorkspace from "@/lib/swr/use-workspace";
 import {
   Button,
   Checkbox,
@@ -19,6 +18,9 @@ import {
   useState,
 } from "react";
 import { Controller, useForm } from "react-hook-form";
+
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 
 const columns = [
@@ -109,7 +111,7 @@ function ExportLinksModal({
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Dub Links Export - ${new Date().toISOString()}.csv`;
+      a.download = `${platform.company} Links Export - ${new Date().toISOString()}.csv`;
       a.click();
 
       toast.success("Exported successfully");

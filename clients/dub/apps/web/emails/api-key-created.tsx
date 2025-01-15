@@ -1,4 +1,3 @@
-import { DUB_WORDMARK, formatDate } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,6 +11,9 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { formatDate } from "@dub/utils";
 import Footer from "./components/footer";
 
 export default function APIKeyCreated({
@@ -46,9 +48,9 @@ export default function APIKeyCreated({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub.co"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>
@@ -56,7 +58,7 @@ export default function APIKeyCreated({
               New Workspace API Key Created
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              You've created a new API key for your Dub.co workspace{" "}
+              You've created a new API key for your {platform.company} workspace{" "}
               <strong>{workspace.name}</strong> with the name{" "}
               <strong>"{token.name}"</strong> on{" "}
               {formatDate(new Date().toString())}.
@@ -68,7 +70,7 @@ export default function APIKeyCreated({
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`https://app.dub.co/${workspace.slug}/settings/tokens`}
+                href={`${platform.platformUrl}/${workspace.slug}/settings/tokens`}
               >
                 View API Keys
               </Link>
@@ -76,7 +78,7 @@ export default function APIKeyCreated({
             <Text className="text-sm leading-6 text-black">
               If you did not create this API key, you can{" "}
               <Link
-                href={`https://app.dub.co/${workspace.slug}/settings/tokens`}
+                href={`${platform.platformUrl}/${workspace.slug}/settings/tokens`}
                 className="text-black underline"
               >
                 <strong>delete this key</strong>

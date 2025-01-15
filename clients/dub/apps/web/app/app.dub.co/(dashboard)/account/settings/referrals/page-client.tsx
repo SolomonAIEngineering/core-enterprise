@@ -1,9 +1,11 @@
 "use client";
 
+import { CursorRays, Hyperlink, InvoiceDollar, UserCheck } from "@dub/ui/icons";
+
 import LayoutLoader from "@/ui/layout/layout-loader";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { DubEmbed } from "@dub/embed-react";
-import { CursorRays, Hyperlink, InvoiceDollar, UserCheck } from "@dub/ui/icons";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { fetcher } from "@dub/utils";
 import { useSession } from "next-auth/react";
 import useSWRImmutable from "swr/immutable";
@@ -26,7 +28,7 @@ export function ReferralsPageClient() {
     return (
       <AnimatedEmptyState
         title="Refer a friend"
-        description="Activate your referral link to share the word about Dub and earn cash rewards"
+        description={`Activate your referral link to share the word about ${platform.company} and earn cash rewards`}
         cardContent={
           <>
             <Hyperlink className="size-4 text-neutral-700" />

@@ -1,7 +1,9 @@
-import Stripe from "stripe";
 import { DUB_CLIENT_ID, DUB_HOST, STRIPE_MODE } from "./constants";
-import { getSecret } from "./secrets";
 import { Token, Workspace } from "./types";
+
+import { BusinessConfig as platform } from "@dub/platform-config";
+import Stripe from "stripe";
+import { getSecret } from "./secrets";
 
 // Get the redirect URL for the OAuth flow based on the mode
 function getRedirectURL() {
@@ -54,11 +56,14 @@ export async function getToken({
 
     return data as Token;
   } catch (e) {
-    console.error("Unable to retrieve Dub access token:", (e as Error).message);
+    console.error(
+      `Unable to retrieve ${platform.company} access token:`,
+      (e as Error).message,
+    );
   }
 }
 
-// Returns the user info from Dub using the access token
+// Returns the user info from using the access token
 export async function getUserInfo({ token }: { token: Token }) {
   const response = await fetch(`${DUB_HOST}/api/oauth/userinfo`, {
     headers: {

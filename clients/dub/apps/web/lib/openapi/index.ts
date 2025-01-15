@@ -1,8 +1,10 @@
+import { LinkErrorSchema, LinkSchema } from "@/lib/zod/schemas/links";
+
 import { openApiErrorResponses } from "@/lib/openapi/responses";
 import { DomainSchema } from "@/lib/zod/schemas/domains";
-import { LinkErrorSchema, LinkSchema } from "@/lib/zod/schemas/links";
 import { TagSchema } from "@/lib/zod/schemas/tags";
 import { WorkspaceSchema } from "@/lib/zod/schemas/workspaces";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { createDocument } from "zod-openapi";
 import { webhookEventSchema } from "../webhook/schemas";
 import { analyticsPath } from "./analytics";
@@ -20,23 +22,18 @@ import { workspacesPaths } from "./workspaces";
 export const document = createDocument({
   openapi: "3.0.3",
   info: {
-    title: "Dub.co API",
-    description:
-      "Dub is link management infrastructure for companies to create marketing campaigns, link sharing features, and referral programs.",
+    title: `${platform.company} API`,
+    description: platform.description,
     version: "0.0.1",
     contact: {
-      name: "Dub.co Support",
-      email: "support@dub.co",
-      url: "https://dub.co/api",
-    },
-    license: {
-      name: "AGPL-3.0 license",
-      url: "https://github.com/dubinc/dub/blob/main/LICENSE.md",
+      name: `${platform.company} Support`,
+      email: platform.supportEmail,
+      url: `https://${platform.domain}/api`,
     },
   },
   servers: [
     {
-      url: "https://api.dub.co",
+      url: `https://api.${platform.domain}`,
       description: "Production API",
     },
   ],
@@ -67,7 +64,7 @@ export const document = createDocument({
         type: "http",
         description: "Default authentication mechanism",
         scheme: "bearer",
-        "x-speakeasy-example": "DUB_API_KEY",
+        "x-speakeasy-example": "PLATFORM_API_KEY",
       },
     },
     responses: {

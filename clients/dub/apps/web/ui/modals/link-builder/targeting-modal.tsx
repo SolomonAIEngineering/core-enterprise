@@ -1,18 +1,17 @@
-import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
 import {
   Button,
   Combobox,
   Modal,
   SimpleTooltipContent,
   Tooltip,
-  useKeyboardShortcut,
   UTM_PARAMETERS,
+  useKeyboardShortcut,
 } from "@dub/ui";
 import { Crosshairs3, Trash } from "@dub/ui/icons";
 import {
+  COUNTRIES,
   cn,
   constructURLFromUTMParams,
-  COUNTRIES,
   getParamsFromURL,
   isValidUrl,
   pluralize,
@@ -27,6 +26,9 @@ import {
   useState,
 } from "react";
 import { useForm, useFormContext } from "react-hook-form";
+
+import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { LinkFormData } from ".";
 
 function TargetingModal({
@@ -150,7 +152,7 @@ function TargetingModal({
                     <SimpleTooltipContent
                       title="Redirect your users to different links based on their location."
                       cta="Learn more about geo targeting."
-                      href="https://dub.co/help/article/geo-targeting"
+                      href={`${platform.webUrl}/help/article/geo-targeting`}
                     />
                   }
                 />
@@ -292,7 +294,7 @@ function TargetingModal({
                     <SimpleTooltipContent
                       title="Redirect your iOS users to a different link."
                       cta="Learn more about device targeting."
-                      href="https://dub.co/help/article/device-targeting"
+                      href={`${platform.webUrl}/help/article/device-targeting`}
                     />
                   }
                 />
@@ -332,7 +334,7 @@ function TargetingModal({
                     <SimpleTooltipContent
                       title="Redirect your Android users to a different link."
                       cta="Learn more about device targeting."
-                      href="https://dub.co/help/article/device-targeting"
+                      href={`${platform.webUrl}/help/article/device-targeting`}
                     />
                   }
                 />

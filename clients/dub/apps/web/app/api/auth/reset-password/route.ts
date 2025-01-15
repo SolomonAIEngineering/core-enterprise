@@ -1,12 +1,14 @@
 import { DubApiError, handleAndReturnErrorResponse } from "@/lib/api/errors";
 import { parseRequestBody, ratelimitOrThrow } from "@/lib/api/utils";
+import { type NextRequest, NextResponse } from "next/server";
+
 import { hashPassword } from "@/lib/auth/password";
 import { resetPasswordSchema } from "@/lib/zod/schemas/auth";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { waitUntil } from "@vercel/functions";
 import { sendEmail } from "emails";
 import PasswordUpdated from "emails/password-updated";
-import { NextRequest, NextResponse } from "next/server";
 
 // POST /api/auth/reset-password - reset password using the reset token
 export async function POST(req: NextRequest) {
@@ -73,7 +75,7 @@ export async function POST(req: NextRequest) {
     // Send the email to inform the user that their password has been reset
     waitUntil(
       sendEmail({
-        subject: `Your ${process.env.NEXT_PUBLIC_APP_NAME} account password has been reset`,
+        subject: `Your ${platform.company} account password has been reset`,
         email: identifier,
         react: PasswordUpdated({
           email: identifier,

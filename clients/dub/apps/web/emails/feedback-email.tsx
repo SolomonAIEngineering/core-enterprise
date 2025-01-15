@@ -1,4 +1,3 @@
-import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,9 +11,11 @@ import {
   Text,
 } from "@react-email/components";
 
+import { BusinessConfig as platform } from "@dub/platform-config";
+
 export default function FeedbackEmail({
   email = "panic@thedis.co",
-  feedback = "I love Dub!",
+  feedback = `I love ${platform.company}!`,
 }: {
   email: string;
   feedback: string;
@@ -28,9 +29,9 @@ export default function FeedbackEmail({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={DUB_WORDMARK}
+                src={platform.assets.wordmark}
                 height="40"
-                alt="Dub"
+                alt={platform.company}
                 className="mx-auto my-0"
               />
             </Section>

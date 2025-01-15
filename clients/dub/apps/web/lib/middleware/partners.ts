@@ -1,5 +1,6 @@
-import { parse } from "@/lib/middleware/utils";
 import { NextRequest, NextResponse } from "next/server";
+
+import { parse } from "@/lib/middleware/utils";
 import { userIsInBeta } from "../edge-config";
 import { getDefaultPartner } from "./utils/get-default-partner";
 import { getUserViaToken } from "./utils/get-user-via-token";

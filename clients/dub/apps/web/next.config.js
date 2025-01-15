@@ -81,20 +81,6 @@ module.exports = withAxiom({
   async headers() {
     return [
       {
-        // Add specific headers for static assets
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*'
-          }
-        ],
-      },
-      {
         source: "/:path*",
         headers: [
           {
