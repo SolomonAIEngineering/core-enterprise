@@ -1,12 +1,11 @@
 "use client";
 
-import { Button, Logo, useScroll } from "@dub/ui";
-import { usePathname, useRouter } from "next/navigation";
-
-import type { Program } from "@dub/prisma/client";
+import { Program } from "@dub/prisma/client";
+import { Button, useScroll, Wordmark } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export function Header({
   program,
@@ -44,10 +43,9 @@ export function Header({
           <img
             className="h-7 max-w-32"
             src={(program.wordmark ?? program.logo) as string}
-            alt={"wordmark"}
           />
         ) : (
-          <Logo className="h-10 w-10" />
+          <Wordmark className="h-7" />
         )}
       </Link>
 

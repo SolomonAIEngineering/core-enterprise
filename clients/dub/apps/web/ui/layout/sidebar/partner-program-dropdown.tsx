@@ -1,10 +1,13 @@
 "use client";
 
+import usePartnerProfile from "@/lib/swr/use-partner-profile";
+import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
 import { PartnerProps, ProgramProps } from "@/lib/types";
 import { BlurImage, Popover, useScrollProgress } from "@dub/ui";
 import { Check2, Gear } from "@dub/ui/icons";
-import { DICEBEAR_AVATAR_URL, cn } from "@dub/utils";
-import { ChevronsUpDown, HelpCircle } from "lucide-react";
+import { cn, DICEBEAR_AVATAR_URL } from "@dub/utils";
+import { ChevronsUpDown } from "lucide-react";
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import {
   PropsWithChildren,
@@ -14,23 +17,18 @@ import {
   useState,
 } from "react";
 
-import usePartnerProfile from "@/lib/swr/use-partner-profile";
-import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import Link from "next/link";
-
 const LINKS = [
   {
     name: "Settings",
     icon: Gear,
     href: "/settings",
   },
-  {
-    name: "Help center",
-    icon: HelpCircle,
-    href: `${platform.webUrl}/help`,
-    target: "_blank",
-  },
+  // {
+  //   name: "Help center",
+  //   icon: HelpCircle,
+  //   href: "https://dub.co/help",
+  //   target: "_blank",
+  // },
   // {
   //   name: "Switch to Business Hub",
   //   icon: Connections3,
@@ -210,7 +208,7 @@ function ScrollContainer({ children }: PropsWithChildren) {
       {/* Bottom scroll fade */}
       <div
         className="pointer-events-none absolute -bottom-px left-0 h-16 w-full rounded-b-lg bg-gradient-to-t from-white sm:bottom-0"
-        style={{ opacity: 1 - scrollProgress ** 2 }}
+        style={{ opacity: 1 - Math.pow(scrollProgress, 2) }}
       />
     </div>
   );

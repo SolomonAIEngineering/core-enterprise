@@ -1,3 +1,5 @@
+import { REFERRAL_CLICKS_QUOTA_BONUS } from "@/lib/embed/constants";
+import { DUB_WORDMARK, getPrettyUrl } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,10 +13,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { REFERRAL_CLICKS_QUOTA_BONUS } from "@/lib/embed/constants";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { getPrettyUrl } from "@dub/utils";
 import Footer from "./components/footer";
 
 export default function NewReferralSignup({
@@ -30,7 +28,7 @@ export default function NewReferralSignup({
     slug: string;
   };
 }) {
-  const referralLink = `${platform.referralUrl}/${workspace.slug}`;
+  const referralLink = `https://refer.dub.co/${workspace.slug}`;
   return (
     <Html>
       <Head />
@@ -40,9 +38,9 @@ export default function NewReferralSignup({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub.co"
                 className="mx-auto my-0"
               />
             </Section>
@@ -50,8 +48,8 @@ export default function NewReferralSignup({
               New referral signup
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Congratulations – someone just signed up for {platform.company}{" "}
-              using your referral link:{" "}
+              Congratulations – someone just signed up for Dub using your
+              referral link:{" "}
               <a
                 href={referralLink}
                 className="text-semibold font-medium text-black underline"
@@ -60,21 +58,21 @@ export default function NewReferralSignup({
               </a>
             </Text>
             <Text className="text-sm leading-6 text-black">
-              As a thank you from us for spreading the word about{" "}
-              {platform.company}, you've earned an additional{" "}
-              {REFERRAL_CLICKS_QUOTA_BONUS} clicks quota for your{" "}
+              As a thank you from us for spreading the word about Dub, you've
+              earned an additional {REFERRAL_CLICKS_QUOTA_BONUS} clicks quota
+              for your{" "}
               <a
-                href={`${platform.platformUrl}/${workspace.slug}`}
+                href={`https://app.dub.co/${workspace.slug}`}
                 className="text-semibold font-medium text-black underline"
               >
                 {workspace.name}
               </a>{" "}
-              workspace on {platform.company}.
+              workspace on Dub.
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`${platform.platformUrl}/${workspace.slug}`}
+                href={`https://app.dub.co/${workspace.slug}`}
               >
                 View your referral stats
               </Link>

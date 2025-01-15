@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function CubeSettings(props: SVGProps<SVGSVGElement>) {
   return (
@@ -131,5 +131,5 @@ export function CubeSettings(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

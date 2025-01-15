@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   AlertCircle,
   Box,
@@ -10,26 +10,26 @@ import {
   Search,
   Settings as SettingsIcon,
   Users as UsersIcon,
-} from 'lucide-react'
+} from "lucide-react";
 
-import { EmptyState } from './empty-state'
+import { EmptyState } from "./empty-state";
 
 const meta: Meta<typeof EmptyState> = {
-  title: 'Components/EmptyState',
+  title: "Components/EmptyState",
   component: EmptyState,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'An empty state component for displaying when there is no content.',
+          "An empty state component for displaying when there is no content.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof EmptyState>
+export default meta;
+type Story = StoryObj<typeof EmptyState>;
 
 export const Default: Story = {
   render: () => (
@@ -39,7 +39,7 @@ export const Default: Story = {
       description="There are no items to display at this time."
     />
   ),
-}
+};
 
 export const WithLearnMore: Story = {
   render: () => (
@@ -50,7 +50,7 @@ export const WithLearnMore: Story = {
       learnMore="https://example.com/docs"
     />
   ),
-}
+};
 
 export const WithCustomButton: Story = {
   render: () => (
@@ -67,7 +67,7 @@ export const WithCustomButton: Story = {
       </button>
     </EmptyState>
   ),
-}
+};
 
 export const SearchResults: Story = {
   render: () => (
@@ -77,7 +77,7 @@ export const SearchResults: Story = {
       description="Try adjusting your search terms or filters to find what you're looking for."
     />
   ),
-}
+};
 
 export const SettingsExample: Story = {
   render: () => (
@@ -88,7 +88,7 @@ export const SettingsExample: Story = {
       learnMore="https://example.com/settings"
     />
   ),
-}
+};
 
 export const ShoppingCartExample: Story = {
   render: () => (
@@ -105,7 +105,7 @@ export const ShoppingCartExample: Story = {
       </button>
     </EmptyState>
   ),
-}
+};
 
 export const UsersExample: Story = {
   render: () => (
@@ -122,7 +122,7 @@ export const UsersExample: Story = {
       </button>
     </EmptyState>
   ),
-}
+};
 
 export const ErrorExample: Story = {
   render: () => (
@@ -139,7 +139,7 @@ export const ErrorExample: Story = {
       </button>
     </EmptyState>
   ),
-}
+};
 
 export const DatabaseExample: Story = {
   render: () => (
@@ -165,7 +165,7 @@ export const DatabaseExample: Story = {
       </div>
     </EmptyState>
   ),
-}
+};
 
 export const Gallery: Story = {
   render: () => (
@@ -182,4 +182,4 @@ export const Gallery: Story = {
       </div>
     </EmptyState>
   ),
-}
+};

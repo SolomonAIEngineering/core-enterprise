@@ -1,4 +1,4 @@
-import { capitalize, getNextPlan, nFormatter } from "@dub/utils";
+import { DUB_WORDMARK, capitalize, getNextPlan, nFormatter } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,9 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
-import type { WorkspaceProps } from "../lib/types";
+import { WorkspaceProps } from "../lib/types";
 import Footer from "./components/footer";
 
 export default function ClicksExceeded({
@@ -40,7 +38,7 @@ export default function ClicksExceeded({
     <Html>
       <Head />
       <Preview>
-        Your {platform.company} workspace, {name || ""} has exceeded the{" "}
+        Your Dub.co workspace, {name || ""} has exceeded the{" "}
         {capitalize(plan) || ""} Plan limit of {nFormatter(usageLimit)} link
         clicks/month.
       </Preview>
@@ -49,9 +47,9 @@ export default function ClicksExceeded({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub"
                 className="mx-auto my-0"
               />
             </Section>
@@ -59,9 +57,9 @@ export default function ClicksExceeded({
               Clicks Limit Exceeded
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Your {platform.company} workspace,{" "}
+              Your Dub.co workspace,{" "}
               <Link
-                href={`${platform.platformUrl}/${slug}`}
+                href={`https://app.dub.co/${slug}`}
                 className="text-black underline"
               >
                 <strong>{name}</strong>
@@ -88,7 +86,7 @@ export default function ClicksExceeded({
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`${platform.platformUrl}/${slug}/upgrade`}
+                href={`https://app.dub.co/${slug}/upgrade`}
               >
                 Upgrade my plan
               </Link>

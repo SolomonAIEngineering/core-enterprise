@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Robot(props: SVGProps<SVGSVGElement>) {
   return (
@@ -39,5 +39,5 @@ export function Robot(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

@@ -1,8 +1,6 @@
-import jackson, { samlAudience } from "@/lib/jackson";
-
 import { withWorkspace } from "@/lib/auth";
+import jackson, { samlAudience } from "@/lib/jackson";
 import z from "@/lib/zod";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { APP_DOMAIN_WITH_NGROK } from "@dub/utils";
 import { NextResponse } from "next/server";
 
@@ -14,7 +12,7 @@ const createSAMLConnectionSchema = z
   .partial()
   .refine(
     ({ metadataUrl, encodedRawMetadata }) =>
-      metadataUrl !== undefined || encodedRawMetadata !== undefined,
+      metadataUrl != undefined || encodedRawMetadata != undefined,
     {
       message: "metadataUrl or encodedRawMetadata is required",
     },
@@ -40,7 +38,7 @@ export const GET = withWorkspace(
       issuer: samlAudience,
       acs:
         process.env.NODE_ENV === "production"
-          ? `${platform.apiUrl}/auth/saml/callback`
+          ? "https://api.dub.co/auth/saml/callback"
           : `${APP_DOMAIN_WITH_NGROK}/api/auth/saml/callback`,
     };
 

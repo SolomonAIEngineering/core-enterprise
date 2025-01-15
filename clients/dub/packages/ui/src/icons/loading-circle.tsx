@@ -1,12 +1,12 @@
-import { cn } from '@dub/utils'
+import { cn } from "@dub/utils";
 
 export function LoadingCircle({ className }: { className?: string }) {
   return (
     <svg
       aria-hidden="true"
       className={cn(
-        'h-4 w-4 animate-spin fill-gray-600 text-gray-200',
-        className
+        "h-4 w-4 animate-spin fill-gray-600 text-gray-200",
+        className,
       )}
       viewBox="0 0 100 101"
       fill="none"
@@ -21,5 +21,5 @@ export function LoadingCircle({ className }: { className?: string }) {
         fill="currentFill"
       />
     </svg>
-  )
+  );
 }

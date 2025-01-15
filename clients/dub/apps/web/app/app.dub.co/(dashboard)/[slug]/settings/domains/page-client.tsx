@@ -1,5 +1,19 @@
 "use client";
 
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useDomains from "@/lib/swr/use-domains";
+import useDomainsCount from "@/lib/swr/use-domains-count";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { DOMAINS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/domains";
+import DomainCard from "@/ui/domains/domain-card";
+import DomainCardPlaceholder from "@/ui/domains/domain-card-placeholder";
+import { FreeDotLinkBanner } from "@/ui/domains/free-dot-link-banner";
+import { useAddEditDomainModal } from "@/ui/modals/add-edit-domain-modal";
+import { useRegisterDomainModal } from "@/ui/modals/register-domain-modal";
+import { useRegisterDomainSuccessModal } from "@/ui/modals/register-domain-success-modal";
+import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
+import EmptyState from "@/ui/shared/empty-state";
+import { SearchBoxPersisted } from "@/ui/shared/search-box";
 import {
   Badge,
   Button,
@@ -17,22 +31,6 @@ import {
 import { capitalize, pluralize } from "@dub/utils";
 import { ChevronDown, Crown } from "lucide-react";
 import { useEffect, useState } from "react";
-
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useDomains from "@/lib/swr/use-domains";
-import useDomainsCount from "@/lib/swr/use-domains-count";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { DOMAINS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/domains";
-import DomainCard from "@/ui/domains/domain-card";
-import DomainCardPlaceholder from "@/ui/domains/domain-card-placeholder";
-import { FreeDotLinkBanner } from "@/ui/domains/free-dot-link-banner";
-import { useAddEditDomainModal } from "@/ui/modals/add-edit-domain-modal";
-import { useRegisterDomainModal } from "@/ui/modals/register-domain-modal";
-import { useRegisterDomainSuccessModal } from "@/ui/modals/register-domain-success-modal";
-import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
-import EmptyState from "@/ui/shared/empty-state";
-import { SearchBoxPersisted } from "@/ui/shared/search-box";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { DefaultDomains } from "./default-domains";
 
 export default function WorkspaceDomainsClient() {
@@ -113,7 +111,7 @@ export default function WorkspaceDomainsClient() {
               content={
                 <TooltipContent
                   title="Learn more about how to add, configure, and verify custom domains on Dub."
-                  href={`${platform.webUrl}/help/article/how-to-add-custom-domain`}
+                  href="https://dub.co/help/article/how-to-add-custom-domain"
                   target="_blank"
                   cta="Learn more"
                 />
@@ -248,7 +246,7 @@ export default function WorkspaceDomainsClient() {
                   </>
                 }
                 addButton={<AddDomainButton />}
-                learnMoreHref={`${platform.webUrl}/help/article/how-to-add-custom-domain`}
+                learnMoreHref="https://dub.co/help/article/how-to-add-custom-domain"
               />
             )
           ) : (

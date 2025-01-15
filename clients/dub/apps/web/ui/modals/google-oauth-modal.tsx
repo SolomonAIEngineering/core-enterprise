@@ -1,15 +1,13 @@
 import { Button, Google, Logo, Modal } from "@dub/ui";
+import Cookies from "js-cookie";
+import { signIn } from "next-auth/react";
 import {
-  type Dispatch,
-  type SetStateAction,
+  Dispatch,
+  SetStateAction,
   useCallback,
   useMemo,
   useState,
 } from "react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
-import Cookies from "js-cookie";
-import { signIn } from "next-auth/react";
 
 function GoogleOauthModal({
   showGoogleOauthModal,
@@ -29,11 +27,11 @@ function GoogleOauthModal({
         <Logo />
         <h3 className="text-lg font-medium">Connect your Google Account</h3>
         <p className="text-center text-sm text-gray-500">
-          This allows you to sign in to your {platform.company} account with
-          Google.{" "}
+          This allows you to sign in to your {process.env.NEXT_PUBLIC_APP_NAME}{" "}
+          account with Google.{" "}
           <a
             className="underline underline-offset-4 transition-colors hover:text-black"
-            href={`${platform.webUrl}/changelog/sign-in-with-google`}
+            href="https://dub.co/changelog/sign-in-with-google"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -53,7 +51,7 @@ function GoogleOauthModal({
           loading={clickedGoogle}
           icon={<Google className="h-4 w-4" />}
         />
-        <Button
+        <button
           onClick={() => {
             setShowGoogleOauthModal(false);
             Cookies.set("hideGoogleOauthModal", true, { expires: 14 });
@@ -61,7 +59,7 @@ function GoogleOauthModal({
           className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-800 active:text-gray-400"
         >
           Don't show this again
-        </Button>
+        </button>
       </div>
     </Modal>
   );
@@ -70,7 +68,6 @@ function GoogleOauthModal({
 export function useGoogleOauthModal() {
   const [showGoogleOauthModal, setShowGoogleOauthModal] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const GoogleOauthModalCallback = useCallback(() => {
     return (
       <GoogleOauthModal
@@ -80,7 +77,6 @@ export function useGoogleOauthModal() {
     );
   }, [showGoogleOauthModal, setShowGoogleOauthModal]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useMemo(
     () => ({
       setShowGoogleOauthModal,

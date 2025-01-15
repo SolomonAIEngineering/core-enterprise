@@ -1,8 +1,6 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Button } from "@dub/ui";
 import { Download } from "@dub/ui/icons";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { toast } from "sonner";
 import { AnalyticsContext } from "./analytics-provider";
 
@@ -33,7 +31,7 @@ export default function ExportButton({
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${platform.company} Analytics Export - ${new Date().toISOString()}.zip`;
+      a.download = `Dub Analytics Export - ${new Date().toISOString()}.zip`;
       a.click();
     } catch (error) {
       throw new Error(error);

@@ -1,37 +1,37 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { useState } from 'react'
-import { Switch } from './switch'
+import { useState } from "react";
+import { Switch } from "./switch";
 
 const meta: Meta<typeof Switch> = {
-  title: 'Components/Switch',
+  title: "Components/Switch",
   component: Switch,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A toggle switch component with customizable styles and behaviors.',
+          "A toggle switch component with customizable styles and behaviors.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Switch>
+export default meta;
+type Story = StoryObj<typeof Switch>;
 
 export const Default: Story = {
   render: () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
       <Switch checked={checked} fn={setChecked} aria-label="Toggle switch" />
-    )
+    );
   },
-}
+};
 
 export const WithLabel: Story = {
   render: () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
       <div className="flex items-center space-x-2">
         <Switch
@@ -44,9 +44,9 @@ export const WithLabel: Story = {
           Enable notifications
         </label>
       </div>
-    )
+    );
   },
-}
+};
 
 export const Disabled: Story = {
   render: () => (
@@ -81,11 +81,11 @@ export const Disabled: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const CustomColors: Story = {
   render: () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
       <div className="space-y-4">
         <div className="flex items-center space-x-2">
@@ -113,13 +113,13 @@ export const CustomColors: Story = {
           </label>
         </div>
       </div>
-    )
+    );
   },
-}
+};
 
 export const WithDescription: Story = {
   render: () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
       <div className="flex space-x-2">
         <Switch
@@ -140,9 +140,9 @@ export const WithDescription: Story = {
           </p>
         </div>
       </div>
-    )
+    );
   },
-}
+};
 
 export const WithForm: Story = {
   render: () => {
@@ -150,7 +150,7 @@ export const WithForm: Story = {
       notifications: false,
       updates: false,
       marketing: false,
-    })
+    });
 
     return (
       <form className="w-96 space-y-6 rounded-xl bg-white p-6 shadow-lg">
@@ -218,13 +218,13 @@ export const WithForm: Story = {
           </div>
         </div>
       </form>
-    )
+    );
   },
-}
+};
 
 export const WithCustomSize: Story = {
   render: () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
       <div className="space-y-4">
         <div className="flex items-center space-x-2">
@@ -256,6 +256,6 @@ export const WithCustomSize: Story = {
           </label>
         </div>
       </div>
-    )
+    );
   },
-}
+};

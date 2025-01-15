@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function PenWriting(props: SVGProps<SVGSVGElement>) {
   return (
@@ -31,5 +31,5 @@ export function PenWriting(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

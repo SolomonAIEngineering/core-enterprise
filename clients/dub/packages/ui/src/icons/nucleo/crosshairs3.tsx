@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Crosshairs3(props: SVGProps<SVGSVGElement>) {
   return (
@@ -66,5 +66,5 @@ export function Crosshairs3(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

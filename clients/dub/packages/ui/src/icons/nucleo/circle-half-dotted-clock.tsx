@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function CircleHalfDottedClock(props: SVGProps<SVGSVGElement>) {
   return (
@@ -71,5 +71,5 @@ export function CircleHalfDottedClock(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

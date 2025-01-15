@@ -1,9 +1,9 @@
 "use client";
 
 import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Crown } from "lucide-react";
 import Link from "next/link";
+
 export const UpgradeRequiredToast = ({
   title,
   message,
@@ -21,9 +21,7 @@ export const UpgradeRequiredToast = ({
       </div>
       <p className="text-sm text-gray-600">{message}</p>
       <Link
-        href={
-          slug ? `/${slug}/upgrade?exit=close` : `${platform.webUrl}/pricing`
-        }
+        href={slug ? `/${slug}/upgrade?exit=close` : "https://dub.co/pricing"}
         target="_blank"
         className="w-full rounded-md border border-black bg-black px-3 py-1.5 text-center text-sm text-white transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200"
       >

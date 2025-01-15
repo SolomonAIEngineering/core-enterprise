@@ -1,10 +1,8 @@
 "use client";
 
+import z from "@/lib/zod";
+import { updatePasswordSchema } from "@/lib/zod/schemas/auth";
 import { Button, Input, Label, Tooltip } from "@dub/ui";
-
-import type z from "@/lib/zod";
-import type { updatePasswordSchema } from "@/lib/zod/schemas/auth";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -50,7 +48,7 @@ export const UpdatePassword = () => {
         <div className="flex flex-col gap-3 border-b border-gray-200 p-5 sm:p-10">
           <h2 className="text-xl font-medium">Password</h2>
           <p className="pb-2 text-sm text-gray-500">
-            Manage your account password on {platform.company}.
+            Manage your account password on {process.env.NEXT_PUBLIC_APP_NAME}.
           </p>
         </div>
         <div className="flex flex-wrap justify-between gap-4 p-5 sm:p-10">

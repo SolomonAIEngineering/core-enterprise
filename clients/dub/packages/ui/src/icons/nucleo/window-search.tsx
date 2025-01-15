@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function WindowSearch(props: SVGProps<SVGSVGElement>) {
   return (
@@ -54,5 +54,5 @@ export function WindowSearch(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

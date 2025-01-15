@@ -1,5 +1,7 @@
 "use client";
 
+import { TokenProps } from "@/lib/types";
+import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
 import {
   Alert,
   AlertDescription,
@@ -11,10 +13,6 @@ import {
 } from "@dub/ui";
 import { fetcher, timeAgo } from "@dub/utils";
 import { FolderOpen, Info, MoreVertical, Trash } from "lucide-react";
-
-import { TokenProps } from "@/lib/types";
-import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useState } from "react";
 import useSWR from "swr";
 
@@ -34,20 +32,18 @@ export default function TokensPageClient() {
         <AlertDescription className="text-gray-500">
           We recommend creating a new{" "}
           <a
-            href={`${platform.webUrl}/docs/api-reference/tokens`}
+            href="https://dub.co/docs/api-reference/tokens"
             target="_blank"
             className="font-medium underline underline-offset-4 hover:text-black"
-            rel="noreferrer"
           >
             Workspace API Key
           </a>{" "}
           for more granular control over your resources such as Links, Tags,
           Domains, Analytics, etc.{" "}
           <a
-            href={`${platform.webUrl}/blog/workspace-api-keys`}
+            href="https://dub.co/blog/workspace-api-keys"
             target="_blank"
             className="font-medium underline underline-offset-4 hover:text-black"
-            rel="noreferrer"
           >
             Read the announcement.
           </a>

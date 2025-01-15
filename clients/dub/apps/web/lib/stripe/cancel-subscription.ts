@@ -1,4 +1,3 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { stripe } from ".";
 
 export async function cancelSubscription(customer?: string) {
@@ -14,7 +13,7 @@ export async function cancelSubscription(customer?: string) {
     return await stripe.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true,
       cancellation_details: {
-        comment: `${platform.company} workspace deleted.`,
+        comment: "Customer deleted their Dub workspace.",
       },
     });
   } catch (error) {

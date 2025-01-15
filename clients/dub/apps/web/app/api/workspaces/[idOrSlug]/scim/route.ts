@@ -2,7 +2,6 @@ import { DubApiError } from "@/lib/api/errors";
 import { withWorkspace } from "@/lib/auth";
 import jackson from "@/lib/jackson";
 import z from "@/lib/zod";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { NextResponse } from "next/server";
 
 const createDirectorySchema = z.object({
@@ -50,7 +49,7 @@ export const POST = withWorkspace(
 
     const [data, _] = await Promise.all([
       directorySyncController.directories.create({
-        name: `${platform.company} SCIM Directory`,
+        name: "Dub SCIM Directory",
         tenant: workspace.id,
         product: "Dub",
         type: provider,

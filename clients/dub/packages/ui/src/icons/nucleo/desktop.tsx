@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Desktop(props: SVGProps<SVGSVGElement>) {
   return (
@@ -20,5 +20,5 @@ export function Desktop(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

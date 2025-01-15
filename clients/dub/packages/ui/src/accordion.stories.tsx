@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from './accordion'
+} from "./accordion";
 
 const meta: Meta<typeof Accordion> = {
-  title: 'Components/Accordion',
+  title: "Components/Accordion",
   component: Accordion,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A vertically stacked set of interactive headings that each reveal a section of content.',
+          "A vertically stacked set of interactive headings that each reveal a section of content.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Accordion>
+export default meta;
+type Story = StoryObj<typeof Accordion>;
 
 export const SingleItem: Story = {
   render: () => (
@@ -34,7 +34,7 @@ export const SingleItem: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const MultipleItems: Story = {
   render: () => (
@@ -53,7 +53,7 @@ export const MultipleItems: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const WithPlusIcon: Story = {
   render: () => (
@@ -66,7 +66,7 @@ export const WithPlusIcon: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const MultipleExpanded: Story = {
   render: () => (
@@ -81,7 +81,7 @@ export const MultipleExpanded: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const CustomStyling: Story = {
   render: () => (
@@ -96,7 +96,7 @@ export const CustomStyling: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const NestedContent: Story = {
   render: () => (
@@ -116,7 +116,7 @@ export const NestedContent: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const WithIcons: Story = {
   render: () => (
@@ -129,7 +129,7 @@ export const WithIcons: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const Disabled: Story = {
   render: () => (
@@ -144,7 +144,7 @@ export const Disabled: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const WithDefaultValue: Story = {
   render: () => (
@@ -159,7 +159,7 @@ export const WithDefaultValue: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};
 
 export const Compact: Story = {
   render: () => (
@@ -172,4 +172,4 @@ export const Compact: Story = {
       </AccordionItem>
     </Accordion>
   ),
-}
+};

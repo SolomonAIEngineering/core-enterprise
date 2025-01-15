@@ -1,31 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Code, Link, Mail, Share } from 'lucide-react'
+import type { Meta, StoryObj } from "@storybook/react";
+import { Code, Link, Mail, Share } from "lucide-react";
 
-import { CopyButton } from './copy-button'
+import { CopyButton } from "./copy-button";
 
 const meta: Meta<typeof CopyButton> = {
-  title: 'Components/CopyButton',
+  title: "Components/CopyButton",
   component: CopyButton,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A button component for copying text to clipboard.',
+        component: "A button component for copying text to clipboard.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof CopyButton>
+export default meta;
+type Story = StoryObj<typeof CopyButton>;
 
 export const Default: Story = {
   render: () => <CopyButton value="Text to copy" />,
-}
+};
 
 export const WithCustomIcon: Story = {
   render: () => <CopyButton value="Text to copy" icon={Share} />,
-}
+};
 
 export const WithSuccessMessage: Story = {
   render: () => (
@@ -34,11 +34,11 @@ export const WithSuccessMessage: Story = {
       successMessage="Custom message copied!"
     />
   ),
-}
+};
 
 export const NeutralVariant: Story = {
   render: () => <CopyButton value="Neutral variant" variant="neutral" />,
-}
+};
 
 export const WithCustomClass: Story = {
   render: () => (
@@ -47,7 +47,7 @@ export const WithCustomClass: Story = {
       className="bg-blue-100 hover:bg-blue-200"
     />
   ),
-}
+};
 
 export const WithDifferentIcons: Story = {
   render: () => (
@@ -57,7 +57,7 @@ export const WithDifferentIcons: Story = {
       <CopyButton value="Email" icon={Mail} />
     </div>
   ),
-}
+};
 
 export const InlineWithText: Story = {
   render: () => (
@@ -66,7 +66,7 @@ export const InlineWithText: Story = {
       <CopyButton value="Inline text" />
     </div>
   ),
-}
+};
 
 export const WithLongText: Story = {
   render: () => (
@@ -77,7 +77,7 @@ export const WithLongText: Story = {
       <CopyButton value="This is a very long text that will be copied when clicking the button" />
     </div>
   ),
-}
+};
 
 export const InCard: Story = {
   render: () => (
@@ -91,7 +91,7 @@ export const InCard: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const MultipleButtons: Story = {
   render: () => (
@@ -110,4 +110,4 @@ export const MultipleButtons: Story = {
       </div>
     </div>
   ),
-}
+};

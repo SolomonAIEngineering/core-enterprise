@@ -17,5 +17,5 @@ export function StripeLink({ className }: { className?: string }) {
         fill="#011E0F"
       />
     </svg>
-  )
+  );
 }

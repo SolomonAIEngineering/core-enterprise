@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Key(props: SVGProps<SVGSVGElement>) {
   return (
@@ -21,5 +21,5 @@ export function Key(props: SVGProps<SVGSVGElement>) {
         <circle cx="5.5" cy="12.5" fill="currentColor" r="1" stroke="none" />
       </g>
     </svg>
-  )
+  );
 }

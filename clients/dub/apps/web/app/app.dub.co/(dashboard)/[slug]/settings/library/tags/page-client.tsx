@@ -1,21 +1,19 @@
 "use client";
 
-import {
-  CardList,
-  PaginationControls,
-  usePagination,
-  useRouterStuff,
-} from "@dub/ui";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
-
 import useTags from "@/lib/swr/use-tags";
 import useTagsCount from "@/lib/swr/use-tags-count";
 import { TAGS_MAX_PAGE_SIZE } from "@/lib/zod/schemas/tags";
 import { useAddEditTagModal } from "@/ui/modals/add-edit-tag-modal";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { SearchBoxPersisted } from "@/ui/shared/search-box";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import {
+  CardList,
+  PaginationControls,
+  usePagination,
+  useRouterStuff,
+} from "@dub/ui";
 import { Tag } from "@dub/ui/icons";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { TagCard } from "./tag-card";
 import { TagCardPlaceholder } from "./tag-card-placeholder";
 
@@ -79,7 +77,7 @@ export default function WorkspaceTagsClient() {
               </>
             }
             addButton={<AddTagButton />}
-            learnMoreHref={`${platform.webUrl}/help/article/how-to-use-tags`}
+            learnMoreHref="https://dub.co/help/article/how-to-use-tags"
           />
         ) : (
           <>

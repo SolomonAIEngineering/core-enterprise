@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function CaretUpFill(props: SVGProps<SVGSVGElement>) {
   return (
@@ -16,5 +16,5 @@ export function CaretUpFill(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

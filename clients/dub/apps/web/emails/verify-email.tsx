@@ -1,3 +1,4 @@
+import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -10,8 +11,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function VerifyEmail({
@@ -24,15 +23,15 @@ export default function VerifyEmail({
   return (
     <Html>
       <Head />
-      <Preview>Your {platform.company} Verification Code</Preview>
+      <Preview>Your Dub.co Verification Code</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub"
                 className="mx-auto my-0"
               />
             </Section>
@@ -40,8 +39,7 @@ export default function VerifyEmail({
               Please confirm your email address
             </Heading>
             <Text className="mx-auto text-sm leading-6">
-              Enter this code on the {platform.company} verify page to complete
-              your sign up:
+              Enter this code on the Dub verify page to complete your sign up:
             </Text>
             <Section className="my-8">
               <div className="mx-auto w-fit rounded-xl px-6 py-3 text-center font-mono text-2xl font-semibold tracking-[0.25em]">

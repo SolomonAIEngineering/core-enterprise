@@ -1,41 +1,41 @@
-'use client'
+"use client";
 
-import { cn, nFormatter, timeAgo } from '@dub/utils'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import Linkify from 'linkify-react'
-import { HelpCircle } from 'lucide-react'
-import Link from 'next/link'
-import { ReactNode, useState } from 'react'
-import { Badge } from './badge'
-import { Button, ButtonProps, buttonVariants } from './button'
+import { cn, nFormatter, timeAgo } from "@dub/utils";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import Linkify from "linkify-react";
+import { HelpCircle } from "lucide-react";
+import Link from "next/link";
+import { ReactNode, useState } from "react";
+import { Badge } from "./badge";
+import { Button, ButtonProps, buttonVariants } from "./button";
 
 export function TooltipProvider({ children }: { children: ReactNode }) {
   return (
     <TooltipPrimitive.Provider delayDuration={150}>
       {children}
     </TooltipPrimitive.Provider>
-  )
+  );
 }
 
 export interface TooltipProps
-  extends Omit<TooltipPrimitive.TooltipContentProps, 'content'> {
+  extends Omit<TooltipPrimitive.TooltipContentProps, "content"> {
   content:
     | ReactNode
     | string
-    | ((props: { setOpen: (open: boolean) => void }) => ReactNode)
-  contentClassName?: string
-  disableHoverableContent?: TooltipPrimitive.TooltipProps['disableHoverableContent']
+    | ((props: { setOpen: (open: boolean) => void }) => ReactNode);
+  contentClassName?: string;
+  disableHoverableContent?: TooltipPrimitive.TooltipProps["disableHoverableContent"];
 }
 
 export function Tooltip({
   children,
   content,
   contentClassName,
-  side = 'top',
+  side = "top",
   disableHoverableContent,
   ...rest
 }: TooltipProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <TooltipPrimitive.Root
@@ -47,10 +47,10 @@ export function Tooltip({
       <TooltipPrimitive.Trigger
         asChild
         onClick={() => {
-          setOpen(true)
+          setOpen(true);
         }}
         onBlur={() => {
-          setOpen(false)
+          setOpen(false);
         }}
       >
         {children}
@@ -63,16 +63,16 @@ export function Tooltip({
           collisionPadding={0}
           {...rest}
         >
-          {typeof content === 'string' ? (
+          {typeof content === "string" ? (
             <span
               className={cn(
-                'block max-w-xs text-pretty px-4 py-2 text-center text-sm text-gray-700',
-                contentClassName
+                "block max-w-xs text-pretty px-4 py-2 text-center text-sm text-gray-700",
+                contentClassName,
               )}
             >
               {content}
             </span>
-          ) : typeof content === 'function' ? (
+          ) : typeof content === "function" ? (
             content({ setOpen })
           ) : (
             content
@@ -80,7 +80,7 @@ export function Tooltip({
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
-  )
+  );
 }
 
 export function TooltipContent({
@@ -90,11 +90,11 @@ export function TooltipContent({
   target,
   onClick,
 }: {
-  title: ReactNode
-  cta?: string
-  href?: string
-  target?: string
-  onClick?: () => void
+  title: ReactNode;
+  cta?: string;
+  href?: string;
+  target?: string;
+  onClick?: () => void;
 }) {
   return (
     <div className="flex max-w-xs flex-col items-center space-y-3 p-4 text-center">
@@ -105,8 +105,8 @@ export function TooltipContent({
             href={href}
             {...(target ? { target } : {})}
             className={cn(
-              buttonVariants({ variant: 'primary' }),
-              'flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm'
+              buttonVariants({ variant: "primary" }),
+              "flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
             )}
           >
             {cta}
@@ -120,7 +120,7 @@ export function TooltipContent({
           />
         ) : null)}
     </div>
-  )
+  );
 }
 
 export function SimpleTooltipContent({
@@ -128,13 +128,13 @@ export function SimpleTooltipContent({
   cta,
   href,
 }: {
-  title: string
-  cta: string
-  href: string
+  title: string;
+  cta: string;
+  href: string;
 }) {
   return (
     <div className="max-w-xs px-4 py-2 text-center text-sm text-gray-700">
-      {title}{' '}
+      {title}{" "}
       <a
         href={href}
         target="_blank"
@@ -145,7 +145,7 @@ export function SimpleTooltipContent({
         {cta}
       </a>
     </div>
-  )
+  );
 }
 
 export function LinkifyTooltipContent({ children }: { children: ReactNode }) {
@@ -154,41 +154,41 @@ export function LinkifyTooltipContent({ children }: { children: ReactNode }) {
       <Linkify
         as="p"
         options={{
-          target: '_blank',
-          rel: 'noopener noreferrer nofollow',
+          target: "_blank",
+          rel: "noopener noreferrer nofollow",
           className:
-            'underline underline-offset-4 text-gray-400 hover:text-gray-700',
+            "underline underline-offset-4 text-gray-400 hover:text-gray-700",
         }}
       >
         {children}
       </Linkify>
     </div>
-  )
+  );
 }
 
-export function InfoTooltip(props: Omit<TooltipProps, 'children'>) {
+export function InfoTooltip(props: Omit<TooltipProps, "children">) {
   return (
     <Tooltip {...props}>
       <HelpCircle className="h-4 w-4 text-gray-500" />
     </Tooltip>
-  )
+  );
 }
 
 export function NumberTooltip({
   value,
-  unit = 'total clicks',
+  unit = "total clicks",
   prefix,
   children,
   lastClicked,
 }: {
-  value?: number | null
-  unit?: string
-  prefix?: string
-  children: ReactNode
-  lastClicked?: Date | null
+  value?: number | null;
+  unit?: string;
+  prefix?: string;
+  children: ReactNode;
+  lastClicked?: Date | null;
 }) {
   if ((!value || value < 1000) && !lastClicked) {
-    return children
+    return children;
   }
   return (
     <Tooltip
@@ -208,7 +208,7 @@ export function NumberTooltip({
     >
       {children}
     </Tooltip>
-  )
+  );
 }
 
 export function BadgeTooltip({ children, content, ...props }: TooltipProps) {
@@ -223,7 +223,7 @@ export function BadgeTooltip({ children, content, ...props }: TooltipProps) {
         </Badge>
       </div>
     </Tooltip>
-  )
+  );
 }
 
 export function ButtonTooltip({
@@ -231,8 +231,8 @@ export function ButtonTooltip({
   tooltipProps,
   ...props
 }: {
-  children: ReactNode
-  tooltipProps: TooltipProps
+  children: ReactNode;
+  tooltipProps: TooltipProps;
 } & ButtonProps) {
   return (
     <Tooltip {...tooltipProps}>
@@ -240,12 +240,12 @@ export function ButtonTooltip({
         type="button"
         {...props}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded-md text-gray-500 transition-colors duration-75 hover:bg-gray-100 active:bg-gray-200 disabled:cursor-not-allowed disabled:hover:bg-transparent',
-          props.className
+          "flex h-6 w-6 items-center justify-center rounded-md text-gray-500 transition-colors duration-75 hover:bg-gray-100 active:bg-gray-200 disabled:cursor-not-allowed disabled:hover:bg-transparent",
+          props.className,
         )}
       >
         {children}
       </button>
     </Tooltip>
-  )
+  );
 }

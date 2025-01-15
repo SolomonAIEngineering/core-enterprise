@@ -16,4 +16,4 @@
  * getFactors(7);  // returns [1, 7]
  */
 export const getFactors = (number: number) =>
-  [...Array(number + 1).keys()].filter((i) => number % i === 0)
+  [...Array(number + 1).keys()].filter((i) => number % i === 0);

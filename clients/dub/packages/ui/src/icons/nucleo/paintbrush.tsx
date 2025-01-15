@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Paintbrush(props: SVGProps<SVGSVGElement>) {
   return (
@@ -22,5 +22,5 @@ export function Paintbrush(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

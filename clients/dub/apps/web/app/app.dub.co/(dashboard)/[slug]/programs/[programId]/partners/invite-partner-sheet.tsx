@@ -1,3 +1,8 @@
+import { invitePartnerAction } from "@/lib/actions/partners/invite-partner";
+import useProgram from "@/lib/swr/use-program";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { PartnerLinkSelector } from "@/ui/partners/partner-link-selector";
+import { X } from "@/ui/shared/icons";
 import {
   AnimatedSizeContainer,
   BlurImage,
@@ -5,15 +10,8 @@ import {
   Sheet,
   useMediaQuery,
 } from "@dub/ui";
-import { Dispatch, SetStateAction, useState } from "react";
-
-import { invitePartnerAction } from "@/lib/actions/partners/invite-partner";
-import useProgram from "@/lib/swr/use-program";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { PartnerLinkSelector } from "@/ui/partners/partner-link-selector";
-import { X } from "@/ui/shared/icons";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useAction } from "next-safe-action/hooks";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -199,20 +197,19 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
               <div className="mt-2 overflow-hidden rounded-md border border-neutral-200">
                 <div className="grid gap-4 p-6 pb-10">
                   <BlurImage
-                    src={program?.logo || platform.assets.logo}
-                    alt={program?.name || platform.company}
+                    src={program?.logo || "https://assets.dub.co/logo.png"}
+                    alt={program?.name || "Dub"}
                     className="my-2 size-8 rounded-full"
                     width={48}
                     height={48}
                   />
                   <h3 className="font-medium text-gray-900">
-                    {program?.name || platform.company} invited you to join{" "}
-                    {platform.company} Partners
+                    {program?.name || "Dub"} invited you to join Dub Partners
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {program?.name || platform.company} uses {platform.company}{" "}
-                    Partners to power their partnership programs and wants to
-                    partner with great people like yourself!
+                    {program?.name || "Dub"} uses Dub Partners to power their
+                    partnership programs and wants to partner with great people
+                    like yourself!
                   </p>
                   <Button
                     type="button"
@@ -225,13 +222,13 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
                     <strong className="font-medium text-gray-900">
                       From:{" "}
                     </strong>
-                    {platform.email.from.default}
+                    system@dub.co
                   </p>
                   <p className="text-sm text-gray-500">
                     <strong className="font-medium text-gray-900">
                       Subject:{" "}
                     </strong>
-                    You&apos;ve been invited to {platform.company} Partners
+                    You've been invited to Dub Partners
                   </p>
                 </div>
               </div>

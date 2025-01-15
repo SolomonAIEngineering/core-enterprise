@@ -1,3 +1,4 @@
+import { DUB_THUMBNAIL, DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -12,8 +13,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function RebrandEmail({
@@ -27,62 +26,39 @@ export default function RebrandEmail({
     <Html>
       <Head />
       <Preview>
-        Today, we're thrilled to announce our rebrand. We are now{" "}
-        {platform.company}.
+        Today, we're thrilled to announce our rebrand. Dub.sh is now Dub.co.
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub"
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              🚀 Exciting Brand Evolution: {platform.company}​.sh →{" "}
-              {platform.company}​.co ✨
+              Dub​.sh is rebranding to Dub​.co
             </Heading>
-            <Text className="text-sm leading-6 text-black">
-              We're thrilled to share an important milestone in our journey! As
-              part of our continuous evolution and commitment to providing you
-              with the best possible experience, we're embarking on an exciting
-              brand transformation.
-            </Text>
-            <Text className="text-sm leading-6 text-black">
-              You can learn more about the rebrand and what's changing{" "}
-              <Link
-                href={`${platform.webUrl}/blog/rebrand`}
-                className="font-medium text-blue-600 no-underline"
-              >
-                in this blog post
-              </Link>
-              .
-            </Text>
             <Section className="my-8">
-              <Img
-                src={platform.assets.thumbnail}
-                alt={platform.company}
-                className="max-w-[500px]"
-              />
+              <Img src={DUB_THUMBNAIL} alt="Dub" className="max-w-[500px]" />
             </Section>
             <Text className="text-sm leading-6 text-black">
               Hey{name ? ` ${name}` : " there"}!
             </Text>
             <Text className="text-sm leading-6 text-black">
-              My name is {platform.founderFirstName}, and I'm the founder of{" "}
-              {platform.company}. Today, I have some exciting news to share with
-              you.
+              My name is Steven, and I'm the founder of Dub. Today, I have some
+              exciting news to share with you.
             </Text>
             <Text className="text-sm font-bold leading-6 text-black">
-              {platform.company}​.sh is rebranding to {platform.company}​.co.
+              Dub​.sh is rebranding to Dub​.co.
             </Text>
             <Text className="text-sm leading-6 text-black">
               You can learn more about the rebrand and what's changing{" "}
               <Link
-                href={`${platform.webUrl}/blog/rebrand`}
+                href="https://dub.co/blog/rebrand"
                 className="font-medium text-blue-600 no-underline"
               >
                 in this blog post
@@ -104,7 +80,7 @@ export default function RebrandEmail({
             <Text className="ml-1 text-sm leading-6 text-black">
               ◆{" "}
               <Link
-                href={`${platform.webUrl}/blog/migration-assistants`}
+                href="https://dub.co/blog/migration-assistants"
                 className="font-bold text-blue-600 no-underline"
               >
                 Migration Assistants
@@ -114,12 +90,12 @@ export default function RebrandEmail({
             <Text className="ml-1 text-sm leading-6 text-black">
               ◆{" "}
               <Link
-                href={`${platform.webUrl}/help`}
+                href="https://dub.co/help"
                 className="font-bold text-blue-600 no-underline"
               >
-                {platform.company} Help Center
+                Dub Help Center
               </Link>{" "}
-              - a one-stop shop for all your {platform.company} questions
+              - a one-stop shop for all your Dub questions
             </Text>
             <Text className="ml-1 text-sm leading-6 text-black">
               ◆ <strong>Geo Targeting</strong> - Redirect visitors based on
@@ -146,12 +122,12 @@ export default function RebrandEmail({
             <Text className="text-sm leading-6 text-black">
               Check out our{" "}
               <Link
-                href={`${platform.webUrl}/changelog`}
+                href="https://dub.co/changelog"
                 className="font-medium text-blue-600 no-underline"
               >
                 changelog
               </Link>{" "}
-              to see what's new on {platform.company}.
+              to see what's new on Dub.
             </Text>
 
             <Text className="text-sm leading-6 text-black">
@@ -159,7 +135,7 @@ export default function RebrandEmail({
               happy to help!
             </Text>
             <Text className="text-sm font-light leading-6 text-gray-400">
-              {platform.founderFirstName} from {platform.company}
+              Steven from Dub
             </Text>
 
             <Footer email={email} marketing />

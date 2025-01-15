@@ -1,9 +1,8 @@
-import { FREE_PLAN, log } from "@dub/utils";
-
 import { recordLink } from "@/lib/tinybird";
 import { redis } from "@/lib/upstash";
 import { webhookCache } from "@/lib/webhook/cache";
 import { prisma } from "@dub/prisma";
+import { FREE_PLAN, log } from "@dub/utils";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendCancellationFeedback } from "./utils";
@@ -103,7 +102,7 @@ export async function customerSubscriptionDeleted(event: Stripe.Event) {
         projectId: workspace.id,
       },
       data: {
-        rateLimit: FREE_PLAN.limits.apis,
+        rateLimit: FREE_PLAN.limits.api,
       },
     }),
 

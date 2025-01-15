@@ -1,4 +1,4 @@
-import { cn } from '@dub/utils'
+import { cn } from "@dub/utils";
 
 export function Logo({ className }: { className?: string }) {
   return (
@@ -9,7 +9,7 @@ export function Logo({ className }: { className?: string }) {
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn('h-10 w-10 text-black dark:text-white', className)}
+      className={cn("h-10 w-10 text-black dark:text-white", className)}
     >
       {/* Cube faces */}
       <path
@@ -30,5 +30,5 @@ export function Logo({ className }: { className?: string }) {
         <line x1="32" y1="28" x2="32" y2="44" />
       </g>
     </svg>
-  )
+  );
 }

@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { useState } from 'react'
-import { Button } from './button'
-import { Popover } from './popover'
+import { useState } from "react";
+import { Button } from "./button";
+import { Popover } from "./popover";
 
 const meta: Meta<typeof Popover> = {
-  title: 'Components/Popover',
+  title: "Components/Popover",
   component: Popover,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A flexible popover component with mobile drawer support and customizable content.',
+          "A flexible popover component with mobile drawer support and customizable content.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Popover>
+export default meta;
+type Story = StoryObj<typeof Popover>;
 
 export const Default: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Basic popover content</div>}
@@ -32,13 +32,13 @@ export const Default: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Open Popover</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithCustomAlignment: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Right-aligned popover</div>}
@@ -48,13 +48,13 @@ export const WithCustomAlignment: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Right Aligned</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithCustomSide: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Top-side popover</div>}
@@ -64,13 +64,13 @@ export const WithCustomSide: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Top Side</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const MobileOnly: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Mobile-only content</div>}
@@ -80,13 +80,13 @@ export const MobileOnly: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Mobile Only</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithRichContent: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={
@@ -109,13 +109,13 @@ export const WithRichContent: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Rich Content</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithCustomStyles: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Custom styled popover</div>}
@@ -125,34 +125,34 @@ export const WithCustomStyles: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Custom Styles</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithEscapeHandler: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Press ESC to close</div>}
         openPopover={openPopover}
         setOpenPopover={setOpenPopover}
         onEscapeKeyDown={() => {
-          console.log('Escape key pressed')
-          setOpenPopover(false)
+          console.log("Escape key pressed");
+          setOpenPopover(false);
         }}
       >
         <Button onClick={() => setOpenPopover(true)}>
           With Escape Handler
         </Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithStickyBehavior: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     return (
       <Popover
         content={<div className="p-4">Sticky popover content</div>}
@@ -162,17 +162,17 @@ export const WithStickyBehavior: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Sticky Popover</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithScrollableContent: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
+    const [openPopover, setOpenPopover] = useState(false);
     const items = Array.from({ length: 10 }, (_, i) => ({
       id: `item-${i}`,
       label: `Item ${i + 1}`,
-    }))
+    }));
     return (
       <Popover
         content={
@@ -193,14 +193,14 @@ export const WithScrollableContent: Story = {
       >
         <Button onClick={() => setOpenPopover(true)}>Scrollable Content</Button>
       </Popover>
-    )
+    );
   },
-}
+};
 
 export const WithCustomTrigger: Story = {
   render: () => {
-    const [openPopover, setOpenPopover] = useState(false)
-    const handleOpen = () => setOpenPopover(true)
+    const [openPopover, setOpenPopover] = useState(false);
+    const handleOpen = () => setOpenPopover(true);
     return (
       <Popover
         content={<div className="p-4">Custom trigger popover</div>}
@@ -215,6 +215,6 @@ export const WithCustomTrigger: Story = {
           Custom Trigger
         </button>
       </Popover>
-    )
+    );
   },
-}
+};

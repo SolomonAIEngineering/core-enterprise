@@ -1,13 +1,13 @@
 import type { DubConfig } from "@/types";
 import { oauthClient } from "@/utils/oauth";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Configstore from "configstore";
+
 export async function getConfig(): Promise<DubConfig> {
   const configStore = new Configstore("dub-cli");
 
   if (!configStore.size) {
     throw new Error(
-      `Access token not found. Please run ${platform.company} login to authenticate with ${platform.company}.`,
+      "Access token not found. Please run `dub login` to authenticate with Dub.",
     );
   }
 

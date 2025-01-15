@@ -1,7 +1,5 @@
 import { getUrlWithoutUTMParams, truncate } from "@dub/utils";
 import { useEffect, useState } from "react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useFormContext } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { LinkFormData } from ".";
@@ -41,7 +39,7 @@ export function useMetatags({
         "description",
         "This link is password protected. Please enter the password to view it.",
       );
-      setValue("image", `${platform.assetsUrl}/password-protected.png`);
+      setValue("image", "https://assets.dub.co/misc/password-protected.png");
       return;
     }
 

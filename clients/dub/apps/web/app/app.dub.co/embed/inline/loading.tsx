@@ -1,5 +1,4 @@
-import { Button, Copy, Logo, MoneyBill2 } from "@dub/ui";
-
+import { Button, Copy, MoneyBill2, Wordmark } from "@dub/ui";
 import { HeroBackground } from "./hero-background";
 
 export default function EmbedInlineLoading() {
@@ -33,10 +32,9 @@ export default function EmbedInlineLoading() {
             href="https://dub.partners"
             target="_blank"
             className="mt-4 flex items-center justify-center gap-1.5 text-neutral-500 transition-colors duration-75 hover:text-neutral-700 md:absolute md:bottom-3 md:right-3 md:mt-0 md:translate-x-0"
-            rel="noreferrer"
           >
             <p className="text-xs font-medium">Powered by</p>
-            <Logo className="h-3.5 text-neutral-900" />
+            <Wordmark className="h-3.5 text-neutral-900" />
           </a>
         </div>
         <div className="mt-4 grid gap-2 sm:h-32 sm:grid-cols-3">

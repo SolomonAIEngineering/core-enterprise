@@ -1,5 +1,4 @@
 import { limiter } from "@/lib/cron/limiter";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prismaEdge } from "@dub/prisma/edge";
 import NewSaleCreated from "emails/new-sale-created";
 import { sendEmailViaResend } from "emails/send-via-resend";
@@ -40,8 +39,8 @@ export async function notifyPartnerSale({
     partnerUsers.map(({ user }) =>
       limiter.schedule(() =>
         sendEmailViaResend({
-          subject: `You just made a sale via ${platform.company} Partners!`,
-          from: platform.email.from.default,
+          subject: "You just made a sale via Dub Partners!",
+          from: "Dub Partners <system@dub.co>",
           email: user.email!,
           react: NewSaleCreated({
             email: user.email!,

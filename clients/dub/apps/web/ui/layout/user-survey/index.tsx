@@ -1,138 +1,120 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { CheckCircleFill } from "@/ui/shared/icons";
+import { AnimatedSizeContainer, ClientOnly, Popover } from "@dub/ui";
+import { cn } from "@dub/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import Cookies from "js-cookie";
+import { X } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { createContext, useCallback, useState } from "react";
+import { toast } from "sonner";
+import SurveyForm from "./survey-form";
 
-import useUser from "@/lib/swr/use-user";
-import { useSurveyModal } from "@/ui/modals/survey-modal";
-import { motion } from "framer-motion";
-import { mutate } from "swr";
-import SurveyButton from "./survey-button";
+type UserSurveyStatus = "idle" | "loading" | "success";
 
-/**
- * Context for managing the survey submission status
- * @example
- * ```tsx
- * const { status } = useContext(UserSurveyContext);
- * if (status === "loading") {
- *   return <LoadingSpinner />;
- * }
- * ```
- */
-export const UserSurveyContext = createContext<{
-  status: "loading" | "success" | null;
-}>({
-  status: null,
+export const UserSurveyContext = createContext<{ status: UserSurveyStatus }>({
+  status: "idle",
 });
 
-/**
- * Loading skeleton component for the survey button
- * Shows a pulsing animation while the user data is being fetched
- * @internal
- */
-function UserSurveySkeleton() {
+// Used to be a popup, now maintaining the same cookie ID
+const HIDDEN_COOKIE_ID = "hideUserSurveyPopup";
+
+export default function UserSurveyButton() {
+  const { data: session } = useSession();
+  const [hidden, setHidden] = useState(Cookies.get(HIDDEN_COOKIE_ID) === "1");
+  const [openPopover, setOpenPopover] = useState(false);
+
+  const hide = useCallback(() => {
+    setOpenPopover(false);
+    setTimeout(() => {
+      setHidden(true);
+      Cookies.set(HIDDEN_COOKIE_ID, "1");
+    }, 500);
+  }, []);
+
   return (
-    <motion.div
-      className="px-3 py-2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <div className="flex items-center space-x-2">
-        <div className="h-4 w-4/5 animate-pulse rounded-md bg-gray-200" />
-      </div>
-    </motion.div>
+    session?.user &&
+    !session.user["source"] && (
+      <ClientOnly>
+        <AnimatePresence initial={false}>
+          {!hidden && (
+            <motion.div exit={{ opacity: 0 }} className="p-2">
+              <Popover
+                content={<UserSurveyPopupInner hide={hide} />}
+                popoverContentClassName="mx-2"
+                openPopover={!hidden && openPopover}
+                setOpenPopover={setOpenPopover}
+              >
+                <button
+                  className={cn(
+                    "rounded-md p-1 text-left text-xs text-neutral-500 transition-colors duration-75",
+                    "hover:text-neutral-600 data-[state=open]:text-neutral-600",
+                    "outline-none focus-visible:ring-2 focus-visible:ring-black/50",
+                  )}
+                >
+                  Where did you hear about Dub?
+                </button>
+              </Popover>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </ClientOnly>
+    )
   );
 }
 
-/**
- * UserSurvey Component
- *
- * Manages the user survey flow, including:
- * - Showing a survey button in the sidebar
- * - Displaying a modal for survey submission
- * - Handling survey responses
- * - Managing loading states
- *
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Child components to render
- *
- * @example
- * Basic usage:
- * ```tsx
- * function App() {
- *   return (
- *     <UserSurvey>
- *       <YourAppContent />
- *     </UserSurvey>
- *   );
- * }
- * ```
- *
- * Using with context:
- * ```tsx
- * function SurveyStatus() {
- *   const { status } = useContext(UserSurveyContext);
- *
- *   if (status === "loading") {
- *     return <div>Submitting survey...</div>;
- *   }
- *
- *   if (status === "success") {
- *     return <div>Thanks for your feedback!</div>;
- *   }
- *
- *   return null;
- * }
- * ```
- *
- * @remarks
- * - The survey will automatically show after 5 seconds if the user hasn't completed it
- * - The survey response is stored in the user's profile in the database
- * - Uses SWR for data fetching and cache invalidation
- * - Shows a loading skeleton while fetching user data
- */
-export default function UserSurvey({
-  children,
-}: {
-  children?: React.ReactNode;
-}) {
-  const [status, setStatus] = useState<"loading" | "success" | null>(null);
-  const { setShowSurveyModal, SurveyModal } = useSurveyModal();
-  const { user, loading } = useUser();
+export function UserSurveyPopupInner({ hide }: { hide: () => void }) {
+  const { update } = useSession();
 
-  if (loading) {
-    return <UserSurveySkeleton />;
-  }
+  const [status, setStatus] = useState<UserSurveyStatus>("idle");
 
   return (
-    <UserSurveyContext.Provider value={{ status }}>
-      {children}
-      <SurveyButton setShowSurveyModal={setShowSurveyModal} />
-      <SurveyModal
-        onSubmit={async (source) => {
-          setStatus("loading");
-          try {
-            const response = await fetch("/api/user/survey", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ source }),
-            });
-
-            if (!response.ok) {
-              throw new Error("Failed to submit survey");
-            }
-
-            setStatus("success");
-            // Mutate the user data to reflect the new source
-            await mutate("/api/user");
-          } catch (error) {
-            setStatus(null);
-            throw error; // This will be caught by the modal's error handler
-          }
-        }}
-      />
-    </UserSurveyContext.Provider>
+    <AnimatedSizeContainer height>
+      <div className="p-4">
+        <button
+          className="absolute right-2.5 top-2.5 rounded-full p-1 transition-colors hover:bg-gray-100 active:scale-90"
+          onClick={hide}
+        >
+          <X className="h-4 w-4 text-gray-500" />
+        </button>
+        <UserSurveyContext.Provider value={{ status }}>
+          <SurveyForm
+            onSubmit={async (source) => {
+              setStatus("loading");
+              try {
+                await fetch("/api/user", {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ source }),
+                });
+                setStatus("success");
+                setTimeout(() => {
+                  update();
+                  hide();
+                }, 3000);
+              } catch (e) {
+                toast.error("Error saving response. Please try again.");
+                setStatus("idle");
+              }
+            }}
+          />
+          <AnimatePresence>
+            {status === "success" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute inset-0 flex flex-col items-center justify-center space-y-3 rounded-lg bg-white text-sm"
+              >
+                <CheckCircleFill className="h-8 w-8 text-green-500" />
+                <p className="text-gray-500">Thank you for your response!</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </UserSurveyContext.Provider>
+      </div>
+    </AnimatedSizeContainer>
   );
 }

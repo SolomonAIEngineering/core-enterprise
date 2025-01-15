@@ -1,3 +1,4 @@
+import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
 import {
   Button,
   InfoTooltip,
@@ -7,6 +8,7 @@ import {
   useKeyboardShortcut,
   useMediaQuery,
 } from "@dub/ui";
+import { CircleHalfDottedClock } from "@dub/ui/icons";
 import {
   cn,
   formatDateTime,
@@ -24,10 +26,6 @@ import {
   useState,
 } from "react";
 import { useForm, useFormContext } from "react-hook-form";
-
-import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { CircleHalfDottedClock } from "@dub/ui/icons";
 import { LinkFormData } from ".";
 
 function ExpirationModal({
@@ -103,7 +101,7 @@ function ExpirationModal({
                 <SimpleTooltipContent
                   title="Set an expiration date for your links – after which it won't be accessible."
                   cta="Learn more."
-                  href={`${platform.webUrl}/help/article/link-expiration`}
+                  href="https://dub.co/help/article/link-expiration"
                 />
               }
             />
@@ -198,7 +196,7 @@ function ExpirationModal({
                 <SimpleTooltipContent
                   title="Redirect users to a specific URL when the link has expired."
                   cta="Learn more."
-                  href={`${platform.webUrl}/help/article/link-expiration#setting-a-custom-expiration-url`}
+                  href="https://dub.co/help/article/link-expiration#setting-a-custom-expiration-url"
                 />
               }
             />
@@ -220,9 +218,8 @@ function ExpirationModal({
         </div>
 
         <a
-          href={`${platform.webUrl}/help/article/link-expiration#setting-a-default-expiration-url-for-all-links-under-a-domain`}
+          href="https://dub.co/help/article/link-expiration#setting-a-default-expiration-url-for-all-links-under-a-domain"
           target="_blank"
-          rel="noreferrer"
           className="group mt-2 flex items-center text-xs text-gray-500 hover:text-gray-700"
         >
           Set a default expiration URL for your domain

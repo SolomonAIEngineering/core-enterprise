@@ -1,5 +1,5 @@
 import { prisma } from "@dub/prisma";
-import type { Webhook } from "@dub/prisma/client";
+import { Webhook } from "@dub/prisma/client";
 import { sendEmail } from "emails";
 import WebhookDisabled from "emails/webhook-disabled";
 import { webhookCache } from "./cache";

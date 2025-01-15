@@ -1,7 +1,5 @@
-import { Button, Download, TooltipContent } from "@dub/ui";
-
 import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Button, Download, TooltipContent } from "@dub/ui";
 import { useContext } from "react";
 import { toast } from "sonner";
 import { EventsContext } from "./events-provider";
@@ -29,7 +27,7 @@ export default function ExportButton({ onClick }: { onClick?: () => void }) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${platform.company} Events Export - ${new Date().toISOString()}.csv`;
+    a.download = `Dub Events Export - ${new Date().toISOString()}.csv`;
     a.click();
   }
 

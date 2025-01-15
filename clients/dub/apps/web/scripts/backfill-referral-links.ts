@@ -1,8 +1,6 @@
-import "dotenv-flow/config";
-
 import { dub } from "@/lib/dub";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
+import "dotenv-flow/config";
 
 async function main() {
   const workspaces = await prisma.project
@@ -31,9 +29,9 @@ async function main() {
 
   const res = await dub.links.createMany(
     workspaces.map((workspace) => ({
-      domain: `refer.${platform.domain}`,
+      domain: "refer.dub.co",
       key: workspace.slug,
-      url: `${platform.webUrl}`,
+      url: "https://dub.co",
       externalId: `ws_${workspace.id}`, // attaching the workspace ID as the externalId for easy updates later on: https://d.to/externalId
       tagIds: ["cm000srqx0004o6ldehod07zc"], // tagging these links with the "Referral links" tag
       trackConversion: true, // enable conversion tracking for these links

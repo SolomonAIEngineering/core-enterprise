@@ -1,13 +1,12 @@
 import { getConfig } from "@/utils/config";
 import { handleError } from "@/utils/handle-error";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Command } from "commander";
 import { Dub } from "dub";
 import ora from "ora";
 
 export const links = new Command()
   .command("links")
-  .description(`Search for links in your ${platform.company} workspace`)
+  .description("Search for links in your Dub workspace")
   .option("-s, --search [search]", "Search term to filter links by")
   .option("-l, --limit [limit]", "Number of links to fetch")
   .action(async ({ search, limit }) => {
@@ -22,7 +21,7 @@ export const links = new Command()
 
       const links = await dub.links.list({
         search,
-        pageSize: limit ? Number.parseInt(limit) : 10,
+        pageSize: limit ? parseInt(limit) : 10,
       });
 
       spinner.stop();

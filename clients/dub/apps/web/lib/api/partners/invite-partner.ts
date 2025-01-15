@@ -1,7 +1,6 @@
 import { updateConfig } from "@/lib/edge-config";
 import { recordLink } from "@/lib/tinybird";
 import { ProgramProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { Link } from "@dub/prisma/client";
 import { waitUntil } from "@vercel/functions";
@@ -90,11 +89,11 @@ export const invitePartner = async ({
     Promise.all([
       recordLink(updatedLink),
       sendEmail({
-        subject: `${program.name} invited you to join ${platform.company} Partners`,
+        subject: `${program.name} invited you to join Dub Partners`,
         email,
         react: PartnerInvite({
           email,
-          appName: platform.company,
+          appName: `${process.env.NEXT_PUBLIC_APP_NAME}`,
           program: {
             name: program.name,
             logo: program.logo,

@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Cube(props: SVGProps<SVGSVGElement>) {
   return (
@@ -39,5 +39,5 @@ export function Cube(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

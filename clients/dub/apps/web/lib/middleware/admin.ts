@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-
-import { DUB_WORKSPACE_ID } from "@dub/utils";
-import { getUserViaToken } from "./utils/get-user-via-token";
 import { parse } from "@/lib/middleware/utils";
 import { prismaEdge } from "@dub/prisma/edge";
+import { DUB_WORKSPACE_ID } from "@dub/utils";
+import { NextRequest, NextResponse } from "next/server";
+import { getUserViaToken } from "./utils/get-user-via-token";
 
 export default async function AdminMiddleware(req: NextRequest) {
   const { path } = parse(req);

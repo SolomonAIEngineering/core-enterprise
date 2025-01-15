@@ -1,0 +1,464 @@
+enum TransactionFrequency {
+  daily
+  weekly
+  biweekly
+  monthly
+  quarterly
+  semiAnnually
+  annually
+  custom
+  irregular
+  unknown
+}
+
+enum TransactionPriority {
+  high
+  medium
+  low
+}
+
+enum TransactionVerificationStatus {
+  unverified
+  pending
+  verified
+  flagged
+  rejected
+}
+
+enum TransactionReconciliationStatus {
+  unreconciled
+  inProgress
+  matched
+  reconciled
+  disputed
+  ignored
+}
+
+enum TransactionStatus {
+  pending
+  posted
+  cleared
+  voided
+  failed
+  cancelled
+  onHold
+  disputed
+  refunded
+  completed
+  archived
+}
+
+enum TransactionMethod {
+  cash
+  check
+  wire
+  ach
+  credit_card
+  debit_card
+  bank_transfer
+  direct_deposit
+  payment_gateway
+  crypto
+  mobile_payment
+  other
+}
+
+enum TransactionRiskLevel {
+  low
+  medium
+  high
+  critical
+}
+
+// Transaction Category Tags for high-level categorization
+enum TransactionCategoryTag {
+  // Income Categories
+  income_general
+  income_sales
+  income_service
+  income_commission
+  income_rental
+  income_interest
+  income_dividend
+  income_royalty
+  income_investment
+
+  // Expense Categories - Operations
+  expense_rent
+  expense_utilities
+  expense_office
+  expense_equipment
+  expense_software
+  expense_hardware
+  expense_cloud
+  expense_maintenance
+  expense_insurance
+
+  // Expense Categories - Personnel
+  expense_salary
+  expense_benefits
+  expense_payroll_tax
+  expense_training
+  expense_recruitment
+  expense_contractor
+  expense_commission
+  expense_bonus
+
+  // Expense Categories - Professional Services
+  expense_legal
+  expense_accounting
+  expense_consulting
+  expense_marketing
+  expense_it_services
+  expense_research
+
+  // Expense Categories - Marketing & Sales
+  expense_advertising
+  expense_promotion
+  expense_events
+  expense_sponsorship
+  expense_travel
+  expense_entertainment
+
+  // Expense Categories - Technology
+  expense_hosting
+  expense_security
+  expense_development
+  expense_licenses
+  expense_support
+
+  // Financial Categories
+  finance_loan_payment
+  finance_loan_interest
+  finance_investment
+  finance_equity
+  finance_debt
+  finance_dividend_paid
+
+  // Tax Categories
+  tax_income
+  tax_sales
+  tax_property
+  tax_payroll
+  tax_vat
+  tax_other
+
+  // Transfer Categories
+  transfer_internal
+  transfer_external
+  transfer_wire
+  transfer_ach
+  transfer_crypto
+
+  // Adjustment Categories
+  adjustment_refund
+  adjustment_correction
+  adjustment_writeoff
+  adjustment_credit
+  adjustment_debit
+
+  // Other Categories
+  other_uncategorized
+  other_miscellaneous
+}
+
+model Transaction {
+  id              String    @id @default(cuid())
+
+  // Basic Transaction Info
+  name            String
+  description     String?   @db.Text
+  note            String?   @db.Text
+  internalNotes   String?   @db.Text
+  reference       String?   // External reference number
+
+  // Amount Information
+  amount          Float
+  baseAmount      Float?    // Amount in base currency
+  balance         Float?    // Running balance
+  exchangeRate    Float?    // Exchange rate used
+  fees            Float?    // Transaction fees
+  tax             Float?    // Tax amount
+  taxRate         Float?    // Tax rate applied
+
+  // Currency Information
+  currency        String
+  baseCurrency    String?
+
+  // Dates and Timing
+  date            DateTime  // Transaction date
+  valueDate       DateTime? // Value date (when amount is available)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  clearedAt       DateTime? // When transaction cleared
+  reconciledAt    DateTime? // When transaction was reconciled
+  cancelledAt     DateTime? // When transaction was cancelled
+
+  // Status and Classification
+  status          TransactionStatus        @default(pending)
+  verificationStatus TransactionVerificationStatus @default(unverified)
+  reconciliationStatus TransactionReconciliationStatus @default(unreconciled)
+  priority        TransactionPriority      @default(medium)
+  riskLevel       TransactionRiskLevel     @default(low)
+
+  // Categorization
+  categoryTag     TransactionCategoryTag?
+  category        TransactionCategory?     @relation(fields: [categoryId], references: [id])
+  categoryId      String?
+  categorySlug    String?
+  subcategory     String?
+
+  // Transaction Type and Method
+  method          TransactionMethod
+  type            String?   // Custom transaction type
+  direction       String?   // incoming/outgoing
+
+  // Recurring Transaction Info
+  recurring       Boolean?
+  frequency       TransactionFrequency?
+  nextDueDate     DateTime?
+  recurringRules  Json?     // Rules for recurring schedule
+
+  // Flags and Indicators
+  internal        Boolean?  // Internal transaction flag
+  manual          Boolean?  // Manually created flag
+  needsReview     Boolean   @default(false)
+  isDisputed      Boolean   @default(false)
+  isFlagged       Boolean   @default(false)
+  isReconciled    Boolean   @default(false)
+  isConfidential  Boolean   @default(false)
+
+  // Financial Analysis
+  budgetCategory  String?
+  costCenter      String?
+  profitCenter    String?
+  projectCode     String?
+  departmentCode  String?
+
+  // Compliance and Audit
+  complianceStatus String?
+  auditTrail      Json?
+  verifiedBy      String?
+  verifiedAt      DateTime?
+  lastReviewedBy  String?
+  lastReviewedAt  DateTime?
+
+  // Reconciliation
+  reconciliationId String?
+  matchingCriteria Json?    // Criteria used for matching
+  reconciliationNotes String? @db.Text
+
+  // Custom Fields and Metadata
+  metadata        Json?     // Additional metadata
+  customFields    Json?     // Custom attributes
+  labels          Json?     // Custom labels/tags
+
+  // Relations
+  bankAccountId   String?
+  bankAccount     BankAccount? @relation(fields: [bankAccountId], references: [id])
+  assignedId      String?
+  assignedTo      User?     @relation(fields: [assignedId], references: [id])
+  projectId       String
+  project         Project   @relation(fields: [projectId], references: [id])
+
+  // Related Records
+  attachments    TransactionAttachment[]
+  tags           Tag[]
+  comments       TransactionComment[]
+  history        TransactionHistory[]
+  reconciliationMatches TransactionReconciliationMatch[]
+  Inbox          Inbox[]
+
+  @@index([bankAccountId])
+  @@index([assignedId])
+  @@index([projectId])
+  @@index([categoryId])
+  @@index([date])
+  @@index([status])
+  @@index([verificationStatus])
+  @@index([reconciliationStatus])
+}
+
+model TransactionComment {
+  id            String    @id @default(cuid())
+  transactionId String
+  content       String    @db.Text
+  type          String?   // Comment type (e.g., internal, review, dispute)
+  visibility    String?   // Public/Private
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdBy     String?
+
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([transactionId])
+}
+
+model TransactionHistory {
+  id            String    @id @default(cuid())
+  transactionId String
+  action        String    // Type of change
+  description   String    @db.Text
+  changes       Json?     // What changed
+  metadata      Json?     // Additional context
+  createdAt     DateTime  @default(now())
+  createdBy     String?
+
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([transactionId])
+}
+
+model TransactionReconciliationMatch {
+  id                String    @id @default(cuid())
+  transactionId     String
+  matchedTransactionId String
+  confidence        Float     // Match confidence score
+  matchType         String    // How it was matched
+  status            String    // Match status
+  notes             String?   @db.Text
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  transaction       Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([transactionId])
+  @@index([matchedTransactionId])
+}
+
+model TransactionCategory {
+  id            String    @id @default(cuid())
+  name          String
+  slug          String
+  description   String?   @db.Text
+  color         String?
+  icon          String?
+  parentId      String?   // For hierarchical categories
+  path          String?   // Materialized path
+  level         Int       @default(0)
+  isSystem      Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  metadata      Json?
+  projectId     String
+
+  // Budget and Analysis
+  budgetLimit   Float?
+  warningThreshold Float?
+  trackingEnabled Boolean @default(true)
+
+  // Tax Information
+  vatRate       Float?
+  taxCode       String?
+  taxDeductible Boolean @default(false)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  project       Project   @relation(fields: [projectId], references: [id])
+  transactions  Transaction[]
+  parent        TransactionCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children      TransactionCategory[] @relation("CategoryHierarchy")
+
+  @@unique([projectId, slug])
+  @@index([projectId])
+  @@index([parentId])
+}
+
+model TransactionAttachment {
+  id            String    @id @default(cuid())
+  transactionId String
+  name          String?
+  description   String?   @db.Text
+  type          String?   // File type
+  category      String?   // Document category
+  path          String    @db.Text
+  size          Int?
+  mimeType      String?
+  hash          String?   // File hash for integrity
+  metadata      Json?
+  isConfidential Boolean  @default(false)
+
+  // Processing
+  status        String?   // Processing status
+  processingErrors String? @db.Text
+
+  // OCR and Analysis
+  ocrText       String?   @db.Text
+  analysisResults Json?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  projectId     String
+
+  // Relations
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  project       Project     @relation(fields: [projectId], references: [id])
+  inbox         Inbox[]
+
+  @@index([transactionId])
+  @@index([projectId])
+}
+
+model TransactionEnrichment {
+  id            String    @id @default(cuid())
+  projectId     String
+
+  // Basic Enrichment
+  name          String?   // Enriched merchant/transaction name
+  description   String?   @db.Text
+  categorySlug  String?   // Suggested category
+  website       String?   // Associated website
+  merchantId    String?   // Unique merchant identifier
+
+  // Merchant Information
+  merchantName      String?
+  merchantCategory  String?
+  merchantLocation  String?
+  merchantLogo     String?
+  merchantMetadata Json?
+
+  // Classification
+  confidence     Float?    // Confidence score of enrichment
+  source         String?   // Source of enrichment (e.g., ML, manual, third-party)
+  status         String?   // Enrichment status
+  version        String?   // Version of enrichment model/rules
+
+  // Rules and Patterns
+  matchingRules  Json?     // Rules used for matching
+  patterns       Json?     // Recognized patterns
+  keywords       Json?     // Associated keywords
+
+  // Analysis Results
+  sentiment      String?   // Transaction sentiment
+  riskScore      Float?    // Risk assessment score
+  anomalyScore   Float?    // Anomaly detection score
+
+  // Flags
+  isRecurring    Boolean?  // Identified as recurring
+  isSubscription Boolean?  // Identified as subscription
+  isBillPayment  Boolean?  // Identified as bill payment
+  isRefund       Boolean?  // Identified as refund
+
+  // Custom Enrichment
+  customData     Json?     // Additional enrichment data
+  metadata       Json?     // Additional metadata
+
+  // System Fields
+  system         Boolean?  // System-generated enrichment
+  enabled        Boolean   @default(true)
+  priority       Int       @default(0)
+
+  // Timestamps
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  lastAppliedAt  DateTime?
+
+  // Relations
+  project        Project   @relation(fields: [projectId], references: [id])
+
+  @@index([projectId])
+  @@index([categorySlug])
+  @@index([merchantId])
+}

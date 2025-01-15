@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Crown(props: SVGProps<SVGSVGElement>) {
   return (
@@ -23,5 +23,5 @@ export function Crown(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

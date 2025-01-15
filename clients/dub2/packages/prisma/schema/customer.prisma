@@ -1,0 +1,203 @@
+model Customer {
+  id               String    @id @default(cuid())
+  name             String?
+  email            String?
+  avatar           String?   @db.LongText
+  externalId       String?
+  stripeCustomerId String?   @unique
+
+  linkId           String?
+  clickId          String?
+  clickedAt        DateTime?
+  country          String?
+
+  projectId        String
+  projectConnectId String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+
+  project          Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  link             Link?     @relation(fields: [linkId], references: [id])
+  sales Sale[]
+  addressLine1  String?
+  addressLine2  String?
+  city          String?
+  contact       String?
+  countryCode   String?
+  state         String?
+  zip           String?
+  note          String?
+  phone         String?
+  token         String?
+  vatNumber     String?
+  website       String?
+
+    // Company Information
+  companyName      String?
+  tradingName      String?
+  registrationNumber String?
+  isVendor         Boolean   @default(false)
+
+  // Contact Information
+  alternativePhone String?
+  fax              String?
+  contactTitle     String?
+  contactEmail     String?
+  contactPhone     String?
+
+
+  // Billing Information
+  billingAddressLine1 String?
+  billingAddressLine2 String?
+  billingCity         String?
+  billingState        String?
+  billingZip          String?
+  billingCountryCode  String?
+  billingEmail        String?
+
+  // Tax Information
+  taxId              String?
+  taxExempt          Boolean  @default(false)
+  taxExemptionNumber String?
+
+  // Payment Information
+  currency           String?  @default("USD")
+  preferredPaymentMethod String?
+  paymentTerms       String?  // e.g., "NET30", "NET60"
+  creditLimit        Decimal? @db.Decimal(10, 2)
+
+  // Bank Information
+  bankName           String?
+  bankAccountName    String?
+  bankAccountNumber  String?
+  bankRoutingNumber  String?
+  bankSwiftCode      String?
+  bankIban           String?
+
+  // Additional Fields
+  industry          String?
+  customerType      String?   // e.g., "retail", "wholesale", "distributor"
+  customerStatus    String?   // e.g., "active", "inactive", "pending"
+  customerRating    Int?      // e.g., 1-5 star rating
+
+  // Financial Terms
+  discountTerms     String?
+  latePaymentPenalty Decimal? @db.Decimal(5, 2)
+  creditScore       Int?
+
+  // Metadata
+  customFields      Json?     // For storing additional custom attributes
+  lastOrderDate     DateTime?
+  accountManager    String?   // Reference to employee managing this account
+
+    // Multiple Addresses Support
+  shippingAddresses   String?      // Array of shipping addresses
+  billingAddresses    String?      // Array of billing addresses
+  warehouseAddresses  String?      // Array of warehouse addresses
+
+  // Billing Information
+  billingCurrency        String?  @default("USD")
+  billingCycle          String?   // Monthly, Quarterly, Annually
+  invoiceDeliveryMethod String?   // Email, Post, Electronic
+  invoiceFormat         String?   // PDF, EDI, XML
+  purchaseOrderRequired Boolean   @default(false)
+  autoInvoice           Boolean   @default(false)
+
+  // Tax Information
+  taxExemptionExpiry    DateTime?
+  taxJurisdiction       String?
+  taxClassification     String?
+  withholdingTaxRate    Decimal?  @db.Decimal(5, 2)
+  taxDocuments          Json?     // Array of tax document references
+
+  // Financial Information
+  availableCredit       Decimal?  @db.Decimal(15, 2)
+  riskRating            String?   // Low, Medium, High
+  insurancePolicy       String?
+  insuranceExpiry       DateTime?
+  insuranceCoverage     Decimal?  @db.Decimal(15, 2)
+
+  // Payment Details
+  earlyPaymentDiscount  Decimal?  @db.Decimal(5, 2)
+  minimumOrderValue     Decimal?  @db.Decimal(10, 2)
+  maximumOrderValue     Decimal?  @db.Decimal(10, 2)
+  averagePaymentDays    Int?
+  paymentFrequency      String?   // Weekly, Biweekly, Monthly
+
+  // Multiple Bank Accounts
+  bankAccounts         Json?      // Array of bank account details
+
+  // Compliance & Legal
+  contractStartDate     DateTime?
+  contractEndDate       DateTime?
+  contractRenewalDate   DateTime?
+  contractStatus        String?
+  legalStatus          String?    // Active, Pending, Suspended
+  complianceStatus     String?
+  certifications       Json?      // Array of certification details
+  licenses             Json?      // Array of license details
+  ndaStatus            Boolean    @default(false)
+  ndaExpiryDate        DateTime?
+
+  // Sales & Marketing
+  customerSegment      String?    // Enterprise, SMB, etc.
+  accountTier          String?    // Platinum, Gold, Silver
+  leadSource          String?
+  marketingCampaigns   Json?      // Array of campaign participations
+  preferredLanguage    String?
+  communicationPreferences Json?   // Email, Phone, Post preferences
+  subscriptionStatus   String?
+  loyaltyPoints        Int?       @default(0)
+  referralSource       String?
+  referralCode         String?
+
+  // Performance Metrics
+  lifetimeValue        Decimal?   @db.Decimal(15, 2)
+  acquisitionCost      Decimal?   @db.Decimal(10, 2)
+  retentionRate        Decimal?   @db.Decimal(5, 2)
+  satisfactionScore    Int?       // 1-100
+  lastReviewDate       DateTime?
+  nextReviewDate       DateTime?
+
+  // Integration Fields
+  erpId               String?     // ERP system identifier
+  crmId               String?     // CRM system identifier
+  accountingId        String?     // Accounting system identifier
+
+  // Activity Tracking
+  lastLoginDate       DateTime?
+  lastInteractionDate DateTime?
+  totalOrders         Int?        @default(0)
+  totalReturns        Int?        @default(0)
+  activeSubscriptions Int?        @default(0)
+
+  // Custom Fields
+  metadata            Json?       // Additional metadata
+  notes               Json?       // Structured notes
+
+  @@unique([projectId, externalId])
+  @@unique([projectConnectId, externalId])
+  @@index([projectId])
+  @@index([projectConnectId])
+  @@index([externalId])
+  @@index([linkId])
+  CustomerTags CustomerTag[]
+  Contracts Contract[]
+  Invoice Invoice[]
+}
+
+model CustomerTag {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  customerId  String
+  tagId       String
+  projectId   String
+  customer    Customer @relation(fields: [customerId], references: [id])
+  tag         Tag      @relation(fields: [tagId], references: [id])
+  project     Project  @relation(fields: [projectId], references: [id])
+
+  @@index([customerId])
+  @@index([projectId])
+  @@index([tagId])
+}

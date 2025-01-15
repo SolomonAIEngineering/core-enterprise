@@ -1,7 +1,6 @@
-import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
-
 import { tagColors } from "@/lib/types";
 import z from "@/lib/zod";
+import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
 
 export const TAGS_MAX_PAGE_SIZE = 100;
 
@@ -31,7 +30,7 @@ export const getTagsQuerySchema = z
 
 export const getTagsQuerySchemaExtended = getTagsQuerySchema.merge(
   z.object({
-    // Only UI uses the following query parameters
+    // Only Dub UI uses the following query parameters
     includeLinksCount: booleanQuerySchema.default("false"),
   }),
 );

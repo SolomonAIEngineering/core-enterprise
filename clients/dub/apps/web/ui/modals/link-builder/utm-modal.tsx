@@ -5,9 +5,9 @@ import {
   Modal,
   SimpleTooltipContent,
   Tooltip,
-  UTMBuilder,
-  UTM_PARAMETERS,
   useKeyboardShortcut,
+  UTM_PARAMETERS,
+  UTMBuilder,
 } from "@dub/ui";
 import {
   cn,
@@ -23,8 +23,6 @@ import {
   useState,
 } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { LinkFormData } from ".";
 import { UTMTemplatesCombo } from "./utm-templates-combo";
 
@@ -177,7 +175,7 @@ function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
               <SimpleTooltipContent
                 title="Add UTM parameters to your short links for conversion tracking."
                 cta="Learn more."
-                href={`${platform.webUrl}/help/article/utm-builder`}
+                href="https://dub.co/help/article/utm-builder"
               />
             }
           />

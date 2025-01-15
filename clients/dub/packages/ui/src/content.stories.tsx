@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   COMPARE_PAGES,
   CUSTOMER_STORIES,
@@ -6,23 +6,23 @@ import {
   LEGAL_PAGES,
   RESOURCES,
   SDKS,
-} from './content'
+} from "./content";
 
 const meta = {
-  title: 'Content/Lists',
+  title: "Content/Lists",
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'Content lists and configurations used throughout the application.',
+          "Content lists and configurations used throughout the application.",
       },
     },
   },
-} satisfies Meta
+} satisfies Meta;
 
-export default meta
-type Story = StoryObj
+export default meta;
+type Story = StoryObj;
 
 export const Features: Story = {
   render: () => (
@@ -44,7 +44,7 @@ export const Features: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const CustomerStories: Story = {
   render: () => (
@@ -66,7 +66,7 @@ export const CustomerStories: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const SDKsList: Story = {
   render: () => (
@@ -87,7 +87,7 @@ export const SDKsList: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const ResourcesList: Story = {
   render: () => (
@@ -109,7 +109,7 @@ export const ResourcesList: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const ComparePagesList: Story = {
   render: () => (
@@ -127,7 +127,7 @@ export const ComparePagesList: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const LegalPagesList: Story = {
   render: () => (
@@ -145,7 +145,7 @@ export const LegalPagesList: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const FeaturesGrid: Story = {
   render: () => (
@@ -169,7 +169,7 @@ export const FeaturesGrid: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const SDKsGrid: Story = {
   render: () => (
@@ -190,7 +190,7 @@ export const SDKsGrid: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const ResourcesCards: Story = {
   render: () => (
@@ -214,7 +214,7 @@ export const ResourcesCards: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const CustomerStoriesCards: Story = {
   render: () => (
@@ -241,4 +241,4 @@ export const CustomerStoriesCards: Story = {
       </div>
     </div>
   ),
-}
+};

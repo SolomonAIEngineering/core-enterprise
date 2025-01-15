@@ -1,31 +1,29 @@
-import type { NextAuthOptions, User } from "next-auth";
-import {
-  exceededLoginAttemptsThreshold,
-  incrementLoginAttempts,
-} from "./lock-account";
+import { isBlacklistedEmail } from "@/lib/edge-config";
+import jackson from "@/lib/jackson";
+import { subscribe } from "@/lib/resend";
 import { isStored, storage } from "@/lib/storage";
-
-import type { AdapterUser } from "next-auth/adapters";
+import { UserProps } from "@/lib/types";
+import { ratelimit } from "@/lib/upstash";
+import { prisma } from "@dub/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { waitUntil } from "@vercel/functions";
+import { sendEmail } from "emails";
+import LoginLink from "emails/login-link";
+import WelcomeEmail from "emails/welcome-email";
+import { User, type NextAuthOptions } from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import type { JWT } from "next-auth/jwt";
-import LoginLink from "emails/login-link";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import type { UserProps } from "@/lib/types";
-import WelcomeEmail from "emails/welcome-email";
 import { completeProgramApplications } from "../partners/complete-program-applications";
-import { isBlacklistedEmail } from "@/lib/edge-config";
-import jackson from "@/lib/jackson";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { prisma } from "@dub/prisma";
-import { ratelimit } from "@/lib/upstash";
-import { sendEmail } from "emails";
-import { subscribe } from "@/lib/resend";
-import { trackLead } from "./track-lead";
+import {
+  exceededLoginAttemptsThreshold,
+  incrementLoginAttempts,
+} from "./lock-account";
 import { validatePassword } from "./password";
-import { waitUntil } from "@vercel/functions";
+import { trackLead } from "./track-lead";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
@@ -36,11 +34,10 @@ export const authOptions: NextAuthOptions = {
         if (process.env.NODE_ENV === "development") {
           console.log(`Login link: ${url}`);
           return;
-          // biome-ignore lint/style/noUselessElse: <explanation>
         } else {
           sendEmail({
             email: identifier,
-            subject: `Your ${platform.company} Login Link`,
+            subject: `Your ${process.env.NEXT_PUBLIC_APP_NAME} Login Link`,
             react: LoginLink({ url, email: identifier }),
           });
         }
@@ -80,13 +77,14 @@ export const authOptions: NextAuthOptions = {
           where: { email: profile.email },
         });
 
-        // user is authorized but doesn't have a account, create one for them
+        // user is authorized but doesn't have a Dub account, create one for them
         if (!existingUser) {
           existingUser = await prisma.user.create({
             data: {
               email: profile.email,
-              name: `${profile.firstName || ""} ${profile.lastName || ""
-                }`.trim(),
+              name: `${profile.firstName || ""} ${
+                profile.lastName || ""
+              }`.trim(),
             },
           });
         }
@@ -149,13 +147,14 @@ export const authOptions: NextAuthOptions = {
           where: { email: userInfo.email },
         });
 
-        // user is authorized but doesn't have a account, create one for them
+        // user is authorized but doesn't have a Dub account, create one for them
         if (!existingUser) {
           existingUser = await prisma.user.create({
             data: {
               email: userInfo.email,
-              name: `${userInfo.firstName || ""} ${userInfo.lastName || ""
-                }`.trim(),
+              name: `${userInfo.firstName || ""} ${
+                userInfo.lastName || ""
+              }`.trim(),
             },
           });
         }
@@ -235,7 +234,6 @@ export const authOptions: NextAuthOptions = {
 
           if (exceededLoginAttempts) {
             throw new Error("exceeded-login-attempts");
-            // biome-ignore lint/style/noUselessElse: <explanation>
           } else {
             throw new Error("invalid-credentials");
           }
@@ -333,7 +331,6 @@ export const authOptions: NextAuthOptions = {
         account?.provider === "saml" ||
         account?.provider === "saml-idp"
       ) {
-        // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
         let samlProfile;
 
         if (account?.provider === "saml-idp") {

@@ -1,3 +1,4 @@
+import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,8 +12,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function IntegrationInstalled({
@@ -39,17 +38,15 @@ export default function IntegrationInstalled({
   return (
     <Html>
       <Head />
-      <Preview>
-        An integration has been added to your {platform.company} workspace
-      </Preview>
+      <Preview>An integration has been added to your workspace</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub.co"
                 className="mx-auto my-0"
               />
             </Section>
@@ -58,12 +55,12 @@ export default function IntegrationInstalled({
             </Heading>
             <Text className="text-sm leading-6 text-black">
               The <strong>{integration.name}</strong> integration has been added
-              to your workspace {workspace.name} on {platform.company}.
+              to your workspace {workspace.name} on Dub.
             </Text>
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`${platform.platformUrl}/${workspace.slug}/settings/integrations/${integration.slug}`}
+                href={`https://app.dub.co/${workspace.slug}/settings/integrations/${integration.slug}`}
               >
                 View installed integration
               </Link>

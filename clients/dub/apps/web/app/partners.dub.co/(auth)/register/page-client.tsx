@@ -4,10 +4,8 @@ import {
   RegisterProvider,
   useRegisterContext,
 } from "@/ui/auth/register/context";
-
 import { SignUpForm } from "@/ui/auth/register/signup-form";
 import { VerifyEmailForm } from "@/ui/auth/register/verify-email-form";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { truncate } from "@dub/utils";
 import Link from "next/link";
 
@@ -26,7 +24,7 @@ function SignUp() {
     <>
       <div className="rounded-lg border border-neutral-200 bg-white p-8 pb-10">
         <h1 className="text-lg font-medium text-neutral-800">
-          Create a {platform.company} Partner account
+          Create a Dub Partner account
         </h1>
         <div className="mt-8">
           <SignUpForm methods={["email", "google"]} />

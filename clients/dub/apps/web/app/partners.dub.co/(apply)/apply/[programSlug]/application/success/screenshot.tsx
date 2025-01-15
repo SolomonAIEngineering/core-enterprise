@@ -1,8 +1,6 @@
-import { DICEBEAR_AVATAR_URL, cn, truncate } from "@dub/utils";
-import { SVGProps, useId } from "react";
-
 import { ProgramProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { cn, DICEBEAR_AVATAR_URL, truncate } from "@dub/utils";
+import { SVGProps, useId } from "react";
 
 export function Screenshot({
   program,
@@ -362,7 +360,7 @@ export function Screenshot({
             x="391.5"
             y="289.045"
           >
-            for the customer&apos;s lifetime.
+            for the customer's lifetime.
           </text>
           <text
             xmlSpace="preserve"
@@ -392,7 +390,7 @@ export function Screenshot({
             style={{ whiteSpace: "pre" }}
           >
             <tspan x="403.5" y="371.091">
-              refer.{platform.domain}/yoan
+              refer.dub.co/steven
             </tspan>
           </text>
           <path

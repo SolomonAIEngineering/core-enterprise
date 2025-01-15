@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function License(props: SVGProps<SVGSVGElement>) {
   return (
@@ -57,5 +57,5 @@ export function License(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

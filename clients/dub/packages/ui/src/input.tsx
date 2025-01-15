@@ -1,32 +1,32 @@
-import { cn } from '@dub/utils'
-import { AlertCircle } from 'lucide-react'
-import React, { useCallback, useState } from 'react'
-import { Eye, EyeSlash } from './icons'
+import { cn } from "@dub/utils";
+import { AlertCircle } from "lucide-react";
+import React, { useCallback, useState } from "react";
+import { Eye, EyeSlash } from "./icons";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  error?: string
+  error?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const toggleIsPasswordVisible = useCallback(
       () => setIsPasswordVisible(!isPasswordVisible),
-      [isPasswordVisible, setIsPasswordVisible]
-    )
+      [isPasswordVisible, setIsPasswordVisible],
+    );
 
     return (
       <div>
         <div className="relative flex">
           <input
-            type={isPasswordVisible ? 'text' : type}
+            type={isPasswordVisible ? "text" : type}
             className={cn(
-              'w-full max-w-md rounded-md border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm',
+              "w-full max-w-md rounded-md border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm",
               props.error &&
-                'border-red-500 focus:border-red-500 focus:ring-red-500',
-              className
+                "border-red-500 focus:border-red-500 focus:ring-red-500",
+              className,
             )}
             ref={ref}
             {...props}
@@ -37,25 +37,25 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <div className="pointer-events-none absolute inset-y-0 right-0 flex flex-none items-center px-2.5">
                 <AlertCircle
                   className={cn(
-                    'size-5 text-white',
-                    type === 'password' &&
-                      'transition-opacity group-hover:opacity-0'
+                    "size-5 text-white",
+                    type === "password" &&
+                      "transition-opacity group-hover:opacity-0",
                   )}
                   fill="#ef4444"
                 />
               </div>
             )}
-            {type === 'password' && (
+            {type === "password" && (
               <button
                 className={cn(
-                  'absolute inset-y-0 right-0 flex items-center px-3',
+                  "absolute inset-y-0 right-0 flex items-center px-3",
                   props.error &&
-                    'opacity-0 transition-opacity group-hover:opacity-100'
+                    "opacity-0 transition-opacity group-hover:opacity-100",
                 )}
                 type="button"
                 onClick={() => toggleIsPasswordVisible()}
                 aria-label={
-                  isPasswordVisible ? 'Hide password' : 'Show Password'
+                  isPasswordVisible ? "Hide password" : "Show Password"
                 }
               >
                 {isPasswordVisible ? (
@@ -84,10 +84,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </span>
         )}
       </div>
-    )
-  }
-)
+    );
+  },
+);
 
-Input.displayName = 'Input'
+Input.displayName = "Input";
 
-export { Input }
+export { Input };

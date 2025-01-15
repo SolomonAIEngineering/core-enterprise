@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Raycast(props: SVGProps<SVGSVGElement>) {
   return (
@@ -15,5 +15,5 @@ export function Raycast(props: SVGProps<SVGSVGElement>) {
         clipRule="evenodd"
       />
     </svg>
-  )
+  );
 }

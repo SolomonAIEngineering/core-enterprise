@@ -1,7 +1,7 @@
 "use client";
 
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Button } from "@dub/ui";
+
 export function DeleteProgram({ programId }: { programId: string }) {
   // TODO:
   // Delete program
@@ -26,7 +26,7 @@ export function DeleteProgram({ programId }: { programId: string }) {
               <div className="px-3 py-2 text-sm text-neutral-600">
                 <a
                   className="underline"
-                  href={`mailto:${platform.email.from.default}?subject=Delete my program`}
+                  href="mailto:support@dub.co?subject=Delete my program"
                 >
                   Contact us
                 </a>{" "}

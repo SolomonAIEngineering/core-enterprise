@@ -1,3 +1,5 @@
+import { Project } from "@dub/prisma/client";
+import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,18 +13,12 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
-import type { Project } from "@dub/prisma/client";
 import Footer from "./components/footer";
 
 export default function DomainTransferred({
   email = "panic@thedis.co",
-  domain = `${platform.webUrl}`,
-  newWorkspace = {
-    name: platform.company,
-    slug: platform.company.toLowerCase(),
-  },
+  domain = "dub.sh",
+  newWorkspace = { name: "Dub", slug: "dub" },
   linksCount = 50,
 }: {
   email: string;
@@ -39,9 +35,9 @@ export default function DomainTransferred({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub"
                 className="mx-auto my-0"
               />
             </Section>
@@ -55,7 +51,7 @@ export default function DomainTransferred({
               )}
               has been transferred to the workspace{" "}
               <Link
-                href={`${platform.platformUrl}/${newWorkspace.slug}/settings/domains`}
+                href={`https://app.dub.co/${newWorkspace.slug}/settings/domains`}
                 className="font-medium text-blue-600 no-underline"
               >
                 {newWorkspace.name}↗

@@ -1,6 +1,4 @@
-import { Grid, Logo } from "@dub/ui";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Grid, Wordmark } from "@dub/ui";
 
 export default function PartnerAuthLayout({
   children,
@@ -15,7 +13,7 @@ export default function PartnerAuthLayout({
       </div>
       <div className="relative z-10 mt-10 flex w-full flex-col items-center justify-center px-3 text-center md:px-8">
         <div className="animate-slide-up-fade relative flex w-auto flex-col items-center [--offset:10px] [animation-duration:1.3s] [animation-fill-mode:both]">
-          <Logo className="relative h-10 w-10" />
+          <Wordmark className="relative h-10" />
           <span className="text-sm font-medium text-neutral-700">Partner</span>
         </div>
         {children}
@@ -23,32 +21,29 @@ export default function PartnerAuthLayout({
       <div className="flex grow flex-col justify-end">
         <div className="relative flex w-full flex-col items-center justify-center gap-2 py-10 pb-6">
           <p className="text-xs text-gray-600">
-            © {new Date().getFullYear()} {platform.company}
+            © {new Date().getFullYear()} Dub Technologies, Inc.
           </p>
           <div className="flex gap-3 text-center text-xs text-gray-500 underline underline-offset-2">
             <a
-              href={`${platform.webUrl}/legal/privacy`}
+              href="https://dub.co/legal/privacy"
               target="_blank"
               className="hover:text-gray-800"
-              rel="noreferrer"
             >
               Privacy Policy
             </a>
             <a
-              href={`${platform.webUrl}/legal/terms`}
+              href="https://dub.co/legal/terms"
               target="_blank"
               className="hover:text-gray-800"
-              rel="noreferrer"
             >
               Terms of Service
             </a>
             <a
-              href={platform.platformUrl}
+              href="https://app.dub.co"
               target="_blank"
               className="hover:text-gray-800"
-              rel="noreferrer"
             >
-              {platform.platformHost}
+              app.dub.co
             </a>
           </div>
         </div>

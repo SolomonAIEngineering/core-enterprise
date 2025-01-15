@@ -1,23 +1,21 @@
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
 import {
   AnimatedSizeContainer,
   Button,
+  buttonVariants,
   SimpleTooltipContent,
   TooltipContent,
-  buttonVariants,
   useMediaQuery,
 } from "@dub/ui";
+import { LoadingSpinner } from "@dub/ui/icons";
 import { cn, truncate } from "@dub/utils";
 import { CircleCheck, Star } from "lucide-react";
-import { FormEvent, useEffect, useState } from "react";
-import { AlertCircleFill, CheckCircleFill } from "../shared/icons";
-
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { LoadingSpinner } from "@dub/ui/icons";
 import Link from "next/link";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useDebounce } from "use-debounce";
+import { AlertCircleFill, CheckCircleFill } from "../shared/icons";
 import { ProBadgeTooltip } from "../shared/pro-badge-tooltip";
 
 interface DomainSearchResult {
@@ -154,7 +152,7 @@ export function RegisterDomainForm({
                   <SimpleTooltipContent
                     title="Search for a free .link domain to use for your short links."
                     cta="Learn more."
-                    href={`${platform.webUrl}/help/article/free-dot-link-domain`}
+                    href="https://dub.co/help/article/free-dot-link-domain"
                   />
                 }
               />
@@ -299,7 +297,7 @@ export function RegisterDomainForm({
           <p className="-my-2 text-pretty text-left text-sm text-gray-400">
             By claiming your .link domain, you agree to our{" "}
             <a
-              href={`${platform.webUrl}/help/article/free-dot-link-domain#terms-and-conditions`}
+              href="https://dub.co/help/article/free-dot-link-domain#terms-and-conditions"
               target="_blank"
               className="underline transition-colors hover:text-gray-700"
             >
@@ -378,7 +376,7 @@ function DomainSavedToast() {
       <p className="text-[13px] font-medium text-gray-900">
         Domain saved. You'll need a pro plan to complete the registration.{" "}
         <a
-          href={`${platform.webUrl}/help/article/free-dot-link-domain`}
+          href="https://dub.co/help/article/free-dot-link-domain"
           target="_blank"
           className="text-gray-500 underline transition-colors hover:text-gray-800"
         >

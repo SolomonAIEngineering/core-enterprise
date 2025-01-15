@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Trash(props: SVGProps<SVGSVGElement>) {
   return (
@@ -33,5 +33,5 @@ export function Trash(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

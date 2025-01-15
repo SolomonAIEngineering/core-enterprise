@@ -1,9 +1,5 @@
 "use client";
 
-import { Button, IconMenu, Popover, TooltipContent } from "@dub/ui";
-import { FolderSync, Lock, ShieldOff } from "lucide-react";
-import { useMemo, useState } from "react";
-
 import useSAML from "@/lib/swr/use-saml";
 import useSCIM from "@/lib/swr/use-scim";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -12,8 +8,10 @@ import { useRemoveSCIMModal } from "@/ui/modals/remove-scim-modal";
 import { useSAMLModal } from "@/ui/modals/saml-modal";
 import { useSCIMModal } from "@/ui/modals/scim-modal";
 import { ThreeDots } from "@/ui/shared/icons";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Button, IconMenu, Popover, TooltipContent } from "@dub/ui";
 import { SAML_PROVIDERS } from "@dub/utils";
+import { FolderSync, Lock, ShieldOff } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export default function WorkspaceSecurityClient() {
   return (
@@ -49,7 +47,6 @@ const SAMLSection = () => {
         title: `${provider} SAML`,
         description: "SAML SSO is configured for your workspace.",
       };
-      // biome-ignore lint/style/noUselessElse: <explanation>
     } else
       return {
         status: "unconfigured",
@@ -74,7 +71,7 @@ const SAMLSection = () => {
             <h2 className="text-xl font-medium">SAML Single Sign-On</h2>
             <p className="text-sm text-gray-500">
               Set up SAML Single Sign-On (SSO) to allow your team to sign in to{" "}
-              {platform.company} with your identity provider.
+              {process.env.NEXT_PUBLIC_APP_NAME} with your identity provider.
             </p>
           </div>
 
@@ -103,7 +100,7 @@ const SAMLSection = () => {
                 <Popover
                   content={
                     <div className="grid w-full gap-1 p-2 sm:w-48">
-                      <Button
+                      <button
                         onClick={() => {
                           setShowRemoveSAMLModal(true);
                           setOpenPopover(false);
@@ -114,7 +111,7 @@ const SAMLSection = () => {
                           text="Remove"
                           icon={<ShieldOff className="h-4 w-4" />}
                         />
-                      </Button>
+                      </button>
                     </div>
                   }
                   align="end"
@@ -142,7 +139,7 @@ const SAMLSection = () => {
                       <TooltipContent
                         title="SAML SSO is only available on Enterprise plans. Upgrade to get started."
                         cta="Contact sales"
-                        href={`${platform.webUrl}/enterprise`}
+                        href="https://dub.co/enterprise"
                         target="_blank"
                       />
                     ),
@@ -156,10 +153,9 @@ const SAMLSection = () => {
 
         <div className="flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-gray-50 px-3 py-5 sm:px-10">
           <a
-            href={`${platform.webUrl}/help/category/saml-sso`}
+            href="https://dub.co/help/category/saml-sso"
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
-            rel="noreferrer"
           >
             Learn more about SAML SSO.
           </a>
@@ -248,7 +244,7 @@ const SCIMSection = () => {
                 <Popover
                   content={
                     <div className="grid w-full gap-1 p-2 sm:w-48">
-                      <Button
+                      <button
                         onClick={() => {
                           setShowSCIMModal(true);
                           setOpenPopover(false);
@@ -259,8 +255,8 @@ const SCIMSection = () => {
                           text="View configuration"
                           icon={<FolderSync className="h-4 w-4" />}
                         />
-                      </Button>
-                      <Button
+                      </button>
+                      <button
                         onClick={() => {
                           setShowRemoveSCIMModal(true);
                           setOpenPopover(false);
@@ -271,7 +267,7 @@ const SCIMSection = () => {
                           text="Remove"
                           icon={<ShieldOff className="h-4 w-4" />}
                         />
-                      </Button>
+                      </button>
                     </div>
                   }
                   align="end"
@@ -299,7 +295,7 @@ const SCIMSection = () => {
                       <TooltipContent
                         title="SCIM Directory Sync is only available on Enterprise plans. Upgrade to get started."
                         cta="Contact sales"
-                        href={`${platform.webUrl}/enterprise`}
+                        href="https://dub.co/enterprise"
                         target="_blank"
                       />
                     ),
@@ -313,10 +309,9 @@ const SCIMSection = () => {
 
         <div className="flex items-center justify-between rounded-b-lg border-t border-gray-200 bg-gray-50 px-3 py-5 sm:px-10">
           <a
-            href={`${platform.webUrl}/help/category/saml-sso`}
+            href="https://dub.co/help/category/saml-sso"
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
-            rel="noreferrer"
           >
             Learn more about SCIM Directory Sync.
           </a>

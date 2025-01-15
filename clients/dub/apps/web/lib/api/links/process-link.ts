@@ -1,6 +1,9 @@
 import { isBlacklistedDomain, updateConfig } from "@/lib/edge-config";
+import { getPangeaDomainIntel } from "@/lib/pangea";
 import { checkIfUserExists, getRandomKey } from "@/lib/planetscale";
+import { isStored } from "@/lib/storage";
 import { NewLinkProps, ProcessedLinkProps, WorkspaceProps } from "@/lib/types";
+import { prisma } from "@dub/prisma";
 import {
   DUB_DOMAINS,
   UTMTags,
@@ -15,12 +18,8 @@ import {
   parseDateTime,
   pluralize,
 } from "@dub/utils";
-import { keyChecks, processKey } from "./utils";
-
-import { getPangeaDomainIntel } from "@/lib/pangea";
-import { isStored } from "@/lib/storage";
-import { prisma } from "@dub/prisma";
 import { combineTagIds } from "../tags/combine-tag-ids";
+import { keyChecks, processKey } from "./utils";
 
 export async function processLink<T extends Record<string, any>>({
   payload,
@@ -233,7 +232,7 @@ export async function processLink<T extends Record<string, any>>({
 
     // else, check if the domain is a free .link and whether the workspace is pro+
   } else if (domain.endsWith(".link") && workspace?.plan === "free") {
-    // provisioned .link domains can only be used on a Pro plan and above
+    // Dub provisioned .link domains can only be used on a Pro plan and above
     const domainId = domains?.find((d) => d.slug === domain)?.id;
     const registeredDomain = await prisma.registeredDomain.findUnique({
       where: {

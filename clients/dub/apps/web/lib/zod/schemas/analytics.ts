@@ -7,6 +7,7 @@ import {
   eventIntervals,
   intervals,
 } from "@/lib/analytics/constants";
+import z from "@/lib/zod";
 import {
   CONTINENT_CODES,
   COUNTRY_CODES,
@@ -15,9 +16,6 @@ import {
   capitalize,
   formatDate,
 } from "@dub/utils";
-
-import z from "@/lib/zod";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { booleanQuerySchema } from "./misc";
 import { parseDateSchema } from "./utils";
 
@@ -165,7 +163,7 @@ export const analyticsQuerySchema = z.object({
     .string()
     .optional()
     .describe("The full referer URL to retrieve analytics for.")
-    .openapi({ example: `${platform.webUrl}/blog` }),
+    .openapi({ example: "https://dub.co/blog" }),
   url: z.string().optional().describe("The URL to retrieve analytics for."),
   tagId: z
     .string()

@@ -1,44 +1,44 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { FunnelChart } from './funnel-chart'
+import { FunnelChart } from "./funnel-chart";
 
 const meta: Meta<typeof FunnelChart> = {
-  title: 'Charts/FunnelChart',
+  title: "Charts/FunnelChart",
   component: FunnelChart,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof FunnelChart>
+export default meta;
+type Story = StoryObj<typeof FunnelChart>;
 
 export const Default: Story = {
   args: {
     steps: [
       {
-        id: 'visitors',
-        label: 'Total Visitors',
+        id: "visitors",
+        label: "Total Visitors",
         value: 1000,
-        colorClassName: 'text-blue-500',
+        colorClassName: "text-blue-500",
       },
       {
-        id: 'interested',
-        label: 'Interested Users',
+        id: "interested",
+        label: "Interested Users",
         value: 750,
-        colorClassName: 'text-blue-600',
+        colorClassName: "text-blue-600",
       },
       {
-        id: 'engaged',
-        label: 'Engaged Users',
+        id: "engaged",
+        label: "Engaged Users",
         value: 500,
-        colorClassName: 'text-blue-700',
+        colorClassName: "text-blue-700",
       },
       {
-        id: 'converted',
-        label: 'Converted Users',
+        id: "converted",
+        label: "Converted Users",
         value: 250,
-        colorClassName: 'text-blue-800',
+        colorClassName: "text-blue-800",
       },
     ],
   },
@@ -47,32 +47,32 @@ export const Default: Story = {
       <FunnelChart {...args} />
     </div>
   ),
-}
+};
 
 export const WithAdditionalValues: Story = {
   args: {
     steps: [
       {
-        id: 'visitors',
-        label: 'Total Visitors',
+        id: "visitors",
+        label: "Total Visitors",
         value: 1000,
         additionalValue: 0,
-        colorClassName: 'text-blue-500',
+        colorClassName: "text-blue-500",
       },
       {
-        id: 'interested',
-        label: 'Interested Users',
+        id: "interested",
+        label: "Interested Users",
         value: 750,
         additionalValue: 1500,
-        colorClassName: 'text-blue-600',
+        colorClassName: "text-blue-600",
       },
       {
-        id: 'converted',
-        label: 'Converted Users',
+        id: "converted",
+        label: "Converted Users",
         value: 250,
         additionalValue: 5000,
-        colorClassName: 'text-blue-800',
+        colorClassName: "text-blue-800",
       },
     ],
   },
-}
+};

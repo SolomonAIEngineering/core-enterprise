@@ -1,11 +1,11 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren, ReactNode } from "react";
 
 export type EmptyStateProps = PropsWithChildren<{
-  icon: React.ElementType
-  title: string
-  description?: ReactNode
-  learnMore?: string
-}>
+  icon: React.ElementType;
+  title: string;
+  description?: ReactNode;
+  learnMore?: string;
+}>;
 
 export function EmptyState({
   icon: Icon,
@@ -22,7 +22,7 @@ export function EmptyState({
       <p className="text-center text-base font-medium text-gray-950">{title}</p>
       {description && (
         <p className="max-w-sm text-balance text-center text-sm text-gray-500">
-          {description}{' '}
+          {description}{" "}
           {learnMore && (
             <a
               href={learnMore}
@@ -36,5 +36,5 @@ export function EmptyState({
       )}
       {children}
     </div>
-  )
+  );
 }

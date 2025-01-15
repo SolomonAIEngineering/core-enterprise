@@ -1,0 +1,53 @@
+// App model represents an application instance within the system
+// Used to manage application-specific configurations and settings
+model App {
+  // Unique identifier for the app instance
+  id         String    @id @default(cuid())
+
+  // External application identifier
+  // Used to reference the app in external systems or APIs
+  appId      String
+
+  // JSON configuration for the app
+  // Stores app-specific configuration parameters
+  // Example: {
+  //   "apiVersion": "v1",
+  //   "features": ["feature1", "feature2"],
+  //   "limits": { "requests": 1000, "storage": "5GB" }
+  // }
+  config     Json?
+
+  // Timestamp when the app was created
+  createdAt  DateTime  @default(now())
+
+  // ID of the user who created the app
+  // Optional to allow system-created apps
+  createdBy  String?
+
+  // App settings in JSON format
+  // Stores user-configurable settings for the app
+  // Example: {
+  //   "theme": "dark",
+  //   "notifications": true,
+  //   "displayMode": "compact"
+  // }
+  settings   Json?
+
+  // Relationship to the user who owns the app
+  // Each app must be associated with a user
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String
+
+  // Relationship to the project the app belongs to
+  // Apps are scoped to projects and are deleted when the project is deleted
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  // Maps this model to the "apps" table in the database
+  @@map("apps")
+
+  // Indexes for optimizing queries
+  @@index([createdBy])    // Optimize queries filtering by creator
+  @@index([projectId])    // Optimize queries filtering by project
+  @@index([userId])       // Optimize queries filtering by user
+}

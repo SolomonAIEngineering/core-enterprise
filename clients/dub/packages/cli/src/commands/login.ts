@@ -2,13 +2,13 @@ import { oauthCallbackServer } from "@/api/callback";
 import { getNanoid } from "@/utils/get-nanoid";
 import { handleError } from "@/utils/handle-error";
 import { oauthClient } from "@/utils/oauth";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Command } from "commander";
 import open from "open";
 import ora from "ora";
+
 export const login = new Command()
   .name("login")
-  .description(`Log into the ${platform.company} platform`)
+  .description("Log into the Dub platform")
   .action(async () => {
     try {
       const codeVerifier = getNanoid(64);

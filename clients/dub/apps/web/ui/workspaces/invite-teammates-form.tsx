@@ -1,14 +1,12 @@
-import { Role, roles } from "@/lib/types";
-import { Button, useMediaQuery } from "@dub/ui";
-import { capitalize, cn, pluralize } from "@dub/utils";
-import { useFieldArray, useForm } from "react-hook-form";
-
 import useWorkspace from "@/lib/swr/use-workspace";
+import { Role, roles } from "@/lib/types";
 import { Invite } from "@/lib/zod/schemas/invites";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Button, useMediaQuery } from "@dub/ui";
 import { Trash } from "@dub/ui/icons";
+import { capitalize, cn, pluralize } from "@dub/utils";
 import { Plus } from "lucide-react";
 import posthog from "posthog-js";
+import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { CheckCircleFill } from "../shared/icons";
@@ -178,10 +176,9 @@ function InviteSavedToast({ teammates }: { teammates: number }) {
         {pluralize("Invitation", teammates)} saved. You'll need a pro plan to
         invite teammates.{" "}
         <a
-          href={`${platform.webUrl}/help/article/how-to-invite-teammates`}
+          href="https://dub.co/help/article/how-to-invite-teammates"
           target="_blank"
           className="text-gray-500 underline transition-colors hover:text-gray-800"
-          rel="noreferrer"
         >
           Learn more
         </a>

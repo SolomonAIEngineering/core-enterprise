@@ -1,4 +1,4 @@
-import { cn } from '@dub/utils'
+import { cn } from "@dub/utils";
 
 export function ProductHunt({ className }: { className?: string }) {
   return (
@@ -7,7 +7,7 @@ export function ProductHunt({ className }: { className?: string }) {
       viewBox="0 0 26.245 26.256"
       width="64"
       height="64"
-      className={cn('text-[#FF6055]', className)}
+      className={cn("text-[#FF6055]", className)}
     >
       <path
         d="M26.254 13.128c0 7.253-5.875 13.128-13.128 13.128S-.003 20.382-.003 13.128 5.872 0 13.125 0s13.128 5.875 13.128 13.128"
@@ -18,5 +18,5 @@ export function ProductHunt({ className }: { className?: string }) {
         fill="#fff"
       />
     </svg>
-  )
+  );
 }

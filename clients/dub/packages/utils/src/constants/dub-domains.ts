@@ -1,7 +1,5 @@
 import { DUB_WORKSPACE_ID, SHORT_DOMAIN } from "./main";
 
-import { BusinessConfig as platform } from "@dub/platform-config";
-
 export const DUB_DOMAINS = [
   {
     id: "clce1z7ch00j0rbstbjufva4j",
@@ -9,7 +7,7 @@ export const DUB_DOMAINS = [
     verified: true,
     primary: true,
     archived: false,
-    placeholder: `${platform.webUrl}/help/article/what-is-dub`,
+    placeholder: "https://dub.co/help/article/what-is-dub",
     allowedHostnames: [],
     description: "The default domain for all new accounts.",
     projectId: DUB_WORKSPACE_ID,
@@ -22,7 +20,7 @@ export const DUB_DOMAINS = [
           verified: true,
           primary: true,
           archived: false,
-          placeholder: `${platform.webUrl}/help/article/what-is-dub`,
+          placeholder: "https://dub.co/help/article/what-is-dub",
           allowedHostnames: [],
           description:
             "Premium short domain on Dub – only available on our Pro plan and above.",

@@ -1,9 +1,7 @@
-import { ZodOpenApiOperationObject, ZodOpenApiPathsObject } from "zod-openapi";
-
 import z from "@/lib/zod";
 import { getUrlQuerySchema } from "@/lib/zod/schemas/links";
 import { metaTagsSchema } from "@/lib/zod/schemas/metatags";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { ZodOpenApiOperationObject, ZodOpenApiPathsObject } from "zod-openapi";
 
 const getMetatags: ZodOpenApiOperationObject = {
   operationId: "getMetatags",
@@ -14,7 +12,7 @@ const getMetatags: ZodOpenApiOperationObject = {
     query: getUrlQuerySchema.merge(
       z.object({
         url: z.string().openapi({
-          example: `${platform.webUrl}/`,
+          example: "https://dub.co",
           description: "The URL to retrieve metatags for.",
         }),
       }),

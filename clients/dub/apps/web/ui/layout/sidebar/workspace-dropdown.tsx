@@ -1,15 +1,19 @@
 "use client";
 
+import useWorkspaces from "@/lib/swr/use-workspaces";
 import { PlanProps, WorkspaceProps } from "@/lib/types";
+import { ModalContext } from "@/ui/modals/modal-provider";
 import {
   BlurImage,
-  Popover,
   getUserAvatarUrl,
+  Popover,
   useScrollProgress,
 } from "@dub/ui";
 import { Book2, Check2, Plus } from "@dub/ui/icons";
-import { DICEBEAR_AVATAR_URL, cn } from "@dub/utils";
+import { cn, DICEBEAR_AVATAR_URL } from "@dub/utils";
 import { ChevronsUpDown, HelpCircle } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import {
   useCallback,
@@ -19,12 +23,6 @@ import {
   useRef,
   useState,
 } from "react";
-
-import useWorkspaces from "@/lib/swr/use-workspaces";
-import { ModalContext } from "@/ui/modals/modal-provider";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 
 export function WorkspaceDropdown() {
   const { workspaces } = useWorkspaces();
@@ -146,13 +144,13 @@ const LINKS = [
   {
     name: "Help Center",
     icon: HelpCircle,
-    href: `${platform.webUrl}/help`,
+    href: "https://dub.co/help",
     target: "_blank",
   },
   {
     name: "Documentation",
     icon: Book2,
-    href: `${platform.webUrl}/docs`,
+    href: "https://dub.co/docs",
     target: "_blank",
   },
 ];

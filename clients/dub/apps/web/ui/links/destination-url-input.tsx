@@ -1,16 +1,14 @@
 "use client";
 
+import { DomainProps } from "@/lib/types";
 import {
   InfoTooltip,
   SimpleTooltipContent,
-  UTM_PARAMETERS,
   useMediaQuery,
+  UTM_PARAMETERS,
 } from "@dub/ui";
-import { HTMLProps, ReactNode, forwardRef, useId } from "react";
-
-import { DomainProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { getParamsFromURL } from "@dub/utils";
+import { forwardRef, HTMLProps, ReactNode, useId } from "react";
 import { useFormContext } from "react-hook-form";
 import { LinkFormData } from "../modals/link-builder";
 import { AlertCircleFill } from "../shared/icons";
@@ -60,7 +58,7 @@ export const DestinationUrlInput = forwardRef<
                   <SimpleTooltipContent
                     title="The URL your users will get redirected to when they visit your root domain link."
                     cta="Learn more."
-                    href={`${platform.webUrl}/help/article/how-to-redirect-root-domain`}
+                    href="https://dub.co/help/article/how-to-redirect-root-domain"
                   />
                 }
               />
@@ -70,7 +68,7 @@ export const DestinationUrlInput = forwardRef<
                   <SimpleTooltipContent
                     title="The URL your users will get redirected to when they visit your short link."
                     cta="Learn more."
-                    href={`${platform.webUrl}/help/article/how-to-create-link`}
+                    href="https://dub.co/help/article/how-to-create-link"
                   />
                 }
               />
@@ -85,7 +83,7 @@ export const DestinationUrlInput = forwardRef<
             id={inputId}
             placeholder={
               domains?.find(({ slug }) => slug === domain)?.placeholder ||
-              `${platform.webUrl}/help/article/what-is-dub`
+              "https://dub.co/help/article/what-is-dub"
             }
             autoFocus={!key && !isMobile}
             autoComplete="off"
@@ -104,7 +102,6 @@ export const DestinationUrlInput = forwardRef<
                 const parentParams = getParamsFromURL(url);
 
                 UTM_PARAMETERS.filter((p) => p.key !== "ref").forEach((p) =>
-                  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                   formContext.setValue(p.key as any, parentParams?.[p.key], {
                     shouldDirty: true,
                   }),

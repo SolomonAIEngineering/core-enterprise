@@ -1,8 +1,8 @@
 import { getConfig } from "@/utils/config";
 import { parseApiResponse } from "@/utils/parser";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Dub } from "dub";
 import fetch from "node-fetch";
+
 export async function getDomains() {
   const config = await getConfig();
 
@@ -13,7 +13,7 @@ export async function getDomains() {
   const [{ result: domainsResponse }, defaultDomainsResponse] =
     await Promise.all([
       dub.domains.list(),
-      fetch(`${platform.apiUrl}/domains/default`, {
+      fetch("https://api.dub.co/domains/default", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${config.access_token}`,

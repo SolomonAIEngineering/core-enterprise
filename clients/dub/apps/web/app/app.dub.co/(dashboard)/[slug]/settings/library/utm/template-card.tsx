@@ -1,5 +1,8 @@
 "use client";
 
+import useWorkspace from "@/lib/swr/use-workspace";
+import { UtmTemplateWithUserProps } from "@/lib/types";
+import { useAddEditUtmTemplateModal } from "@/ui/modals/add-edit-utm-template.modal";
 import { Delete, ThreeDots } from "@/ui/shared/icons";
 import {
   Avatar,
@@ -7,16 +10,12 @@ import {
   CardList,
   Popover,
   Tooltip,
-  UTM_PARAMETERS,
   useKeyboardShortcut,
+  UTM_PARAMETERS,
 } from "@dub/ui";
 import { DiamondTurnRight, LoadingSpinner, PenWriting } from "@dub/ui/icons";
 import { cn, formatDate } from "@dub/utils";
 import { Fragment, useContext, useState } from "react";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import { UtmTemplateWithUserProps } from "@/lib/types";
-import { useAddEditUtmTemplateModal } from "@/ui/modals/add-edit-utm-template.modal";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { TemplatesListContext } from "./page-client";
@@ -102,11 +101,8 @@ export function TemplateCard({
           }
         >
           <div className="xs:flex hidden shrink-0 items-center gap-1 px-2 text-gray-500">
-            {includedParams.map(({ icon: Icon, key }) => (
-              <Icon
-                className="size-3.5"
-                key={`${Icon}-${key}-${Math.random()}`}
-              />
+            {includedParams.map(({ icon: Icon }) => (
+              <Icon className="size-3.5" />
             ))}
           </div>
         </Tooltip>

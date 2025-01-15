@@ -9,7 +9,7 @@ export default function NewIntegrationsPage({
 }: {
   params: { slug: string };
 }) {
-  // this is only available for workspace for now
+  // this is only available for Dub workspace for now
   // we might open this up to other workspaces in the future
   if (params.slug !== "dub") {
     notFound();

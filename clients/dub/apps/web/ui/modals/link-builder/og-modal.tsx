@@ -1,3 +1,7 @@
+import useWorkspace from "@/lib/swr/use-workspace";
+import { Link } from "@/ui/shared/icons";
+import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
+import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
 import {
   Button,
   ButtonTooltip,
@@ -8,6 +12,9 @@ import {
   Tooltip,
 } from "@dub/ui";
 import { LoadingCircle, Magic, Unsplash } from "@dub/ui/icons";
+import { resizeImage } from "@dub/utils";
+import { useCompletion } from "ai/react";
+import posthog from "posthog-js";
 import {
   Dispatch,
   SetStateAction,
@@ -18,18 +25,9 @@ import {
   useState,
 } from "react";
 import { useForm, useFormContext } from "react-hook-form";
-import { LinkFormData, LinkModalContext } from ".";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import { Link } from "@/ui/shared/icons";
-import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
-import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { resizeImage } from "@dub/utils";
-import { useCompletion } from "ai/react";
-import posthog from "posthog-js";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
+import { LinkFormData, LinkModalContext } from ".";
 import { usePromptModal } from "../prompt-modal";
 import UnsplashSearch from "./unsplash-search";
 
@@ -130,10 +128,10 @@ function OGModalInner({
   const generateTitle = async () => {
     completeTitle(
       `You are an SEO expert. Generate an SEO-optimized meta title (max 120 characters) for the following URL:
-
+      
       - URL: ${url}
       - Meta title: ${title}
-      - Meta description: ${description}.
+      - Meta description: ${description}. 
 
       Only respond with the title without quotation marks or special characters.
       `,
@@ -221,7 +219,7 @@ function OGModalInner({
                   <SimpleTooltipContent
                     title="Customize how your links look when shared on social media to improve click-through rates."
                     cta="Learn more."
-                    href={`${platform.webUrl}/help/article/custom-social-media-cards`}
+                    href="https://dub.co/help/article/custom-social-media-cards"
                   />
                 }
               />

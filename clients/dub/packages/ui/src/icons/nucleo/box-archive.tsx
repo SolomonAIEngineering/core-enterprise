@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function BoxArchive(props: SVGProps<SVGSVGElement>) {
   return (
@@ -44,5 +44,5 @@ export function BoxArchive(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

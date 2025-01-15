@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function ArrowRight(props: SVGProps<SVGSVGElement>) {
   return (
@@ -31,5 +31,5 @@ export function ArrowRight(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

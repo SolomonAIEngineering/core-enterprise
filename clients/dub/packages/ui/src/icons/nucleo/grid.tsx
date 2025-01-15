@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function GridIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -64,5 +64,5 @@ export function GridIcon(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Circles(props: SVGProps<SVGSVGElement>) {
   return (
@@ -32,5 +32,5 @@ export function Circles(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

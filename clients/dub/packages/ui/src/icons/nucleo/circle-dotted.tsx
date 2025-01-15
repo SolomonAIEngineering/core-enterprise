@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function CircleDotted(props: SVGProps<SVGSVGElement>) {
   return (
@@ -100,5 +100,5 @@ export function CircleDotted(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

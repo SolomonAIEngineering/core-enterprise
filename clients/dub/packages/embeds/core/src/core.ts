@@ -1,7 +1,6 @@
 import { DUB_CONTAINER_ID, EMBED_URL } from "./constants";
-import { DubEmbedOptions, DubInitResult, IframeMessage } from "./types";
-
 import { EmbedError } from "./error";
+import { DubEmbedOptions, DubInitResult, IframeMessage } from "./types";
 
 const CONTAINER_STYLES = {
   position: "relative",
@@ -92,7 +91,7 @@ const createIframe = (iframeUrl: string, token: string): HTMLIFrameElement => {
 };
 
 /**
- * Initializes the embed.
+ * Initializes the Dub embed.
  */
 export const init = (options: DubEmbedOptions): DubInitResult => {
   const embed = new DubEmbed(options);

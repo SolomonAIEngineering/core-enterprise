@@ -1,3 +1,5 @@
+import useWorkspace from "@/lib/swr/use-workspace";
+import { BitlyGroupProps } from "@/lib/types";
 import {
   Button,
   LoadingSpinner,
@@ -11,17 +13,13 @@ import { APP_DOMAIN_WITH_NGROK, fetcher } from "@dub/utils";
 import { ArrowRight, ServerOff } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
-  type Dispatch,
-  type SetStateAction,
+  Dispatch,
+  SetStateAction,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import type { BitlyGroupProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 import useSWRImmutable from "swr/immutable";
 
@@ -67,7 +65,6 @@ function ImportBitlyModal({
 
   const [importing, setImporting] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (searchParams?.get("import") === "bitly") {
       mutate();
@@ -80,7 +77,7 @@ function ImportBitlyModal({
   const bitlyOAuthURL = `https://bitly.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_BITLY_CLIENT_ID}&redirect_uri=${APP_DOMAIN_WITH_NGROK}/api/callback/bitly&state=${workspaceId}`;
 
   const isSelected = (domain: string) => {
-    return !!selectedDomains.find((d) => d.domain === domain);
+    return selectedDomains.find((d) => d.domain === domain) ? true : false;
   };
 
   const { queryParams } = useRouterStuff();
@@ -107,8 +104,8 @@ function ImportBitlyModal({
         </div>
         <h3 className="text-lg font-medium">Import Your Bitly Links</h3>
         <p className="text-center text-sm text-gray-500">
-          Easily import all your existing Bitly links into {platform.company}{" "}
-          with just a few clicks.
+          Easily import all your existing Bitly links into{" "}
+          {process.env.NEXT_PUBLIC_APP_NAME} with just a few clicks.
         </p>
       </div>
 
@@ -255,10 +252,9 @@ function ImportBitlyModal({
               }}
             />
             <a
-              href={`${platform.webUrl}/help/article/migrating-from-bitly`}
+              href="https://dub.co/help/article/migrating-from-bitly"
               target="_blank"
               className="text-center text-xs text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800"
-              rel="noreferrer"
             >
               Read the guide
             </a>
@@ -272,7 +268,6 @@ function ImportBitlyModal({
 export function useImportBitlyModal() {
   const [showImportBitlyModal, setShowImportBitlyModal] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const ImportBitlyModalCallback = useCallback(() => {
     return (
       <ImportBitlyModal
@@ -282,7 +277,6 @@ export function useImportBitlyModal() {
     );
   }, [showImportBitlyModal, setShowImportBitlyModal]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useMemo(
     () => ({
       setShowImportBitlyModal,

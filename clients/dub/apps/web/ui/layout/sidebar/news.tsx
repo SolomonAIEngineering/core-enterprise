@@ -1,12 +1,10 @@
 "use client";
 
 import { useLocalStorage, useMediaQuery } from "@dub/ui";
-import { CSSProperties, SVGProps, useEffect, useRef, useState } from "react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { cn } from "@dub/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { CSSProperties, SVGProps, useEffect, useRef, useState } from "react";
 
 export interface NewsArticle {
   href: string;
@@ -262,7 +260,7 @@ function NewsCard({
         >
           <div className="flex items-center justify-between pt-3 text-xs">
             <Link
-              href={href || `${platform.webUrl}`}
+              href={href || "https://dub.co"}
               target="_blank"
               className="font-medium text-neutral-700 transition-colors duration-75 hover:text-neutral-900"
             >

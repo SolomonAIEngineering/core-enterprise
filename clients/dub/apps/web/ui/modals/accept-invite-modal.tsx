@@ -1,13 +1,12 @@
 import { mutatePrefix } from "@/lib/swr/mutate";
 import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Button, Logo, Modal } from "@dub/ui";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import {
-  type Dispatch,
-  type SetStateAction,
+  Dispatch,
+  SetStateAction,
   useCallback,
   useMemo,
   useState,
@@ -42,7 +41,7 @@ function AcceptInviteModal({
               <span className="font-mono text-purple-600">
                 {slug || "......"}
               </span>{" "}
-              workspace on {platform.company}
+              workspace on {process.env.NEXT_PUBLIC_APP_NAME}
             </p>
           </div>
           <div className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16">
@@ -54,7 +53,6 @@ function AcceptInviteModal({
                   headers: { "Content-Type": "application/json" },
                 }).then(async () => {
                   if (session?.user) {
-                    // biome-ignore lint/complexity/useLiteralKeys: <explanation>
                     posthog.identify(session.user["id"], {
                       email: session.user.email,
                       name: session.user.name,
@@ -103,7 +101,6 @@ function AcceptInviteModal({
 export function useAcceptInviteModal() {
   const [showAcceptInviteModal, setShowAcceptInviteModal] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const AcceptInviteModalCallback = useCallback(() => {
     return (
       <AcceptInviteModal
@@ -113,7 +110,6 @@ export function useAcceptInviteModal() {
     );
   }, [showAcceptInviteModal, setShowAcceptInviteModal]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useMemo(
     () => ({
       setShowAcceptInviteModal,

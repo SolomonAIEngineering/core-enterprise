@@ -1,9 +1,7 @@
 "use client";
 
-import { MaxWidthWrapper, buttonVariants } from "@dub/ui";
-
 import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { buttonVariants, MaxWidthWrapper } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { Lock } from "lucide-react";
 import Link from "next/link";
@@ -25,7 +23,7 @@ export default function WorkspaceExceededClicks() {
           collecting data on your links, but you need to upgrade to view them.
         </p>
         <img
-          src={`${platform.assetsUrl}/video-park.svg`}
+          src="https://assets.dub.co/misc/video-park.svg"
           alt="No links yet"
           width={400}
           height={400}

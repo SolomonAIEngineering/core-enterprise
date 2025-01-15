@@ -1,12 +1,11 @@
 import { DubApiError } from "@/lib/api/errors";
 import { withSession } from "@/lib/auth";
 import { PASSWORD_RESET_TOKEN_EXPIRY } from "@/lib/auth/constants";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
+import { randomBytes } from "crypto";
 import { sendEmail } from "emails";
 import ResetPasswordLink from "emails/reset-password-link";
 import { NextResponse } from "next/server";
-import { randomBytes } from "node:crypto";
 
 // POST /api/user/set-password - set account password (for users who signed up with a OAuth provider)
 export const POST = withSession(async ({ session }) => {
@@ -39,7 +38,7 @@ export const POST = withSession(async ({ session }) => {
 
   // Send email with password reset link
   await sendEmail({
-    subject: `${platform.company}: Password reset instructions`,
+    subject: `${process.env.NEXT_PUBLIC_APP_NAME}: Password reset instructions`,
     email: session.user.email,
     react: ResetPasswordLink({
       email: session.user.email,

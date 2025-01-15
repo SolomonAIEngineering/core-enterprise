@@ -1,13 +1,11 @@
 "use client";
 
-import UserInfo, { UserInfoProps } from "./user-info";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { LoadingSpinner } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
+import UserInfo, { UserInfoProps } from "./user-info";
 
 export default function ImpersonateWorkspace() {
   const [data, setData] = useState<UserInfoProps | null>(null);
@@ -44,7 +42,7 @@ const Form = () => {
   return (
     <div className="relative flex w-full rounded-md shadow-sm">
       <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">
-        {platform.platformHost}
+        app.dub.co
       </span>
       <input
         name="slug"

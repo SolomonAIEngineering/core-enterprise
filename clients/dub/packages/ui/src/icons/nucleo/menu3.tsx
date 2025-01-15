@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Menu3(props: SVGProps<SVGSVGElement>) {
   return (
@@ -45,5 +45,5 @@ export function Menu3(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

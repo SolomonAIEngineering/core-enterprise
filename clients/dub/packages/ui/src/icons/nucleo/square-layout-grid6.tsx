@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function SquareLayoutGrid6(props: SVGProps<SVGSVGElement>) {
   return (
@@ -69,5 +69,5 @@ export function SquareLayoutGrid6(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

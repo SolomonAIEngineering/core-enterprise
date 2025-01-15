@@ -1,4 +1,4 @@
-import { Logo } from "@dub/ui";
+import { Wordmark } from "@dub/ui";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import WrappedPageClient from "./client";
@@ -15,7 +15,7 @@ export default function WrappedPage({
   return (
     <div className="relative flex flex-col items-center">
       <Link href={`/${params.slug}`}>
-        <Logo className="mt-6 h-8 w-8" />
+        <Wordmark className="mt-6 h-8" />
       </Link>
       <WrappedPageClient />
     </div>

@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import { RefObject, useCallback, useEffect, useState } from 'react'
-import { useResizeObserver } from './use-resize-observer'
+import { RefObject, useCallback, useEffect, useState } from "react";
+import { useResizeObserver } from "./use-resize-observer";
 
 export function useScrollProgress(ref: RefObject<HTMLElement>) {
-  const [scrollProgress, setScrollProgress] = useState(1)
+  const [scrollProgress, setScrollProgress] = useState(1);
 
   const updateScrollProgress = useCallback(() => {
-    if (!ref.current) return
-    const { scrollTop, scrollHeight, clientHeight } = ref.current
+    if (!ref.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = ref.current;
 
     setScrollProgress(
       scrollHeight === clientHeight
         ? 1
-        : Math.min(scrollTop / (scrollHeight - clientHeight), 1)
-    )
-  }, [])
+        : Math.min(scrollTop / (scrollHeight - clientHeight), 1),
+    );
+  }, []);
 
-  const resizeObserverEntry = useResizeObserver(ref)
+  const resizeObserverEntry = useResizeObserver(ref);
 
-  useEffect(updateScrollProgress, [resizeObserverEntry])
+  useEffect(updateScrollProgress, [resizeObserverEntry]);
 
-  return { scrollProgress, updateScrollProgress }
+  return { scrollProgress, updateScrollProgress };
 }

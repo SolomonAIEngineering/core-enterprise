@@ -1,7 +1,7 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function ShieldCheck(
-  props: SVGProps<SVGSVGElement> & { invert?: boolean }
+  props: SVGProps<SVGSVGElement> & { invert?: boolean },
 ) {
   return (
     <svg
@@ -39,5 +39,5 @@ export function ShieldCheck(
         )}
       </g>
     </svg>
-  )
+  );
 }

@@ -1,28 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Input } from './input'
-import { Label } from './label'
+import { Input } from "./input";
+import { Label } from "./label";
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Label',
+  title: "Components/Label",
   component: Label,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A label component for form controls with various styling options.',
+          "A label component for form controls with various styling options.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Label>
+export default meta;
+type Story = StoryObj<typeof Label>;
 
 export const Default: Story = {
   render: () => <Label htmlFor="input">Label Text</Label>,
-}
+};
 
 export const WithInput: Story = {
   render: () => (
@@ -31,7 +31,7 @@ export const WithInput: Story = {
       <Input id="email" type="email" placeholder="Enter your email" />
     </div>
   ),
-}
+};
 
 export const Required: Story = {
   render: () => (
@@ -42,7 +42,7 @@ export const Required: Story = {
       <Input id="name" required />
     </div>
   ),
-}
+};
 
 export const WithHelpText: Story = {
   render: () => (
@@ -54,7 +54,7 @@ export const WithHelpText: Story = {
       </p>
     </div>
   ),
-}
+};
 
 export const Disabled: Story = {
   render: () => (
@@ -65,7 +65,7 @@ export const Disabled: Story = {
       <Input id="disabled-input" disabled />
     </div>
   ),
-}
+};
 
 export const WithCustomStyling: Story = {
   render: () => (
@@ -73,7 +73,7 @@ export const WithCustomStyling: Story = {
       Custom styled label
     </Label>
   ),
-}
+};
 
 export const WithDescription: Story = {
   render: () => (
@@ -89,7 +89,7 @@ export const WithDescription: Story = {
       />
     </div>
   ),
-}
+};
 
 export const WithCheckbox: Story = {
   render: () => (
@@ -98,7 +98,7 @@ export const WithCheckbox: Story = {
       <Label htmlFor="terms">I agree to the terms and conditions</Label>
     </div>
   ),
-}
+};
 
 export const WithRadio: Story = {
   render: () => (
@@ -123,7 +123,7 @@ export const WithRadio: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const WithSelect: Story = {
   render: () => (
@@ -140,4 +140,4 @@ export const WithSelect: Story = {
       </select>
     </div>
   ),
-}
+};

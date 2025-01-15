@@ -12,6 +12,13 @@ import {
   AnalyticsView,
   EventType,
 } from "@/lib/analytics/types";
+import { editQueryString } from "@/lib/analytics/utils";
+import { combineTagIds } from "@/lib/api/tags/combine-tag-ids";
+import usePartnerProfile from "@/lib/swr/use-partner-profile";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { PlanProps } from "@/lib/types";
+import { useLocalStorage } from "@dub/ui";
+import { fetcher } from "@dub/utils";
 import { endOfDay, startOfDay, subDays } from "date-fns";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import {
@@ -21,14 +28,6 @@ import {
   useMemo,
   useState,
 } from "react";
-
-import { editQueryString } from "@/lib/analytics/utils";
-import { combineTagIds } from "@/lib/api/tags/combine-tag-ids";
-import usePartnerProfile from "@/lib/swr/use-partner-profile";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { PlanProps } from "@/lib/types";
-import { useLocalStorage } from "@dub/ui";
-import { fetcher } from "@dub/utils";
 import { toast } from "sonner";
 import useSWR from "swr";
 import { defaultConfig } from "swr/_internal";
@@ -218,7 +217,7 @@ export default function AnalyticsProvider({
         domain: domainSlug,
       };
     } else if (dashboardId) {
-      // Public stats page, e.g. app.*.co/share/dsh_123
+      // Public stats page, e.g. app.dub.co/share/dsh_123
       return {
         basePath: `/share/${dashboardId}`,
         baseApiPath: "/api/analytics/dashboard",

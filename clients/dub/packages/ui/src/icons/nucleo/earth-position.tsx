@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function EarthPosition(props: SVGProps<SVGSVGElement>) {
   return (
@@ -65,5 +65,5 @@ export function EarthPosition(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

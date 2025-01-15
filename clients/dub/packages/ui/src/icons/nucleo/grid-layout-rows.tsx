@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function GridLayoutRows(props: SVGProps<SVGSVGElement>) {
   return (
@@ -40,5 +40,5 @@ export function GridLayoutRows(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

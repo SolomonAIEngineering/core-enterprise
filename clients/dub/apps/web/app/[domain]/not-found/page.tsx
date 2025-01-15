@@ -1,4 +1,3 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { GlobeSearch } from "@dub/ui";
 import { constructMetadata } from "@dub/utils";
 
@@ -6,8 +5,9 @@ export const runtime = "edge";
 
 export const metadata = constructMetadata({
   title: "Link Not Found",
-  description: `This link does not exist on ${platform.company}. Please check the URL and try again.`,
-  image: platform.assets.notFoundLink,
+  description:
+    "This link does not exist on Dub.co. Please check the URL and try again.",
+  image: "https://assets.dub.co/misc/notfoundlink.jpg",
   noIndex: true,
 });
 
@@ -22,7 +22,7 @@ export default async function NotFoundLinkPage() {
         This link does not exist. Please check the URL and try again.
       </p>
       <a
-        href={`${platform.webUrl}/home`}
+        href="https://dub.co/home"
         className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
       >
         Create Your Free Branded Link

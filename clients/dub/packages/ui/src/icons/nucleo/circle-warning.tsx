@@ -1,7 +1,7 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function CircleWarning(
-  props: SVGProps<SVGSVGElement> & { invert?: boolean }
+  props: SVGProps<SVGSVGElement> & { invert?: boolean },
 ) {
   return (
     <svg
@@ -49,5 +49,5 @@ export function CircleWarning(
         )}
       </g>
     </svg>
-  )
+  );
 }

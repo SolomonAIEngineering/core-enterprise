@@ -16,7 +16,6 @@ model Tag {
   @@index(projectId)
   CustomerTag CustomerTag[]
   Transaction Transaction[]
-  BankAccount BankAccount[]
 }
 
 model LinkTag {

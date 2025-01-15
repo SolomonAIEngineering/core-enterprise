@@ -1,21 +1,19 @@
 "use client";
 
+import useWorkspace from "@/lib/swr/use-workspace";
 import { BlurImage, ExpandingArrow } from "@dub/ui";
 import {
-  DICEBEAR_AVATAR_URL,
-  STAGGER_CHILD_VARIANTS,
   cn,
+  DICEBEAR_AVATAR_URL,
   smartTruncate,
+  STAGGER_CHILD_VARIANTS,
 } from "@dub/utils";
-import { redirect, useParams } from "next/navigation";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { COUNTRIES } from "@dub/utils/src/constants/countries";
 import NumberFlow from "@number-flow/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect, useParams } from "next/navigation";
 
 export default function WrappedPageClient() {
   const { slug, year } = useParams();
@@ -45,7 +43,7 @@ export default function WrappedPageClient() {
       </h1>
       <p className="animate-slide-up-fade text-balance text-center text-sm leading-6 text-black [animation-delay:300ms] [animation-duration:1s] [animation-fill-mode:both]">
         As we put a wrap on {year}, we wanted to say thank you for your support!
-        Here&apos;s a look back at your activity in {year}:
+        Here's a look back at your activity in {year}:
       </p>
 
       <div className="animate-slide-up-fade mb-4 mt-8 rounded-lg border border-neutral-200 bg-white p-2 shadow-md [animation-delay:450ms] [animation-duration:1s] [animation-fill-mode:both]">
@@ -102,13 +100,12 @@ export default function WrappedPageClient() {
 
       <Link
         className="group flex flex-col gap-4 rounded-lg border border-neutral-200 bg-white p-4 sm:flex-row"
-        href={`${platform.webUrl}/blog/2024`}
+        href="https://dub.co/blog/2024"
         target="_blank"
-        rel="noreferrer"
       >
         <Image
           src="https://assets.dub.co/blog/2024.jpg"
-          alt={`${platform.company} logo with confetti`}
+          alt="Dub logo with confetti"
           width={1838}
           height={1172}
           className="w-1/3 rounded-md"
@@ -116,7 +113,7 @@ export default function WrappedPageClient() {
         />
         <div className="flex flex-col gap-2">
           <h3 className="font-display font-semibold text-black">
-            {platform.company} {year} Year in Review 🎊
+            Dub {year} Year in Review 🎊
           </h3>
           <p className="text-sm text-neutral-500 group-hover:underline">
             A full recap of some of the top features we shipped this year – and

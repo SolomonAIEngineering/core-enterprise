@@ -1,20 +1,5 @@
 "use client";
 
-import {
-  Button,
-  Dots,
-  Icon,
-  Key,
-  PenWriting,
-  Popover,
-  Table,
-  Tooltip,
-  buttonVariants,
-  usePagination,
-  useTable,
-} from "@dub/ui";
-import { DICEBEAR_AVATAR_URL, cn, fetcher, timeAgo } from "@dub/utils";
-
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import { scopesToName } from "@/lib/api/tokens/scopes";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -24,7 +9,20 @@ import { useDeleteTokenModal } from "@/ui/modals/delete-token-modal";
 import { useTokenCreatedModal } from "@/ui/modals/token-created-modal";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { Delete } from "@/ui/shared/icons";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import {
+  Button,
+  buttonVariants,
+  Dots,
+  Icon,
+  Key,
+  PenWriting,
+  Popover,
+  Table,
+  Tooltip,
+  usePagination,
+  useTable,
+} from "@dub/ui";
+import { cn, DICEBEAR_AVATAR_URL, fetcher, timeAgo } from "@dub/utils";
 import { Command } from "cmdk";
 import { useState } from "react";
 import useSWR from "swr";
@@ -177,7 +175,7 @@ export default function TokensPageClient() {
           </>
         )}
         addButton={<AddTokenButton />}
-        learnMoreHref={`${platform.webUrl}/docs/api-reference/tokens`}
+        learnMoreHref="https://dub.co/docs/api-reference/tokens"
       />
     ),
     resourceName: (plural) => `token${plural ? "s" : ""}`,
@@ -196,10 +194,9 @@ export default function TokensPageClient() {
         caution – do not share your API key with others, or expose it in the
         browser or other client-side code.{" "}
         <a
-          href={`${platform.webUrl}/docs/api-reference/tokens`}
+          href="https://dub.co/docs/api-reference/tokens"
           target="_blank"
           className="font-medium underline underline-offset-4 hover:text-black"
-          rel="noreferrer"
         >
           Learn more
         </a>

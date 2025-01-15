@@ -1,4 +1,4 @@
-import { nFormatter, smartTruncate } from "@dub/utils";
+import { DUB_WORDMARK, nFormatter, smartTruncate } from "@dub/utils";
 import {
   Body,
   Column,
@@ -16,16 +16,14 @@ import {
   Text,
 } from "@react-email/components";
 import { Link2, MousePointerClick } from "lucide-react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function ClicksSummary({
   email = "panic@thedis.co",
-  appName = platform.company,
-  appDomain = platform.webUrl,
+  appName = "Dub.co",
+  appDomain = "dub.co",
   workspaceName = "Acme",
-  workspaceSlug = platform.company.toLowerCase(),
+  workspaceSlug = "acme",
   totalClicks = 63689,
   createdLinks = 25,
   topLinks = [
@@ -76,7 +74,7 @@ export default function ClicksSummary({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
                 alt={appName}
                 className="mx-auto my-0"
@@ -130,11 +128,11 @@ export default function ClicksSummary({
                     const [domain, ...pathParts] = link.split("/");
                     const path = pathParts.join("/") || "_root";
                     return (
-                      <div key={`${index}-${link}-${Math.random()}`}>
+                      <div key={index}>
                         <Row>
                           <Column align="left">
                             <Link
-                              href={`${platform.platformUrl}/${workspaceSlug}/analytics?domain=${domain}&key=${path}`}
+                              href={`https://app.dub.co/${workspaceSlug}/analytics?domain=${domain}&key=${path}`}
                               className="text-sm font-medium text-black underline"
                             >
                               {smartTruncate(link, 33)}↗

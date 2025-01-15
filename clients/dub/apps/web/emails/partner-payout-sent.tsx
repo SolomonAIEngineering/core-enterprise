@@ -1,3 +1,4 @@
+import { currencyFormatter, DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,9 +12,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { currencyFormatter } from "@dub/utils";
 import Footer from "./components/footer";
 
 export default function PartnerPayoutSent({
@@ -21,7 +19,7 @@ export default function PartnerPayoutSent({
   program = {
     id: "prog_d8pl69xXCv4AoHNT281pHQdo",
     name: "Acme",
-    logo: `${platform.assets.wordmark}`,
+    logo: DUB_WORDMARK,
   },
   payout = {
     id: "po_8VuCr2i7WnG65d4TNgZO19fT",
@@ -43,7 +41,7 @@ export default function PartnerPayoutSent({
     endDate: string;
   };
 }) {
-  const linkToPayout = `${platform.partnersUrl}/settings/payouts?payoutId=${payout.id}`;
+  const linkToPayout = `https://partners.dub.co/settings/payouts?payoutId=${payout.id}`;
 
   const saleAmountInDollars = currencyFormatter(payout.amount / 100, {
     minimumFractionDigits: 2,
@@ -59,7 +57,7 @@ export default function PartnerPayoutSent({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="my-8">
               <Img
-                src={program.logo || platform.assets.logo}
+                src={program.logo || "https://assets.dub.co/logo.png"}
                 height="32"
                 alt={program.name}
               />

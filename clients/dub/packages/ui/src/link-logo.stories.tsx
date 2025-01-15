@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { LinkLogo } from './link-logo'
+import { LinkLogo } from "./link-logo";
 
 const meta: Meta<typeof LinkLogo> = {
-  title: 'Components/LinkLogo',
+  title: "Components/LinkLogo",
   component: LinkLogo,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A component for displaying logos with link functionality.',
+        component: "A component for displaying logos with link functionality.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof LinkLogo>
+export default meta;
+type Story = StoryObj<typeof LinkLogo>;
 
 export const Default: Story = {
   render: () => <LinkLogo apexDomain="example.com" />,
-}
+};
 
 export const WithCustomSize: Story = {
   render: () => <LinkLogo apexDomain="example.com" className="h-12 w-12" />,
-}
+};
 
 export const WithBackground: Story = {
   render: () => (
@@ -32,7 +32,7 @@ export const WithBackground: Story = {
       <LinkLogo apexDomain="example.com" />
     </div>
   ),
-}
+};
 
 export const WithGradient: Story = {
   render: () => (
@@ -40,11 +40,11 @@ export const WithGradient: Story = {
       <LinkLogo apexDomain="example.com" />
     </div>
   ),
-}
+};
 
 export const WithCustomColor: Story = {
   render: () => <LinkLogo apexDomain="example.com" className="text-blue-500" />,
-}
+};
 
 export const WithHoverEffect: Story = {
   render: () => (
@@ -53,7 +53,7 @@ export const WithHoverEffect: Story = {
       className="transition-transform hover:scale-110"
     />
   ),
-}
+};
 
 export const WithTooltip: Story = {
   render: () => (
@@ -66,7 +66,7 @@ export const WithTooltip: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const WithBorder: Story = {
   render: () => (
@@ -75,7 +75,7 @@ export const WithBorder: Story = {
       className="rounded-full border-2 border-gray-200 p-1"
     />
   ),
-}
+};
 
 export const WithShadow: Story = {
   render: () => (
@@ -84,7 +84,7 @@ export const WithShadow: Story = {
       className="shadow-lg transition-shadow hover:shadow-xl"
     />
   ),
-}
+};
 
 export const WithCustomTarget: Story = {
   render: () => (
@@ -93,4 +93,4 @@ export const WithCustomTarget: Story = {
       className="transition-opacity hover:opacity-80"
     />
   ),
-}
+};

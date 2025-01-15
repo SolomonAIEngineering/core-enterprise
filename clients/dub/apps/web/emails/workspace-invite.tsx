@@ -1,3 +1,4 @@
+import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,13 +12,11 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function WorkspaceInvite({
   email = "panic@thedis.co",
-  appName = platform.company,
+  appName = "Dub.co",
   url = "http://localhost:8888/api/auth/callback/email?callbackUrl=http%3A%2F%2Fapp.localhost%3A3000%2Flogin&token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&email=youremail@gmail.com",
   workspaceName = "Acme",
   workspaceUser = "Brendon Urie",
@@ -41,7 +40,7 @@ export default function WorkspaceInvite({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
                 alt={appName}
                 className="mx-auto my-0"

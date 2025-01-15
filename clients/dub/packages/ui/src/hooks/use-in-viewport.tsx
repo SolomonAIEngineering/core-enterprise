@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { RefObject, useEffect, useState } from 'react'
+import { RefObject, useEffect, useState } from "react";
 
 export function useInViewport(
   elementRef: RefObject<Element>,
-  options: { root?: RefObject<Element>; defaultValue?: boolean } = {}
+  options: { root?: RefObject<Element>; defaultValue?: boolean } = {},
 ) {
-  const { root, defaultValue } = options
-  const [visible, setVisible] = useState(defaultValue ?? false)
+  const { root, defaultValue } = options;
+  const [visible, setVisible] = useState(defaultValue ?? false);
 
   useEffect(() => {
     const checkVisibility = () => {
-      const node = elementRef.current
-      if (!node) return
-      const rootNode = root?.current
+      const node = elementRef.current;
+      if (!node) return;
+      const rootNode = root?.current;
 
-      const rect = node.getBoundingClientRect()
+      const rect = node.getBoundingClientRect();
       const rootRect = rootNode
         ? rootNode.getBoundingClientRect()
         : {
@@ -23,33 +23,33 @@ export function useInViewport(
             left: 0,
             bottom: window.innerHeight,
             right: window.innerWidth,
-          }
+          };
 
       setVisible(
         rect.top < rootRect.bottom &&
           rect.bottom > rootRect.top &&
           rect.left < rootRect.right &&
-          rect.right > rootRect.left
-      )
-    }
+          rect.right > rootRect.left,
+      );
+    };
 
-    ;(root?.current || window).addEventListener('scroll', checkVisibility)
-    window.addEventListener('resize', checkVisibility)
+    (root?.current || window).addEventListener("scroll", checkVisibility);
+    window.addEventListener("resize", checkVisibility);
 
-    let observer: IntersectionObserver | null = null
+    let observer: IntersectionObserver | null = null;
     if (elementRef.current) {
-      observer = new IntersectionObserver(checkVisibility)
-      observer.observe(elementRef.current)
+      observer = new IntersectionObserver(checkVisibility);
+      observer.observe(elementRef.current);
     }
 
-    checkVisibility()
+    checkVisibility();
 
     return () => {
-      ;(root?.current || window).removeEventListener('scroll', checkVisibility)
-      window.removeEventListener('resize', checkVisibility)
-      observer?.disconnect()
-    }
-  }, [elementRef, root])
+      (root?.current || window).removeEventListener("scroll", checkVisibility);
+      window.removeEventListener("resize", checkVisibility);
+      observer?.disconnect();
+    };
+  }, [elementRef, root]);
 
-  return visible
+  return visible;
 }

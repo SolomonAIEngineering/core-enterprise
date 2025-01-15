@@ -1,3 +1,5 @@
+import useWorkspace from "@/lib/swr/use-workspace";
+import { ImportedDomainCountProps } from "@/lib/types";
 import {
   Button,
   InfoTooltip,
@@ -21,10 +23,6 @@ import {
   useMemo,
   useState,
 } from "react";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import { ImportedDomainCountProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { toast } from "sonner";
 import useSWRImmutable from "swr/immutable";
 
@@ -96,7 +94,7 @@ function ImportShortModal({
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-8 sm:px-16">
         <div className="flex items-center space-x-3 py-4">
           <img
-            src={`${platform.assetsUrl}/icons/short.svg`}
+            src="https://assets.dub.co/misc/icons/short.svg"
             alt="Short.io logo"
             className="h-10 w-10"
           />
@@ -105,8 +103,8 @@ function ImportShortModal({
         </div>
         <h3 className="text-lg font-medium">Import Your Short.io Links</h3>
         <p className="text-center text-sm text-gray-500">
-          Easily import all your existing Short.io links into {platform.company}{" "}
-          with just a few clicks.
+          Easily import all your existing Short.io links into{" "}
+          {process.env.NEXT_PUBLIC_APP_NAME} with just a few clicks.
         </p>
       </div>
 
@@ -253,7 +251,7 @@ function ImportShortModal({
                     <SimpleTooltipContent
                       title={`Your Short.io API Key can be found in your Short.io account under "Integrations & API".`}
                       cta="Read the guide."
-                      href={`${platform.webUrl}/help/article/migrating-from-short`}
+                      href="https://dub.co/help/article/migrating-from-short"
                     />
                   }
                 />

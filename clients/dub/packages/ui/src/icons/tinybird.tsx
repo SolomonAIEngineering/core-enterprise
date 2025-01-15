@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Tinybird(props: SVGProps<SVGSVGElement>) {
   return (
@@ -18,5 +18,5 @@ export function Tinybird(props: SVGProps<SVGSVGElement>) {
         d="m0 11.495 17.535 6.275L20.41 4.36 0 11.495Z"
       />
     </svg>
-  )
+  );
 }

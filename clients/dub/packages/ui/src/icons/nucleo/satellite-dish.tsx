@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function SatelliteDish(props: SVGProps<SVGSVGElement>) {
   return (
@@ -47,5 +47,5 @@ export function SatelliteDish(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

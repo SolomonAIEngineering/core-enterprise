@@ -1,10 +1,7 @@
-import "dotenv-flow/config";
-
-import { getPrettyUrl, truncate } from "@dub/utils";
-
 import { createId } from "@/lib/api/utils";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
+import { getPrettyUrl, truncate } from "@dub/utils";
+import "dotenv-flow/config";
 
 async function main() {
   const links = await prisma.link.findMany({
@@ -41,7 +38,7 @@ async function main() {
       return {
         shortLink: truncate(getPrettyUrl(link.shortLink), 24),
         clicks: link.clicks,
-        dashboardUrl: `https://preview.${platform.domain}/share/${dashboard.id}`,
+        dashboardUrl: `https://preview.dub.co/share/${dashboard.id}`,
       };
     }),
   );

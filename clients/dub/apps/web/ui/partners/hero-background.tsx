@@ -1,6 +1,6 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { BlurImage } from "@dub/ui";
 import Image from "next/image";
+
 export function HeroBackground({
   logo,
   color,
@@ -22,7 +22,7 @@ export function HeroBackground({
           }}
         />
         <Image
-          src={`${platform.assetsUrl}/referrals-hero-background.svg`}
+          src="https://assets.dub.co/misc/referrals-hero-background.svg"
           alt="Refer and earn"
           width={1200}
           height={630}

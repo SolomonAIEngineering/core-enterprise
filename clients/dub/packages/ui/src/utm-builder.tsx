@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { cn } from '@dub/utils'
-import { ReactNode, useEffect, useId, useRef, useState } from 'react'
-import { useMediaQuery } from './hooks/use-media-query'
+import { cn } from "@dub/utils";
+import { ReactNode, useEffect, useId, useRef, useState } from "react";
+import { useMediaQuery } from "./hooks/use-media-query";
 import {
   Flag6,
   Gift,
@@ -10,53 +10,53 @@ import {
   InputSearch,
   Page2,
   SatelliteDish,
-} from './icons/nucleo'
-import { Tooltip } from './tooltip'
+} from "./icons/nucleo";
+import { Tooltip } from "./tooltip";
 
 export const UTM_PARAMETERS = [
   {
-    key: 'utm_source',
+    key: "utm_source",
     icon: GlobePointer,
-    label: 'Source',
-    placeholder: 'google',
-    description: 'Where the traffic is coming from',
+    label: "Source",
+    placeholder: "google",
+    description: "Where the traffic is coming from",
   },
   {
-    key: 'utm_medium',
+    key: "utm_medium",
     icon: SatelliteDish,
-    label: 'Medium',
-    placeholder: 'cpc',
-    description: 'How the traffic is coming',
+    label: "Medium",
+    placeholder: "cpc",
+    description: "How the traffic is coming",
   },
   {
-    key: 'utm_campaign',
+    key: "utm_campaign",
     icon: Flag6,
-    label: 'Campaign',
-    placeholder: 'summer_sale',
-    description: 'The name of the campaign',
+    label: "Campaign",
+    placeholder: "summer_sale",
+    description: "The name of the campaign",
   },
   {
-    key: 'utm_term',
+    key: "utm_term",
     icon: InputSearch,
-    label: 'Term',
-    placeholder: 'running shoes',
-    description: 'The term of the campaign',
+    label: "Term",
+    placeholder: "running shoes",
+    description: "The term of the campaign",
   },
   {
-    key: 'utm_content',
+    key: "utm_content",
     icon: Page2,
-    label: 'Content',
-    placeholder: 'logolink',
-    description: 'The content of the campaign',
+    label: "Content",
+    placeholder: "logolink",
+    description: "The content of the campaign",
   },
   {
-    key: 'ref',
+    key: "ref",
     icon: Gift,
-    label: 'Referral',
-    placeholder: 'yoursite.com',
-    description: 'The referral of the campaign',
+    label: "Referral",
+    placeholder: "yoursite.com",
+    description: "The referral of the campaign",
   },
-] as const
+] as const;
 
 export function UTMBuilder({
   values,
@@ -67,30 +67,33 @@ export function UTMBuilder({
   className,
 }: {
   values: Record<
-    (typeof UTM_PARAMETERS)[number]['key'],
+    (typeof UTM_PARAMETERS)[number]["key"],
     string | null | undefined
-  >
-  onChange: (key: (typeof UTM_PARAMETERS)[number]['key'], value: string) => void
-  disabled?: boolean
-  autoFocus?: boolean
-  disabledTooltip?: string | ReactNode
-  className?: string
+  >;
+  onChange: (
+    key: (typeof UTM_PARAMETERS)[number]["key"],
+    value: string,
+  ) => void;
+  disabled?: boolean;
+  autoFocus?: boolean;
+  disabledTooltip?: string | ReactNode;
+  className?: string;
 }) {
-  const { isMobile } = useMediaQuery()
+  const { isMobile } = useMediaQuery();
 
-  const id = useId()
-  const [showParams, setShowParams] = useState(false)
+  const id = useId();
+  const [showParams, setShowParams] = useState(false);
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Hacky fix to focus the input automatically in modals where normally it doesn't work
   useEffect(() => {
     if (inputRef.current && !isMobile && autoFocus)
-      setTimeout(() => inputRef.current?.focus(), 10)
-  }, [])
+      setTimeout(() => inputRef.current?.focus(), 10);
+  }, []);
 
   return (
-    <div className={cn('grid gap-y-3', className)}>
+    <div className={cn("grid gap-y-3", className)}>
       {UTM_PARAMETERS.map(
         ({ key, icon: Icon, label, placeholder, description }, idx) => {
           return (
@@ -108,8 +111,8 @@ export function UTMBuilder({
                 >
                   <div
                     className={cn(
-                      'flex items-center gap-1.5 rounded-l-md border-y border-l border-gray-300 bg-gray-50 px-3 py-1.5 text-gray-700',
-                      showParams ? 'sm:min-w-36' : 'sm:min-w-28'
+                      "flex items-center gap-1.5 rounded-l-md border-y border-l border-gray-300 bg-gray-50 px-3 py-1.5 text-gray-700",
+                      showParams ? "sm:min-w-36" : "sm:min-w-28",
                     )}
                     onClick={() => setShowParams((s) => !s)}
                   >
@@ -135,26 +138,26 @@ export function UTMBuilder({
                       placeholder={placeholder}
                       disabled={disabled || Boolean(disabledTooltip)}
                       className="size-full rounded-r-md border border-gray-300 placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500 disabled:cursor-not-allowed sm:text-sm"
-                      value={values[key] || ''}
+                      value={values[key] || ""}
                       onChange={(e) => onChange(key, e.target.value)}
                     />
                   </DisabledTooltipWrapper>
                 </div>
               </div>
             </div>
-          )
-        }
+          );
+        },
       )}
     </div>
-  )
+  );
 }
 
 function DisabledTooltipWrapper({
   children,
   disabledTooltip,
 }: {
-  children: ReactNode
-  disabledTooltip?: string | ReactNode
+  children: ReactNode;
+  disabledTooltip?: string | ReactNode;
 }) {
   return disabledTooltip ? (
     <Tooltip content={disabledTooltip} disableHoverableContent>
@@ -162,5 +165,5 @@ function DisabledTooltipWrapper({
     </Tooltip>
   ) : (
     children
-  )
+  );
 }

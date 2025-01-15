@@ -1,10 +1,8 @@
-import { GOOGLE_FAVICON_URL, cn } from '@dub/utils'
-import { type SVGProps, useId } from 'react'
-
-import { BusinessConfig as platform } from '@dub/platform-config'
+import { cn, GOOGLE_FAVICON_URL } from "@dub/utils";
+import { SVGProps, useId } from "react";
 
 export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
-  const id = useId()
+  const id = useId();
 
   return (
     <svg
@@ -15,8 +13,8 @@ export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 336 336"
       {...props}
       className={cn(
-        'pointer-events-none text-[var(--fg)] [--bg:white] [--fg:#222] [--grid:#e5e5e5] dark:[--bg:black] dark:[--fg:#fffa] dark:[--grid:#fff2]',
-        props.className
+        "pointer-events-none text-[var(--fg)] [--bg:white] [--fg:#222] [--grid:#e5e5e5] dark:[--bg:black] dark:[--fg:#fffa] dark:[--grid:#fff2]",
+        props.className,
       )}
     >
       <g clipPath={`url(#${id}-a)`}>
@@ -405,7 +403,7 @@ export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
           fontSize="12"
           fontWeight="500"
           letterSpacing="0em"
-          style={{ whiteSpace: 'pre' }}
+          style={{ whiteSpace: "pre" }}
         >
           <tspan x="97" y="165.364">
             d.to/try
@@ -428,10 +426,10 @@ export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
           fill="#A3A3A3"
           fontSize="9"
           letterSpacing="-.02em"
-          style={{ whiteSpace: 'pre' }}
+          style={{ whiteSpace: "pre" }}
         >
           <tspan x="110" y="179.773">
-            {platform.platformHost}/register
+            app.dub.co/register
           </tspan>
         </text>
         <path
@@ -462,7 +460,7 @@ export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
           fontSize="10"
           fontWeight="500"
           letterSpacing="0em"
-          style={{ whiteSpace: 'pre' }}
+          style={{ whiteSpace: "pre" }}
         >
           <tspan x="251" y="171.636">
             51K
@@ -661,5 +659,5 @@ export function LinksGraphic(props: SVGProps<SVGSVGElement>) {
         />
       </defs>
     </svg>
-  )
+  );
 }

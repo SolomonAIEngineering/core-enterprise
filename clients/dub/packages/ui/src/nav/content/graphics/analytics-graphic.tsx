@@ -1,5 +1,5 @@
-import { cn } from '@dub/utils'
-import { SVGProps } from 'react'
+import { cn } from "@dub/utils";
+import { SVGProps } from "react";
 
 export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
   return (
@@ -11,8 +11,8 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 349 290"
       {...props}
       className={cn(
-        'pointer-events-none [--bg:white] [--grid:#e5e5e5] dark:[--bg:black] dark:[--grid:#fff2]',
-        props.className
+        "pointer-events-none [--bg:white] [--grid:#e5e5e5] dark:[--bg:black] dark:[--grid:#fff2]",
+        props.className,
       )}
     >
       <g className="text-[var(--grid)]">
@@ -70,7 +70,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="213.667" y="158.909">
           Clicks
@@ -82,7 +82,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="244.667" y="158.909">
           12.5K
@@ -94,7 +94,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="213.667" y="171.909">
           Leads
@@ -106,7 +106,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="244.667" y="171.909">
           8.2K
@@ -118,7 +118,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="213.667" y="184.909">
           Sales
@@ -130,7 +130,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="244.667" y="184.909">
           $10K
@@ -153,7 +153,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="117.667" y="206.909">
           Desktop
@@ -165,7 +165,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="157.667" y="206.909">
           2.5K
@@ -177,7 +177,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="117.667" y="219.909">
           Mobile
@@ -189,7 +189,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="157.667" y="219.909">
           1.3K
@@ -201,7 +201,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="117.667" y="232.909">
           Tablet
@@ -213,7 +213,7 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         fontSize="8"
         fontWeight="500"
         letterSpacing="0em"
-        style={{ whiteSpace: 'pre' }}
+        style={{ whiteSpace: "pre" }}
       >
         <tspan x="157.667" y="232.909">
           402
@@ -264,5 +264,5 @@ export function AnalyticsGraphic(props: SVGProps<SVGSVGElement>) {
         </filter>
       </defs>
     </svg>
-  )
+  );
 }

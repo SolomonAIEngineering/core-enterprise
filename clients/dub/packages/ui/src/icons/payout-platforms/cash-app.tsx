@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function CashApp(props: SVGProps<SVGSVGElement>) {
   return (
@@ -17,5 +17,5 @@ export function CashApp(props: SVGProps<SVGSVGElement>) {
         clipRule="evenodd"
       ></path>
     </svg>
-  )
+  );
 }

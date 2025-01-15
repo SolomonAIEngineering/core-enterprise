@@ -1,7 +1,5 @@
-import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
-
 import z from "@/lib/zod";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { booleanQuerySchema, getPaginationQuerySchema } from "./misc";
 import { parseUrlSchemaAllowEmpty } from "./utils";
 
 export const DomainSchema = z.object({
@@ -28,7 +26,7 @@ export const DomainSchema = z.object({
     .describe(
       "Provide context to your teammates in the link creation modal by showing them an example of a link to be shortened.",
     )
-    .openapi({ example: `${platform.webUrl}/help/article/what-is-dub` }),
+    .openapi({ example: "https://dub.co/help/article/what-is-dub" }),
   expiredUrl: z
     .string()
     .nullable()
@@ -75,7 +73,7 @@ export const getDomainsQuerySchema = z
 
 export const getDomainsQuerySchemaExtended = getDomainsQuerySchema.merge(
   z.object({
-    // only UI uses the following query parameters
+    // only Dub UI uses the following query parameters
     includeLink: booleanQuerySchema.default("false"),
   }),
 );
@@ -124,7 +122,7 @@ export const createDomainBodySchema = z.object({
     .describe(
       "Provide context to your teammates in the link creation modal by showing them an example of a link to be shortened.",
     )
-    .openapi({ example: `${platform.webUrl}/help/article/what-is-dub` }),
+    .openapi({ example: "https://dub.co/help/article/what-is-dub" }),
   logo: z
     .string()
     .trim()

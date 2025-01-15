@@ -1,9 +1,9 @@
 export function Facebook({
   className,
-  fill = '#1977f3',
+  fill = "#1977f3",
 }: {
-  className?: string
-  fill?: string
+  className?: string;
+  fill?: string;
 }) {
   return (
     <svg
@@ -19,5 +19,5 @@ export function Facebook({
         fill="#fff"
       />
     </svg>
-  )
+  );
 }

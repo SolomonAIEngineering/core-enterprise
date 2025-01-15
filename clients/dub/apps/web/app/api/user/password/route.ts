@@ -1,10 +1,8 @@
-import { hashPassword, validatePassword } from "@/lib/auth/password";
-
 import { DubApiError } from "@/lib/api/errors";
 import { parseRequestBody } from "@/lib/api/utils";
 import { withSession } from "@/lib/auth";
+import { hashPassword, validatePassword } from "@/lib/auth/password";
 import { updatePasswordSchema } from "@/lib/zod/schemas/auth";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { waitUntil } from "@vercel/functions";
 import { sendEmail } from "emails";
@@ -65,7 +63,7 @@ export const PATCH = withSession(async ({ req, session }) => {
   // Send the email to inform the user that their password has been updated
   waitUntil(
     sendEmail({
-      subject: `Your ${platform.company} account password has been updated`,
+      subject: `Your ${process.env.NEXT_PUBLIC_APP_NAME} account password has been updated`,
       email: session.user.email,
       react: PasswordUpdated({
         email: session.user.email,

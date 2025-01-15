@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Asia(props: SVGProps<SVGSVGElement>) {
   return (
@@ -212,5 +212,5 @@ export function Asia(props: SVGProps<SVGSVGElement>) {
         </linearGradient>
       </defs>
     </svg>
-  )
+  );
 }

@@ -1,14 +1,12 @@
 "use client";
 
-import { Badge, Button } from "@dub/ui";
-import { CircleCheckFill, LoadingSpinner } from "@dub/ui/icons";
-
 import { updateProgramAction } from "@/lib/actions/partners/update-program";
 import useDomains from "@/lib/swr/use-domains";
 import useProgram from "@/lib/swr/use-program";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { ProgramProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Badge, Button } from "@dub/ui";
+import { CircleCheckFill, LoadingSpinner } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
@@ -21,17 +19,17 @@ type FormData = Pick<ProgramProps, "domain" | "url" | "cookieLength">;
 const linkStructures = [
   {
     label: "Short link",
-    example: `refer.${platform.domain}/yoan`,
+    example: "refer.dub.co/steven",
     comingSoon: false,
   },
   {
     label: "Query parameter",
-    example: `${platform.domain}?via=yoan`,
+    example: "dub.co?via=steven",
     comingSoon: true,
   },
   {
     label: "Dynamic path",
-    example: `${platform.domain}/refer/yoan`,
+    example: "dub.co/refer/steven",
     comingSoon: true,
   },
 ];
@@ -237,14 +235,13 @@ function TrackingSettingsForm({ program }: { program: ProgramProps }) {
             <p className="mt-2 text-sm text-neutral-500">
               View our{" "}
               <a
-                href={`${platform.webUrl}/docs/sdks/client-side/introduction`}
+                href="https://dub.co/docs/sdks/client-side/introduction"
                 target="_blank"
                 className="underline transition-colors duration-75 hover:text-neutral-600"
-                rel="noreferrer"
               >
                 installation guides
               </a>{" "}
-              to add {platform.company} Conversions to your website.
+              to add Dub Conversions to your website.
             </p>
           </div>
         </SettingsRow>

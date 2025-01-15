@@ -1,16 +1,15 @@
-import { createToken, generateCodeChallengeHash } from "@/lib/api/oauth/utils";
-
 import { DubApiError } from "@/lib/api/errors";
 import { OAUTH_CONFIG } from "@/lib/api/oauth/constants";
+import { createToken, generateCodeChallengeHash } from "@/lib/api/oauth/utils";
 import { hashToken } from "@/lib/auth";
 import { installIntegration } from "@/lib/integrations/install";
 import { generateRandomName } from "@/lib/names";
-import type z from "@/lib/zod";
-import type { authCodeExchangeSchema } from "@/lib/zod/schemas/oauth";
+import z from "@/lib/zod";
+import { authCodeExchangeSchema } from "@/lib/zod/schemas/oauth";
 import { prisma } from "@dub/prisma";
 import { getCurrentPlan } from "@dub/utils";
 import { waitUntil } from "@vercel/functions";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
 // Exchange authorization code with access token
 export const exchangeAuthCodeForToken = async (
@@ -123,7 +122,7 @@ export const exchangeAuthCodeForToken = async (
         ? await generateCodeChallengeHash(codeVerifier!)
         : codeVerifier;
 
-    if (accessCode.codeChallenge !== codeChallenge) {
+    if (accessCode.codeChallenge != codeChallenge) {
       throw new DubApiError({
         code: "unauthorized",
         message: "invalid_grant",
@@ -233,7 +232,7 @@ export const exchangeAuthCodeForToken = async (
           await prisma.restrictedToken.update({
             where: { id: restrictedToken.id },
             data: {
-              rateLimit: getCurrentPlan(project.plan).limits.apis,
+              rateLimit: getCurrentPlan(project.plan).limits.api,
             },
           });
         }),

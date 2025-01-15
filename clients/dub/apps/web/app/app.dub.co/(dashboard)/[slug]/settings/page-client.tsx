@@ -5,7 +5,6 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import DeleteWorkspace from "@/ui/workspaces/delete-workspace";
 import UploadLogo from "@/ui/workspaces/upload-logo";
 import WorkspaceId from "@/ui/workspaces/workspace-id";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Form } from "@dub/ui";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -27,7 +26,7 @@ export default function WorkspaceSettingsClient() {
     <>
       <Form
         title="Workspace Name"
-        description={`This is the name of your workspace on ${platform.company}.`}
+        description={`This is the name of your workspace on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
         inputAttrs={{
           name: "name",
           defaultValue: name,
@@ -59,7 +58,7 @@ export default function WorkspaceSettingsClient() {
       />
       <Form
         title="Workspace Slug"
-        description={`This is your workspace's unique slug on ${platform.company}.`}
+        description={`This is your workspace's unique slug on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
         inputAttrs={{
           name: "slug",
           defaultValue: slug,
@@ -80,7 +79,7 @@ export default function WorkspaceSettingsClient() {
             if (res.status === 200) {
               const { slug: newSlug } = await res.json();
               await mutate("/api/workspaces");
-              if (newSlug !== slug) {
+              if (newSlug != slug) {
                 router.push(`/${newSlug}/settings`);
                 update();
               }

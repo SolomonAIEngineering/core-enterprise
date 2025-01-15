@@ -14,7 +14,7 @@ export function processKey({ domain, key }: { domain: string; key: string }) {
   if (!validKeyRegex.test(key)) {
     return null;
   }
-  // if key starts with _, return null (reserved route for  internals)
+  // if key starts with _, return null (reserved route for Dub internals)
   if (key.startsWith("_")) {
     return null;
   }
@@ -26,8 +26,8 @@ export function processKey({ domain, key }: { domain: string; key: string }) {
 
   // remove all leading and trailing slashes from key
   key = key.replace(/^\/+|\/+$/g, "");
-  /*
-      for default  domains, remove all special characters + unicode normalization
+  /* 
+      for default dub domains, remove all special characters + unicode normalization 
         to remove accents / diacritical marks. this is to prevent phishing/typo squatting
       for custom domains this is fine, since only the workspace can set the key
     */

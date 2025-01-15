@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function QRCode(props: SVGProps<SVGSVGElement>) {
   return (
@@ -123,5 +123,5 @@ export function QRCode(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

@@ -1,17 +1,16 @@
+import { DubApiError } from "@/lib/api/errors";
+import { withSession } from "@/lib/auth";
+import { checkIfUserExists } from "@/lib/planetscale";
 import {
   WorkspaceSchema,
   createWorkspaceSchema,
 } from "@/lib/zod/schemas/workspaces";
+import { prisma } from "@dub/prisma";
 import {
   FREE_WORKSPACES_LIMIT,
   generateRandomString,
   nanoid,
 } from "@dub/utils";
-
-import { DubApiError } from "@/lib/api/errors";
-import { withSession } from "@/lib/auth";
-import { checkIfUserExists } from "@/lib/planetscale";
-import { prisma } from "@dub/prisma";
 import { waitUntil } from "@vercel/functions";
 import { NextResponse } from "next/server";
 
@@ -51,8 +50,9 @@ export const GET = withSession(async ({ session }) => {
 });
 
 export const POST = withSession(async ({ req, session }) => {
-  const { name, slug, adminRole, organizationSize, reason } =
-    await createWorkspaceSchema.parseAsync(await req.json());
+  const { name, slug } = await createWorkspaceSchema.parseAsync(
+    await req.json(),
+  );
 
   const userExists = await checkIfUserExists(session.user.id);
 
@@ -87,9 +87,6 @@ export const POST = withSession(async ({ req, session }) => {
       data: {
         name,
         slug,
-        adminRole,
-        organizationSize,
-        reason,
         users: {
           create: {
             userId: session.user.id,

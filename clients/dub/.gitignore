@@ -45,4 +45,3 @@ packages/stripe-app/.build/*
 *.csv
 *.ndjson
 .vitest
-*storybook.log

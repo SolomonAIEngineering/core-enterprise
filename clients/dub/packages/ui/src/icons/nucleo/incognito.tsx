@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function Incognito(props: SVGProps<SVGSVGElement>) {
   return (
@@ -59,5 +59,5 @@ export function Incognito(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

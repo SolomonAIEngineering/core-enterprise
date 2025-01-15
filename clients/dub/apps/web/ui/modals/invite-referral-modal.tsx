@@ -1,6 +1,9 @@
 "use client";
 
+import { sendInviteReferralEmail } from "@/lib/actions/send-invite-referral-email";
+import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, Logo, Modal, useMediaQuery } from "@dub/ui";
+import { useAction } from "next-safe-action/hooks";
 import {
   Dispatch,
   SetStateAction,
@@ -8,11 +11,6 @@ import {
   useMemo,
   useState,
 } from "react";
-
-import { sendInviteReferralEmail } from "@/lib/actions/send-invite-referral-email";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 
 function InviteReferralModal({
@@ -45,8 +43,7 @@ function InviteReferralModal({
         <Logo />
         <h3 className="text-lg font-medium">Invite via Email</h3>
         <p className="text-center text-sm text-gray-500">
-          Invite a friend or colleague to use {platform.company} with your
-          referral link.
+          Invite a friend or colleague to use Dub with your referral link.
         </p>
       </div>
       <form
@@ -87,7 +84,6 @@ function InviteReferralModal({
 export function useInviteReferralModal() {
   const [showInviteReferralModal, setShowInviteReferralModal] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const InviteReferralModalCallback = useCallback(() => {
     return (
       <InviteReferralModal
@@ -97,7 +93,6 @@ export function useInviteReferralModal() {
     );
   }, [showInviteReferralModal, setShowInviteReferralModal]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   return useMemo(
     () => ({
       setShowInviteReferralModal,

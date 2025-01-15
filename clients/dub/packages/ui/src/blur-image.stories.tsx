@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { BlurImage } from './blur-image'
+import { BlurImage } from "./blur-image";
 
 const meta: Meta<typeof BlurImage> = {
-  title: 'Components/BlurImage',
+  title: "Components/BlurImage",
   component: BlurImage,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'An image component with blur loading effect and fallback support.',
+          "An image component with blur loading effect and fallback support.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof BlurImage>
+export default meta;
+type Story = StoryObj<typeof BlurImage>;
 
 export const Default: Story = {
   render: () => (
@@ -28,7 +28,7 @@ export const Default: Story = {
       height={200}
     />
   ),
-}
+};
 
 export const SmallImage: Story = {
   render: () => (
@@ -40,7 +40,7 @@ export const SmallImage: Story = {
       className="rounded"
     />
   ),
-}
+};
 
 export const LargeImage: Story = {
   render: () => (
@@ -52,7 +52,7 @@ export const LargeImage: Story = {
       className="rounded-lg"
     />
   ),
-}
+};
 
 export const CircularImage: Story = {
   render: () => (
@@ -64,7 +64,7 @@ export const CircularImage: Story = {
       className="rounded-full"
     />
   ),
-}
+};
 
 export const WithBorder: Story = {
   render: () => (
@@ -76,7 +76,7 @@ export const WithBorder: Story = {
       className="rounded-lg border-2 border-gray-200"
     />
   ),
-}
+};
 
 export const WithShadow: Story = {
   render: () => (
@@ -88,7 +88,7 @@ export const WithShadow: Story = {
       className="rounded-lg shadow-lg"
     />
   ),
-}
+};
 
 export const FallbackAvatar: Story = {
   render: () => (
@@ -100,7 +100,7 @@ export const FallbackAvatar: Story = {
       className="rounded-full"
     />
   ),
-}
+};
 
 export const ImageGrid: Story = {
   render: () => (
@@ -117,7 +117,7 @@ export const ImageGrid: Story = {
       ))}
     </div>
   ),
-}
+};
 
 export const AspectRatios: Story = {
   render: () => (
@@ -145,7 +145,7 @@ export const AspectRatios: Story = {
       />
     </div>
   ),
-}
+};
 
 export const WithOverlay: Story = {
   render: () => (
@@ -162,4 +162,4 @@ export const WithOverlay: Story = {
       </div>
     </div>
   ),
-}
+};

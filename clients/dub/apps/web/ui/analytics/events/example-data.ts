@@ -1,4 +1,3 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
 const common = {
   ip: "0.0.0.0",
   referer: "(direct)",
@@ -12,8 +11,8 @@ const dubLink = {
   id: "1",
   domain: "dub.link",
   key: "uxUrVCz",
-  shortLink: `${platform.webUrl}/uxUrVCz`,
-  url: `${platform.webUrl}/`,
+  shortLink: "https://dub.co/uxUrVCz",
+  url: "https://dub.co/",
 };
 
 const githubLink = {

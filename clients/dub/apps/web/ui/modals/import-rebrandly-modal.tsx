@@ -1,3 +1,5 @@
+import useWorkspace from "@/lib/swr/use-workspace";
+import { ImportedDomainCountProps } from "@/lib/types";
 import {
   Button,
   InfoTooltip,
@@ -10,20 +12,16 @@ import {
   useRouterStuff,
 } from "@dub/ui";
 import { fetcher, nFormatter } from "@dub/utils";
+import { ArrowRight } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  type Dispatch,
-  type SetStateAction,
+  Dispatch,
+  SetStateAction,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import type { ImportedDomainCountProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import useSWRImmutable from "swr/immutable";
 
@@ -81,7 +79,7 @@ function ImportRebrandlyModal({
   }, [searchParams]);
 
   const isSelected = (domain: string) => {
-    return !!selectedDomains.find((d) => d.domain === domain);
+    return selectedDomains.find((d) => d.domain === domain) ? true : false;
   };
 
   const { queryParams } = useRouterStuff();
@@ -111,7 +109,7 @@ function ImportRebrandlyModal({
         <h3 className="text-lg font-medium">Import Your Rebrandly Links</h3>
         <p className="text-center text-sm text-gray-500">
           Easily import all your existing Rebrandly links into{" "}
-          {platform.company} with just a few clicks.
+          {process.env.NEXT_PUBLIC_APP_NAME} with just a few clicks.
         </p>
       </div>
 

@@ -1,7 +1,5 @@
-import { Background, Footer, Nav, NavMobile } from "@dub/ui";
-
 import { getDomainViaEdge } from "@/lib/planetscale/get-domain-via-edge";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Background, Footer, Nav, NavMobile } from "@dub/ui";
 import { CircleHalfDottedClock } from "@dub/ui/icons";
 import { constructMetadata } from "@dub/utils";
 import { redirect } from "next/navigation";
@@ -40,9 +38,8 @@ export default async function ExpiredLinkPage({
           new one.
         </p>
         <a
-          href={`${platform.webUrl}/home`}
+          href="https://dub.co/home"
           className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
-          rel="noreferrer"
         >
           Create Your Free Branded Link
         </a>

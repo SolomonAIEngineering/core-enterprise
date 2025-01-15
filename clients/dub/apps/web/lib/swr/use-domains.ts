@@ -1,12 +1,11 @@
+import { DomainProps } from "@/lib/types";
+import { useRouterStuff } from "@dub/ui";
 import {
   DUB_DOMAINS,
   DUB_WORKSPACE_ID,
   SHORT_DOMAIN,
   fetcher,
 } from "@dub/utils";
-
-import { DomainProps } from "@/lib/types";
-import { useRouterStuff } from "@dub/ui";
 import { useMemo } from "react";
 import useSWR from "swr";
 import useDefaultDomains from "./use-default-domains";
@@ -89,10 +88,10 @@ export default function useDomains({
 
   return {
     activeWorkspaceDomains, // active workspace domains
-    activeDefaultDomains, // active default domains
+    activeDefaultDomains, // active default Dub domains
     allWorkspaceDomains, // all workspace domains (active + archived)
-    allActiveDomains, // all active domains (active workspace domains + active default domains)
-    allDomains, // all domains (all workspace domains + all default domains)
+    allActiveDomains, // all active domains (active workspace domains + active default Dub domains)
+    allDomains, // all domains (all workspace domains + all default Dub domains)
     primaryDomain,
     loading: (!data && !error) || loadingDefaultDomains,
     mutate,

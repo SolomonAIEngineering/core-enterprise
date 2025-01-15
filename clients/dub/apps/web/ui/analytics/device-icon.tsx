@@ -1,4 +1,6 @@
+import { DeviceTabs } from "@/lib/analytics/types";
 import { Apple, Chrome, Safari } from "@/ui/shared/icons/devices";
+import { BlurImage } from "@dub/ui";
 import {
   CursorRays,
   Desktop,
@@ -9,9 +11,6 @@ import {
   Tablet,
   Watch,
 } from "@dub/ui/icons";
-
-import { DeviceTabs } from "@/lib/analytics/types";
-import { BlurImage } from "@dub/ui";
 
 export default function DeviceIcon({
   display,

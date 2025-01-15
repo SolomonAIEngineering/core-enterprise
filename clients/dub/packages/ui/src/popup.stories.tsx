@@ -1,28 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Popup, PopupContext } from './popup'
+import type { Meta, StoryObj } from "@storybook/react";
+import { Popup, PopupContext } from "./popup";
 
-import { useContext } from 'react'
-import { Button } from './button'
+import { useContext } from "react";
+import { Button } from "./button";
 
 const meta: Meta<typeof Popup> = {
-  title: 'Components/Popup',
+  title: "Components/Popup",
   component: Popup,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A popup component with cookie-based persistence and animation support.',
+          "A popup component with cookie-based persistence and animation support.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Popup>
+export default meta;
+type Story = StoryObj<typeof Popup>;
 
 const PopupContent = () => {
-  const { hidePopup } = useContext(PopupContext)
+  const { hidePopup } = useContext(PopupContext);
   return (
     <div className="animate-fade-in fixed bottom-4 right-4 max-w-sm rounded-lg border border-gray-200 bg-white p-4 shadow-lg">
       <h3 className="mb-2 text-lg font-medium">Welcome!</h3>
@@ -31,8 +31,8 @@ const PopupContent = () => {
       </p>
       <Button onClick={hidePopup}>Got it</Button>
     </div>
-  )
-}
+  );
+};
 
 export const Default: Story = {
   render: () => (
@@ -40,12 +40,12 @@ export const Default: Story = {
       <PopupContent />
     </Popup>
   ),
-}
+};
 
 export const WithCustomContent: Story = {
   render: () => {
     const CustomContent = () => {
-      const { hidePopup } = useContext(PopupContext)
+      const { hidePopup } = useContext(PopupContext);
       return (
         <div className="animate-slide-in fixed left-4 top-4 max-w-sm rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 p-6 text-white shadow-lg">
           <h3 className="mb-3 text-xl font-bold">Special Offer!</h3>
@@ -68,21 +68,21 @@ export const WithCustomContent: Story = {
             </Button>
           </div>
         </div>
-      )
-    }
+      );
+    };
 
     return (
       <Popup hiddenCookieId="custom-popup">
         <CustomContent />
       </Popup>
-    )
+    );
   },
-}
+};
 
 export const WithNotification: Story = {
   render: () => {
     const NotificationContent = () => {
-      const { hidePopup } = useContext(PopupContext)
+      const { hidePopup } = useContext(PopupContext);
       return (
         <div className="animate-slide-down fixed right-4 top-4 max-w-sm rounded-lg border border-green-200 bg-green-50 p-4 shadow-md">
           <div className="flex items-start">
@@ -131,21 +131,21 @@ export const WithNotification: Story = {
             </button>
           </div>
         </div>
-      )
-    }
+      );
+    };
 
     return (
       <Popup hiddenCookieId="notification-popup">
         <NotificationContent />
       </Popup>
-    )
+    );
   },
-}
+};
 
 export const WithCookieWarning: Story = {
   render: () => {
     const CookieWarning = () => {
-      const { hidePopup } = useContext(PopupContext)
+      const { hidePopup } = useContext(PopupContext);
       return (
         <div className="animate-slide-up fixed bottom-0 left-0 right-0 bg-gray-900 p-4 text-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -163,13 +163,13 @@ export const WithCookieWarning: Story = {
             </div>
           </div>
         </div>
-      )
-    }
+      );
+    };
 
     return (
       <Popup hiddenCookieId="cookie-warning">
         <CookieWarning />
       </Popup>
-    )
+    );
   },
-}
+};

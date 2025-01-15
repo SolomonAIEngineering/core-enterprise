@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function ArrowsOppositeDirectionY(props: SVGProps<SVGSVGElement>) {
   return (
@@ -50,5 +50,5 @@ export function ArrowsOppositeDirectionY(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }

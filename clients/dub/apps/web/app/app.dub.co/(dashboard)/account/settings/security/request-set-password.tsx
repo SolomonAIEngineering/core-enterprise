@@ -1,10 +1,10 @@
 "use client";
 
 import useUser from "@/lib/swr/use-user";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { Button } from "@dub/ui";
 import { useState } from "react";
 import { toast } from "sonner";
+
 // Displayed when the user doesn't have a password set for their account
 export const RequestSetPassword = () => {
   const { user } = useUser();
@@ -46,7 +46,7 @@ export const RequestSetPassword = () => {
               <span className="uppercase">{user?.provider}</span>.{" "}
             </>
           )}
-          You can set a password to use with your {platform.company} account.
+          You can set a password to use with your Dub account.
         </p>
       </div>
       <div className="p-5 sm:p-10">

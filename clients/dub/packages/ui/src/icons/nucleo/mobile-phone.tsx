@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function MobilePhone(props: SVGProps<SVGSVGElement>) {
   return (
@@ -34,5 +34,5 @@ export function MobilePhone(props: SVGProps<SVGSVGElement>) {
         <circle cx="9" cy="13" fill="currentColor" r="1" stroke="none" />
       </g>
     </svg>
-  )
+  );
 }

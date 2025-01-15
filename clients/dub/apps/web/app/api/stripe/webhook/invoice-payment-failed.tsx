@@ -1,9 +1,9 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { log } from "@dub/utils";
 import { sendEmail } from "emails";
 import FailedPayment from "emails/failed-payment";
-import type Stripe from "stripe";
+import Stripe from "stripe";
+
 export async function invoicePaymentFailed(event: Stripe.Event) {
   const {
     customer: stripeId,
@@ -65,11 +65,11 @@ export async function invoicePaymentFailed(event: Stripe.Event) {
     ...workspace.users.map(({ user }) =>
       sendEmail({
         email: user.email as string,
-        from: `${platform.email.from.default}`,
+        from: "steven@dub.co",
         subject: `${
-          attemptCount === 2
+          attemptCount == 2
             ? "2nd notice: "
-            : attemptCount === 3
+            : attemptCount == 3
               ? "3rd notice: "
               : ""
         }Your payment for Dub.co failed`,

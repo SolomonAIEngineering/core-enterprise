@@ -1,7 +1,6 @@
 import { withWorkspace } from "@/lib/auth";
 import { stripe } from "@/lib/stripe";
 import { InvoiceSchema } from "@/lib/zod/schemas/invoices";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { APP_DOMAIN } from "@dub/utils";
 import { NextResponse } from "next/server";
@@ -37,7 +36,7 @@ const subscriptionInvoices = async (stripeId: string) => {
         id: invoice.id,
         total: invoice.amount_paid,
         createdAt: new Date(invoice.created * 1000),
-        description: `${platform.company} subscription`,
+        description: "Dub subscription",
         pdfUrl: invoice.invoice_pdf,
       };
     });
@@ -67,7 +66,7 @@ const payoutInvoices = async (workspaceId: string) => {
   return invoices.map((invoice) => {
     return {
       ...invoice,
-      description: `${platform.company} Partner payout`,
+      description: "Dub Partner payout",
       pdfUrl: `${APP_DOMAIN}/invoices/${invoice.id}`,
     };
   });

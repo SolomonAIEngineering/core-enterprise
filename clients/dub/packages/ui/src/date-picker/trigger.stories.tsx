@@ -1,38 +1,38 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Trigger } from './trigger'
+import { Trigger } from "./trigger";
 
 const meta = {
-  title: 'Components/DateTrigger',
+  title: "Components/DateTrigger",
   component: Trigger,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A button component designed for date picker inputs with various states and styling options.',
+          "A button component designed for date picker inputs with various states and styling options.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     placeholder: {
-      control: 'text',
-      description: 'Placeholder text when no date is selected',
+      control: "text",
+      description: "Placeholder text when no date is selected",
     },
     hasError: {
-      control: 'boolean',
-      description: 'Show error state',
+      control: "boolean",
+      description: "Show error state",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Disable the trigger',
+      control: "boolean",
+      description: "Disable the trigger",
     },
   },
-} satisfies Meta<typeof Trigger>
+} satisfies Meta<typeof Trigger>;
 
-export default meta
-type Story = StoryObj<typeof Trigger>
+export default meta;
+type Story = StoryObj<typeof Trigger>;
 
 export const Default: Story = {
   render: () => (
@@ -40,7 +40,7 @@ export const Default: Story = {
       <Trigger placeholder="Select date..." />
     </div>
   ),
-}
+};
 
 export const WithValue: Story = {
   render: () => (
@@ -48,7 +48,7 @@ export const WithValue: Story = {
       <Trigger>January 1, 2024</Trigger>
     </div>
   ),
-}
+};
 
 export const WithError: Story = {
   render: () => (
@@ -56,7 +56,7 @@ export const WithError: Story = {
       <Trigger hasError placeholder="Select date..." />
     </div>
   ),
-}
+};
 
 export const Disabled: Story = {
   render: () => (
@@ -64,7 +64,7 @@ export const Disabled: Story = {
       <Trigger disabled placeholder="Select date..." />
     </div>
   ),
-}
+};
 
 export const WithCustomClassName: Story = {
   render: () => (
@@ -75,4 +75,4 @@ export const WithCustomClassName: Story = {
       />
     </div>
   ),
-}
+};

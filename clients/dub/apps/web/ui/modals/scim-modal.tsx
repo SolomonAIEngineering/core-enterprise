@@ -1,3 +1,6 @@
+import useSCIM from "@/lib/swr/use-scim";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { SAMLProviderProps } from "@/lib/types";
 import {
   Button,
   Copy,
@@ -8,6 +11,7 @@ import {
   Tick,
   useCopyToClipboard,
 } from "@dub/ui";
+import { SAML_PROVIDERS } from "@dub/utils";
 import { Eye, EyeOff, FolderSync, RefreshCcw } from "lucide-react";
 import {
   Dispatch,
@@ -16,12 +20,6 @@ import {
   useMemo,
   useState,
 } from "react";
-
-import useSCIM from "@/lib/swr/use-scim";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { SAMLProviderProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { SAML_PROVIDERS } from "@dub/utils";
 import { toast } from "sonner";
 
 function SCIMModal({
@@ -73,7 +71,7 @@ function SCIMModal({
         <p className="text-center text-sm text-gray-500">
           {currentProvider
             ? "Your workspace is currently syncing with your SCIM directory."
-            : `Select a provider to configure directory sync for your ${platform.company} workspace.`}
+            : `Select a provider to configure directory sync for your ${process.env.NEXT_PUBLIC_APP_NAME} workspace.`}
         </p>
       </div>
 
@@ -116,7 +114,7 @@ function SCIMModal({
                   <SimpleTooltipContent
                     title="Your directory provider is the IDP you use to manage your users."
                     cta={selectedProvider ? "Read the guide." : "Learn more."}
-                    href={`${platform.webUrl}/help/${
+                    href={`https://dub.co/help/${
                       currentProvider
                         ? `article/${currentProvider.saml}-scim`
                         : "category/saml-sso"
@@ -150,9 +148,8 @@ function SCIMModal({
             </select>
             {currentProvider && (
               <a
-                href={`${platform.webUrl}/help/article/${currentProvider.saml}-scim`}
+                href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
                 target="_blank"
-                rel="noreferrer"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
               >
                 Read the guide on {currentProvider.name} SCIM
@@ -173,7 +170,7 @@ function SCIMModal({
                       <SimpleTooltipContent
                         title="Your directory provider is the IDP you use to manage your users."
                         cta="Read the guide."
-                        href={`${platform.webUrl}/help/article/${currentProvider.saml}-scim`}
+                        href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
                       />
                     }
                   />
@@ -213,7 +210,7 @@ function SCIMModal({
                       <SimpleTooltipContent
                         title="Your directory provider is the IDP you use to manage your users."
                         cta="Read the guide."
-                        href={`${platform.webUrl}/help/article/${currentProvider.saml}-scim`}
+                        href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
                       />
                     }
                   />

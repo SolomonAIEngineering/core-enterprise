@@ -1,4 +1,4 @@
-import { Grid, Logo } from "@dub/ui";
+import { Grid, Wordmark } from "@dub/ui";
 
 export default function PartnerOnboardingLayout({
   children,
@@ -13,7 +13,7 @@ export default function PartnerOnboardingLayout({
       </div>
       <div className="relative z-10 mt-10 flex w-full flex-col items-center justify-center px-3 text-center md:px-8">
         <div className="animate-slide-up-fade relative flex w-auto flex-col items-center [--offset:10px] [animation-duration:1.3s] [animation-fill-mode:both]">
-          <Logo className="relative h-10 w-10" />
+          <Wordmark className="relative h-10" />
           <span className="text-sm font-medium text-neutral-700">Partner</span>
         </div>
         {children}

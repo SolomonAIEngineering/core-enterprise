@@ -1,0 +1,300 @@
+enum InvoiceStatus {
+  processing
+  completed
+  failed
+  draft
+  sent
+  viewed
+  overdue
+  paid
+  cancelled
+  void
+}
+
+enum InvoiceSize {
+  a4
+  letter
+  legal
+  custom
+}
+
+enum InvoiceDeliveryType {
+  create
+  create_and_send
+  send
+  schedule
+  auto_send
+}
+
+// Invoice Comment Types
+enum InvoiceCommentType {
+  general
+  internal
+  payment
+  dispute
+  reminder
+  status_change
+  system
+}
+
+// Invoice Comment Visibility
+enum InvoiceCommentVisibility {
+  internal     // Only visible to team members
+  external     // Visible to customers
+  private      // Only visible to comment creator
+  restricted   // Visible to specific roles
+}
+
+model Invoice {
+  id              String   @id @default(cuid())
+  programId       String
+  workspaceId     String
+  number      String?       @unique // This starts with the customer’s unique invoicePrefix
+  status          InvoiceStatus   @default(processing)
+  amount          Int      @default(0)
+  fee             Int      @default(0)
+  total           Int      @default(0)
+  receiptUrl      String?  @db.LongText
+  createdAt       DateTime @default(now())
+
+  // Invoice Details
+  bottomBlock     Json?
+  companyDetails  Json?
+  currency        String?
+  customerDetails Json?
+  customerId      String?
+  customerName    String?
+  discount        Float?
+  dueDate         DateTime?
+  filePath        String?
+  fileSize        Int?
+  fromDetails     Json?
+  internalNote    String?
+  invoiceNumber   String?
+  issueDate       DateTime?
+  lineItems       Json?
+  note            String?
+  noteDetails     Json?
+  paidAt          DateTime?
+  paymentDetails  Json?
+  reminderSentAt  DateTime?
+  sentTo          String?
+  subtotal        Float?
+  tax             Float?
+  teamId          String?
+  template        Json?
+  token           String?
+  topBlock        Json?
+  updatedAt       DateTime?
+  url             String?
+  userId          String?
+  vat             Float?
+  viewedAt        DateTime?
+
+  // Additional Fields
+  version         Int       @default(1)
+  language        String?   @default("en")
+  timezone        String?   @default("UTC")
+  tags            Json?     // Invoice tags/labels
+  metadata        Json?     // Additional metadata
+  customFields    Json?     // Custom attributes
+
+  // Payment Information
+  paymentMethod   String?   // Payment method used
+  paymentStatus   String?   // Detailed payment status
+  paymentDue      Float?    // Amount still due
+  partialPayments Json?     // Track partial payments
+  refundAmount    Float?    // Refunded amount
+
+  // Tracking and Analytics
+  conversionRate  Float?    // Currency conversion rate
+  processingFees  Float?    // Payment processing fees
+  profitMargin    Float?    // Calculated profit margin
+  costBreakdown   Json?     // Detailed cost analysis
+
+  // Automation and Workflow
+  autoRemind      Boolean   @default(false)
+  reminderSchedule Json?    // Reminder configuration
+  approvalStatus  String?   // If approval workflow enabled
+  approvedBy      String?   // Who approved the invoice
+  approvedAt      DateTime?
+
+  // Compliance and Audit
+  taxExempt       Boolean   @default(false)
+  taxExemptReason String?
+  complianceNotes Json?     // Compliance-related notes
+  auditTrail      Json?     // Track all changes
+
+  // Relations
+  payouts         Payout[]
+  program         Program    @relation(fields: [programId], references: [id])
+  workspace       Project    @relation(fields: [workspaceId], references: [id])
+  customer        Customer?  @relation(fields: [customerId], references: [id])
+  comments        InvoiceComment[]
+  attachments     InvoiceAttachment[]
+  history         InvoiceHistory[]
+
+  @@index([programId])
+  @@index([workspaceId])
+  @@index([customerId])
+  @@index([status])
+  @@index([dueDate])
+  @@index([invoiceNumber])
+}
+
+model InvoiceComment {
+  id            String                @id @default(cuid())
+  invoiceId     String
+  content       String                @db.Text
+  type          InvoiceCommentType   @default(general)
+  visibility    InvoiceCommentVisibility @default(internal)
+
+  // Comment Metadata
+  title         String?
+  priority      String?   // high, medium, low
+  status        String?   // open, resolved, pending
+  tags          Json?     // Comment tags/labels
+  metadata      Json?     // Additional metadata
+
+  // Rich Content
+  attachments   Json?     // Attached files/links
+  mentions      Json?     // @mentioned users
+  formatting    Json?     // Rich text formatting
+
+  // Threading
+  parentId      String?   // For threaded comments
+  threadPath    String?   // Materialized path
+  replyCount    Int       @default(0)
+
+  // Tracking
+  isEdited      Boolean   @default(false)
+  editedAt      DateTime?
+  lastReplyAt   DateTime?
+  resolvedAt    DateTime?
+  resolvedBy    String?
+
+  // Timestamps
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  invoice       Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  parent        InvoiceComment?  @relation("CommentThread", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies       InvoiceComment[] @relation("CommentThread")
+
+  // User Relations
+  createdBy     String?   // User who created the comment
+  updatedBy     String?   // User who last updated the comment
+
+  @@index([invoiceId])
+  @@index([parentId])
+  @@index([createdAt])
+  @@map("invoice_comments")
+}
+
+model InvoiceTemplate {
+  id                String              @id @default(cuid())
+  createdAt         DateTime
+  currency          String?
+  customerLabel     String?
+  dateFormat        String?
+  deliveryType      InvoiceDeliveryType
+  descriptionLabel  String?
+  discountLabel     String?
+  dueDateLabel      String?
+  fromDetails       Json?
+  fromLabel         String?
+  includeDecimals   Boolean?
+  includeDiscount   Boolean?
+  includeQr         Boolean?
+  includeTax        Boolean?
+  includeUnits      Boolean?
+  includeVat        Boolean?
+  invoiceNoLabel    String?
+  issueDateLabel    String?
+  logoUrl           String?
+  noteLabel         String?
+  paymentDetails    Json?
+  paymentLabel      String?
+  priceLabel        String?
+  quantityLabel     String?
+  size              InvoiceSize?
+  taxLabel          String?
+  taxRate           Float?
+  projectId         String
+  title             String?
+  totalLabel        String?
+  totalSummaryLabel String?
+  vatLabel          String?
+  vatRate           Float?
+
+  // Additional Template Features
+  version           Int       @default(1)
+  isDefault         Boolean   @default(false)
+  isArchived        Boolean   @default(false)
+  language          String?   @default("en")
+  description       String?   @db.Text
+  tags              Json?     // Template tags
+  metadata          Json?     // Additional metadata
+  customFields      Json?     // Custom fields config
+
+  // Style and Layout
+  style            Json?     // CSS/styling information
+  layout           Json?     // Layout configuration
+  fonts            Json?     // Font settings
+  colors           Json?     // Color scheme
+
+  // Dynamic Content
+  variables        Json?     // Template variables
+  sections         Json?     // Template sections
+  footerContent    Json?     // Footer configuration
+  headerContent    Json?     // Header configuration
+
+  // Usage Statistics
+  useCount         Int      @default(0)
+  lastUsedAt       DateTime?
+
+  // Relations
+  project          Project   @relation(fields: [projectId], references: [id])
+
+  @@index([projectId])
+}
+
+// New model for invoice attachments
+model InvoiceAttachment {
+  id            String    @id @default(cuid())
+  invoiceId     String
+  name          String
+  description   String?   @db.Text
+  type          String?   // File type
+  path          String    @db.Text
+  size          Int?
+  mimeType      String?
+  metadata      Json?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdBy     String?
+
+  invoice       Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+}
+
+// New model for invoice history/audit trail
+model InvoiceHistory {
+  id            String    @id @default(cuid())
+  invoiceId     String
+  action        String    // Type of change
+  description   String    @db.Text
+  changes       Json?     // What changed
+  metadata      Json?     // Additional context
+
+  createdAt     DateTime  @default(now())
+  createdBy     String?
+
+  invoice       Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@index([createdAt])
+}

@@ -1,5 +1,13 @@
 "use client";
 
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { ExpandedLinkProps } from "@/lib/types";
+import { DestinationUrlInput } from "@/ui/links/destination-url-input";
+import { ShortLinkInput } from "@/ui/links/short-link-input";
+import { useAvailableDomains } from "@/ui/links/use-available-domains";
+import { X } from "@/ui/shared/icons";
+import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
 import {
   ArrowTurnLeft,
   Button,
@@ -14,19 +22,20 @@ import {
   useRouterStuff,
 } from "@dub/ui";
 import {
-  DEFAULT_LINK_PROPS,
   cn,
   constructURLFromUTMParams,
+  DEFAULT_LINK_PROPS,
   getApexDomain,
   getUrlWithoutUTMParams,
   isValidUrl,
   linkConstructor,
 } from "@dub/utils";
 import { useParams, useSearchParams } from "next/navigation";
+import posthog from "posthog-js";
 import {
+  createContext,
   Dispatch,
   SetStateAction,
-  createContext,
   useCallback,
   useEffect,
   useMemo,
@@ -39,22 +48,11 @@ import {
   useForm,
   useFormContext,
 } from "react-hook-form";
-import { DraftControls, DraftControlsHandle } from "./draft-controls";
-
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { ExpandedLinkProps } from "@/lib/types";
-import { DestinationUrlInput } from "@/ui/links/destination-url-input";
-import { ShortLinkInput } from "@/ui/links/short-link-input";
-import { useAvailableDomains } from "@/ui/links/use-available-domains";
-import { X } from "@/ui/shared/icons";
-import { UpgradeRequiredToast } from "@/ui/shared/upgrade-required-toast";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import posthog from "posthog-js";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { useDebounce } from "use-debounce";
+import { DraftControls, DraftControlsHandle } from "./draft-controls";
 import { useExpirationModal } from "./expiration-modal";
 import { LinkPreview } from "./link-preview";
 import { MoreDropdown } from "./more-dropdown";
@@ -164,7 +162,7 @@ function LinkBuilderInner({
   });
 
   const saveDisabled = useMemo(() => {
-    /*
+    /* 
       Disable save if:
       - modal is not open
       - saving is in progress
@@ -446,7 +444,7 @@ function LinkBuilderInner({
                           <SimpleTooltipContent
                             title="Use comments to add context to your short links – for you and your team."
                             cta="Learn more."
-                            href={`${platform.webUrl}/help/article/link-comments`}
+                            href="https://dub.co/help/article/link-comments"
                           />
                         }
                       />
@@ -476,7 +474,7 @@ function LinkBuilderInner({
               </div>
               <div className="scrollbar-hide px-6 md:overflow-auto md:pl-0 md:pr-4">
                 <div className="relative">
-                  <div className="absolute inset-0 rounded-xl border border-gray-200 bg-gray-50 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
+                  <div className="absolute inset-0 rounded-xl border border-gray-200 bg-gray-50 [mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
                   <div className="relative flex flex-col gap-6 p-4">
                     <QRCodePreview />
                     <LinkPreview />

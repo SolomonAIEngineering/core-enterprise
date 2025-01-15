@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { NavWordmark } from './nav-wordmark'
+import { NavWordmark } from "./nav-wordmark";
 
 const meta: Meta<typeof NavWordmark> = {
-  title: 'Components/NavWordmark',
+  title: "Components/NavWordmark",
   component: NavWordmark,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A navigation wordmark component with logo and context menu functionality.',
+          "A navigation wordmark component with logo and context menu functionality.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof NavWordmark>
+export default meta;
+type Story = StoryObj<typeof NavWordmark>;
 
 export const Default: Story = {
   render: () => (
@@ -25,7 +25,7 @@ export const Default: Story = {
       <NavWordmark />
     </div>
   ),
-}
+};
 
 export const SymbolOnly: Story = {
   render: () => (
@@ -33,7 +33,7 @@ export const SymbolOnly: Story = {
       <NavWordmark variant="symbol" />
     </div>
   ),
-}
+};
 
 export const InApp: Story = {
   render: () => (
@@ -41,7 +41,7 @@ export const InApp: Story = {
       <NavWordmark isInApp />
     </div>
   ),
-}
+};
 
 export const WithCustomClass: Story = {
   render: () => (
@@ -49,7 +49,7 @@ export const WithCustomClass: Story = {
       <NavWordmark className="text-blue-500" />
     </div>
   ),
-}
+};
 
 export const InAppSymbol: Story = {
   render: () => (
@@ -57,7 +57,7 @@ export const InAppSymbol: Story = {
       <NavWordmark variant="symbol" isInApp />
     </div>
   ),
-}
+};
 
 export const WithDarkBackground: Story = {
   render: () => (
@@ -65,7 +65,7 @@ export const WithDarkBackground: Story = {
       <NavWordmark className="text-white" />
     </div>
   ),
-}
+};
 
 export const WithGradientBackground: Story = {
   render: () => (
@@ -73,7 +73,7 @@ export const WithGradientBackground: Story = {
       <NavWordmark className="text-white" />
     </div>
   ),
-}
+};
 
 export const WithCustomSize: Story = {
   render: () => (
@@ -81,7 +81,7 @@ export const WithCustomSize: Story = {
       <NavWordmark className="scale-150" />
     </div>
   ),
-}
+};
 
 export const WithHoverEffect: Story = {
   render: () => (
@@ -89,7 +89,7 @@ export const WithHoverEffect: Story = {
       <NavWordmark className="transition-transform hover:scale-105" />
     </div>
   ),
-}
+};
 
 export const WithContainer: Story = {
   render: () => (
@@ -97,4 +97,4 @@ export const WithContainer: Story = {
       <NavWordmark />
     </div>
   ),
-}
+};

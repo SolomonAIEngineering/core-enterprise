@@ -1,11 +1,4 @@
 import {
-  ADMIN_HOSTNAMES,
-  API_HOSTNAMES,
-  APP_HOSTNAMES,
-  DEFAULT_REDIRECTS,
-  isValidUrl,
-} from "@dub/utils";
-import {
   AdminMiddleware,
   ApiMiddleware,
   AppMiddleware,
@@ -13,11 +6,17 @@ import {
   CreateLinkMiddleware,
   LinkMiddleware,
 } from "@/lib/middleware";
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
-
-import { PARTNERS_HOSTNAMES } from "@dub/utils/src/constants";
-import PartnersMiddleware from "./lib/middleware/partners";
 import { parse } from "@/lib/middleware/utils";
+import {
+  ADMIN_HOSTNAMES,
+  API_HOSTNAMES,
+  APP_HOSTNAMES,
+  DEFAULT_REDIRECTS,
+  isValidUrl,
+} from "@dub/utils";
+import { PARTNERS_HOSTNAMES } from "@dub/utils/src/constants";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import PartnersMiddleware from "./lib/middleware/partners";
 
 export const config = {
   matcher: [

@@ -1,16 +1,5 @@
 "use client";
 
-import { DEFAULT_LINK_PROPS, getUrlFromString } from "@dub/utils";
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  Suspense,
-  createContext,
-  useEffect,
-  useMemo,
-} from "react";
-
 import { mutatePrefix } from "@/lib/swr/mutate";
 import useWorkspace from "@/lib/swr/use-workspace";
 import useWorkspaces from "@/lib/swr/use-workspaces";
@@ -21,10 +10,19 @@ import { useAddWorkspaceModal } from "@/ui/modals/add-workspace-modal";
 import { useImportBitlyModal } from "@/ui/modals/import-bitly-modal";
 import { useImportCsvModal } from "@/ui/modals/import-csv-modal";
 import { useImportShortModal } from "@/ui/modals/import-short-modal";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useCookies } from "@dub/ui";
+import { DEFAULT_LINK_PROPS, getUrlFromString } from "@dub/utils";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  Suspense,
+  createContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { toast } from "sonner";
 import { useAddEditTagModal } from "./add-edit-tag-modal";
 import { useImportRebrandlyModal } from "./import-rebrandly-modal";
@@ -107,9 +105,7 @@ function ModalProviderClient({ children }: { children: ReactNode }) {
   );
 
   const [hashes, setHashes] = useCookies<SimpleLinkProps[]>("hashes__dub", [], {
-    domain: !!process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `.${platform.domain}`
-      : undefined,
+    domain: !!process.env.NEXT_PUBLIC_VERCEL_URL ? ".dub.co" : undefined,
   });
 
   const { id: workspaceId, error } = useWorkspace();

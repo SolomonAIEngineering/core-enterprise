@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { CircleCheck, CircleWarning } from './icons'
+import type { Meta, StoryObj } from "@storybook/react";
+import { CircleCheck, CircleWarning } from "./icons";
 
-import { StatusBadge } from './status-badge'
+import { StatusBadge } from "./status-badge";
 
 const meta: Meta<typeof StatusBadge> = {
-  title: 'Components/StatusBadge',
+  title: "Components/StatusBadge",
   component: StatusBadge,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A status badge component with various styles and icon support.',
+          "A status badge component with various styles and icon support.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof StatusBadge>
+export default meta;
+type Story = StoryObj<typeof StatusBadge>;
 
 export const Default: Story = {
   render: () => (
@@ -26,7 +26,7 @@ export const Default: Story = {
       <StatusBadge>Default Status</StatusBadge>
     </div>
   ),
-}
+};
 
 export const AllVariants: Story = {
   render: () => (
@@ -39,7 +39,7 @@ export const AllVariants: Story = {
       <StatusBadge variant="error">Error Status</StatusBadge>
     </div>
   ),
-}
+};
 
 export const WithCustomIcons: Story = {
   render: () => (
@@ -55,7 +55,7 @@ export const WithCustomIcons: Story = {
       </StatusBadge>
     </div>
   ),
-}
+};
 
 export const WithoutIcons: Story = {
   render: () => (
@@ -71,32 +71,32 @@ export const WithoutIcons: Story = {
       </StatusBadge>
     </div>
   ),
-}
+};
 
 export const Interactive: Story = {
   render: () => (
     <div className="space-y-4">
       <StatusBadge
         variant="success"
-        onClick={() => console.log('Clicked success badge')}
+        onClick={() => console.log("Clicked success badge")}
       >
         Clickable Success
       </StatusBadge>
       <StatusBadge
         variant="warning"
-        onClick={() => console.log('Clicked warning badge')}
+        onClick={() => console.log("Clicked warning badge")}
       >
         Clickable Warning
       </StatusBadge>
       <StatusBadge
         variant="error"
-        onClick={() => console.log('Clicked error badge')}
+        onClick={() => console.log("Clicked error badge")}
       >
         Clickable Error
       </StatusBadge>
     </div>
   ),
-}
+};
 
 export const WithCustomStyles: Story = {
   render: () => (
@@ -112,7 +112,7 @@ export const WithCustomStyles: Story = {
       </StatusBadge>
     </div>
   ),
-}
+};
 
 export const InContext: Story = {
   render: () => (
@@ -131,7 +131,7 @@ export const InContext: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const WithLongText: Story = {
   render: () => (
@@ -144,7 +144,7 @@ export const WithLongText: Story = {
       </StatusBadge>
     </div>
   ),
-}
+};
 
 export const Compact: Story = {
   render: () => (
@@ -160,7 +160,7 @@ export const Compact: Story = {
       </StatusBadge>
     </div>
   ),
-}
+};
 
 export const WithGradients: Story = {
   render: () => (
@@ -185,4 +185,4 @@ export const WithGradients: Story = {
       </StatusBadge>
     </div>
   ),
-}
+};

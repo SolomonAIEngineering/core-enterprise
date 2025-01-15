@@ -1,24 +1,22 @@
 "use client";
 
-import { AnimatedSizeContainer, Icon, buttonVariants } from "@dub/ui";
+import useWorkspace from "@/lib/swr/use-workspace";
+import ManageSubscriptionButton from "@/ui/workspaces/manage-subscription-button";
+import { AnimatedSizeContainer, buttonVariants, Icon } from "@dub/ui";
 import { CircleDollar, CursorRays, Hyperlink } from "@dub/ui/icons";
 import {
-  INFINITY_NUMBER,
   cn,
   getFirstAndLastDay,
   getNextPlan,
+  INFINITY_NUMBER,
   nFormatter,
 } from "@dub/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { CSSProperties, useMemo, useState } from "react";
-
-import useWorkspace from "@/lib/swr/use-workspace";
-import ManageSubscriptionButton from "@/ui/workspaces/manage-subscription-button";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import NumberFlow from "@number-flow/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { CSSProperties, useMemo, useState } from "react";
 
 export function Usage() {
   const { slug } = useParams() as { slug?: string };
@@ -164,7 +162,7 @@ function UsageInner() {
               setHovered(false);
             }}
           >
-            {plan === "free" ? `Get ${platform.company} Pro` : "Upgrade plan"}
+            {plan === "free" ? "Get Dub Pro" : "Upgrade plan"}
           </Link>
         ) : null}
       </div>

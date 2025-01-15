@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { TooltipProvider } from '@radix-ui/react-tooltip'
-import { Button } from './button'
-import { Tooltip } from './tooltip'
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Button } from "./button";
+import { Tooltip } from "./tooltip";
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: "Components/Tooltip",
   component: Tooltip,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A tooltip component that provides additional information on hover.',
+          "A tooltip component that provides additional information on hover.",
       },
     },
   },
@@ -23,10 +23,10 @@ const meta: Meta<typeof Tooltip> = {
       </TooltipProvider>
     ),
   ],
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Tooltip>
+export default meta;
+type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
   render: () => (
@@ -34,7 +34,7 @@ export const Default: Story = {
       <Button variant="outline">Hover me</Button>
     </Tooltip>
   ),
-}
+};
 
 export const Positions: Story = {
   render: () => (
@@ -53,7 +53,7 @@ export const Positions: Story = {
       </Tooltip>
     </div>
   ),
-}
+};
 
 export const WithDelay: Story = {
   render: () => (
@@ -61,7 +61,7 @@ export const WithDelay: Story = {
       <Button variant="outline">Hover me (with delay)</Button>
     </Tooltip>
   ),
-}
+};
 
 export const WithHTML: Story = {
   render: () => (
@@ -76,7 +76,7 @@ export const WithHTML: Story = {
       <Button variant="outline">Hover for rich content</Button>
     </Tooltip>
   ),
-}
+};
 
 export const WithCustomStyles: Story = {
   render: () => (
@@ -87,7 +87,7 @@ export const WithCustomStyles: Story = {
       <Button variant="outline">Hover for custom style</Button>
     </Tooltip>
   ),
-}
+};
 
 export const WithIcon: Story = {
   render: () => (
@@ -97,7 +97,7 @@ export const WithIcon: Story = {
       </Button>
     </Tooltip>
   ),
-}
+};
 
 export const WithDisabledButton: Story = {
   render: () => (
@@ -106,8 +106,8 @@ export const WithDisabledButton: Story = {
         type="button"
         className="cursor-not-allowed"
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
           }
         }}
         onClick={(e) => e.preventDefault()}
@@ -118,7 +118,7 @@ export const WithDisabledButton: Story = {
       </button>
     </Tooltip>
   ),
-}
+};
 
 export const WithLongContent: Story = {
   render: () => (
@@ -129,7 +129,7 @@ export const WithLongContent: Story = {
       <Button variant="outline">Hover for long content</Button>
     </Tooltip>
   ),
-}
+};
 
 export const InContext: Story = {
   render: () => (
@@ -152,4 +152,4 @@ export const InContext: Story = {
       </div>
     </div>
   ),
-}
+};

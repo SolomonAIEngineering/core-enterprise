@@ -1,3 +1,4 @@
+import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,14 +12,12 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function ReferralInvite({
   email = "panic@thedis.co",
-  appName = platform.company,
-  url = `${platform.webUrl}`,
+  appName = "Dub.co",
+  url = "https://dub.co",
   workspaceUser = "Brendon Urie",
   workspaceUserEmail = "panic@thedis.co",
 }: {
@@ -37,7 +36,7 @@ export default function ReferralInvite({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
                 alt={appName}
                 className="mx-auto my-0"

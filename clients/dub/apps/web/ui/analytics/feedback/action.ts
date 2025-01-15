@@ -1,7 +1,6 @@
 "use server";
 
 import { resend } from "@/lib/resend";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import FeedbackEmail from "emails/feedback-email";
 
 export async function submitFeedback(data: FormData) {
@@ -9,8 +8,8 @@ export async function submitFeedback(data: FormData) {
   const feedback = data.get("feedback") as string;
 
   return await resend?.emails.send({
-    from: `${platform.email.from.feedback}`,
-    to: `${platform.email.from.default}`,
+    from: "feedback@dub.co",
+    to: "steven@dub.co",
     ...(email && { replyTo: email }),
     subject: "🎉 New Feedback Received!",
     react: FeedbackEmail({ email, feedback }),

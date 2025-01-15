@@ -1,32 +1,32 @@
-import { BusinessConfig as platform } from '@dub/platform-config'
-import type { Meta, StoryObj } from '@storybook/react'
-import { SolutionsContent } from './solutions-content'
+import { BusinessConfig as platform } from "@dub/platform-config";
+import type { Meta, StoryObj } from "@storybook/react";
+import { SolutionsContent } from "./solutions-content";
 const meta = {
   component: SolutionsContent,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
-} satisfies Meta<typeof SolutionsContent>
+  tags: ["autodocs"],
+} satisfies Meta<typeof SolutionsContent>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     domain: platform.domain,
   },
-}
+};
 
 export const CustomDomain: Story = {
   args: {
-    domain: 'custom-domain.com',
+    domain: "custom-domain.com",
   },
-}
+};
 
 export const DarkMode: Story = {
   parameters: {
-    backgrounds: { default: 'dark' },
+    backgrounds: { default: "dark" },
   },
   args: {
     domain: platform.domain,
@@ -38,4 +38,4 @@ export const DarkMode: Story = {
       </div>
     ),
   ],
-}
+};

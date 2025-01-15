@@ -1,8 +1,6 @@
 import { Button, Modal, useRouterStuff } from "@dub/ui";
-import { useCallback, useMemo, useState } from "react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useSearchParams } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
 import { ModalHero } from "../shared/modal-hero";
 
 interface RegisterDomainSuccessProps {
@@ -46,9 +44,8 @@ const RegisterDomainSuccess = ({
               Your domain is now registered and ready to use, though it may take
               some time for the domain configuration to propagate globally.{" "}
               <a
-                href={`${platform.webUrl}/help/article/free-dot-link-domain#claim-your-domain-and-wait-for-it-to-be-provisioned`}
+                href="https://dub.co/help/article/free-dot-link-domain#claim-your-domain-and-wait-for-it-to-be-provisioned"
                 target="_blank"
-                rel="noreferrer"
                 className="underline transition-colors hover:text-gray-700"
               >
                 Learn more.

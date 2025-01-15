@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   AlertCircle,
   AlertTriangle,
   CheckCircle2,
   Info,
   Terminal,
-} from 'lucide-react'
-import { Alert, AlertDescription, AlertTitle } from './alert'
+} from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "./alert";
 
 const meta: Meta<typeof Alert> = {
-  title: 'Components/Alert',
+  title: "Components/Alert",
   component: Alert,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'Displays a callout for user attention with various states and styles.',
+          "Displays a callout for user attention with various states and styles.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Alert>
+export default meta;
+type Story = StoryObj<typeof Alert>;
 
 export const Default: Story = {
   render: () => (
@@ -33,7 +33,7 @@ export const Default: Story = {
       <AlertDescription>This is a default alert message.</AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const Destructive: Story = {
   render: () => (
@@ -45,7 +45,7 @@ export const Destructive: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const InfoAlert: Story = {
   render: () => (
@@ -57,7 +57,7 @@ export const InfoAlert: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const WarningAlert: Story = {
   render: () => (
@@ -69,7 +69,7 @@ export const WarningAlert: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const SuccessAlert: Story = {
   render: () => (
@@ -81,7 +81,7 @@ export const SuccessAlert: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const WithoutIcon: Story = {
   render: () => (
@@ -90,7 +90,7 @@ export const WithoutIcon: Story = {
       <AlertDescription>This alert doesn't include an icon.</AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const TitleOnly: Story = {
   render: () => (
@@ -98,7 +98,7 @@ export const TitleOnly: Story = {
       <AlertTitle>Title Only Alert</AlertTitle>
     </Alert>
   ),
-}
+};
 
 export const DescriptionOnly: Story = {
   render: () => (
@@ -108,7 +108,7 @@ export const DescriptionOnly: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const CustomContent: Story = {
   render: () => (
@@ -127,7 +127,7 @@ export const CustomContent: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};
 
 export const Compact: Story = {
   render: () => (
@@ -139,4 +139,4 @@ export const Compact: Story = {
       </AlertDescription>
     </Alert>
   ),
-}
+};

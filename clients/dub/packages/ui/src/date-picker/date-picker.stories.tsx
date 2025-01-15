@@ -1,15 +1,15 @@
-import type { StoryObj } from '@storybook/react'
-import { addDays, addMonths, startOfToday, subDays } from 'date-fns'
-import type { DateRange, DateRangePreset } from './types'
+import type { StoryObj } from "@storybook/react";
+import { addDays, addMonths, startOfToday, subDays } from "date-fns";
+import type { DateRange, DateRangePreset } from "./types";
 
-import { useState } from 'react'
-import { Calendar } from './calendar'
-import { DateRangePicker } from './date-range-picker'
+import { useState } from "react";
+import { Calendar } from "./calendar";
+import { DateRangePicker } from "./date-range-picker";
 
 const meta = {
-  title: 'Components/DatePicker',
+  title: "Components/DatePicker",
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -29,17 +29,17 @@ and a DateRangePicker component for selecting date ranges with presets.
       },
     },
   },
-  tags: ['autodocs'],
-}
+  tags: ["autodocs"],
+};
 
-export default meta
+export default meta;
 
 // Calendar Stories
-type CalendarStory = StoryObj<typeof Calendar>
+type CalendarStory = StoryObj<typeof Calendar>;
 
 export const SingleDateCalendar: CalendarStory = {
   render: () => {
-    const [selected, setSelected] = useState<Date>()
+    const [selected, setSelected] = useState<Date>();
     return (
       <Calendar
         mode="single"
@@ -47,13 +47,13 @@ export const SingleDateCalendar: CalendarStory = {
         onSelect={setSelected}
         className="rounded-md border"
       />
-    )
+    );
   },
-}
+};
 
 export const DateRangeCalendar: CalendarStory = {
   render: () => {
-    const [range, setRange] = useState<DateRange>()
+    const [range, setRange] = useState<DateRange>();
     return (
       <Calendar
         mode="range"
@@ -62,81 +62,81 @@ export const DateRangeCalendar: CalendarStory = {
         numberOfMonths={2}
         className="rounded-md border"
       />
-    )
+    );
   },
-}
+};
 
 export const WithYearNavigation: CalendarStory = {
   render: () => (
     <Calendar mode="single" showYearNavigation className="rounded-md border" />
   ),
-}
+};
 
 // DateRangePicker Stories
-type DateRangePickerStory = StoryObj<typeof DateRangePicker>
+type DateRangePickerStory = StoryObj<typeof DateRangePicker>;
 
-const today = startOfToday()
+const today = startOfToday();
 const presets: DateRangePreset[] = [
   {
-    id: 'today',
-    label: 'Today',
-    shortcut: 't',
+    id: "today",
+    label: "Today",
+    shortcut: "t",
     dateRange: {
       from: today,
       to: today,
     },
   },
   {
-    id: 'yesterday',
-    label: 'Yesterday',
-    shortcut: 'y',
+    id: "yesterday",
+    label: "Yesterday",
+    shortcut: "y",
     dateRange: {
       from: subDays(today, 1),
       to: subDays(today, 1),
     },
   },
   {
-    id: 'last7',
-    label: 'Last 7 days',
-    shortcut: '7',
+    id: "last7",
+    label: "Last 7 days",
+    shortcut: "7",
     dateRange: {
       from: subDays(today, 6),
       to: today,
     },
   },
   {
-    id: 'last30',
-    label: 'Last 30 days',
-    shortcut: '3',
+    id: "last30",
+    label: "Last 30 days",
+    shortcut: "3",
     dateRange: {
       from: subDays(today, 29),
       to: today,
     },
   },
   {
-    id: 'future',
-    label: 'Next 3 months',
+    id: "future",
+    label: "Next 3 months",
     dateRange: {
       from: today,
       to: addMonths(today, 3),
     },
   },
-]
+];
 
 export const BasicDateRangePicker: DateRangePickerStory = {
   render: () => {
-    const [dateRange, setDateRange] = useState<DateRange>()
+    const [dateRange, setDateRange] = useState<DateRange>();
     return (
       <div className="w-[300px]">
         <DateRangePicker value={dateRange} onChange={setDateRange} />
       </div>
-    )
+    );
   },
-}
+};
 
 export const WithPresets: DateRangePickerStory = {
   render: () => {
-    const [dateRange, setDateRange] = useState<DateRange>()
+    const [dateRange, setDateRange] = useState<DateRange>();
     return (
       <div className="w-[300px]">
         <DateRangePicker
@@ -145,13 +145,13 @@ export const WithPresets: DateRangePickerStory = {
           presets={presets}
         />
       </div>
-    )
+    );
   },
-}
+};
 
 export const WithDisabledDates: DateRangePickerStory = {
   render: () => {
-    const [dateRange, setDateRange] = useState<DateRange>()
+    const [dateRange, setDateRange] = useState<DateRange>();
     return (
       <div className="w-[300px]">
         <DateRangePicker
@@ -163,9 +163,9 @@ export const WithDisabledDates: DateRangePickerStory = {
           ]}
         />
       </div>
-    )
+    );
   },
-}
+};
 
 export const WithError: DateRangePickerStory = {
   render: () => (
@@ -173,7 +173,7 @@ export const WithError: DateRangePickerStory = {
       <DateRangePicker hasError />
     </div>
   ),
-}
+};
 
 export const Disabled: DateRangePickerStory = {
   render: () => (
@@ -181,4 +181,4 @@ export const Disabled: DateRangePickerStory = {
       <DateRangePicker disabled />
     </div>
   ),
-}
+};

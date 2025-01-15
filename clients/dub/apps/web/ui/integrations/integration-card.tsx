@@ -1,5 +1,8 @@
 "use client";
 
+import useIntegrations from "@/lib/swr/use-integrations";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { InstalledIntegrationProps } from "@/lib/types";
 import { BlurImage, TokenAvatar, Tooltip } from "@dub/ui";
 import {
   CircleWarning,
@@ -7,11 +10,6 @@ import {
   OfficeBuilding,
   ShieldCheck,
 } from "@dub/ui/icons";
-
-import useIntegrations from "@/lib/swr/use-integrations";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { InstalledIntegrationProps } from "@/lib/types";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { pluralize } from "@dub/utils";
 import Link from "next/link";
 
@@ -54,7 +52,7 @@ export default function IntegrationCard(
               content={
                 integration.verified
                   ? "This is a verified integration."
-                  : `${platform.company} hasn't verified this integration. Install it at your own risk.`
+                  : "Dub hasn't verified this integration. Install it at your own risk."
               }
             >
               <div>

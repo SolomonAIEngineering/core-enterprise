@@ -1,12 +1,10 @@
 import { ExpandingArrow, useMediaQuery } from "@dub/ui";
 import { Command, useCommandState } from "cmdk";
-import { ExternalLink, MessageSquareText } from "lucide-react";
-import { Dispatch, SetStateAction, useContext, useMemo, useRef } from "react";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Fuse from "fuse.js";
+import { ExternalLink, MessageSquareText } from "lucide-react";
 import { useSession } from "next-auth/react";
 import posthog from "posthog-js";
+import { Dispatch, SetStateAction, useContext, useMemo, useRef } from "react";
 import Highlighter from "react-highlight-words";
 import { useDebouncedCallback } from "use-debounce";
 import { HelpContext } from ".";
@@ -82,7 +80,7 @@ export function HelpArticles({
           <div />
         )}
         <a
-          href={`${platform.webUrl}/help`}
+          href="https://dub.co/help"
           target="_blank"
           className="flex items-center space-x-2 hover:underline"
         >
@@ -126,7 +124,7 @@ const CommandResults = () => {
           query: search,
           slug,
         });
-        window.open(`${platform.webUrl}/help/article/${slug}`);
+        window.open(`https://dub.co/help/article/${slug}`);
       }}
       className="group flex cursor-pointer items-center justify-between space-x-2 rounded-md px-4 py-2 hover:bg-gray-100 active:bg-gray-200 aria-selected:bg-gray-100"
     >

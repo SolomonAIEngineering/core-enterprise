@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function BulletListFill(props: SVGProps<SVGSVGElement>) {
   return (
@@ -30,5 +30,5 @@ export function BulletListFill(props: SVGProps<SVGSVGElement>) {
         <circle cx="3.75" cy="11.25" fill="currentColor" r="2.25" />
       </g>
     </svg>
-  )
+  );
 }

@@ -1,33 +1,33 @@
-import { cn } from '@dub/utils'
-import { cva, VariantProps } from 'class-variance-authority'
-import { LayoutGroup, motion } from 'framer-motion'
-import { Dispatch, SetStateAction, useId } from 'react'
+import { cn } from "@dub/utils";
+import { cva, VariantProps } from "class-variance-authority";
+import { LayoutGroup, motion } from "framer-motion";
+import { Dispatch, SetStateAction, useId } from "react";
 
-const tabSelectButtonVariants = cva('p-4 transition-colors duration-75', {
+const tabSelectButtonVariants = cva("p-4 transition-colors duration-75", {
   variants: {
     variant: {
       default:
-        'text-gray-400 data-[selected=true]:text-black data-[selected=false]:hover:text-gray-500',
+        "text-gray-400 data-[selected=true]:text-black data-[selected=false]:hover:text-gray-500",
       accent:
-        'text-neutral-500 transition-[color,font-weight] data-[selected=true]:text-blue-600 data-[selected=false]:hover:text-neutral-700 data-[selected=true]:font-medium',
+        "text-neutral-500 transition-[color,font-weight] data-[selected=true]:text-blue-600 data-[selected=false]:hover:text-neutral-700 data-[selected=true]:font-medium",
     },
   },
   defaultVariants: {
-    variant: 'default',
+    variant: "default",
   },
-})
+});
 
-const tabSelectIndicatorVariants = cva('absolute bottom-0 w-full px-1.5', {
+const tabSelectIndicatorVariants = cva("absolute bottom-0 w-full px-1.5", {
   variants: {
     variant: {
-      default: 'text-black',
-      accent: 'text-blue-600',
+      default: "text-black",
+      accent: "text-blue-600",
     },
   },
   defaultVariants: {
-    variant: 'default',
+    variant: "default",
   },
-})
+});
 
 export function TabSelect<T extends string>({
   variant,
@@ -36,15 +36,15 @@ export function TabSelect<T extends string>({
   onSelect,
   className,
 }: VariantProps<typeof tabSelectButtonVariants> & {
-  options: { id: T; label: string }[]
-  selected: string | null
-  onSelect?: Dispatch<SetStateAction<T>> | ((id: T) => void)
-  className?: string
+  options: { id: T; label: string }[];
+  selected: string | null;
+  onSelect?: Dispatch<SetStateAction<T>> | ((id: T) => void);
+  className?: string;
 }) {
-  const layoutGroupId = useId()
+  const layoutGroupId = useId();
 
   return (
-    <div className={cn('flex text-sm', className)}>
+    <div className={cn("flex text-sm", className)}>
       <LayoutGroup id={layoutGroupId}>
         {options.map(({ id, label }) => (
           <div key={id} className="relative">
@@ -72,5 +72,5 @@ export function TabSelect<T extends string>({
         ))}
       </LayoutGroup>
     </div>
-  )
+  );
 }

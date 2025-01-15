@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { useState } from 'react'
-import { Checkbox } from './checkbox'
+import { useState } from "react";
+import { Checkbox } from "./checkbox";
 
 const meta: Meta<typeof Checkbox> = {
-  title: 'Components/Checkbox',
+  title: "Components/Checkbox",
   component: Checkbox,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A checkbox component for selecting options.',
+        component: "A checkbox component for selecting options.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Checkbox>
+export default meta;
+type Story = StoryObj<typeof Checkbox>;
 
 export const Default: Story = {
   render: () => <Checkbox id="terms" />,
-}
+};
 
 export const WithLabel: Story = {
   render: () => (
@@ -35,7 +35,7 @@ export const WithLabel: Story = {
       </label>
     </div>
   ),
-}
+};
 
 export const Checked: Story = {
   render: () => (
@@ -46,7 +46,7 @@ export const Checked: Story = {
       </label>
     </div>
   ),
-}
+};
 
 export const Disabled: Story = {
   render: () => (
@@ -60,7 +60,7 @@ export const Disabled: Story = {
       </label>
     </div>
   ),
-}
+};
 
 export const DisabledChecked: Story = {
   render: () => (
@@ -74,7 +74,7 @@ export const DisabledChecked: Story = {
       </label>
     </div>
   ),
-}
+};
 
 export const WithDescription: Story = {
   render: () => (
@@ -93,11 +93,11 @@ export const WithDescription: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const Controlled: Story = {
   render: () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
       <div className="flex items-center space-x-2">
         <Checkbox
@@ -109,12 +109,12 @@ export const Controlled: Story = {
           htmlFor="controlled"
           className="text-sm font-medium leading-none"
         >
-          Controlled checkbox: {checked ? 'Checked' : 'Unchecked'}
+          Controlled checkbox: {checked ? "Checked" : "Unchecked"}
         </label>
       </div>
-    )
+    );
   },
-}
+};
 
 export const CheckboxGroup: Story = {
   render: () => (
@@ -139,7 +139,7 @@ export const CheckboxGroup: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const CustomStyling: Story = {
   render: () => (
@@ -153,7 +153,7 @@ export const CustomStyling: Story = {
       </label>
     </div>
   ),
-}
+};
 
 export const FormExample: Story = {
   render: () => (
@@ -187,4 +187,4 @@ export const FormExample: Story = {
       </button>
     </form>
   ),
-}
+};

@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { CardList } from './card-list'
-import { CardListCard } from './card-list-card'
+import { CardList } from "./card-list";
+import { CardListCard } from "./card-list-card";
 
 const meta: Meta<typeof CardList> = {
-  title: 'Components/CardList',
+  title: "Components/CardList",
   component: CardList,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -24,46 +24,46 @@ It's designed to display a collection of cards with consistent spacing and styli
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['compact', 'loose'],
-      description: 'Controls the spacing and styling between cards',
+      control: "select",
+      options: ["compact", "loose"],
+      description: "Controls the spacing and styling between cards",
       table: {
-        defaultValue: { summary: 'loose' },
+        defaultValue: { summary: "loose" },
       },
     },
     loading: {
-      control: 'boolean',
-      description: 'Applies a loading state to the entire list',
+      control: "boolean",
+      description: "Applies a loading state to the entire list",
       table: {
-        defaultValue: { summary: 'false' },
+        defaultValue: { summary: "false" },
       },
     },
     className: {
-      control: 'text',
-      description: 'Additional CSS classes to apply to the list',
+      control: "text",
+      description: "Additional CSS classes to apply to the list",
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof CardList>
+export default meta;
+type Story = StoryObj<typeof CardList>;
 
 // Example card content component for the stories
 const ExampleCard = ({
   title,
   description,
 }: {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }) => (
   <div className="flex flex-col gap-1">
     <h3 className="text-sm font-medium text-gray-900">{title}</h3>
     <p className="text-sm text-gray-500">{description}</p>
   </div>
-)
+);
 
 export const Default: Story = {
   args: {
@@ -90,11 +90,11 @@ export const Default: Story = {
       </>
     ),
   },
-}
+};
 
 export const CompactVariant: Story = {
   args: {
-    variant: 'compact',
+    variant: "compact",
     children: (
       <>
         <CardListCard>
@@ -118,7 +118,7 @@ export const CompactVariant: Story = {
       </>
     ),
   },
-}
+};
 
 export const LoadingState: Story = {
   args: {
@@ -140,19 +140,19 @@ export const LoadingState: Story = {
       </>
     ),
   },
-}
+};
 
 export const WithInteractiveCards: Story = {
   args: {
     children: (
       <>
-        <CardListCard onClick={() => alert('Card 1 clicked!')}>
+        <CardListCard onClick={() => alert("Card 1 clicked!")}>
           <ExampleCard
             title="Clickable Card"
             description="Click me to see an alert"
           />
         </CardListCard>
-        <CardListCard onClick={() => alert('Card 2 clicked!')}>
+        <CardListCard onClick={() => alert("Card 2 clicked!")}>
           <ExampleCard
             title="Another Clickable Card"
             description="I'm also interactive"
@@ -161,11 +161,11 @@ export const WithInteractiveCards: Story = {
       </>
     ),
   },
-}
+};
 
 export const CustomStyling: Story = {
   args: {
-    className: 'max-w-md',
+    className: "max-w-md",
     children: (
       <>
         <CardListCard outerClassName="bg-blue-50" innerClassName="p-6">
@@ -183,4 +183,4 @@ export const CustomStyling: Story = {
       </>
     ),
   },
-}
+};

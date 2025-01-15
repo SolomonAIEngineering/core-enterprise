@@ -1,5 +1,3 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
-
 export const isValidUrl = (url: string) => {
   try {
     new URL(url);
@@ -136,9 +134,7 @@ export const createHref = (
   utmParams?: Partial<Record<(typeof UTMTags)[number], string>>,
 ) => {
   if (domain === "dub.co") return href;
-  const url = new URL(
-    href.startsWith("/") ? `${platform.webUrl}${href}` : href,
-  );
+  const url = new URL(href.startsWith("/") ? `https://dub.co${href}` : href);
   if (utmParams) {
     Object.entries(utmParams).forEach(([key, value]) => {
       url.searchParams.set(key, value);

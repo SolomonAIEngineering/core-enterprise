@@ -1,10 +1,8 @@
 "use client";
 
-import { Button, TooltipContent } from "@dub/ui";
-
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import { ModalContext } from "@/ui/modals/modal-provider";
-import { BusinessConfig as platform } from "@dub/platform-config";
+import { Button, TooltipContent } from "@dub/ui";
 import { FREE_WORKSPACES_LIMIT } from "@dub/utils";
 import { useContext } from "react";
 
@@ -24,7 +22,7 @@ export default function CreateWorkspaceButton() {
               href={
                 freeWorkspaces
                   ? `/${freeWorkspaces[0].slug}/upgrade`
-                  : `${platform.webUrl}/pricing`
+                  : "https://dub.co/pricing"
               }
             />
           ) : undefined

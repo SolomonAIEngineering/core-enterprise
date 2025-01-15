@@ -1,12 +1,10 @@
 import { createLink, processLink } from "@/lib/api/links";
-import { APP_DOMAIN, SLACK_INTEGRATION_ID } from "@dub/utils";
-
 import { WorkspaceProps } from "@/lib/types";
 import z from "@/lib/zod";
 import { createLinkBodySchema } from "@/lib/zod/schemas/links";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { User } from "@dub/prisma/client";
+import { APP_DOMAIN, SLACK_INTEGRATION_ID } from "@dub/utils";
 import { SlackCredential } from "./type";
 import { verifySlackSignature } from "./verify-request";
 
@@ -82,7 +80,7 @@ export const handleSlashCommand = async (req: Request) => {
     };
   }
 
-  // Find user matching the Slack user profile
+  // Find Dub user matching the Slack user profile
   const credentials = installation.credentials as SlackCredential;
   const slackUser = await findSlackUser({
     userId: data.user_id,
@@ -106,7 +104,7 @@ export const handleSlashCommand = async (req: Request) => {
           type: "section",
           text: {
             type: "plain_text",
-            text: `Unable to find ${platform.company} account matching your Slack account. Only ${platform.company} users can use this command.`,
+            text: "Unable to find Dub account matching your Slack account. Only Dub users can use this command.",
           },
         },
       ],
@@ -145,7 +143,7 @@ export const handleSlashCommand = async (req: Request) => {
   };
 };
 
-// Find user matching the Slack user profile
+// Find Dub user for the given Slack user
 // TODO: Cache the profile for better performance
 const findSlackUser = async ({
   userId,

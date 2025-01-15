@@ -1,5 +1,3 @@
-import { getPlanFromPriceId, log } from "@dub/utils";
-
 import { claimDotLinkDomain } from "@/lib/api/domains/claim-dot-link-domain";
 import { inviteUser } from "@/lib/api/users";
 import { limiter } from "@/lib/cron/limiter";
@@ -9,6 +7,7 @@ import { redis } from "@/lib/upstash";
 import { Invite } from "@/lib/zod/schemas/invites";
 import { prisma } from "@dub/prisma";
 import { User } from "@dub/prisma/client";
+import { getPlanFromPriceId, log } from "@dub/utils";
 import { sendEmail } from "emails";
 import UpgradeEmail from "emails/upgrade-email";
 import Stripe from "stripe";
@@ -117,7 +116,7 @@ export async function checkoutSessionCompleted(event: Stripe.Event) {
         projectId: workspaceId,
       },
       data: {
-        rateLimit: plan.limits.apis,
+        rateLimit: plan.limits.api,
       },
     }),
     // enable dub.link premium default domain for the workspace

@@ -1,5 +1,5 @@
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { FileX2 } from "lucide-react";
+
 export default function LinkNotFound() {
   return (
     <div className="flex flex-col items-center justify-center rounded-md border border-gray-200 bg-white py-12">
@@ -14,7 +14,7 @@ export default function LinkNotFound() {
         the wrong URL or don't have access to this link.
       </p>
       <img
-        src={`${platform.assetsUrl}/not-found.png`}
+        src="https://assets.dub.co/misc/not-found.svg"
         alt="No links yet"
         width={300}
         height={300}

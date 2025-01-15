@@ -1,8 +1,8 @@
 import { resend } from "@/lib/resend";
 import { render } from "@react-email/components";
 import nodemailer from "nodemailer";
-import type { ReactElement } from "react";
-import type { CreateEmailOptions } from "resend";
+import { ReactElement } from "react";
+import { CreateEmailOptions } from "resend";
 import { sendEmailViaResend } from "./send-via-resend";
 
 // Send email using SMTP (Recommended for local development)
@@ -43,7 +43,7 @@ export const sendEmail = async ({
   subject,
   from,
   bcc,
-  replyToFromEmail,
+  replyTo,
   text,
   react,
   scheduledAt,
@@ -51,7 +51,7 @@ export const sendEmail = async ({
 }: Omit<CreateEmailOptions, "to" | "from"> & {
   email: string;
   from?: string;
-  replyToFromEmail?: boolean;
+  replyTo?: string;
   marketing?: boolean;
 }) => {
   if (resend) {
@@ -60,7 +60,7 @@ export const sendEmail = async ({
       subject,
       from,
       bcc,
-      replyToFromEmail,
+      replyTo,
       text,
       react,
       scheduledAt,

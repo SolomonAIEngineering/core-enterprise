@@ -1,28 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { useState } from 'react'
-import { AnimatedSizeContainer } from './animated-size-container'
+import { useState } from "react";
+import { AnimatedSizeContainer } from "./animated-size-container";
 
 const meta: Meta<typeof AnimatedSizeContainer> = {
-  title: 'Components/AnimatedSizeContainer',
+  title: "Components/AnimatedSizeContainer",
   component: AnimatedSizeContainer,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A container that smoothly animates its size based on its content.',
+          "A container that smoothly animates its size based on its content.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof AnimatedSizeContainer>
+export default meta;
+type Story = StoryObj<typeof AnimatedSizeContainer>;
 
 export const AnimatedHeight: Story = {
   render: () => {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false);
     return (
       <div className="w-[300px]">
         <button
@@ -44,13 +44,13 @@ export const AnimatedHeight: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const AnimatedWidth: Story = {
   render: () => {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false);
     return (
       <div>
         <button
@@ -64,19 +64,19 @@ export const AnimatedWidth: Story = {
           <div className="rounded border border-gray-200 p-4">
             <p>
               {expanded
-                ? 'This is a longer text that expands the width smoothly'
-                : 'Short text'}
+                ? "This is a longer text that expands the width smoothly"
+                : "Short text"}
             </p>
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const BothDimensions: Story = {
   render: () => {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false);
     return (
       <div>
         <button
@@ -100,13 +100,13 @@ export const BothDimensions: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const CustomTransition: Story = {
   render: () => {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false);
     return (
       <div>
         <button
@@ -118,7 +118,7 @@ export const CustomTransition: Story = {
         </button>
         <AnimatedSizeContainer
           height
-          transition={{ type: 'spring', stiffness: 100, damping: 10 }}
+          transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
           <div className="rounded border border-gray-200 p-4">
             <p>Basic content</p>
@@ -128,13 +128,13 @@ export const CustomTransition: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const ListAnimation: Story = {
   render: () => {
-    const [items, setItems] = useState([1])
+    const [items, setItems] = useState([1]);
     return (
       <div>
         <button
@@ -157,13 +157,13 @@ export const ListAnimation: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const CardExpansion: Story = {
   render: () => {
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false);
     return (
       <div>
         <button
@@ -187,13 +187,13 @@ export const CardExpansion: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const AccordionStyle: Story = {
   render: () => {
-    const [activeSection, setActiveSection] = useState<number | null>(null)
+    const [activeSection, setActiveSection] = useState<number | null>(null);
     return (
       <div className="w-[300px]">
         {[1, 2, 3].map((section) => (
@@ -206,7 +206,7 @@ export const AccordionStyle: Story = {
               className="flex w-full justify-between p-4 text-left hover:bg-gray-50"
             >
               <span>Section {section}</span>
-              <span>{activeSection === section ? '−' : '+'}</span>
+              <span>{activeSection === section ? "−" : "+"}</span>
             </button>
             <AnimatedSizeContainer height>
               {activeSection === section && (
@@ -218,13 +218,13 @@ export const AccordionStyle: Story = {
           </div>
         ))}
       </div>
-    )
+    );
   },
-}
+};
 
 export const TabPanels: Story = {
   render: () => {
-    const [activeTab, setActiveTab] = useState(1)
+    const [activeTab, setActiveTab] = useState(1);
     return (
       <div className="w-[300px]">
         <div className="mb-4 flex space-x-2">
@@ -235,8 +235,8 @@ export const TabPanels: Story = {
               onClick={() => setActiveTab(tab)}
               className={`rounded px-4 py-2 ${
                 activeTab === tab
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-700'
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-100 text-gray-700"
               }`}
             >
               Tab {tab}
@@ -262,13 +262,13 @@ export const TabPanels: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};
 
 export const FormFields: Story = {
   render: () => {
-    const [showOptional, setShowOptional] = useState(false)
+    const [showOptional, setShowOptional] = useState(false);
     return (
       <div className="w-[300px]">
         <div className="space-y-4 rounded border border-gray-200 p-4">
@@ -327,22 +327,22 @@ export const FormFields: Story = {
           </AnimatedSizeContainer>
         </div>
       </div>
-    )
+    );
   },
-}
+};
 
 export const NotificationList: Story = {
   render: () => {
     const [notifications, setNotifications] = useState([
-      { id: 1, text: 'First notification' },
-    ])
+      { id: 1, text: "First notification" },
+    ]);
 
     const addNotification = () => {
       setNotifications([
         ...notifications,
         { id: Date.now(), text: `Notification ${notifications.length + 1}` },
-      ])
-    }
+      ]);
+    };
 
     return (
       <div className="w-[300px]">
@@ -366,6 +366,6 @@ export const NotificationList: Story = {
           </div>
         </AnimatedSizeContainer>
       </div>
-    )
+    );
   },
-}
+};

@@ -1,29 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { useState } from 'react'
-import { Button } from './button'
-import { Modal } from './modal'
+import { useState } from "react";
+import { Button } from "./button";
+import { Modal } from "./modal";
 
 const meta: Meta<typeof Modal> = {
-  title: 'Components/Modal',
+  title: "Components/Modal",
   component: Modal,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A versatile modal component with mobile drawer support and customizable content.',
+          "A versatile modal component with mobile drawer support and customizable content.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof Modal>
+export default meta;
+type Story = StoryObj<typeof Modal>;
 
 export const Default: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Open Modal</Button>
@@ -34,13 +34,13 @@ export const Default: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const WithCustomStyles: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Custom Styled Modal</Button>
@@ -59,13 +59,13 @@ export const WithCustomStyles: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const PreventDefaultClose: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>
@@ -85,13 +85,13 @@ export const PreventDefaultClose: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const DesktopOnly: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Desktop Only Modal</Button>
@@ -104,13 +104,13 @@ export const DesktopOnly: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const WithCustomContent: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Rich Content Modal</Button>
@@ -134,13 +134,13 @@ export const WithCustomContent: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const WithForm: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Form Modal</Button>
@@ -186,13 +186,13 @@ export const WithForm: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const WithCustomWidth: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Wide Modal</Button>
@@ -209,13 +209,13 @@ export const WithCustomWidth: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};
 
 export const WithCustomClose: Story = {
   render: () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     return (
       <>
         <Button onClick={() => setShowModal(true)}>Custom Close Modal</Button>
@@ -223,8 +223,8 @@ export const WithCustomClose: Story = {
           showModal={showModal}
           setShowModal={setShowModal}
           onClose={() => {
-            console.log('Modal closed')
-            setShowModal(false)
+            console.log("Modal closed");
+            setShowModal(false);
           }}
         >
           <div className="p-6">
@@ -235,6 +235,6 @@ export const WithCustomClose: Story = {
           </div>
         </Modal>
       </>
-    )
+    );
   },
-}
+};

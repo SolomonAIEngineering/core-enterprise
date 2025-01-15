@@ -1,10 +1,10 @@
-import type React from 'react'
-import { cn } from '@dub/utils'
+import { cn } from "@dub/utils";
+import type React from "react";
 
 interface WordmarkProps {
-  width?: number
-  height?: number
-  className?: string
+  width?: number;
+  height?: number;
+  className?: string;
 }
 
 export const Wordmark: React.FC<WordmarkProps> = ({
@@ -20,7 +20,7 @@ export const Wordmark: React.FC<WordmarkProps> = ({
       viewBox="0 0 3500 1000"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn('w-auto text-black dark:text-white', className)}
+      className={cn("w-auto text-black dark:text-white", className)}
     >
       <defs>
         <linearGradient id="blackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -41,5 +41,5 @@ export const Wordmark: React.FC<WordmarkProps> = ({
         Vector Platform
       </text>
     </svg>
-  )
-}
+  );
+};

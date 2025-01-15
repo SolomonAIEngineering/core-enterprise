@@ -1,7 +1,5 @@
 import { Hr, Link, Tailwind, Text } from "@react-email/components";
 
-import { BusinessConfig as platform } from "@dub/platform-config";
-
 export default function Footer({
   email,
   marketing,
@@ -20,18 +18,17 @@ export default function Footer({
           Don't want to get these emails?{" "}
           <Link
             className="text-gray-700 underline"
-            href={`${platform.platformUrl}/account/settings`}
+            href="https://app.dub.co/account/settings"
           >
             Unsubscribe here.
           </Link>
         </Text>
         <Text className="text-[12px] text-gray-500">
-          {platform.company}, Inc.
+          Dub Technologies, Inc.
           <br />
-          {platform.address.street}
+          2261 Market Street STE 5906
           <br />
-          {platform.address.city}, {platform.address.state}{" "}
-          {platform.address.zipCode}
+          San Francisco, CA 941114
         </Text>
       </Tailwind>
     );
@@ -59,12 +56,11 @@ export default function Footer({
         </Text>
       )}
       <Text className="text-[12px] text-gray-500">
-        {platform.company}, Inc.
+        Dub Technologies, Inc.
         <br />
-        {platform.address.street}
+        2261 Market Street STE 5906
         <br />
-        {platform.address.city}, {platform.address.state}{" "}
-        {platform.address.zipCode}
+        San Francisco, CA 941114
       </Text>
     </Tailwind>
   );

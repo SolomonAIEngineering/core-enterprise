@@ -1,3 +1,4 @@
+import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
   Container,
@@ -11,16 +12,14 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import Footer from "./components/footer";
 
 export default function InvalidDomain({
   email = "panic@thedis.co",
-  domain = "getvector.co",
-  workspaceSlug = "getvector",
+  domain = "dub.sh",
+  workspaceSlug = "dub",
   invalidDays = 14,
-  appDomain = "getvector.co",
+  appDomain = "dub.co",
 }: {
   email: string;
   domain: string;
@@ -39,9 +38,9 @@ export default function InvalidDomain({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={platform.assets.wordmark}
+                src={DUB_WORDMARK}
                 height="40"
-                alt={platform.company}
+                alt="Dub"
                 className="mx-auto my-0"
               />
             </Section>
@@ -50,9 +49,9 @@ export default function InvalidDomain({
             </Heading>
             <Text className="text-sm leading-6 text-black">
               Your domain <code className="text-purple-600">{domain}</code> for
-              your {platform.company} workspace{" "}
+              your Dub.co workspace{" "}
               <Link
-                href={`${platform.platformUrl}/${workspaceSlug}`}
+                href={`https://app.dub.co/${workspaceSlug}`}
                 className="font-medium text-blue-600 no-underline"
               >
                 {workspaceSlug}↗
@@ -61,22 +60,21 @@ export default function InvalidDomain({
             </Text>
             <Text className="text-sm leading-6 text-black">
               If your domain remains unconfigured for 30 days, it will be
-              automatically deleted from {platform.company}. Please click the
-              link below to configure your domain.
+              automatically deleted from Dub.co. Please click the link below to
+              configure your domain.
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
-                href={`${platform.platformUrl}/${workspaceSlug}/settings/domains`}
+                href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
               >
                 Configure domain
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">
-              If you do not want to keep this domain on {platform.company}, you
-              can{" "}
+              If you do not want to keep this domain on Dub.co, you can{" "}
               <Link
-                href={`${platform.platformUrl}/${workspaceSlug}/settings/domains`}
+                href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
                 className="font-medium text-blue-600 no-underline"
               >
                 delete it

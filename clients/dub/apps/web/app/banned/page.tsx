@@ -1,6 +1,4 @@
 import { Background, Footer, Nav, NavMobile } from "@dub/ui";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { constructMetadata } from "@dub/utils";
 import { ShieldBan } from "lucide-react";
 
@@ -26,9 +24,8 @@ export default async function BannedPage() {
           This link has been banned for violating our terms of service.
         </p>
         <a
-          href={`${platform.webUrl}/home`}
+          href="https://dub.co/home"
           className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
-          rel="noreferrer"
         >
           Create Your Free Branded Link
         </a>

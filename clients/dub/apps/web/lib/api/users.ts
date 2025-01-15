@@ -1,7 +1,5 @@
 import { Session, hashToken } from "@/lib/auth";
 import { Role, WorkspaceWithUsers } from "@/lib/types";
-
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { prisma } from "@dub/prisma";
 import { TWO_WEEKS_IN_SECONDS } from "@dub/utils";
 import { randomBytes } from "crypto";
@@ -62,11 +60,11 @@ export async function inviteUser({
   const url = `${process.env.NEXTAUTH_URL}/api/auth/callback/email?${params}`;
 
   return await sendEmail({
-    subject: `You've been invited to join a workspace on ${platform.company}`,
+    subject: `You've been invited to join a workspace on ${process.env.NEXT_PUBLIC_APP_NAME}`,
     email,
     react: WorkspaceInvite({
       email,
-      appName: platform.company,
+      appName: process.env.NEXT_PUBLIC_APP_NAME as string,
       url,
       workspaceName: workspace.name,
       workspaceUser: session?.user.name || null,

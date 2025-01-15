@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { MiniAreaChart } from './mini-area-chart'
+import { MiniAreaChart } from "./mini-area-chart";
 
 const meta: Meta<typeof MiniAreaChart> = {
-  title: 'Components/MiniAreaChart',
+  title: "Components/MiniAreaChart",
   component: MiniAreaChart,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
-          'A compact area chart component for displaying trends in a small space.',
+          "A compact area chart component for displaying trends in a small space.",
       },
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof MiniAreaChart>
+export default meta;
+type Story = StoryObj<typeof MiniAreaChart>;
 
 const defaultData = [
   { date: new Date(2023, 0, 1), value: 10 },
@@ -27,7 +27,7 @@ const defaultData = [
   { date: new Date(2023, 4, 1), value: 20 },
   { date: new Date(2023, 5, 1), value: 18 },
   { date: new Date(2023, 6, 1), value: 25 },
-]
+];
 
 export const Default: Story = {
   render: () => (
@@ -35,7 +35,7 @@ export const Default: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};
 
 export const WithCustomSize: Story = {
   render: () => (
@@ -43,7 +43,7 @@ export const WithCustomSize: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};
 
 export const WithCustomColor: Story = {
   render: () => (
@@ -51,7 +51,7 @@ export const WithCustomColor: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};
 
 export const WithGradient: Story = {
   render: () => (
@@ -59,7 +59,7 @@ export const WithGradient: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};
 
 export const WithTooltip: Story = {
   render: () => (
@@ -72,7 +72,7 @@ export const WithTooltip: Story = {
       </div>
     </div>
   ),
-}
+};
 
 export const WithDifferentData: Story = {
   render: () => (
@@ -90,7 +90,7 @@ export const WithDifferentData: Story = {
       />
     </div>
   ),
-}
+};
 
 export const WithCustomStroke: Story = {
   render: () => (
@@ -98,7 +98,7 @@ export const WithCustomStroke: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};
 
 export const WithBackground: Story = {
   render: () => (
@@ -106,7 +106,7 @@ export const WithBackground: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};
 
 export const WithCard: Story = {
   render: () => (
@@ -116,7 +116,7 @@ export const WithCard: Story = {
       <p className="mt-2 text-xs text-gray-500">Last 7 months</p>
     </div>
   ),
-}
+};
 
 export const Responsive: Story = {
   render: () => (
@@ -124,4 +124,4 @@ export const Responsive: Story = {
       <MiniAreaChart data={defaultData} />
     </div>
   ),
-}
+};

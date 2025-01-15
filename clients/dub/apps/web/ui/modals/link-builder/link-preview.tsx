@@ -1,3 +1,4 @@
+import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
 import {
   Button,
   FileUpload,
@@ -27,14 +28,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { LinkFormData, LinkModalContext } from ".";
-
-import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
-import { BusinessConfig as platform } from "@dub/platform-config";
 import { useFormContext } from "react-hook-form";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import { useDebounce } from "use-debounce";
+import { LinkFormData, LinkModalContext } from ".";
 import { useOGModal } from "./og-modal";
 
 const tabs = ["default", "x", "linkedin", "facebook"] as const;
@@ -103,7 +101,7 @@ export function LinkPreview() {
               <SimpleTooltipContent
                 title="Customize how your links look when shared on social media to improve click-through rates."
                 cta="Learn more."
-                href={`${platform.webUrl}/help/article/custom-social-media-cards`}
+                href="https://dub.co/help/article/custom-social-media-cards"
               />
             }
           />

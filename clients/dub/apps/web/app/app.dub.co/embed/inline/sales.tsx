@@ -1,17 +1,16 @@
+import { SALES_PAGE_SIZE } from "@/lib/partners/constants";
+import { PartnerSaleResponse } from "@/lib/types";
 import { Gift, Table, usePagination, useTable } from "@dub/ui";
 import {
-  TAB_ITEM_ANIMATION_SETTINGS,
   currencyFormatter,
   fetcher,
   formatDate,
   formatDateTime,
+  TAB_ITEM_ANIMATION_SETTINGS,
 } from "@dub/utils";
 
-import { SALES_PAGE_SIZE } from "@/lib/partners/constants";
-import { PartnerSaleResponse } from "@/lib/types";
 import { motion } from "framer-motion";
 import useSWR from "swr";
-
 export function EmbedSales({ salesCount }: { salesCount: number }) {
   const { pagination, setPagination } = usePagination(SALES_PAGE_SIZE);
   const { data: sales, isLoading } = useSWR<PartnerSaleResponse[]>(
@@ -72,7 +71,7 @@ export function EmbedSales({ salesCount }: { salesCount: number }) {
         <Gift className="size-6 text-neutral-400" />
         <p className="max-w-sm text-balance text-center text-xs text-neutral-400">
           No sales yet. When you refer a friend and they make a purchase,
-          they&apos;ll show up here.
+          they'll show up here.
         </p>
       </div>
     ),

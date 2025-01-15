@@ -1,3 +1,6 @@
+import { mutatePrefix } from "@/lib/swr/mutate";
+import useTags from "@/lib/swr/use-tags";
+import useWorkspace from "@/lib/swr/use-workspace";
 import { TagColorProps, TagProps } from "@/lib/types";
 import {
   Button,
@@ -11,6 +14,7 @@ import {
   useMediaQuery,
 } from "@dub/ui";
 import { capitalize, cn, pluralize } from "@dub/utils";
+import posthog from "posthog-js";
 import {
   Dispatch,
   FormEvent,
@@ -19,14 +23,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { COLORS_LIST, randomBadgeColor } from "../links/tag-badge";
-
-import { mutatePrefix } from "@/lib/swr/mutate";
-import useTags from "@/lib/swr/use-tags";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import posthog from "posthog-js";
 import { toast } from "sonner";
+import { COLORS_LIST, randomBadgeColor } from "../links/tag-badge";
 
 function AddEditTagModal({
   showAddEditTagModal,
@@ -91,7 +89,7 @@ function AddEditTagModal({
           <p className="text-sm text-gray-500">
             Use tags to organize your links.{" "}
             <a
-              href={`${platform.webUrl}/help/article/how-to-use-tags#what-is-a-tag`}
+              href="https://dub.co/help/article/how-to-use-tags#what-is-a-tag"
               target="_blank"
               rel="noopener noreferrer"
               className="underline underline-offset-4 hover:text-gray-800"

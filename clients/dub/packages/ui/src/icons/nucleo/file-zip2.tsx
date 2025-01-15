@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import { SVGProps } from "react";
 
 export function FileZip2(props: SVGProps<SVGSVGElement>) {
   return (
@@ -60,5 +60,5 @@ export function FileZip2(props: SVGProps<SVGSVGElement>) {
         />
       </g>
     </svg>
-  )
+  );
 }
