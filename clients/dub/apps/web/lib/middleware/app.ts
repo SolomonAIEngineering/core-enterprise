@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { parse } from "@/lib/middleware/utils";
 import EmbedMiddleware from "./embed";
 import NewLinkMiddleware from "./new-link";
+import WorkspacesMiddleware from "./workspaces";
 import { appRedirect } from "./utils/app-redirect";
 import { getDefaultWorkspace } from "./utils/get-default-workspace";
 import { getOnboardingStep } from "./utils/get-onboarding-step";
 import { getUserViaToken } from "./utils/get-user-via-token";
 import { isTopLevelSettingsRedirect } from "./utils/is-top-level-settings-redirect";
-import WorkspacesMiddleware from "./workspaces";
+import { parse } from "@/lib/middleware/utils";
 
 export default async function AppMiddleware(req: NextRequest) {
   const { path, fullPath } = parse(req);
@@ -29,7 +29,8 @@ export default async function AppMiddleware(req: NextRequest) {
     path !== "/register" &&
     path !== "/auth/saml" &&
     !path.startsWith("/auth/reset-password/") &&
-    !path.startsWith("/share/")
+    !path.startsWith("/share/") &&
+    !path.startsWith("/onboarding")  // Add this line to ensure onboarding route is accessible for authenticated accounts without a workspace
   ) {
     return NextResponse.redirect(
       new URL(
