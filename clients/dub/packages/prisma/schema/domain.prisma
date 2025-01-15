@@ -43,6 +43,7 @@ model DefaultDomains {
   id          String  @id @default(cuid())
   oppulence   Boolean @default(true)
   solomonai   Boolean @default(true)
+  thinkthank  Boolean @default(true)
   dublink     Boolean @default(false)
   dubsh       Boolean @default(true)
   chatgpt     Boolean @default(true)

@@ -11,17 +11,17 @@ const ENV = {
 
 // Asset URLs configuration
 const assetUrls = {
-  logo: "https://assets.solomon-ai.app/logo.png",
-  qrLogo: "https://assets.solomon-ai.app/logo.png",
-  wordmark: "https://assets.solomon-ai.app/wordmark.png",
-  thumbnail: "https://assets.solomon-ai.app/thumbnail.ppg",
-  appleTouchIcon: "https://assets.solomon-ai.app/apple-touch-icon.png",
-  favicon32: "https://assets.solomon-ai.app/favicon-32x32.png",
-  favicon16: "https://assets.solomon-ai.app/favicon-16x16.png",
-  faviconAndroid192: "https://assets.solomon-ai.app/android-chrome-192x192.png",
-  faviconAndroid512: "https://assets.solomon-ai.app/android-chrome-512x512.png",
-  notFoundLink: "https://assets.solomon-ai.app/notfound.png",
-  thankYouThumbnail: "https://assets.solomon-ai.app/thank-you-thumbnail.jpg",
+  logo: "https://assets.thinkthank.io/logo.png",
+  qrLogo: "https://assets.thinkthank.io/logo.png",
+  wordmark: "https://assets.thinkthank.io/wordmark.png",
+  thumbnail: "https://assets.thinkthank.io/thumbnail.ppg",
+  appleTouchIcon: "https://assets.thinkthank.io/apple-touch-icon.png",
+  favicon32: "https://assets.thinkthank.io/favicon-32x32.png",
+  favicon16: "https://assets.thinkthank.io/favicon-16x16.png",
+  faviconAndroid192: "https://assets.thinkthank.io/android-chrome-192x192.png",
+  faviconAndroid512: "https://assets.thinkthank.io/android-chrome-512x512.png",
+  notFoundLink: "https://assets.thinkthank.io/notfound.png",
+  thankYouThumbnail: "https://assets.thinkthank.io/thank-you-thumbnail.jpg",
 };
 
 // Company address configuration
@@ -37,15 +37,15 @@ const companyAddress = {
 // Email configuration
 const emailConfig: EmailConfig = {
   from: {
-    default: "Yoan from Solomon AI <yoan@solomon-ai.app>",
-    support: "Solomon AI Support <support@solomon-ai.app>",
-    sales: "Solomon AI Sales <sales@solomon-ai.app>",
-    billing: "Solomon AI Billing <billing@solomon-ai.app>",
-    notifications: "Solomon AI Notifications <notifications@solomon-ai.app>",
-    system: "Solomon AI <system@solomon-ai.app>",
-    feedback: "Solomon AI Feedback <feedback@solomon-ai.app>",
+    default: "Yoan from Solomon AI <yoan@thinkthank.io>",
+    support: "Solomon AI Support <support@thinkthank.io>",
+    sales: "Solomon AI Sales <sales@thinkthank.io>",
+    billing: "Solomon AI Billing <billing@thinkthank.io>",
+    notifications: "Solomon AI Notifications <notifications@thinkthank.io>",
+    system: "Solomon AI <system@thinkthank.io>",
+    feedback: "Solomon AI Feedback <feedback@thinkthank.io>",
   },
-  replyTo: "support@solomon-ai.app",
+  replyTo: "support@thinkthank.io",
   templates: {
     welcome: "welcome-template",
     passwordReset: "password-reset-template",
@@ -137,7 +137,7 @@ const pricingPlans = [
 
 // Enhanced security configuration
 const securityConfig = {
-  corsOrigins: ["https://app.solomon-ai.app", "https://solomon-ai.app"],
+  corsOrigins: ["https://app.thinkthank.io", "https://thinkthank.io"],
   rateLimiting: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxRequests: 100, // limit each IP to 100 requests per windowMs
@@ -147,7 +147,7 @@ const securityConfig = {
     scriptSrc: ["'self'", "'unsafe-inline'", "https://js.intercomcdn.com"],
     styleSrc: ["'self'", "'unsafe-inline'"],
     imgSrc: ["'self'", "data:", "https:"],
-    connectSrc: ["'self'", "https://api.solomon-ai.app", "https://engine.solomon-ai.app"],
+    connectSrc: ["'self'", "https://api.thinkthank.io", "https://engine.thinkthank.io"],
   },
   cookieSettings: {
     secure: ENV.IS_PROD,
@@ -174,7 +174,7 @@ const analyticsConfig = {
 
 // API configuration
 const apiConfig = {
-  baseUrl: ENV.IS_PROD ? "https://api.solomon-ai.app/v1" : "https://api-staging.solomon-ai.app/v1",
+  baseUrl: ENV.IS_PROD ? "https://api.thinkthank.io/v1" : "https://api-staging.thinkthank.io/v1",
   timeout: 30000,
   retryAttempts: 3,
   endpoints: {
@@ -195,7 +195,7 @@ const apiConfig = {
  * through advanced analytics, AI-powered insights, and real-time intelligence capabilities.
  */
 export const BusinessConfig: SiteConfig = {
-  platformHost: "app.solomon-ai.app",
+  platformHost: "app.thinkthank.io",
   company: "Solomon AI",
   name: "Solomon AI | Revenue Intelligence Platform",
   shortName: "Solomon AI",
@@ -206,18 +206,18 @@ export const BusinessConfig: SiteConfig = {
   email: emailConfig,
   title: sharedTitle,
   description: platformDescription,
-  domain: "solomon-ai.app",
-  platformUrl: "https://app.solomon-ai.app",
-  webUrl: "https://solomon-ai.app",
-  assetsUrl: "https://assets.solomon-ai.app",
-  securityUrl: "https://security.solomon-ai.app",
-  partnersUrl: "https://partners.solomon-ai.app",
-  referralUrl: "https://referral.solomon-ai.app",
-  statusPageUrl: "https://status.solomon-ai.app",
-  apiUrl: "https://api.solomon-ai.app",
+  domain: "thinkthank.io",
+  platformUrl: "https://app.thinkthank.io",
+  webUrl: "https://thinkthank.io",
+  assetsUrl: "https://assets.thinkthank.io",
+  securityUrl: "https://security.thinkthank.io",
+  partnersUrl: "https://partners.thinkthank.io",
+  referralUrl: "https://referral.thinkthank.io",
+  statusPageUrl: "https://status.thinkthank.io",
+  apiUrl: "https://api.thinkthank.io",
   desktopUrl: "solomonai://",
   dubProjectSlug: "solomonai",
-  mfaIssuer: "app.solomon-ai.app",
+  mfaIssuer: "app.thinkthank.io",
   uptimeUrl: "https://solomon.betteruptime.com/",
   /**
    * Navigation items displayed in the main navigation bar.
@@ -237,11 +237,11 @@ export const BusinessConfig: SiteConfig = {
   links: {
     twitter: "https://twitter.com/solomon_ai",
     github: "https://github.com/solomon-ai",
-    docs: "https://docs.solomon-ai.app",
+    docs: "https://docs.thinkthank.io",
     youtube: "https://www.youtube.com/solomon-ai",
   },
-  supportEmail: "support@solomon-ai.app",
-  helpUrl: "https://help.solomon-ai.app",
+  supportEmail: "support@thinkthank.io",
+  helpUrl: "https://help.thinkthank.io",
   intercomAppId: "pezs7zbq",
   /**
    * Payment configuration for managing subscriptions.
@@ -269,12 +269,12 @@ export const BusinessConfig: SiteConfig = {
    * @property {SiteMetadata} metadata - SEO and social sharing metadata settings for the platform.
    */
   metadata: {
-    metadataBase: new URL("https://app.solomon-ai.app"),
+    metadataBase: new URL("https://app.thinkthank.io"),
     ...sharedMetadata,
     twitter: sharedMetadata,
     openGraph: {
       ...sharedMetadata,
-      url: "https://app.solomon-ai.app",
+      url: "https://app.thinkthank.io",
       siteName: "Solomon AI",
       locale: "en_US",
       type: "website",
@@ -307,13 +307,13 @@ export const BusinessConfig: SiteConfig = {
    * @property {FinancialEngineConfig} financialEngine - The configuration for connecting to the financial engine, including production and development URLs.
    */
   financialEngine: {
-    baseUrlProd: "https://engine.solomon-ai.app",
-    baseUrlDev: "https://engine-staging.solomon-ai.app",
+    baseUrlProd: "https://engine.thinkthank.io",
+    baseUrlDev: "https://engine-staging.thinkthank.io",
     bearerToken: "SOLOMON_API_TOKEN",
   },
-  termsAndConditionsUrl: "https://solomon-ai.app/terms",
-  privacyPolicyUrl: "https://solomon-ai.app/privacy",
-  documentationUrl: "https://docs.solomon-ai.app",
+  termsAndConditionsUrl: "https://thinkthank.io/terms",
+  privacyPolicyUrl: "https://thinkthank.io/privacy",
+  documentationUrl: "https://docs.thinkthank.io",
   security: securityConfig,
   analytics: analyticsConfig,
   api: apiConfig,
