@@ -6,6 +6,16 @@ enum WebhookReceiver {
   segment
 }
 
+enum WebhookStatus {
+  ACTIVE
+  DISABLED
+  PENDING_VERIFICATION // For initial verification process
+}
+
+enum WebhookMethod {
+  POST // Starting with POST only, can expand later
+}
+
 model Webhook {
   id                  String          @id @default(cuid())
   projectId           String
@@ -18,12 +28,24 @@ model Webhook {
   consecutiveFailures Int             @default(0)
   lastFailedAt        DateTime?
   disabledAt          DateTime?
+  maxRetries          Int               @default(3)
+  lastErrorMessage    String?           @db.Text
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @updatedAt
+  timeout             Int?             @default(30)
+
+  // Security and rate limiting
+  status               WebhookStatus     @default(PENDING_VERIFICATION)
+  verificationToken    String?           // For initial endpoint verification
+  ipWhitelist         String?            // Optional IP whitelist - stored as comma-separated string
+  rateLimitPerMinute  Int               @default(60)
+
 
   project              Project               @relation(fields: [projectId], references: [id], onDelete: Cascade)
   installedIntegration InstalledIntegration? @relation(fields: [installationId], references: [id], onDelete: Cascade)
   links                LinkWebhook[]
+  logs WebhookLog[]
+  bankConnectionSettings BankConnectionSettings[]
 
   @@index([projectId])
 }
@@ -39,4 +61,22 @@ model LinkWebhook {
   @@unique([linkId, webhookId])
   @@index([linkId])
   @@index([webhookId])
+}
+
+// New model for webhook execution logs
+model WebhookLog {
+  id              String    @id @default(cuid())
+  webhookId       String
+  requestBody     Json?
+  responseBody    Json?
+  statusCode      Int?
+  duration        Int       // in milliseconds
+  success         Boolean
+  errorMessage    String?   @db.Text
+  timestamp       DateTime  @default(now())
+
+  webhook         Webhook   @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+
+  @@index([webhookId, timestamp])
+  @@index([success])
 }
