@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { parse } from "@/lib/middleware/utils";
 import EmbedMiddleware from "./embed";
 import NewLinkMiddleware from "./new-link";
-import WorkspacesMiddleware from "./workspaces";
 import { appRedirect } from "./utils/app-redirect";
 import { getDefaultWorkspace } from "./utils/get-default-workspace";
 import { getOnboardingStep } from "./utils/get-onboarding-step";
 import { getUserViaToken } from "./utils/get-user-via-token";
 import { isTopLevelSettingsRedirect } from "./utils/is-top-level-settings-redirect";
-import { parse } from "@/lib/middleware/utils";
+import WorkspacesMiddleware from "./workspaces";
 
 export default async function AppMiddleware(req: NextRequest) {
   const { path, fullPath } = parse(req);
@@ -28,8 +28,14 @@ export default async function AppMiddleware(req: NextRequest) {
 
   // Handle non-authenticated users
   if (!user) {
-    const publicPaths = ["/login", "/forgot-password", "/register", "/auth/saml"];
-    const isPublicPath = publicPaths.includes(path) ||
+    const publicPaths = [
+      "/login",
+      "/forgot-password",
+      "/register",
+      "/auth/saml",
+    ];
+    const isPublicPath =
+      publicPaths.includes(path) ||
       path.startsWith("/auth/reset-password/") ||
       path.startsWith("/share/");
 
@@ -46,7 +52,8 @@ export default async function AppMiddleware(req: NextRequest) {
   }
 
   // Handle authenticated users
-  const isNewUser = new Date(user.createdAt).getTime() > Date.now() - 60 * 60 * 24 * 1000;
+  const isNewUser =
+    new Date(user.createdAt).getTime() > Date.now() - 60 * 60 * 24 * 1000;
   const defaultWorkspace = await getDefaultWorkspace(user);
   const onboardingStep = await getOnboardingStep(user);
 
@@ -54,7 +61,7 @@ export default async function AppMiddleware(req: NextRequest) {
     isNewUser,
     hasDefaultWorkspace: !!defaultWorkspace,
     onboardingStep,
-    currentPath: path
+    currentPath: path,
   });
 
   // Direct to onboarding if needed
@@ -84,9 +91,11 @@ export default async function AppMiddleware(req: NextRequest) {
     "/wrapped",
   ];
 
-  if (mainRoutes.includes(path) ||
+  if (
+    mainRoutes.includes(path) ||
     path.startsWith("/settings/") ||
-    isTopLevelSettingsRedirect(path)) {
+    isTopLevelSettingsRedirect(path)
+  ) {
     console.log("Handling workspace middleware");
     return WorkspacesMiddleware(req, user);
   }

@@ -6,7 +6,7 @@
  */
 
 import type { FeatureFlags } from "../features/types";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 /**
  * Represents a navigation item used in the main navigation menu.
@@ -429,6 +429,8 @@ type EmailConfig = {
     notifications: string;
     /** System sender address */
     system: string;
+    /** Feedback sender address */
+    feedback: string;
   };
   /** Default reply-to address */
   replyTo: string;
@@ -500,6 +502,20 @@ type Assets = {
   wordmark: string;
   /** Default thumbnail image URL */
   thumbnail: string;
+  /** Apple Touch Icon URL */
+  appleTouchIcon: string;
+  /** Favicon 32x32 URL */
+  favicon32: string;
+  /** Favicon 16x16 URL */
+  favicon16: string;
+  /** Favicon Android 192x192 URL */
+  faviconAndroid192: string;
+  /** Favicon Android 512x512 URL */
+  faviconAndroid512: string;
+  /** Not found link image URL */
+  notFoundLink: string;
+  /** Thank you thumbnail image URL */
+  thankYouThumbnail: string;
 };
 
 /**
@@ -522,6 +538,8 @@ type SiteConfig = {
   company: string;
   /** Platform name */
   name: string;
+  /** Short name */
+  shortName: string;
   /** Founder name */
   founder: string;
   /** Founder first name */
@@ -544,6 +562,8 @@ type SiteConfig = {
   partnersUrl: string;
   /** Referral URL */
   referralUrl: string;
+  /** Assets URL */
+  assetsUrl: string;
   /** Website URL */
   webUrl: string;
   /** Desktop app URL scheme */
@@ -554,7 +574,7 @@ type SiteConfig = {
   statusPageUrl: string;
   /** API URL */
   apiUrl: string;
-  /** Project slug for Dub */
+  /** Project slug */
   dubProjectSlug: string;
   /** MFA issuer name */
   mfaIssuer: string;

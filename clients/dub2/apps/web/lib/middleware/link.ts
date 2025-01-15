@@ -1,4 +1,11 @@
 import {
+  createResponseWithCookie,
+  detectBot,
+  getFinalUrl,
+  isSupportedDeeplinkProtocol,
+  parse,
+} from "@/lib/middleware/utils";
+import {
   DUB_HEADERS,
   LEGAL_WORKSPACE_ID,
   LOCALHOST_GEO_DATA,
@@ -13,20 +20,13 @@ import {
   NextResponse,
   userAgent,
 } from "next/server";
-import {
-  createResponseWithCookie,
-  detectBot,
-  getFinalUrl,
-  isSupportedDeeplinkProtocol,
-  parse,
-} from "@/lib/middleware/utils";
 
-import { cookies } from "next/headers";
-import { formatRedisLink } from "@/lib/upstash";
-import { getDomainViaEdge } from "../planetscale/get-domain-via-edge";
-import { getLinkViaEdge } from "../planetscale";
-import { linkCache } from "../api/links/cache";
 import { recordClick } from "@/lib/tinybird";
+import { formatRedisLink } from "@/lib/upstash";
+import { cookies } from "next/headers";
+import { linkCache } from "../api/links/cache";
+import { getLinkViaEdge } from "../planetscale";
+import { getDomainViaEdge } from "../planetscale/get-domain-via-edge";
 
 export default async function LinkMiddleware(
   req: NextRequest,

@@ -11,10 +11,17 @@ const ENV = {
 
 // Asset URLs configuration
 const assetUrls = {
-  logo: "https://assets.dub.co/logo.png",
-  qrLogo: "https://assets.dub.co/logo.png",
-  wordmark: "https://assets.dub.co/wordmark.png",
-  thumbnail: "https://assets.dub.co/thumbnail.jpg",
+  logo: "https://assets.solomon-ai.app/logo.png",
+  qrLogo: "https://assets.solomon-ai.app/logo.png",
+  wordmark: "https://assets.solomon-ai.app/wordmark.png",
+  thumbnail: "https://assets.solomon-ai.app/thumbnail.ppg",
+  appleTouchIcon: "https://assets.solomon-ai.app/apple-touch-icon.png",
+  favicon32: "https://assets.solomon-ai.app/favicon-32x32.png",
+  favicon16: "https://assets.solomon-ai.app/favicon-16x16.png",
+  faviconAndroid192: "https://assets.solomon-ai.app/android-chrome-192x192.png",
+  faviconAndroid512: "https://assets.solomon-ai.app/android-chrome-512x512.png",
+  notFoundLink: "https://assets.solomon-ai.app/notfound.png",
+  thankYouThumbnail: "https://assets.solomon-ai.app/thank-you-thumbnail.jpg",
 };
 
 // Company address configuration
@@ -30,14 +37,15 @@ const companyAddress = {
 // Email configuration
 const emailConfig: EmailConfig = {
   from: {
-    default: "Yoan from Vector <yoan@getvector.app>",
-    support: "Vector Support <support@getvector.app>",
-    sales: "Vector Sales <sales@getvector.app>",
-    billing: "Vector Billing <billing@getvector.app>",
-    notifications: "Vector Notifications <notifications@getvector.app>",
-    system: "Vector <system@getvector.app>",
+    default: "Yoan from Solomon AI <yoan@solomon-ai.app>",
+    support: "Solomon AI Support <support@solomon-ai.app>",
+    sales: "Solomon AI Sales <sales@solomon-ai.app>",
+    billing: "Solomon AI Billing <billing@solomon-ai.app>",
+    notifications: "Solomon AI Notifications <notifications@solomon-ai.app>",
+    system: "Solomon AI <system@solomon-ai.app>",
+    feedback: "Solomon AI Feedback <feedback@solomon-ai.app>",
   },
-  replyTo: "support@getvector.app",
+  replyTo: "support@solomon-ai.app",
   templates: {
     welcome: "welcome-template",
     passwordReset: "password-reset-template",
@@ -47,9 +55,9 @@ const emailConfig: EmailConfig = {
   },
 };
 
-const sharedTitle = "Vector - Revenue Intelligence Platform";
+const sharedTitle = "Solomon - Revenue Intelligence Platform";
 const sharedDescription =
-  "Vector - AI-powered intelligence platform for high-performing revenue teams.";
+  "Solomon - AI-powered intelligence platform for high-performing revenue teams.";
 const platformDescription =
   "the revenue intelligence platform that empowers teams with AI-driven insights, predictive analytics, and automated forecasting to optimize sales performance and maximize revenue growth.";
 const sharedImages = [
@@ -129,7 +137,7 @@ const pricingPlans = [
 
 // Enhanced security configuration
 const securityConfig = {
-  corsOrigins: ["https://app.getvector.app", "https://getvector.app"],
+  corsOrigins: ["https://app.solomon-ai.app", "https://solomon-ai.app"],
   rateLimiting: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxRequests: 100, // limit each IP to 100 requests per windowMs
@@ -139,7 +147,7 @@ const securityConfig = {
     scriptSrc: ["'self'", "'unsafe-inline'", "https://js.intercomcdn.com"],
     styleSrc: ["'self'", "'unsafe-inline'"],
     imgSrc: ["'self'", "data:", "https:"],
-    connectSrc: ["'self'", "https://api.getvector.app", "https://engine.vector-platform.com"],
+    connectSrc: ["'self'", "https://api.solomon-ai.app", "https://engine.solomon-ai.app"],
   },
   cookieSettings: {
     secure: ENV.IS_PROD,
@@ -166,7 +174,7 @@ const analyticsConfig = {
 
 // API configuration
 const apiConfig = {
-  baseUrl: ENV.IS_PROD ? "https://api.getvector.app/v1" : "https://api-staging.getvector.app/v1",
+  baseUrl: ENV.IS_PROD ? "https://api.solomon-ai.app/v1" : "https://api-staging.solomon-ai.app/v1",
   timeout: 30000,
   retryAttempts: 3,
   endpoints: {
@@ -178,37 +186,39 @@ const apiConfig = {
 };
 
 /**
- * Configuration object for the Vector revenue intelligence platform.
+ * Configuration object for the Solomon AI revenue intelligence platform.
  *
  * This configuration defines platform-wide settings, pricing plans, navigation, metadata, and revenue intelligence
- * features for Vector, a platform designed to empower revenue teams with AI-powered insights and intelligence.
+ * features for Solomon AI, a platform designed to empower revenue teams with AI-powered insights and intelligence.
  *
  * The platform helps revenue teams optimize their pipeline, forecast accurately, and make data-driven decisions
  * through advanced analytics, AI-powered insights, and real-time intelligence capabilities.
  */
 export const BusinessConfig: SiteConfig = {
-  platformHost: "app.getvector.app",
-  company: "Vector",
-  name: "Vector | Revenue Intelligence Platform",
-  founder: "Yoan From Vector",
+  platformHost: "app.solomon-ai.app",
+  company: "Solomon AI",
+  name: "Solomon AI | Revenue Intelligence Platform",
+  shortName: "Solomon AI",
+  founder: "Yoan From Solomon AI",
   founderFirstName: "Yoan",
   address: companyAddress,
   assets: assetUrls,
   email: emailConfig,
   title: sharedTitle,
   description: platformDescription,
-  domain: "getvector.app",
-  platformUrl: "https://app.getvector.app",
-  webUrl: "https://getvector.app",
-  securityUrl: "https://security.getvector.app",
-  partnersUrl: "https://partners.getvector.app",
-  referralUrl: "https://referral.getvector.app",
-  statusPageUrl: "https://status.getvector.app",
-  apiUrl: "https://api.getvector.app",
-  desktopUrl: "vector://",
-  dubProjectSlug: "vector",
-  mfaIssuer: "app.getvector.app",
-  uptimeUrl: "https://vector.betteruptime.com/",
+  domain: "solomon-ai.app",
+  platformUrl: "https://app.solomon-ai.app",
+  webUrl: "https://solomon-ai.app",
+  assetsUrl: "https://assets.solomon-ai.app",
+  securityUrl: "https://security.solomon-ai.app",
+  partnersUrl: "https://partners.solomon-ai.app",
+  referralUrl: "https://referral.solomon-ai.app",
+  statusPageUrl: "https://status.solomon-ai.app",
+  apiUrl: "https://api.solomon-ai.app",
+  desktopUrl: "solomonai://",
+  dubProjectSlug: "solomonai",
+  mfaIssuer: "app.solomon-ai.app",
+  uptimeUrl: "https://solomon.betteruptime.com/",
   /**
    * Navigation items displayed in the main navigation bar.
    *
@@ -225,13 +235,13 @@ export const BusinessConfig: SiteConfig = {
    * @property {Links} links - URLs to external resources such as Twitter, GitHub, and documentation.
    */
   links: {
-    twitter: "https://twitter.com/vector",
-    github: "https://github.com/vector",
-    docs: "https://docs.vector.app",
-    youtube: "https://www.youtube.com/vector",
+    twitter: "https://twitter.com/solomon_ai",
+    github: "https://github.com/solomon-ai",
+    docs: "https://docs.solomon-ai.app",
+    youtube: "https://www.youtube.com/solomon-ai",
   },
-  supportEmail: "support@getvector.app",
-  helpUrl: "https://help.getvector.app",
+  supportEmail: "support@solomon-ai.app",
+  helpUrl: "https://help.solomon-ai.app",
   intercomAppId: "pezs7zbq",
   /**
    * Payment configuration for managing subscriptions.
@@ -259,13 +269,13 @@ export const BusinessConfig: SiteConfig = {
    * @property {SiteMetadata} metadata - SEO and social sharing metadata settings for the platform.
    */
   metadata: {
-    metadataBase: new URL("https://app.getvector.app"),
+    metadataBase: new URL("https://app.solomon-ai.app"),
     ...sharedMetadata,
     twitter: sharedMetadata,
     openGraph: {
       ...sharedMetadata,
-      url: "https://app.getvector.app",
-      siteName: "Vector",
+      url: "https://app.solomon-ai.app",
+      siteName: "Solomon AI",
       locale: "en_US",
       type: "website",
     },
@@ -297,13 +307,13 @@ export const BusinessConfig: SiteConfig = {
    * @property {FinancialEngineConfig} financialEngine - The configuration for connecting to the financial engine, including production and development URLs.
    */
   financialEngine: {
-    baseUrlProd: "https://engine.vector-platform.com",
-    baseUrlDev: "https://engine-staging.vector-platform.com",
-    bearerToken: "VECTOR_API_TOKEN",
+    baseUrlProd: "https://engine.solomon-ai.app",
+    baseUrlDev: "https://engine-staging.solomon-ai.app",
+    bearerToken: "SOLOMON_API_TOKEN",
   },
-  termsAndConditionsUrl: "https://getvector.app/terms",
-  privacyPolicyUrl: "https://getvector.app/privacy",
-  documentationUrl: "https://docs.getvector.app",
+  termsAndConditionsUrl: "https://solomon-ai.app/terms",
+  privacyPolicyUrl: "https://solomon-ai.app/privacy",
+  documentationUrl: "https://docs.solomon-ai.app",
   security: securityConfig,
   analytics: analyticsConfig,
   api: apiConfig,
