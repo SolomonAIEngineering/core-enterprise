@@ -21,64 +21,74 @@ export default async function AppMiddleware(req: NextRequest) {
   const isWorkspaceInvite =
     req.nextUrl.searchParams.get("invite") || path.startsWith("/invites/");
 
-  // if there's no user and the path isn't /login or /register, redirect to /login
-  if (
-    !user &&
-    path !== "/login" &&
-    path !== "/forgot-password" &&
-    path !== "/register" &&
-    path !== "/auth/saml" &&
-    !path.startsWith("/auth/reset-password/") &&
-    !path.startsWith("/share/")
-  ) {
+  // List of public paths that don't require authentication
+  const publicPaths = [
+    "/login",
+    "/forgot-password",
+    "/register",
+    "/auth/saml",
+    "/onboarding",
+    "/onboarding/workspace"
+  ];
+
+  // Check if current path is public or starts with allowed prefixes
+  const isPublicPath = publicPaths.includes(path) ||
+    path.startsWith("/auth/reset-password/") ||
+    path.startsWith("/share/") ||
+    path.startsWith("/onboarding/");
+
+  // Redirect to login if no user and not a public path
+  if (!user && !isPublicPath) {
     return NextResponse.redirect(
       new URL(
         `/login${path === "/" ? "" : `?next=${encodeURIComponent(fullPath)}`}`,
         req.url,
       ),
     );
+  }
 
-    // if there's a user
-  } else if (user) {
-    // /new is a special path that creates a new link (or workspace if the user doesn't have one yet)
-    if (path === "/new") {
-      return NewLinkMiddleware(req, user);
+  // If there's a user
+  if (user) {
+    // Handle onboarding for new users
+    const isNewUser = new Date(user.createdAt).getTime() > Date.now() - 60 * 60 * 24 * 1000;
+    const hasDefaultWorkspace = await getDefaultWorkspace(user);
+    const onboardingStep = await getOnboardingStep(user);
 
-      /* Onboarding redirects
-
-        - User was created less than a day ago
-        - User is not invited to a workspace (redirect straight to the workspace)
-        - The path does not start with /onboarding
-        - The user has not completed the onboarding step
-      */
-    } else if (
-      new Date(user.createdAt).getTime() > Date.now() - 60 * 60 * 24 * 1000 &&
+    // If user needs onboarding
+    if (isNewUser &&
       !isWorkspaceInvite &&
       !path.startsWith("/onboarding") &&
-      !(await getDefaultWorkspace(user)) &&
-      (await getOnboardingStep(user)) !== "completed"
-    ) {
-      let step = await getOnboardingStep(user);
-      if (!step) {
-        return NextResponse.redirect(new URL("/onboarding", req.url));
-      } else if (step === "completed") {
-        return WorkspacesMiddleware(req, user);
+      !hasDefaultWorkspace &&
+      onboardingStep !== "completed") {
+
+      // Allow access if already on onboarding path
+      if (path.startsWith("/onboarding")) {
+        return NextResponse.rewrite(new URL(`/app.dub.co${fullPath}`, req.url));
       }
 
-      const defaultWorkspace = await getDefaultWorkspace(user);
-
-      if (defaultWorkspace) {
-        // Skip workspace step if user already has a workspace
-        step = step === "workspace" ? "link" : step;
-        return NextResponse.redirect(
-          new URL(`/onboarding/${step}?workspace=${defaultWorkspace}`, req.url),
-        );
-      } else {
-        return NextResponse.redirect(new URL("/onboarding", req.url));
+      // If no onboarding step is set, start from beginning
+      if (!onboardingStep) {
+        return NextResponse.redirect(new URL("/onboarding/welcome", req.url));
       }
 
-      // if the path is / or /login or /register, redirect to the default workspace
-    } else if (
+      // If onboarding is completed but no workspace, go to workspace creation
+      if (onboardingStep === "completed" && !hasDefaultWorkspace) {
+        return NextResponse.redirect(new URL("/onboarding/workspace", req.url));
+      }
+
+      // For any other case, continue with normal onboarding flow
+      return NextResponse.redirect(
+        new URL(`/onboarding/${onboardingStep || "workspace"}`, req.url)
+      );
+    }
+
+    // Handle /new path
+    if (path === "/new") {
+      return NewLinkMiddleware(req, user);
+    }
+
+    // Handle main routes that need workspace redirects
+    if (
       [
         "/",
         "/login",
@@ -95,11 +105,14 @@ export default async function AppMiddleware(req: NextRequest) {
       isTopLevelSettingsRedirect(path)
     ) {
       return WorkspacesMiddleware(req, user);
-    } else if (appRedirect(path)) {
+    }
+
+    // Handle any app redirects
+    if (appRedirect(path)) {
       return NextResponse.redirect(new URL(appRedirect(path), req.url));
     }
   }
 
-  // otherwise, rewrite the path to /app
+  // For everything else, rewrite to app path
   return NextResponse.rewrite(new URL(`/app.dub.co${fullPath}`, req.url));
 }
