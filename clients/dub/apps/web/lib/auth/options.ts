@@ -1,31 +1,31 @@
-import { isStored, storage } from "@/lib/storage";
 import type { NextAuthOptions, User } from "next-auth";
 import {
   exceededLoginAttemptsThreshold,
   incrementLoginAttempts,
 } from "./lock-account";
+import { isStored, storage } from "@/lib/storage";
 
-import { isBlacklistedEmail } from "@/lib/edge-config";
-import jackson from "@/lib/jackson";
-import { subscribe } from "@/lib/resend";
-import type { UserProps } from "@/lib/types";
-import { ratelimit } from "@/lib/upstash";
-import { BusinessConfig as platform } from "@dub/platform-config";
-import { prisma } from "@dub/prisma";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { waitUntil } from "@vercel/functions";
-import { sendEmail } from "emails";
-import LoginLink from "emails/login-link";
-import WelcomeEmail from "emails/welcome-email";
 import type { AdapterUser } from "next-auth/adapters";
-import type { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import type { JWT } from "next-auth/jwt";
+import LoginLink from "emails/login-link";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import type { UserProps } from "@/lib/types";
+import WelcomeEmail from "emails/welcome-email";
 import { completeProgramApplications } from "../partners/complete-program-applications";
-import { validatePassword } from "./password";
+import { isBlacklistedEmail } from "@/lib/edge-config";
+import jackson from "@/lib/jackson";
+import { BusinessConfig as platform } from "@dub/platform-config";
+import { prisma } from "@dub/prisma";
+import { ratelimit } from "@/lib/upstash";
+import { sendEmail } from "emails";
+import { subscribe } from "@/lib/resend";
 import { trackLead } from "./track-lead";
+import { validatePassword } from "./password";
+import { waitUntil } from "@vercel/functions";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
@@ -85,9 +85,8 @@ export const authOptions: NextAuthOptions = {
           existingUser = await prisma.user.create({
             data: {
               email: profile.email,
-              name: `${profile.firstName || ""} ${
-                profile.lastName || ""
-              }`.trim(),
+              name: `${profile.firstName || ""} ${profile.lastName || ""
+                }`.trim(),
             },
           });
         }
@@ -155,9 +154,8 @@ export const authOptions: NextAuthOptions = {
           existingUser = await prisma.user.create({
             data: {
               email: userInfo.email,
-              name: `${userInfo.firstName || ""} ${
-                userInfo.lastName || ""
-              }`.trim(),
+              name: `${userInfo.firstName || ""} ${userInfo.lastName || ""
+                }`.trim(),
             },
           });
         }
@@ -275,7 +273,9 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-        domain: VERCEL_DEPLOYMENT ? `.${platform.domain}` : undefined,
+        domain: VERCEL_DEPLOYMENT
+          ? `.${process.env.NEXT_PUBLIC_APP_DOMAIN}`
+          : undefined,
         secure: VERCEL_DEPLOYMENT,
       },
     },
