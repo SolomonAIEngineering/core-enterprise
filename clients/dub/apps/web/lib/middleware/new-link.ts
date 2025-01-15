@@ -1,8 +1,9 @@
-import { APP_DOMAIN } from "@dub/utils";
 import { NextRequest, NextResponse } from "next/server";
+
+import { APP_DOMAIN } from "@dub/utils";
 import { UserProps } from "../types";
-import { parse } from "./utils";
 import { getDefaultWorkspace } from "./utils/get-default-workspace";
+import { parse } from "./utils";
 
 export default async function NewLinkMiddleware(
   req: NextRequest,
