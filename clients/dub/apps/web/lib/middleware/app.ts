@@ -29,8 +29,7 @@ export default async function AppMiddleware(req: NextRequest) {
     path !== "/register" &&
     path !== "/auth/saml" &&
     !path.startsWith("/auth/reset-password/") &&
-    !path.startsWith("/share/") &&
-    !path.startsWith("/onboarding")  // Add this line to ensure onboarding route is accessible for authenticated accounts without a workspace
+    !path.startsWith("/share/")
   ) {
     return NextResponse.redirect(
       new URL(

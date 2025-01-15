@@ -1,11 +1,4 @@
 import {
-  createResponseWithCookie,
-  detectBot,
-  getFinalUrl,
-  isSupportedDeeplinkProtocol,
-  parse,
-} from "@/lib/middleware/utils";
-import {
   DUB_HEADERS,
   LEGAL_WORKSPACE_ID,
   LOCALHOST_GEO_DATA,
@@ -20,13 +13,20 @@ import {
   NextResponse,
   userAgent,
 } from "next/server";
+import {
+  createResponseWithCookie,
+  detectBot,
+  getFinalUrl,
+  isSupportedDeeplinkProtocol,
+  parse,
+} from "@/lib/middleware/utils";
 
-import { recordClick } from "@/lib/tinybird";
-import { formatRedisLink } from "@/lib/upstash";
 import { cookies } from "next/headers";
-import { linkCache } from "../api/links/cache";
-import { getLinkViaEdge } from "../planetscale";
+import { formatRedisLink } from "@/lib/upstash";
 import { getDomainViaEdge } from "../planetscale/get-domain-via-edge";
+import { getLinkViaEdge } from "../planetscale";
+import { linkCache } from "../api/links/cache";
+import { recordClick } from "@/lib/tinybird";
 
 export default async function LinkMiddleware(
   req: NextRequest,
@@ -39,7 +39,7 @@ export default async function LinkMiddleware(
   }
 
   // encode the key to ascii
-  // links on are case insensitive by default
+  // links on Dub are case insensitive by default
   let key = punyEncode(originalKey.toLowerCase());
 
   const inspectMode = key.endsWith("+");
@@ -113,7 +113,7 @@ export default async function LinkMiddleware(
     projectId: workspaceId,
   } = link;
 
-  // by default, we only index default domain links (e.g. dub.sh)
+  // by default, we only index default dub domain links (e.g. dub.sh)
   // everything else is not indexed by default, unless the user has explicitly set it to be indexed
   const shouldIndex = isDubDomain(domain) || doIndex === true;
 

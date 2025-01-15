@@ -1,8 +1,9 @@
-import { UserProps } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
-import { parse } from "./utils";
+
+import { UserProps } from "@/lib/types";
 import { getDefaultWorkspace } from "./utils/get-default-workspace";
 import { isTopLevelSettingsRedirect } from "./utils/is-top-level-settings-redirect";
+import { parse } from "./utils";
 
 export default async function WorkspacesMiddleware(
   req: NextRequest,
