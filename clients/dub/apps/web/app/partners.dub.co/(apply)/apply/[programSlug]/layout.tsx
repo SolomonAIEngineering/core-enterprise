@@ -96,7 +96,7 @@ export default async function ApplyLayout({
       {/* Background grid */}
       <div className="absolute inset-0 flex h-fit w-full items-center justify-center">
         <img
-          src="https://assets.dub.co/misc/program-apply-grid.svg"
+          src={`${platform.assetsUrl}/program-apply-grid.png`}
           alt=""
           width={1280}
           height={480}

@@ -279,9 +279,9 @@ function StatusBadge() {
     ongoing_incidents: {
       name: string
       current_worst_impact:
-      | 'degraded_performance'
-      | 'partial_outage'
-      | 'full_outage'
+        | 'degraded_performance'
+        | 'partial_outage'
+        | 'full_outage'
     }[]
   }>(`https://status.${platform.domain}/api/v1/summary`, fetcher)
 

@@ -1,13 +1,5 @@
 "use client";
 
-import { clientAccessCheck } from "@/lib/api/tokens/permissions";
-import useUsers from "@/lib/swr/use-users";
-import useWorkspace from "@/lib/swr/use-workspace";
-import { WorkspaceUserProps } from "@/lib/types";
-import { useEditRoleModal } from "@/ui/modals/edit-role-modal";
-import { useInviteCodeModal } from "@/ui/modals/invite-code-modal";
-import { useInviteTeammateModal } from "@/ui/modals/invite-teammate-modal";
-import { useRemoveTeammateModal } from "@/ui/modals/remove-teammate-modal";
 import {
   CheckCircleFill,
   Link as LinkIcon,
@@ -23,6 +15,16 @@ import {
   useCopyToClipboard,
 } from "@dub/ui";
 import { capitalize, cn, timeAgo } from "@dub/utils";
+
+import { clientAccessCheck } from "@/lib/api/tokens/permissions";
+import useUsers from "@/lib/swr/use-users";
+import useWorkspace from "@/lib/swr/use-workspace";
+import { WorkspaceUserProps } from "@/lib/types";
+import { useEditRoleModal } from "@/ui/modals/edit-role-modal";
+import { useInviteCodeModal } from "@/ui/modals/invite-code-modal";
+import { useInviteTeammateModal } from "@/ui/modals/invite-teammate-modal";
+import { useRemoveTeammateModal } from "@/ui/modals/remove-teammate-modal";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { UserMinus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -110,7 +112,7 @@ export default function WorkspacePeopleClient() {
             ) : (
               <div className="flex flex-col items-center justify-center py-10">
                 <img
-                  src="https://assets.dub.co/misc/video-park.svg"
+                  src={`${platform.assetsUrl}/video-park.svg`}
                   alt="No invitations sent"
                   width={300}
                   height={300}

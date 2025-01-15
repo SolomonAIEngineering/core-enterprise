@@ -514,6 +514,8 @@ type Assets = {
   faviconAndroid512: string;
   /** Not found link image URL */
   notFoundLink: string;
+  /** Thank you thumbnail image URL */
+  thankYouThumbnail: string;
 };
 
 /**
@@ -560,6 +562,8 @@ type SiteConfig = {
   partnersUrl: string;
   /** Referral URL */
   referralUrl: string;
+  /** Assets URL */
+  assetsUrl: string;
   /** Website URL */
   webUrl: string;
   /** Desktop app URL scheme */

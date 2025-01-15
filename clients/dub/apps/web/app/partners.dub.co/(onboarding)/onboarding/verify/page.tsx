@@ -1,6 +1,8 @@
 import StripeConnectButton from "@/ui/partners/stripe-connect-button";
+import { BusinessConfig as platform } from "@dub/platform-config";
 import { ConnectedDots4 } from "@dub/ui/icons";
 import Link from "next/link";
+
 export default function OnboardingVerification() {
   return (
     <div className="mx-auto my-10 flex w-full max-w-sm flex-col items-center md:mt-14">
@@ -14,7 +16,7 @@ export default function OnboardingVerification() {
         <div className="divide-y divide-neutral-200 overflow-hidden rounded-lg border border-neutral-200">
           <div className="flex items-center justify-center bg-neutral-50 p-6">
             <img
-              src="https://assets.dub.co/misc/stripe-wordmark.svg"
+              src={`${platform.assetsUrl}/stripe-wordmark.png`}
               alt="Stripe wordmark"
               className="aspect-[96/40] h-12"
             />

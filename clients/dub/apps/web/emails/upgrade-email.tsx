@@ -48,7 +48,7 @@ export default function UpgradeEmail({
             </Heading>
             <Section className="my-8">
               <Img
-                src="https://assets.dub.co/misc/thank-you-thumbnail.jpg"
+                src={platform.assets.thankYouThumbnail}
                 alt="Thank you"
                 className="max-w-[500px]"
               />

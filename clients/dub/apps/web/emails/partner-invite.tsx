@@ -39,7 +39,7 @@ export default function PartnerInvite({
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="my-8">
               <Img
-                src={program.logo || "https://assets.dub.co/logo.png"}
+                src={program.logo || platform.assets.logo}
                 height="32"
                 alt={appName}
               />

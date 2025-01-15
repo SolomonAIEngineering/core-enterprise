@@ -151,7 +151,7 @@ export default function WorkspaceLeadsSummary({
             <Section className="my-8 rounded-lg border border-solid border-gray-200 p-2">
               <div>
                 <Img
-                  src="https://assets.dub.co/misc/year-in-review-header.jpg"
+                  src={`${platform.assetsUrl}/header.png`}
                   alt="header"
                   className="max-w-[500px] rounded-lg"
                 />

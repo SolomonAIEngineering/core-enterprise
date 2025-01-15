@@ -175,7 +175,7 @@ export default function DubWrapped({
             <Section className="my-8 rounded-lg border border-solid border-gray-200 p-2">
               <div>
                 <Img
-                  src="https://assets.dub.co/misc/year-in-review-header.jpg"
+                  src={`${platform.assetsUrl}/header.png`}
                   alt="header"
                   className="max-w-[500px] rounded-lg"
                 />
@@ -231,7 +231,7 @@ export default function DubWrapped({
               </Text>
             ))}
             <Img
-              src="https://assets.dub.co/misc/year-in-review-2024.jpg"
+              src={`${platform.assetsUrl}/header.png`}
               alt="Thank you"
               className="max-w-[500px] rounded-lg"
             />
@@ -292,7 +292,7 @@ export default function DubWrapped({
               Thank you again, and happy holidays!
             </Text>
             <Img
-              src="https://assets.dub.co/misc/email-signature.png"
+              src={`${platform.assetsUrl}/signature.png`}
               alt="Email signature"
               className="max-w-[200px]"
             />
